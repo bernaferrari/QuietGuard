@@ -29,6 +29,7 @@ public class ResourceRecord {
     public String AName;
     public String Resource;
     public int TTL;
+
     private static DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
 
     public ResourceRecord() {
@@ -36,8 +37,7 @@ public class ResourceRecord {
 
     @Override
     public String toString() {
-        return formatter.format(
-                new Date(Time).getTime()) +
+        return formatter.format(new Date(Time).getTime()) +
                 " Q " + QName +
                 " A " + AName +
                 " R " + Resource +

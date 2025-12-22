@@ -121,6 +121,7 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
 
     private boolean registeredUser = false;
     private boolean registeredIdleState = false;
+    private boolean registeredApState = false;
     private boolean registeredConnectivityChanged = false;
     private boolean registeredPackageChanged = false;
 
@@ -2229,6 +2230,16 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
         }
     };
 
+    private BroadcastReceiver apStateReceiver = new BroadcastReceiver() {
+        @Override
+        @TargetApi(Build.VERSION_CODES.M)
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "Received " + intent);
+            Util.logExtras(intent);
+            reload("AP state changed", ServiceSinkhole.this, false);
+        }
+    };
+
     private BroadcastReceiver connectivityChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -2592,6 +2603,11 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
             ContextCompat.registerReceiver(this, idleStateReceiver, ifIdle, ContextCompat.RECEIVER_NOT_EXPORTED);
             registeredIdleState = true;
         }
+
+        IntentFilter ifAp = new IntentFilter();
+        ifAp.addAction("android.net.wifi.WIFI_AP_STATE_CHANGED");
+        ContextCompat.registerReceiver(this, apStateReceiver, ifAp, ContextCompat.RECEIVER_NOT_EXPORTED);
+        registeredApState = true;
 
         // Listen for added/removed applications
         IntentFilter ifPackage = new IntentFilter();
@@ -2959,6 +2975,10 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
             if (registeredIdleState) {
                 unregisterReceiver(idleStateReceiver);
                 registeredIdleState = false;
+            }
+            if (registeredApState) {
+                unregisterReceiver(apStateReceiver);
+                registeredApState = false;
             }
             if (registeredPackageChanged) {
                 unregisterReceiver(packageChangedReceiver);

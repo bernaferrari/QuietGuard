@@ -91,6 +91,8 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -100,6 +102,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1320,6 +1323,24 @@ public class ServiceSinkhole extends VpnService implements SharedPreferences.OnS
                 listExclude.add(new IPUtil.CIDR("192.168.44.0", 24));
                 // Wi-Fi direct 192.168.49.x
                 listExclude.add(new IPUtil.CIDR("192.168.49.0", 24));
+
+                try {
+                    Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+                    if (nis != null)
+                        while (nis.hasMoreElements()) {
+                            NetworkInterface ni = nis.nextElement();
+                            if (ni != null && !ni.isLoopback() && ni.isUp() &&
+                                    ni.getName() != null && ni.getName().startsWith("ap_br_wlan")) {
+                                List<InterfaceAddress> ias = ni.getInterfaceAddresses();
+                                if (ias != null)
+                                    for (InterfaceAddress ia : ias)
+                                        if (ia.getAddress() instanceof Inet4Address)
+                                            listExclude.add(new IPUtil.CIDR(ia.getAddress().getHostAddress(), 24));
+                            }
+                        }
+                } catch (Throwable ex) {
+                    Log.e(TAG, ex.toString());
+                }
             }
 
             if (lan) {

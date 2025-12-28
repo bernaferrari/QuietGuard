@@ -102,7 +102,7 @@ class ServiceExternal : IntentService(TAG) {
         private const val ACTION_DOWNLOAD_HOSTS_FILE = "eu.faircode.netguard.DOWNLOAD_HOSTS_FILE"
 
         private fun getForegroundNotification(context: Context): Notification {
-            val builder = NotificationCompat.Builder(context, "foreground")
+            val builder = NotificationCompat.Builder(context, Notifications.CHANNEL_FOREGROUND)
             builder.setSmallIcon(R.drawable.ic_hourglass_empty_white_24dp)
             builder.priority = NotificationCompat.PRIORITY_MIN
             builder.setCategory(NotificationCompat.CATEGORY_STATUS)

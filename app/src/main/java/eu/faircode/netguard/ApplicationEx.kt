@@ -2,10 +2,6 @@ package eu.faircode.netguard
 
 import android.app.Activity
 import android.app.Application
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +25,7 @@ class ApplicationEx : Application() {
         Prefs.init(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannels()
+            Notifications.ensureChannels(this)
         }
 
         prevHandler = Thread.getDefaultUncaughtExceptionHandler()
@@ -85,45 +81,6 @@ class ApplicationEx : Application() {
                 override fun onActivityDestroyed(activity: Activity) {}
             },
         )
-    }
-
-    private fun createNotificationChannels() {
-        val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val foreground = NotificationChannel(
-            "foreground",
-            getString(R.string.channel_foreground),
-            NotificationManager.IMPORTANCE_MIN,
-        )
-        foreground.setSound(null, Notification.AUDIO_ATTRIBUTES_DEFAULT)
-        nm.createNotificationChannel(foreground)
-
-        val notify = NotificationChannel(
-            "notify",
-            getString(R.string.channel_notify),
-            NotificationManager.IMPORTANCE_DEFAULT,
-        )
-        notify.setSound(null, Notification.AUDIO_ATTRIBUTES_DEFAULT)
-        notify.setBypassDnd(true)
-        nm.createNotificationChannel(notify)
-
-        val access = NotificationChannel(
-            "access",
-            getString(R.string.channel_access),
-            NotificationManager.IMPORTANCE_DEFAULT,
-        )
-        access.setSound(null, Notification.AUDIO_ATTRIBUTES_DEFAULT)
-        access.setBypassDnd(true)
-        nm.createNotificationChannel(access)
-
-        val malware = NotificationChannel(
-            "malware",
-            getString(R.string.setting_malware),
-            NotificationManager.IMPORTANCE_HIGH,
-        )
-        malware.setSound(null, Notification.AUDIO_ATTRIBUTES_DEFAULT)
-        malware.setBypassDnd(true)
-        nm.createNotificationChannel(malware)
     }
 
     companion object {

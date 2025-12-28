@@ -131,7 +131,7 @@ class DownloadTask(
 
         val tv = TypedValue()
         context.theme.resolveAttribute(R.attr.colorOff, tv, true)
-        val builder = NotificationCompat.Builder(context, "notify")
+        val builder = NotificationCompat.Builder(context, Notifications.CHANNEL_NOTIFY)
             .setSmallIcon(R.drawable.ic_file_download_white_24dp)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.msg_downloading, url.toString()))

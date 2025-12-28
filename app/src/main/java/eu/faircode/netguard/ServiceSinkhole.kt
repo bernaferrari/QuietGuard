@@ -949,7 +949,7 @@ class ServiceSinkhole : VpnService() {
 
             val tv = TypedValue()
             theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-            val builder = NotificationCompat.Builder(this@ServiceSinkhole, "notify")
+            val builder = NotificationCompat.Builder(this@ServiceSinkhole, Notifications.CHANNEL_NOTIFY)
             builder
                 .setWhen(whenMs)
                 .setSmallIcon(R.drawable.ic_equalizer_white_24dp)
@@ -2252,7 +2252,7 @@ class ServiceSinkhole : VpnService() {
 
             val tv = TypedValue()
             theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-            val builder = NotificationCompat.Builder(this, if (malware) "malware" else "notify")
+            val builder = NotificationCompat.Builder(this, if (malware) Notifications.CHANNEL_MALWARE else Notifications.CHANNEL_NOTIFY)
             builder
                 .setSmallIcon(R.drawable.ic_security_white_24dp)
                 .setContentIntent(pi)
@@ -2824,7 +2824,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-        val builder = NotificationCompat.Builder(this, "foreground")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_FOREGROUND)
         builder
             .setSmallIcon(
                 if (isLockedDown(lastMetered)) {
@@ -2907,7 +2907,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-        val builder = NotificationCompat.Builder(this, "foreground")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_FOREGROUND)
         builder.setSmallIcon(R.drawable.ic_security_white_24dp)
             .setContentIntent(pi)
             .setColor(tv.data)
@@ -2936,7 +2936,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorOff, tv, true)
-        val builder = NotificationCompat.Builder(this, "notify")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         builder.setSmallIcon(R.drawable.ic_error_white_24dp)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_revoked))
@@ -2965,7 +2965,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorOff, tv, true)
-        val builder = NotificationCompat.Builder(this, "notify")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         builder.setSmallIcon(R.drawable.ic_error_white_24dp)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_always_on_lockdown))
@@ -3000,7 +3000,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorOff, tv, true)
-        val builder = NotificationCompat.Builder(this, "notify")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         builder.setSmallIcon(R.drawable.ic_error_white_24dp)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_autostart))
@@ -3029,7 +3029,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorOff, tv, true)
-        val builder = NotificationCompat.Builder(this, "notify")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         builder.setSmallIcon(R.drawable.ic_error_white_24dp)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_error, message))
@@ -3069,7 +3069,7 @@ class ServiceSinkhole : VpnService() {
         theme.resolveAttribute(R.attr.colorOff, tv, true)
         val colorOff = tv.data
 
-        val builder = NotificationCompat.Builder(this, "access")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_ACCESS)
         builder.setSmallIcon(R.drawable.ic_cloud_upload_white_24dp)
             .setGroup("AccessAttempt")
             .setContentIntent(pi)
@@ -3155,7 +3155,7 @@ class ServiceSinkhole : VpnService() {
 
         val tv = TypedValue()
         theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-        val builder = NotificationCompat.Builder(this, "notify")
+        val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         builder.setSmallIcon(R.drawable.ic_security_white_24dp)
             .setContentTitle(name)
             .setContentText(getString(R.string.msg_update))

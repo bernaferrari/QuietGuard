@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 
 class WidgetMain : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -19,8 +19,7 @@ class WidgetMain : AppWidgetProvider() {
         private const val TAG = "NetGuard.Widget"
 
         private fun update(appWidgetIds: IntArray, appWidgetManager: AppWidgetManager, context: Context) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val enabled = prefs.getBoolean("enabled", false)
+            val enabled = Prefs.getBoolean("enabled", false)
             try {
                 val intent = Intent(if (enabled) WidgetAdmin.INTENT_OFF else WidgetAdmin.INTENT_ON)
                 intent.setPackage(context.packageName)

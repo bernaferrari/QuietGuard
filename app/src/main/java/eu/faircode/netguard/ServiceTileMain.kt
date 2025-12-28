@@ -4,32 +4,29 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.N)
-class ServiceTileMain : TileService(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ServiceTileMain : TileService() {
+    private var removeListener: (() -> Unit)? = null
+
     override fun onStartListening() {
         Log.i(TAG, "Start listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        removeListener = Prefs.addListener { key ->
+            if (key == "enabled") update()
+        }
         update()
     }
 
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
-        if (key == "enabled") update()
-    }
-
     private fun update() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val enabled = prefs.getBoolean("enabled", false)
+        val enabled = Prefs.getBoolean("enabled", false)
         val tile = qsTile
         if (tile != null) {
             tile.state = if (enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
@@ -43,8 +40,8 @@ class ServiceTileMain : TileService(), SharedPreferences.OnSharedPreferenceChang
 
     override fun onStopListening() {
         Log.i(TAG, "Stop listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        removeListener?.invoke()
+        removeListener = null
     }
 
     override fun onClick() {
@@ -55,15 +52,14 @@ class ServiceTileMain : TileService(), SharedPreferences.OnSharedPreferenceChang
         val pi = PendingIntentCompat.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         am.cancel(pi)
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val enabled = !prefs.getBoolean("enabled", false)
-        prefs.edit().putBoolean("enabled", enabled).apply()
+        val enabled = !Prefs.getBoolean("enabled", false)
+        Prefs.putBoolean("enabled", enabled)
         if (enabled) {
             ServiceSinkhole.start("tile", this)
         } else {
             ServiceSinkhole.stop("tile", this, false)
 
-            val auto = prefs.getString("auto_enable", "0")?.toIntOrNull() ?: 0
+            val auto = Prefs.getString("auto_enable", "0")?.toIntOrNull() ?: 0
             if (auto > 0) {
                 Log.i(TAG, "Scheduling enabled after minutes=$auto")
                 val trigger = Date().time + auto * 60 * 1000L

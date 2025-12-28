@@ -12,7 +12,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.SharedPreferences
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -57,7 +56,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -85,7 +84,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ServiceSinkhole : VpnService() {
     private var registeredUser = false
     private var registeredIdleState = false
     private var registeredApState = false
@@ -107,6 +106,8 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     private var lastAllowed = -1
     private var lastBlocked = -1
     private var lastHosts = -1
+
+    private var removePrefsListener: (() -> Unit)? = null
 
     private var tunnelThread: Thread? = null
     private var lastBuilder: Builder? = null
@@ -199,7 +200,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         }
 
         private fun handleIntent(intent: Intent) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
 
             val cmd = intent.getSerializableExtra(EXTRA_COMMAND) as Command
             val reason = intent.getStringExtra(EXTRA_REASON)
@@ -373,7 +374,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                         showErrorNotification(ex.toString())
 
                         if (ex !is StartFailedException) {
-                            prefs.edit().putBoolean("enabled", false).apply()
+                            Prefs.putBoolean("enabled", false)
                             WidgetMain.updateWidgets(this@ServiceSinkhole)
                         }
                     }
@@ -428,7 +429,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                 }
             }
 
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
 
             if (state != State.enforcing) {
                 if (state != State.none) {
@@ -529,7 +530,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
                 stopForeground(true)
 
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                val prefs = Prefs
                 if (prefs.getBoolean("show_stats", false)) {
                     startForeground(NOTIFY_WAITING, getWaitingNotification())
                     state = State.waiting
@@ -547,7 +548,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
             DatabaseHelper.getInstance(this@ServiceSinkhole).cleanupDns()
 
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
             if (
                 !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
                     Util.hasValidFingerprint(this@ServiceSinkhole) &&
@@ -559,7 +560,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         private fun watchdog(intent: Intent) {
             if (vpn == null) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                val prefs = Prefs
                 if (prefs.getBoolean("enabled", false)) {
                     Log.e(TAG, "Service was killed")
                     start()
@@ -671,7 +672,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         }
 
         private fun log(packet: Packet, connection: Int, interactive: Boolean) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
             val log = prefs.getBoolean("log", false)
             val logApp = prefs.getBoolean("log_app", false)
 
@@ -704,7 +705,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         private fun usage(usage: Usage) {
             if (usage.Uid >= 0 && !(usage.Uid == 0 && usage.Protocol == 17 && usage.DPort == 53)) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                val prefs = Prefs
                 val filter = prefs.getBoolean("filter", false)
                 val logApp = prefs.getBoolean("log_app", false)
                 val trackUsage = prefs.getBoolean("track_usage", false)
@@ -749,7 +750,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         }
 
         private fun startStats() {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
             val enabled = !stats && prefs.getBoolean("show_stats", false)
             Log.i(TAG, "Stats start enabled=$enabled")
             if (enabled) {
@@ -781,7 +782,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         private fun updateStats() {
             val remoteViews = RemoteViews(packageName, R.layout.traffic)
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+            val prefs = Prefs
             val frequency = prefs.getString("stats_frequency", "1000")?.toLongOrNull() ?: 1000
             val samples = prefs.getString("stats_samples", "90")?.toLongOrNull() ?: 90
             val filter = prefs.getBoolean("filter", false)
@@ -1003,7 +1004,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun getBuilder(listAllowed: List<Rule>, listRule: List<Rule>): Builder {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
         val subnet = prefs.getBoolean("subnet", false)
         val tethering = prefs.getBoolean("tethering", false)
         val lan = prefs.getBoolean("lan", false)
@@ -1281,7 +1282,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun startNative(vpn: ParcelFileDescriptor, listAllowed: List<Rule>, listRule: List<Rule>) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+        val prefs = Prefs
         val log = prefs.getBoolean("log", false)
         val logApp = prefs.getBoolean("log_app", false)
         val filter = prefs.getBoolean("filter", false)
@@ -1400,7 +1401,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun prepareHostsBlocked() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+        val prefs = Prefs
         val useHosts = prefs.getBoolean("filter", false) && prefs.getBoolean("use_hosts", false)
         val hosts = File(filesDir, "hosts.txt")
         if (!useHosts || !hosts.exists() || !hosts.canRead()) {
@@ -1462,7 +1463,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun prepareMalwareList() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+        val prefs = Prefs
         val malware = prefs.getBoolean("filter", false) && prefs.getBoolean("malware", false)
         val file = File(filesDir, "malware.txt")
         if (!malware || !file.exists() || !file.canRead()) {
@@ -1523,8 +1524,6 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun prepareUidIPFilters(dname: String?) {
-        val lockdown = getSharedPreferences("lockdown", Context.MODE_PRIVATE)
-
         lock.writeLock().lock()
 
         if (dname == null) {
@@ -1559,7 +1558,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                 if (isLockedDown(lastMetered)) {
                     val pkg = packageManager.getPackagesForUid(uid)
                     if (pkg != null && pkg.isNotEmpty()) {
-                        if (!lockdown.getBoolean(pkg[0], false)) {
+                        if (!Prefs.getBoolean(Prefs.namespaced("lockdown", pkg[0]), false)) {
                             continue
                         }
                     }
@@ -1617,7 +1616,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         lock.writeLock().lock()
         mapForward.clear()
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
         if (prefs.getBoolean("filter", false)) {
             DatabaseHelper.getInstance(this@ServiceSinkhole).getForwarding().use { cursor ->
                 val colProtocol = cursor.getColumnIndex("protocol")
@@ -1641,7 +1640,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun prepareNotify(listRule: List<Rule>) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
         val notify = prefs.getBoolean("notify_access", false)
         val system = prefs.getBoolean("manage_system", false)
 
@@ -1654,7 +1653,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun isLockedDown(metered: Boolean): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+        val prefs = Prefs
         var lockdown = prefs.getBoolean("lockdown", false)
         val lockdownWifi = prefs.getBoolean("lockdown_wifi", true)
         val lockdownOther = prefs.getBoolean("lockdown_other", true)
@@ -1668,12 +1667,12 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
     private fun getAllowedRules(listRule: List<Rule>): List<Rule> {
         val listAllowed = ArrayList<Rule>()
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
 
         val wifi = Util.isWifiActive(this)
         var metered = Util.isMeteredNetwork(this)
         val useMetered = prefs.getBoolean("use_metered", false)
-        val ssidHomes = prefs.getStringSet("wifi_homes", HashSet()) ?: HashSet()
+        val ssidHomes = prefs.getStringSet("wifi_homes", emptySet()).toMutableSet()
         val ssidNetwork = Util.getWifiSSID(this)
         val generation = Util.getNetworkGeneration(this)
         val unmetered2g = prefs.getBoolean("unmetered_2g", false)
@@ -1763,8 +1762,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         if (reason != null) {
             showErrorNotification(reason)
 
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            prefs.edit().putBoolean("enabled", false).apply()
+            Prefs.putBoolean("enabled", false)
             WidgetMain.updateWidgets(this)
         }
     }
@@ -1789,10 +1787,9 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
             lock.readLock().unlock()
 
             if (malware) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-                val notified = prefs.getBoolean("malware.${rr.uid}", false)
+                val notified = Prefs.getBoolean("malware.${rr.uid}", false)
                 if (!notified) {
-                    prefs.edit().putBoolean("malware.${rr.uid}", true).apply()
+                    Prefs.putBoolean("malware.${rr.uid}", true)
                     notifyNewApplication(rr.uid, true)
                 }
             }
@@ -1828,7 +1825,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     }
 
     private fun isAddressAllowed(packet: Packet): Allowed? {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
 
         lock.readLock().lock()
 
@@ -1942,7 +1939,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                     am.cancel(pi)
 
                     try {
-                        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                        val prefs = Prefs
                         val delay = prefs.getString("screen_delay", "0")?.toIntOrNull() ?: 0
                         val interactive = Intent.ACTION_SCREEN_ON == intent.action
 
@@ -1993,7 +1990,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                 Log.i(TAG, "User foreground=$userForeground user=" + (Process.myUid() / 100000))
 
                 if (userForeground) {
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                    val prefs = Prefs
                     if (prefs.getBoolean("enabled", false)) {
                         try {
                             Thread.sleep(3000)
@@ -2118,7 +2115,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                         }
                     }
 
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                    val prefs = Prefs
                     val host = prefs.getString("validate", "www.google.com") ?: "www.google.com"
                     Log.i(tag, "Validating $network $ni host=$host")
 
@@ -2162,7 +2159,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                         Log.i(TAG, "New network generation=$currentGeneration")
                         lastGeneration = currentGeneration
 
-                        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                        val prefs = Prefs
                         if (
                             prefs.getBoolean("unmetered_2g", false) ||
                                 prefs.getBoolean("unmetered_3g", false) ||
@@ -2186,7 +2183,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                         Rule.clearCache(context)
 
                         if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)) {
-                            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+                            val prefs = Prefs
                             if (IAB.isPurchased(ActivityPro.SKU_NOTIFY, context) && prefs.getBoolean("install", true)) {
                                 val uid = intent.getIntExtra(Intent.EXTRA_UID, -1)
                                 notifyNewApplication(uid, false)
@@ -2200,22 +2197,14 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                         if (intent.getBooleanExtra(Intent.EXTRA_DATA_REMOVED, false)) {
                             val packageName = intent.data?.schemeSpecificPart ?: ""
                             Log.i(TAG, "Deleting settings package=$packageName")
-                            context.getSharedPreferences("wifi", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("other", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("screen_wifi", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("screen_other", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("roaming", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("lockdown", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("apply", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
-                            context.getSharedPreferences("notify", Context.MODE_PRIVATE).edit()
-                                .remove(packageName).apply()
+                            Prefs.remove(Prefs.namespaced("wifi", packageName))
+                            Prefs.remove(Prefs.namespaced("other", packageName))
+                            Prefs.remove(Prefs.namespaced("screen_wifi", packageName))
+                            Prefs.remove(Prefs.namespaced("screen_other", packageName))
+                            Prefs.remove(Prefs.namespaced("roaming", packageName))
+                            Prefs.remove(Prefs.namespaced("lockdown", packageName))
+                            Prefs.remove(Prefs.namespaced("apply", packageName))
+                            Prefs.remove(Prefs.namespaced("notify", packageName))
 
                             val uid = intent.getIntExtra(Intent.EXTRA_UID, 0)
                             if (uid > 0) {
@@ -2241,7 +2230,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
             return
         }
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
         try {
             val names = Util.getApplicationNames(uid, this)
             if (names.isEmpty()) {
@@ -2288,16 +2277,21 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                     .setVisibility(NotificationCompat.VISIBILITY_SECRET)
             }
 
-            val prefsWifi = getSharedPreferences("wifi", Context.MODE_PRIVATE)
-            val prefsOther = getSharedPreferences("other", Context.MODE_PRIVATE)
-            val wifi = prefsWifi.getBoolean(packages[0], prefs.getBoolean("whitelist_wifi", true))
-            val other = prefsOther.getBoolean(packages[0], prefs.getBoolean("whitelist_other", true))
+            val packageName = packages[0]
+            val wifi = Prefs.getBoolean(
+                Prefs.namespaced("wifi", packageName),
+                prefs.getBoolean("whitelist_wifi", true),
+            )
+            val other = Prefs.getBoolean(
+                Prefs.namespaced("other", packageName),
+                prefs.getBoolean("whitelist_other", true),
+            )
 
             val riWifi = Intent(this, ServiceSinkhole::class.java)
             riWifi.putExtra(EXTRA_COMMAND, Command.set)
             riWifi.putExtra(EXTRA_NETWORK, "wifi")
             riWifi.putExtra(EXTRA_UID, uid)
-            riWifi.putExtra(EXTRA_PACKAGE, packages[0])
+            riWifi.putExtra(EXTRA_PACKAGE, packageName)
             riWifi.putExtra(EXTRA_BLOCKED, !wifi)
 
             val piWifi = PendingIntentCompat.getService(this, uid, riWifi, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -2313,7 +2307,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
             riOther.putExtra(EXTRA_COMMAND, Command.set)
             riOther.putExtra(EXTRA_NETWORK, "other")
             riOther.putExtra(EXTRA_UID, uid)
-            riOther.putExtra(EXTRA_PACKAGE, packages[0])
+            riOther.putExtra(EXTRA_PACKAGE, packageName)
             riOther.putExtra(EXTRA_BLOCKED, !other)
             val piOther =
                 PendingIntentCompat.getService(this, uid + 10000, riOther, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -2351,7 +2345,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         Log.i(TAG, "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this))
         startForeground(NOTIFY_WAITING, getWaitingNotification())
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val prefs = Prefs
 
         if (jni_context != 0L) {
             Log.w(TAG, "Create with context=$jni_context")
@@ -2367,7 +2361,9 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         val pcap = prefs.getBoolean("pcap", false)
         setPcap(pcap, this)
 
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        removePrefsListener = Prefs.addListener { key ->
+            onPreferenceChanged(key)
+        }
 
         Util.setTheme(this)
         super.onCreate()
@@ -2484,7 +2480,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                     if (!isActiveNetwork(network)) return
 
                     val dns = linkProperties.dnsServers
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                    val prefs = Prefs
                     if (
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             !same(lastDns, dns)
@@ -2530,7 +2526,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                     }
 
                     if (reason == null && lastGeneration != null && lastGeneration != generation) {
-                        val prefs = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+                        val prefs = Prefs
                         if (
                             prefs.getBoolean("unmetered_2g", false) ||
                                 prefs.getBoolean("unmetered_3g", false) ||
@@ -2627,7 +2623,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         return network != null && network == getActiveNetwork()
     }
 
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, name: String?) {
+    private fun onPreferenceChanged(name: String?) {
         if ("theme" == name) {
             Log.i(TAG, "Theme changed")
             Util.setTheme(this)
@@ -2665,8 +2661,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         getLock(this).acquire()
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val enabled = prefs.getBoolean("enabled", false)
+        val enabled = Prefs.getBoolean("enabled", false)
 
         if (actualIntent == null) {
             Log.i(TAG, "Restart")
@@ -2705,15 +2700,16 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
         val blocked = intent.getBooleanExtra(EXTRA_BLOCKED, false)
         Log.i(TAG, "Set $pkg $network=$blocked")
 
-        val settings = PreferenceManager.getDefaultSharedPreferences(this@ServiceSinkhole)
+        val settings = Prefs
         val defaultWifi = settings.getBoolean("whitelist_wifi", true)
         val defaultOther = settings.getBoolean("whitelist_other", true)
 
-        val prefs = getSharedPreferences(network, Context.MODE_PRIVATE)
-        if (blocked == (if ("wifi" == network) defaultWifi else defaultOther)) {
-            prefs.edit().remove(pkg).apply()
+        val networkName = network ?: "other"
+        val key = Prefs.namespaced(networkName, pkg ?: "")
+        if (blocked == (if ("wifi" == networkName) defaultWifi else defaultOther)) {
+            Prefs.remove(key)
         } else {
-            prefs.edit().putBoolean(pkg, blocked).apply()
+            Prefs.putBoolean(key, blocked)
         }
 
         reload("notification", this@ServiceSinkhole, false)
@@ -2727,8 +2723,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
     override fun onRevoke() {
         Log.i(TAG, "Revoke")
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.edit().putBoolean("enabled", false).apply()
+        Prefs.putBoolean("enabled", false)
 
         showDisabledNotification()
         WidgetMain.updateWidgets(this)
@@ -2810,8 +2805,8 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
                 jni_context = 0
             }
 
-            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-            prefs.unregisterOnSharedPreferenceChangeListener(this)
+            removePrefsListener?.invoke()
+            removePrefsListener = null
         }
 
         super.onDestroy()
@@ -3364,7 +3359,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         @JvmStatic
         fun setPcap(enabled: Boolean, context: Context) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val prefs = Prefs
 
             var recordSize = 64
             try {
@@ -3417,7 +3412,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
             val listDns = ArrayList<InetAddress>()
             val sysDns = Util.getDefaultDNS(context)
 
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val prefs = Prefs
             val ip6 = prefs.getBoolean("ip6", true)
             val filter = prefs.getBoolean("filter", false)
             val vpnDns1 = prefs.getString("dns", null)
@@ -3554,7 +3549,7 @@ class ServiceSinkhole : VpnService(), SharedPreferences.OnSharedPreferenceChange
 
         @JvmStatic
         fun reload(reason: String, context: Context, interactive: Boolean) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val prefs = Prefs
             if (prefs.getBoolean("enabled", false)) {
                 val intent = Intent(context, ServiceSinkhole::class.java)
                 intent.putExtra(EXTRA_COMMAND, Command.reload)

@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -28,9 +28,7 @@ class ServiceExternal : IntentService(TAG) {
             Util.logExtras(intent)
 
             if (ACTION_DOWNLOAD_HOSTS_FILE == intent?.action) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-
-                var hostsUrl = prefs.getString("hosts_url", null)
+                var hostsUrl = Prefs.getString("hosts_url", null)
                 if ("https://www.netguard.me/hosts" == hostsUrl) {
                     hostsUrl = BuildConfig.HOSTS_FILE_URI
                 }
@@ -72,7 +70,7 @@ class ServiceExternal : IntentService(TAG) {
                     tmp.renameTo(hosts)
 
                     val last = SimpleDateFormat.getDateTimeInstance().format(Date().time)
-                    prefs.edit().putString("hosts_last_download", last).apply()
+                    Prefs.putString("hosts_last_download", last)
 
                     ServiceSinkhole.reload("hosts file download", this, false)
                 } catch (ex: Throwable) {

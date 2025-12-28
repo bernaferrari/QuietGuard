@@ -2,7 +2,6 @@ package eu.faircode.netguard
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDoneException
@@ -11,13 +10,12 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
 import android.util.Log
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.locks.ReentrantReadWriteLock
 
 class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
-    private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val lock = ReentrantReadWriteLock(true)
 
     override fun close() {
@@ -797,7 +795,7 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
             try {
                 var ttl = rr.TTL
 
-                val min = prefs.getString("ttl", "259200")?.toIntOrNull() ?: 259200
+                val min = Prefs.getString("ttl", "259200")?.toIntOrNull() ?: 259200
                 if (ttl < min) {
                     ttl = min
                 }

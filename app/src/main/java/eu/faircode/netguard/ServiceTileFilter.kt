@@ -1,6 +1,5 @@
 package eu.faircode.netguard
 
-import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
@@ -8,24 +7,22 @@ import android.service.quicksettings.TileService
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 
 @RequiresApi(Build.VERSION_CODES.N)
-class ServiceTileFilter : TileService(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ServiceTileFilter : TileService() {
+    private var removeListener: (() -> Unit)? = null
+
     override fun onStartListening() {
         Log.i(TAG, "Start listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        removeListener = Prefs.addListener { key ->
+            if (key == "filter") update()
+        }
         update()
     }
 
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
-        if (key == "filter") update()
-    }
-
     private fun update() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val filter = prefs.getBoolean("filter", false)
+        val filter = Prefs.getBoolean("filter", false)
         val tile = qsTile
         if (tile != null) {
             tile.state = if (filter) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
@@ -39,8 +36,8 @@ class ServiceTileFilter : TileService(), SharedPreferences.OnSharedPreferenceCha
 
     override fun onStopListening() {
         Log.i(TAG, "Stop listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        removeListener?.invoke()
+        removeListener = null
     }
 
     override fun onClick() {
@@ -48,8 +45,8 @@ class ServiceTileFilter : TileService(), SharedPreferences.OnSharedPreferenceCha
 
         if (Util.canFilter(this)) {
             if (IAB.isPurchased(ActivityPro.SKU_FILTER, this)) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-                prefs.edit().putBoolean("filter", !prefs.getBoolean("filter", false)).apply()
+                val enabled = !Prefs.getBoolean("filter", false)
+                Prefs.putBoolean("filter", enabled)
                 ServiceSinkhole.reload("tile", this, false)
             } else {
                 Toast.makeText(this, R.string.title_pro_feature, Toast.LENGTH_SHORT).show()

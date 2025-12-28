@@ -1,6 +1,5 @@
 package eu.faircode.netguard
 
-import android.content.SharedPreferences
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
@@ -8,24 +7,22 @@ import android.service.quicksettings.TileService
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 
 @RequiresApi(Build.VERSION_CODES.N)
-class ServiceTileGraph : TileService(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ServiceTileGraph : TileService() {
+    private var removeListener: (() -> Unit)? = null
+
     override fun onStartListening() {
         Log.i(TAG, "Start listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        removeListener = Prefs.addListener { key ->
+            if (key == "show_stats") update()
+        }
         update()
     }
 
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
-        if (key == "show_stats") update()
-    }
-
     private fun update() {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val stats = prefs.getBoolean("show_stats", false)
+        val stats = Prefs.getBoolean("show_stats", false)
         val tile = qsTile
         if (tile != null) {
             tile.state = if (stats) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
@@ -39,19 +36,18 @@ class ServiceTileGraph : TileService(), SharedPreferences.OnSharedPreferenceChan
 
     override fun onStopListening() {
         Log.i(TAG, "Stop listening")
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        removeListener?.invoke()
+        removeListener = null
     }
 
     override fun onClick() {
         Log.i(TAG, "Click")
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val stats = !prefs.getBoolean("show_stats", false)
+        val stats = !Prefs.getBoolean("show_stats", false)
         if (stats && !IAB.isPurchased(ActivityPro.SKU_SPEED, this)) {
             Toast.makeText(this, R.string.title_pro_feature, Toast.LENGTH_SHORT).show()
         } else {
-            prefs.edit().putBoolean("show_stats", stats).apply()
+            Prefs.putBoolean("show_stats", stats)
         }
         ServiceSinkhole.reloadStats("tile", this)
     }

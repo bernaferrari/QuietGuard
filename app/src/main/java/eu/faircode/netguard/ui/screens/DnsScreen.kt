@@ -2,7 +2,6 @@ package eu.faircode.netguard.ui.screens
 
 import android.util.Log
 import android.util.Xml
-import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,11 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,8 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import eu.faircode.netguard.AdapterDns
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ServiceSinkhole
@@ -55,7 +56,7 @@ private const val TAG = "NetGuard.DNS.Compose"
 @Composable
 fun DnsScreen() {
     val context = LocalContext.current
-    var adapter by remember { mutableStateOf<AdapterDns?>(null) }
+    var entries by remember { mutableStateOf<List<DnsEntry>>(emptyList()) }
     var refreshKey by remember { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
 
@@ -66,9 +67,8 @@ fun DnsScreen() {
             }
         }
 
-    LaunchedEffect(adapter, refreshKey) {
-        val target = adapter ?: return@LaunchedEffect
-        target.changeCursor(DatabaseHelper.getInstance(context).getDns())
+    LaunchedEffect(refreshKey) {
+        entries = loadDns(context)
     }
 
     Column(
@@ -151,19 +151,80 @@ fun DnsScreen() {
             }
         }
 
-        AndroidView(
-            factory = { ctx ->
-                ListView(ctx).apply {
-                    val cursor = DatabaseHelper.getInstance(ctx).getDns()
-                    val created = AdapterDns(ctx, cursor)
-                    adapter = created
-                    this.adapter = created
-                }
-            },
+        LazyColumn(
             modifier = Modifier.fillMaxSize(),
-        )
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(entries, key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
+                val expired = entry.time + entry.ttl < Date().time
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor =
+                            if (expired) MaterialTheme.colorScheme.surfaceVariant
+                            else MaterialTheme.colorScheme.surface,
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            text = "${entry.qname} -> ${entry.aname}",
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                        Text(
+                            text = entry.resource,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Text(
+                            text = stringResource(R.string.label_ttl, entry.ttl / 1000),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        if (entry.uid > 0) {
+                            Text(
+                                text = stringResource(R.string.label_uid, entry.uid),
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
+private data class DnsEntry(
+    val time: Long,
+    val qname: String,
+    val aname: String,
+    val resource: String,
+    val ttl: Int,
+    val uid: Int,
+)
+
+private suspend fun loadDns(context: android.content.Context): List<DnsEntry> =
+    withContext(Dispatchers.IO) {
+        val result = mutableListOf<DnsEntry>()
+        DatabaseHelper.getInstance(context).getDns().use { cursor ->
+            val colTime = cursor.getColumnIndex("time")
+            val colQName = cursor.getColumnIndex("qname")
+            val colAName = cursor.getColumnIndex("aname")
+            val colResource = cursor.getColumnIndex("resource")
+            val colTTL = cursor.getColumnIndex("ttl")
+            val colUid = cursor.getColumnIndex("uid")
+            while (cursor.moveToNext()) {
+                result.add(
+                    DnsEntry(
+                        time = cursor.getLong(colTime),
+                        qname = cursor.getString(colQName),
+                        aname = cursor.getString(colAName),
+                        resource = cursor.getString(colResource),
+                        ttl = cursor.getInt(colTTL),
+                        uid = cursor.getInt(colUid),
+                    ),
+                )
+            }
+        }
+        result
+    }
 
 private fun runDnsCleanup(
     context: android.content.Context,

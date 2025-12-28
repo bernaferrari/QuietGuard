@@ -8,7 +8,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.util.Date
 
 class WidgetAdmin : ReceiverAutostart() {
@@ -18,7 +18,6 @@ class WidgetAdmin : ReceiverAutostart() {
         Log.i(TAG, "Received $intent")
         Util.logExtras(intent)
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val i = Intent(INTENT_ON).setPackage(context.packageName)
         val pi = PendingIntentCompat.getBroadcast(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -40,14 +39,14 @@ class WidgetAdmin : ReceiverAutostart() {
             when (intent?.action) {
                 INTENT_ON, INTENT_OFF -> {
                     val enabled = INTENT_ON == intent.action
-                    prefs.edit().putBoolean("enabled", enabled).apply()
+                    Prefs.putBoolean("enabled", enabled)
                     if (enabled) {
                         ServiceSinkhole.start("widget", context)
                     } else {
                         ServiceSinkhole.stop("widget", context, false)
                     }
 
-                    val auto = prefs.getString("auto_enable", "0")?.toIntOrNull() ?: 0
+                    val auto = Prefs.getString("auto_enable", "0")?.toIntOrNull() ?: 0
                     if (!enabled && auto > 0) {
                         Log.i(TAG, "Scheduling enabled after minutes=$auto")
                         val trigger = Date().time + auto * 60 * 1000L
@@ -60,7 +59,7 @@ class WidgetAdmin : ReceiverAutostart() {
                 }
                 INTENT_LOCKDOWN_ON, INTENT_LOCKDOWN_OFF -> {
                     val lockdown = INTENT_LOCKDOWN_ON == intent.action
-                    prefs.edit().putBoolean("lockdown", lockdown).apply()
+                    Prefs.putBoolean("lockdown", lockdown)
                     ServiceSinkhole.reload("widget", context, false)
                     WidgetLockdown.updateWidgets(context)
                 }

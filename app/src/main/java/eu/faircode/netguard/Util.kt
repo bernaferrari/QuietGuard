@@ -32,7 +32,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.net.ConnectivityManagerCompat
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -531,9 +531,8 @@ object Util {
 
     @JvmStatic
     fun setTheme(context: Context) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val dark = prefs.getBoolean("dark_theme", false)
-        val theme = prefs.getString("theme", "teal")
+        val dark = Prefs.getBoolean("dark_theme", false)
+        val theme = Prefs.getString("theme", "teal")
         when (theme) {
             "teal" -> context.setTheme(if (dark) R.style.AppThemeTealDark else R.style.AppThemeTeal)
             "blue" -> context.setTheme(if (dark) R.style.AppThemeBlueDark else R.style.AppThemeBlue)

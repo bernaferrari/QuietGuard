@@ -6,7 +6,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -17,8 +16,8 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.preference.PreferenceManager
 import dagger.hilt.android.HiltAndroidApp
+import eu.faircode.netguard.data.Prefs
 
 @HiltAndroidApp
 class ApplicationEx : Application() {
@@ -27,6 +26,7 @@ class ApplicationEx : Application() {
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this))
+        Prefs.init(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannels()
@@ -59,8 +59,7 @@ class ApplicationEx : Application() {
                             val tv = TypedValue()
                             activity.theme.resolveAttribute(R.attr.colorPrimaryDark, tv, true)
 
-                            val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-                            val dark = prefs.getBoolean("dark_theme", false)
+                            val dark = Prefs.getBoolean("dark_theme", false)
 
                             activity.window.decorView.setBackgroundColor(tv.data)
                             content.setBackgroundColor(if (dark) Color.parseColor("#ff121212") else Color.WHITE)

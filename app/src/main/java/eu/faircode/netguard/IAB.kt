@@ -5,12 +5,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 import com.android.vending.billing.IInAppBillingService
 import org.json.JSONException
 import org.json.JSONObject
@@ -124,27 +123,24 @@ class IAB(
 
         fun setBought(sku: String, context: Context) {
             Log.i(TAG, "Bought $sku")
-            val prefs = context.getSharedPreferences("IAB", Context.MODE_PRIVATE)
-            prefs.edit().putBoolean(sku, true).apply()
+            Prefs.putBoolean(Prefs.namespaced("IAB", sku), true)
         }
 
         fun isPurchased(sku: String, context: Context): Boolean {
             return try {
                 if (Util.isDebuggable(context)) {
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-                    return !prefs.getBoolean("debug_iab", false)
+                    return !Prefs.getBoolean("debug_iab", false)
                 }
 
-                val prefs = context.getSharedPreferences("IAB", Context.MODE_PRIVATE)
                 if (ActivityPro.SKU_SUPPORT1 == sku || ActivityPro.SKU_SUPPORT2 == sku) {
-                    return prefs.getBoolean(sku, false)
+                    return Prefs.getBoolean(Prefs.namespaced("IAB", sku), false)
                 }
 
-                prefs.getBoolean(sku, false) ||
-                    prefs.getBoolean(ActivityPro.SKU_PRO1, false) ||
-                    prefs.getBoolean(ActivityPro.SKU_SUPPORT1, false) ||
-                    prefs.getBoolean(ActivityPro.SKU_SUPPORT2, false) ||
-                    prefs.getBoolean(ActivityPro.SKU_DONATION, false)
+                Prefs.getBoolean(Prefs.namespaced("IAB", sku), false) ||
+                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_PRO1), false) ||
+                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT1), false) ||
+                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT2), false) ||
+                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_DONATION), false)
             } catch (ignored: SecurityException) {
                 false
             }
@@ -153,13 +149,12 @@ class IAB(
         fun isPurchasedAny(context: Context): Boolean {
             return try {
                 if (Util.isDebuggable(context)) {
-                    val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-                    return !prefs.getBoolean("debug_iab", false)
+                    return !Prefs.getBoolean("debug_iab", false)
                 }
 
-                val prefs = context.getSharedPreferences("IAB", Context.MODE_PRIVATE)
-                for (key in prefs.all.keys) {
-                    if (prefs.getBoolean(key, false)) return true
+                val prefix = "IAB"
+                for (key in Prefs.keysWithPrefix(prefix)) {
+                    if (Prefs.getBoolean(key, false)) return true
                 }
                 false
             } catch (ignored: SecurityException) {

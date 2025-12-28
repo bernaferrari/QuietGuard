@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.RemoteViews
-import androidx.preference.PreferenceManager
+import eu.faircode.netguard.data.Prefs
 
 class WidgetLockdown : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
@@ -19,8 +19,7 @@ class WidgetLockdown : AppWidgetProvider() {
         private const val TAG = "NetGuard.WidgetLock"
 
         private fun update(appWidgetIds: IntArray, appWidgetManager: AppWidgetManager, context: Context) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val lockdown = prefs.getBoolean("lockdown", false)
+            val lockdown = Prefs.getBoolean("lockdown", false)
             try {
                 val intent = Intent(if (lockdown) WidgetAdmin.INTENT_LOCKDOWN_OFF else WidgetAdmin.INTENT_LOCKDOWN_ON)
                 intent.setPackage(context.packageName)

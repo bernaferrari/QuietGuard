@@ -5,88 +5,77 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NavUtils
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
+import eu.faircode.netguard.ui.theme.NetGuardTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ActivityPro : AppCompatActivity() {
+class ActivityPro : ComponentActivity() {
     private var iab: IAB? = null
+    private var refreshKey by mutableStateOf(0)
+    private var availability by mutableStateOf<Map<String, Boolean>>(emptyMap())
+    private var showChallenge by mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "Create")
         Util.setTheme(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.pro)
 
-        supportActionBar?.setTitle(R.string.title_pro)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
-        updateState()
-
-        val tvLogTitle = findViewById<TextView>(R.id.tvLogTitle)
-        val tvFilterTitle = findViewById<TextView>(R.id.tvFilterTitle)
-        val tvNotifyTitle = findViewById<TextView>(R.id.tvNotifyTitle)
-        val tvSpeedTitle = findViewById<TextView>(R.id.tvSpeedTitle)
-        val tvThemeTitle = findViewById<TextView>(R.id.tvThemeTitle)
-        val tvAllTitle = findViewById<TextView>(R.id.tvAllTitle)
-        val tvDev1Title = findViewById<TextView>(R.id.tvDev1Title)
-        val tvDev2Title = findViewById<TextView>(R.id.tvDev2Title)
-
-        tvLogTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvFilterTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvNotifyTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvSpeedTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvThemeTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvAllTitle.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvDev1Title.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        tvDev2Title.paintFlags = tvLogTitle.paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
-
-        val listener = View.OnClickListener { view ->
-            val sku =
-                when (view.id) {
-                    R.id.tvLogTitle -> SKU_LOG
-                    R.id.tvFilterTitle -> SKU_FILTER
-                    R.id.tvNotifyTitle -> SKU_NOTIFY
-                    R.id.tvSpeedTitle -> SKU_SPEED
-                    R.id.tvThemeTitle -> SKU_THEME
-                    R.id.tvAllTitle -> SKU_PRO1
-                    R.id.tvDev1Title -> SKU_SUPPORT1
-                    R.id.tvDev2Title -> SKU_SUPPORT2
-                    else -> SKU_PRO1
-                }
-
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("http://www.netguard.me/#$sku")
-            if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+        setContent {
+            NetGuardTheme {
+                ProContent(
+                    availability = availability,
+                    refreshKey = refreshKey,
+                    showChallenge = showChallenge,
+                    onBuy = { sku, isDonation -> buySku(sku, isDonation) },
+                    onChallenge = { showChallenge = true },
+                    onDismissChallenge = { showChallenge = false },
+                    onChallengeSuccess = {
+                        IAB.setBought(SKU_DONATION, this)
+                        refreshKey++
+                        showChallenge = false
+                    },
+                )
+            }
         }
-
-        tvLogTitle.setOnClickListener(listener)
-        tvFilterTitle.setOnClickListener(listener)
-        tvNotifyTitle.setOnClickListener(listener)
-        tvSpeedTitle.setOnClickListener(listener)
-        tvThemeTitle.setOnClickListener(listener)
-        tvAllTitle.setOnClickListener(listener)
-        tvDev1Title.setOnClickListener(listener)
-        tvDev2Title.setOnClickListener(listener)
 
         try {
             iab =
@@ -96,88 +85,27 @@ class ActivityPro : AppCompatActivity() {
                             Log.i(TAG, "IAB ready")
                             try {
                                 iab.updatePurchases()
-                                updateState()
-
-                                val btnLog = findViewById<Button>(R.id.btnLog)
-                                val btnFilter = findViewById<Button>(R.id.btnFilter)
-                                val btnNotify = findViewById<Button>(R.id.btnNotify)
-                                val btnSpeed = findViewById<Button>(R.id.btnSpeed)
-                                val btnTheme = findViewById<Button>(R.id.btnTheme)
-                                val btnAll = findViewById<Button>(R.id.btnAll)
-                                val btnDev1 = findViewById<Button>(R.id.btnDev1)
-                                val btnDev2 = findViewById<Button>(R.id.btnDev2)
-
-                                val buyListener = View.OnClickListener { view ->
-                                    try {
-                                        var id = 0
-                                        var pi: PendingIntent? = null
-                                        when (view) {
-                                            btnLog -> {
-                                                id = SKU_LOG_ID
-                                                pi = iab.getBuyIntent(SKU_LOG, false)
-                                            }
-                                            btnFilter -> {
-                                                id = SKU_FILTER_ID
-                                                pi = iab.getBuyIntent(SKU_FILTER, false)
-                                            }
-                                            btnNotify -> {
-                                                id = SKU_NOTIFY_ID
-                                                pi = iab.getBuyIntent(SKU_NOTIFY, false)
-                                            }
-                                            btnSpeed -> {
-                                                id = SKU_SPEED_ID
-                                                pi = iab.getBuyIntent(SKU_SPEED, false)
-                                            }
-                                            btnTheme -> {
-                                                id = SKU_THEME_ID
-                                                pi = iab.getBuyIntent(SKU_THEME, false)
-                                            }
-                                            btnAll -> {
-                                                id = SKU_PRO1_ID
-                                                pi = iab.getBuyIntent(SKU_PRO1, false)
-                                            }
-                                            btnDev1 -> {
-                                                id = SKU_SUPPORT1_ID
-                                                pi = iab.getBuyIntent(SKU_SUPPORT1, true)
-                                            }
-                                            btnDev2 -> {
-                                                id = SKU_SUPPORT2_ID
-                                                pi = iab.getBuyIntent(SKU_SUPPORT2, true)
-                                            }
-                                        }
-
-                                        if (id > 0 && pi != null) {
-                                            startIntentSenderForResult(
-                                                pi.intentSender,
-                                                id,
-                                                Intent(),
-                                                0,
-                                                0,
-                                                0,
-                                            )
-                                        }
-                                    } catch (ex: Throwable) {
-                                        Log.i(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
+                                refreshKey++
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    val map = HashMap<String, Boolean>()
+                                    val skus =
+                                        listOf(
+                                            SKU_LOG,
+                                            SKU_FILTER,
+                                            SKU_NOTIFY,
+                                            SKU_SPEED,
+                                            SKU_THEME,
+                                            SKU_PRO1,
+                                            SKU_SUPPORT1,
+                                            SKU_SUPPORT2,
+                                        )
+                                    for (sku in skus) {
+                                        map[sku] = runCatching { iab.isAvailable(sku) }.getOrDefault(true)
+                                    }
+                                    withContext(Dispatchers.Main) {
+                                        availability = map
                                     }
                                 }
-
-                                btnLog.setOnClickListener(buyListener)
-                                btnFilter.setOnClickListener(buyListener)
-                                btnNotify.setOnClickListener(buyListener)
-                                btnSpeed.setOnClickListener(buyListener)
-                                btnTheme.setOnClickListener(buyListener)
-                                btnAll.setOnClickListener(buyListener)
-                                btnDev1.setOnClickListener(buyListener)
-                                btnDev2.setOnClickListener(buyListener)
-
-                                btnLog.isEnabled = true
-                                btnFilter.isEnabled = true
-                                btnNotify.isEnabled = true
-                                btnSpeed.isEnabled = true
-                                btnTheme.isEnabled = true
-                                btnAll.isEnabled = true
-                                btnDev1.isEnabled = true
-                                btnDev2.isEnabled = true
                             } catch (ex: Throwable) {
                                 Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
                             }
@@ -198,97 +126,6 @@ class ActivityPro : AppCompatActivity() {
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.pro, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                Log.i(TAG, "Up")
-                NavUtils.navigateUpFromSameTask(this)
-                true
-            }
-            R.id.menu_challenge -> {
-                menuChallenge()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        if (Util.isPlayStoreInstall(this)) menu.removeItem(R.id.menu_challenge)
-        return super.onPrepareOptionsMenu(menu)
-    }
-
-    private fun menuChallenge() {
-        if (IAB.isPurchased(SKU_DONATION, this)) {
-            Toast.makeText(this, getString(R.string.title_pro_already), Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.challenge, null, false)
-
-        val dialog =
-            AlertDialog.Builder(this)
-                .setView(view)
-                .setCancelable(true)
-                .create()
-
-        val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-        val challenge = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) Build.SERIAL else "O3$androidId"
-        val seed = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) "NetGuard2" else "NetGuard3"
-
-        val tvChallenge = view.findViewById<TextView>(R.id.tvChallenge)
-        tvChallenge.text = challenge
-
-        val ibCopy = view.findViewById<ImageButton>(R.id.ibCopy)
-        ibCopy.setOnClickListener {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(getString(R.string.title_pro_challenge), challenge)
-            clipboard.setPrimaryClip(clip)
-            Toast.makeText(this, android.R.string.copy, Toast.LENGTH_LONG).show()
-        }
-
-        val etResponse = view.findViewById<EditText>(R.id.etResponse)
-        try {
-            val response = Util.md5(challenge, seed)
-            etResponse.addTextChangedListener(
-                object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                    override fun afterTextChanged(editable: Editable) {
-                        if (response == editable.toString().uppercase()) {
-                            IAB.setBought(SKU_DONATION, this@ActivityPro)
-                            dialog.dismiss()
-                            invalidateOptionsMenu()
-                            updateState()
-                        }
-                    }
-                },
-            )
-        } catch (ex: Throwable) {
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-        }
-
-        val ibPaste = view.findViewById<ImageButton>(R.id.ibPaste)
-        ibPaste.setOnClickListener {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            if (clipboard.hasPrimaryClip() &&
-                clipboard.primaryClipDescription?.hasMimeType(android.content.ClipDescription.MIMETYPE_TEXT_PLAIN) == true
-            ) {
-                val item = clipboard.primaryClip?.getItemAt(0)
-                etResponse.setText(item?.text?.toString())
-            }
-        }
-
-        dialog.show()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -302,65 +139,36 @@ class ActivityPro : AppCompatActivity() {
                 SKU_SUPPORT1_ID -> IAB.setBought(SKU_SUPPORT1, this)
                 SKU_SUPPORT2_ID -> IAB.setBought(SKU_SUPPORT2, this)
             }
-            updateState()
+            refreshKey++
         }
     }
 
-    private fun updateState() {
-        val btnLog = findViewById<Button>(R.id.btnLog)
-        val btnFilter = findViewById<Button>(R.id.btnFilter)
-        val btnNotify = findViewById<Button>(R.id.btnNotify)
-        val btnSpeed = findViewById<Button>(R.id.btnSpeed)
-        val btnTheme = findViewById<Button>(R.id.btnTheme)
-        val btnAll = findViewById<Button>(R.id.btnAll)
-        val btnDev1 = findViewById<Button>(R.id.btnDev1)
-        val btnDev2 = findViewById<Button>(R.id.btnDev2)
-        val tvLog = findViewById<TextView>(R.id.tvLog)
-        val tvFilter = findViewById<TextView>(R.id.tvFilter)
-        val tvNotify = findViewById<TextView>(R.id.tvNotify)
-        val tvSpeed = findViewById<TextView>(R.id.tvSpeed)
-        val tvTheme = findViewById<TextView>(R.id.tvTheme)
-        val tvAll = findViewById<TextView>(R.id.tvAll)
-        val tvDev1 = findViewById<TextView>(R.id.tvDev1)
-        val tvDev2 = findViewById<TextView>(R.id.tvDev2)
-        val tvLogUnavailable = findViewById<TextView>(R.id.tvLogUnavailable)
-        val tvFilterUnavailable = findViewById<TextView>(R.id.tvFilterUnavailable)
-
-        val can = Util.canFilter(this)
-
-        btnLog.visibility = if (IAB.isPurchased(SKU_LOG, this) || !can) View.GONE else View.VISIBLE
-        btnFilter.visibility = if (IAB.isPurchased(SKU_FILTER, this) || !can) View.GONE else View.VISIBLE
-        btnNotify.visibility = if (IAB.isPurchased(SKU_NOTIFY, this)) View.GONE else View.VISIBLE
-        btnSpeed.visibility = if (IAB.isPurchased(SKU_SPEED, this)) View.GONE else View.VISIBLE
-        btnTheme.visibility = if (IAB.isPurchased(SKU_THEME, this)) View.GONE else View.VISIBLE
-        btnAll.visibility = if (IAB.isPurchased(SKU_PRO1, this)) View.GONE else View.VISIBLE
-        btnDev1.visibility = if (IAB.isPurchased(SKU_SUPPORT1, this)) View.GONE else View.VISIBLE
-        btnDev2.visibility = if (IAB.isPurchased(SKU_SUPPORT2, this)) View.GONE else View.VISIBLE
-
-        tvLog.visibility = if (IAB.isPurchased(SKU_LOG, this) && can) View.VISIBLE else View.GONE
-        tvFilter.visibility = if (IAB.isPurchased(SKU_FILTER, this) && can) View.VISIBLE else View.GONE
-        tvNotify.visibility = if (IAB.isPurchased(SKU_NOTIFY, this)) View.VISIBLE else View.GONE
-        tvSpeed.visibility = if (IAB.isPurchased(SKU_SPEED, this)) View.VISIBLE else View.GONE
-        tvTheme.visibility = if (IAB.isPurchased(SKU_THEME, this)) View.VISIBLE else View.GONE
-        tvAll.visibility = if (IAB.isPurchased(SKU_PRO1, this)) View.VISIBLE else View.GONE
-        tvDev1.visibility = if (IAB.isPurchased(SKU_SUPPORT1, this)) View.VISIBLE else View.GONE
-        tvDev2.visibility = if (IAB.isPurchased(SKU_SUPPORT2, this)) View.VISIBLE else View.GONE
-
-        tvLogUnavailable.visibility = if (can) View.GONE else View.VISIBLE
-        tvFilterUnavailable.visibility = if (can) View.GONE else View.VISIBLE
+    private fun buySku(sku: String, isDonation: Boolean) {
+        try {
+            val iabInstance = iab ?: return
+            val id =
+                when (sku) {
+                    SKU_LOG -> SKU_LOG_ID
+                    SKU_FILTER -> SKU_FILTER_ID
+                    SKU_NOTIFY -> SKU_NOTIFY_ID
+                    SKU_SPEED -> SKU_SPEED_ID
+                    SKU_THEME -> SKU_THEME_ID
+                    SKU_PRO1 -> SKU_PRO1_ID
+                    SKU_SUPPORT1 -> SKU_SUPPORT1_ID
+                    SKU_SUPPORT2 -> SKU_SUPPORT2_ID
+                    else -> 0
+                }
+            val pi = iabInstance.getBuyIntent(sku, isDonation)
+            if (id > 0 && pi != null) {
+                startIntentSenderForResult(pi.intentSender, id, Intent(), 0, 0, 0)
+            }
+        } catch (ex: Throwable) {
+            Log.i(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
+        }
     }
 
     companion object {
         private const val TAG = "NetGuard.Pro"
-
-        private const val SKU_LOG_ID = 1
-        private const val SKU_FILTER_ID = 2
-        private const val SKU_NOTIFY_ID = 3
-        private const val SKU_SPEED_ID = 4
-        private const val SKU_THEME_ID = 5
-        private const val SKU_PRO1_ID = 6
-        private const val SKU_SUPPORT1_ID = 7
-        private const val SKU_SUPPORT2_ID = 8
 
         const val SKU_LOG = "log"
         const val SKU_FILTER = "filter"
@@ -371,5 +179,197 @@ class ActivityPro : AppCompatActivity() {
         const val SKU_SUPPORT1 = "support1"
         const val SKU_SUPPORT2 = "support2"
         const val SKU_DONATION = "donation"
+
+        private const val SKU_LOG_ID = 101
+        private const val SKU_FILTER_ID = 102
+        private const val SKU_NOTIFY_ID = 103
+        private const val SKU_SPEED_ID = 104
+        private const val SKU_THEME_ID = 105
+        private const val SKU_PRO1_ID = 106
+        private const val SKU_SUPPORT1_ID = 107
+        private const val SKU_SUPPORT2_ID = 108
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ProContent(
+    availability: Map<String, Boolean>,
+    refreshKey: Int,
+    showChallenge: Boolean,
+    onBuy: (String, Boolean) -> Unit,
+    onChallenge: () -> Unit,
+    onDismissChallenge: () -> Unit,
+    onChallengeSuccess: () -> Unit,
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val items =
+        listOf(
+            ProItem(ActivityPro.SKU_LOG, R.string.title_pro_log, false),
+            ProItem(ActivityPro.SKU_FILTER, R.string.title_pro_filter, false),
+            ProItem(ActivityPro.SKU_NOTIFY, R.string.title_pro_notify, false),
+            ProItem(ActivityPro.SKU_SPEED, R.string.title_pro_speed, false),
+            ProItem(ActivityPro.SKU_THEME, R.string.title_pro_theme, false),
+            ProItem(ActivityPro.SKU_PRO1, R.string.title_pro_all, false),
+            ProItem(ActivityPro.SKU_SUPPORT1, R.string.title_pro_dev, true),
+            ProItem(ActivityPro.SKU_SUPPORT2, R.string.title_pro_dev, true),
+        )
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.title_pro)) },
+                actions = {
+                    if (!Util.isPlayStoreInstall(context)) {
+                        TextButton(onClick = onChallenge) {
+                        Text(text = stringResource(R.string.title_pro_challenge))
+                        }
+                    }
+                },
+            )
+        },
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                text = stringResource(R.string.title_pro_description),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+
+            items.forEach { item ->
+                val purchased = remember(refreshKey) { IAB.isPurchased(item.sku, context) }
+                val available = availability[item.sku] ?: true
+                ProRow(
+                    title = stringResource(item.titleRes),
+                    purchased = purchased,
+                    available = available,
+                    onClick = {
+                        val link = "http://www.netguard.me/#${item.sku}".toUri()
+                        val intent = Intent(Intent.ACTION_VIEW, link)
+                        if (intent.resolveActivity(context.packageManager) != null) {
+                            context.startActivity(intent)
+                        }
+                    },
+                    onBuy = { onBuy(item.sku, item.isDonation) },
+                )
+            }
+        }
+    }
+
+    if (showChallenge) {
+        val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        val challenge = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) Build.SERIAL else "O3$androidId"
+        val seed = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) "NetGuard2" else "NetGuard3"
+        ChallengeDialog(
+            challenge = challenge,
+            seed = seed,
+            onDismiss = onDismissChallenge,
+            onSuccess = onChallengeSuccess,
+        )
+    }
+}
+
+@Composable
+private fun ProRow(
+    title: String,
+    purchased: Boolean,
+    available: Boolean,
+    onClick: () -> Unit,
+    onBuy: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(text = title, style = MaterialTheme.typography.bodyLarge)
+        when {
+            purchased -> Text(text = stringResource(R.string.title_pro_bought), style = MaterialTheme.typography.bodyMedium)
+            !available -> Text(text = stringResource(R.string.title_pro_unavailable))
+            else -> FilledTonalButton(onClick = onBuy) {
+                Text(text = stringResource(R.string.title_pro_buy))
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChallengeDialog(
+    challenge: String,
+    seed: String,
+    onDismiss: () -> Unit,
+    onSuccess: () -> Unit,
+) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    var response by remember { mutableStateOf("") }
+    val expected = remember(challenge, seed) { runCatching { Util.md5(challenge, seed) }.getOrDefault("") }
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    if (response.uppercase() == expected) {
+                        onSuccess()
+                    }
+                },
+            ) {
+                Text(text = stringResource(android.R.string.ok))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(android.R.string.cancel))
+            }
+        },
+        title = { Text(text = stringResource(R.string.title_pro_challenge)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(text = challenge, style = MaterialTheme.typography.bodyMedium)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilledTonalButton(
+                        onClick = {
+                            val clip = ClipData.newPlainText(
+                                context.getString(R.string.title_pro_challenge),
+                                challenge,
+                            )
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, android.R.string.copy, Toast.LENGTH_LONG).show()
+                        },
+                    ) {
+                        Text(text = stringResource(android.R.string.copy))
+                    }
+                    FilledTonalButton(
+                        onClick = {
+                            val item = clipboard.primaryClip?.getItemAt(0)
+                            response = item?.text?.toString().orEmpty()
+                        },
+                    ) {
+                        Text(text = stringResource(android.R.string.paste))
+                    }
+                }
+                OutlinedTextField(
+                    value = response,
+                    onValueChange = { response = it },
+                    label = { Text(text = stringResource(R.string.title_pro_reponse)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        },
+    )
+}
+
+private data class ProItem(
+    val sku: String,
+    val titleRes: Int,
+    val isDonation: Boolean,
+)

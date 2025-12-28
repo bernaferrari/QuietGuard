@@ -1,9 +1,10 @@
 package eu.faircode.netguard.ui.screens
 
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.PopupMenu
+import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,12 +15,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -38,8 +41,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import eu.faircode.netguard.AdapterForwarding
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Rule
@@ -53,15 +54,18 @@ import java.net.InetAddress
 @Composable
 fun ForwardingScreen() {
     val context = LocalContext.current
-    var adapter by remember { mutableStateOf<AdapterForwarding?>(null) }
+    var entries by remember { mutableStateOf<List<ForwardingEntry>>(emptyList()) }
     var showDialog by remember { mutableStateOf(false) }
+    var loading by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
 
     val forwardListener =
         remember {
             DatabaseHelper.ForwardChangedListener {
-                val target = adapter ?: return@ForwardChangedListener
-                target.changeCursor(DatabaseHelper.getInstance(context).getForwarding())
+                scope.launch {
+                    entries = loadForwarding(context)
+                    loading = false
+                }
             }
         }
 
@@ -70,6 +74,11 @@ fun ForwardingScreen() {
         onDispose {
             DatabaseHelper.getInstance(context).removeForwardChangedListener(forwardListener)
         }
+    }
+
+    LaunchedEffect(Unit) {
+        entries = loadForwarding(context)
+        loading = false
     }
 
     Column(
@@ -104,39 +113,54 @@ fun ForwardingScreen() {
             }
         }
 
-        AndroidView(
-            factory = { ctx ->
-                ListView(ctx).apply {
-                    val created = AdapterForwarding(ctx, DatabaseHelper.getInstance(ctx).getForwarding())
-                    adapter = created
-                    this.adapter = created
-                    onItemClickListener =
-                        AdapterView.OnItemClickListener { _, view, position, _ ->
-                            val cursor = created.getItem(position) as android.database.Cursor
-                            val protocol = cursor.getInt(cursor.getColumnIndex("protocol"))
-                            val dport = cursor.getInt(cursor.getColumnIndex("dport"))
-                            val raddr = cursor.getString(cursor.getColumnIndex("raddr"))
-                            val rport = cursor.getInt(cursor.getColumnIndex("rport"))
-
-                            val popup = PopupMenu(ctx, view)
-                            popup.inflate(R.menu.forward)
-                            popup.menu.findItem(R.id.menu_port).title =
-                                Util.getProtocolName(protocol, 0, false) + " " + dport + " > " + raddr + "/" + rport
-                            popup.setOnMenuItemClickListener { item ->
-                                if (item.itemId == R.id.menu_delete) {
-                                    DatabaseHelper.getInstance(ctx).deleteForward(protocol, dport)
-                                    ServiceSinkhole.reload("forwarding", ctx, false)
-                                    adapter = AdapterForwarding(ctx, DatabaseHelper.getInstance(ctx).getForwarding())
-                                    this.adapter = adapter
-                                }
-                                false
-                            }
-                            popup.show()
+        if (loading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(entries, key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = Util.getProtocolName(entry.protocol, 0, false) +
+                                    " ${entry.dport} > ${entry.raddr}/${entry.rport}",
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                            Text(
+                                text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
+                        IconButton(
+                            onClick = {
+                                DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
+                                ServiceSinkhole.reload("forwarding", context, false)
+                                scope.launch {
+                                    entries = loadForwarding(context)
+                                    loading = false
+                                }
+                            },
+                        ) {
+                            androidx.compose.material3.Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = stringResource(R.string.menu_delete),
+                            )
+                        }
+                    }
                 }
-            },
-            modifier = Modifier.fillMaxSize(),
-        )
+            }
+        }
     }
 
     if (showDialog) {
@@ -163,6 +187,38 @@ fun ForwardingScreen() {
         )
     }
 }
+
+private data class ForwardingEntry(
+    val protocol: Int,
+    val dport: Int,
+    val raddr: String,
+    val rport: Int,
+    val ruid: Int,
+)
+
+private suspend fun loadForwarding(context: Context): List<ForwardingEntry> =
+    withContext(Dispatchers.IO) {
+        val result = mutableListOf<ForwardingEntry>()
+        DatabaseHelper.getInstance(context).getForwarding().use { cursor ->
+            val colProtocol = cursor.getColumnIndex("protocol")
+            val colDport = cursor.getColumnIndex("dport")
+            val colRaddr = cursor.getColumnIndex("raddr")
+            val colRport = cursor.getColumnIndex("rport")
+            val colRuid = cursor.getColumnIndex("ruid")
+            while (cursor.moveToNext()) {
+                result.add(
+                    ForwardingEntry(
+                        protocol = cursor.getInt(colProtocol),
+                        dport = cursor.getInt(colDport),
+                        raddr = cursor.getString(colRaddr),
+                        rport = cursor.getInt(colRport),
+                        ruid = cursor.getInt(colRuid),
+                    ),
+                )
+            }
+        }
+        result
+    }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

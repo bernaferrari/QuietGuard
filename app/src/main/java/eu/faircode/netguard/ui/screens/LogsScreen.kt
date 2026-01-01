@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,6 +37,7 @@ import eu.faircode.netguard.IAB
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Util
 import eu.faircode.netguard.data.Prefs
+import eu.faircode.netguard.ui.util.StatePlaceholder
 import java.text.SimpleDateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -135,58 +136,70 @@ fun LogsScreen() {
             }
         }
 
-        if (isLoading) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
+        when {
+            isLoading -> {
+                StatePlaceholder(
+                    title = stringResource(R.string.ui_loading),
+                    message = stringResource(R.string.home_logs_hint),
+                    icon = Icons.Default.Inbox,
+                    isLoading = true,
+                )
             }
-        }
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(entries, key = { "${it.time}_${it.uid}_${it.daddr}_${it.dport}" }) { entry ->
-                val allowedColor =
-                    if (entry.allowed > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            entries.isEmpty() -> {
+                StatePlaceholder(
+                    title = stringResource(R.string.ui_empty_logs_title),
+                    message = stringResource(R.string.ui_empty_logs_body),
+                    icon = Icons.Default.Inbox,
+                    actionLabel = stringResource(R.string.menu_refresh),
+                    onAction = { refreshKey += 1 },
+                )
+            }
+            else -> {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                    items(entries, key = { "${it.time}_${it.uid}_${it.daddr}_${it.dport}" }) { entry ->
+                        val allowedColor =
+                            if (entry.allowed > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                         ) {
-                            Text(
-                                text = entry.timeText,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Text(
-                                text = entry.protocolLabel,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        Text(
-                            text = "${entry.daddr}:${entry.dport}",
-                            style = MaterialTheme.typography.titleSmall,
-                            color = if (entry.allowed >= 0) allowedColor else MaterialTheme.colorScheme.onSurface,
-                        )
-                        entry.dname?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                        if (entry.uid > 0) {
-                            Text(
-                                text = Util.getApplicationNames(entry.uid, context).joinToString(", "),
-                                style = MaterialTheme.typography.bodySmall,
-                            )
+                            Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                ) {
+                                    Text(
+                                        text = entry.timeText,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    Text(
+                                        text = entry.protocolLabel,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                Text(
+                                    text = "${entry.daddr}:${entry.dport}",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = if (entry.allowed >= 0) allowedColor else MaterialTheme.colorScheme.onSurface,
+                                )
+                                entry.dname?.let {
+                                    Text(
+                                        text = it,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                if (entry.uid > 0) {
+                                    Text(
+                                        text = Util.getApplicationNames(entry.uid, context).joinToString(", "),
+                                        style = MaterialTheme.typography.bodySmall,
+                                    )
+                                }
+                            }
                         }
                     }
                 }

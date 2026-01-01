@@ -17,11 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -49,6 +49,7 @@ import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
 import eu.faircode.netguard.Widgets
 import eu.faircode.netguard.data.Prefs
+import eu.faircode.netguard.ui.util.StatePlaceholder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -102,26 +103,38 @@ fun AppsScreen() {
             }
         }
 
-        if (isLoading) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(rules, key = { it.uid }) { rule ->
-                RuleCard(
-                    rule = rule,
-                    onToggle = {
-                        persistRule(context, rule, rules)
-                    },
+        when {
+            isLoading -> {
+                StatePlaceholder(
+                    title = stringResource(R.string.ui_loading),
+                    message = stringResource(R.string.home_apps_hint),
+                    icon = Icons.Default.Apps,
+                    isLoading = true,
                 )
+            }
+            rules.isEmpty() -> {
+                StatePlaceholder(
+                    title = stringResource(R.string.ui_empty_apps_title),
+                    message = stringResource(R.string.ui_empty_apps_body),
+                    icon = Icons.Default.Apps,
+                    actionLabel = stringResource(R.string.menu_refresh),
+                    onAction = { refreshKey += 1 },
+                )
+            }
+            else -> {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    items(rules, key = { it.uid }) { rule ->
+                        RuleCard(
+                            rule = rule,
+                            onToggle = {
+                                persistRule(context, rule, rules)
+                            },
+                        )
+                    }
+                }
             }
         }
     }

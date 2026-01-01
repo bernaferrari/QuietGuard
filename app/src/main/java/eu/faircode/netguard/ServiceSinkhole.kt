@@ -906,33 +906,34 @@ class ServiceSinkhole : VpnService() {
             val tv = TypedValue()
             theme.resolveAttribute(R.attr.colorPrimary, tv, true)
             val builder = NotificationCompat.Builder(this@ServiceSinkhole, Notifications.CHANNEL_NOTIFY)
+            val extraLines = buildList {
+                if (topText.isNotBlank()) {
+                    addAll(topText.split("\r\n"))
+                }
+                if (debugText.isNotBlank()) {
+                    add(debugText)
+                }
+            }
+            val headline = extraLines.firstOrNull() ?: statsSummary
+
             builder
                 .setWhen(whenMs)
                 .setSmallIcon(R.drawable.ic_equalizer_white_24dp)
                 .setContentTitle(getString(R.string.notify_traffic_title))
-                .setContentText(statsSummary)
+                .setContentText(headline)
+                .setSubText(statsSummary.takeIf { extraLines.isNotEmpty() })
                 .setContentIntent(pi)
                 .setColor(tv.data)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setLargeIcon(bitmap)
-
-            val style = NotificationCompat.BigPictureStyle()
-                .bigPicture(bitmap)
-                .bigLargeIcon(null as Bitmap?)
-            builder.setStyle(style)
-
-            if (topText.isNotBlank() || debugText.isNotBlank()) {
-                val inbox = NotificationCompat.InboxStyle()
-                    .setSummaryText(statsSummary)
-                if (topText.isNotBlank()) {
-                    topText.split("\r\n").forEach { inbox.addLine(it) }
-                }
-                if (debugText.isNotBlank()) {
-                    inbox.addLine(debugText)
-                }
-                builder.setStyle(inbox)
-            }
+                .setStyle(
+                    NotificationCompat.BigPictureStyle()
+                        .bigPicture(bitmap)
+                        .bigLargeIcon(null as Bitmap?)
+                        .setBigContentTitle(getString(R.string.notify_traffic_title))
+                        .setSummaryText(statsSummary),
+                )
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 builder.setCategory(NotificationCompat.CATEGORY_STATUS)

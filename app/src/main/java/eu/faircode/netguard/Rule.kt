@@ -275,7 +275,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val root = PackageInfo().apply {
                     packageName = "root"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 0
@@ -286,7 +285,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val media = PackageInfo().apply {
                     packageName = "android.media"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 1013 + userId * 100000
@@ -297,7 +295,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val mdr = PackageInfo().apply {
                     packageName = "android.multicast"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 1020 + userId * 100000
@@ -308,7 +305,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val gps = PackageInfo().apply {
                     packageName = "android.gps"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 1021 + userId * 100000
@@ -319,7 +315,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val dns = PackageInfo().apply {
                     packageName = "android.dns"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 1051 + userId * 100000
@@ -330,7 +325,6 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val nobody = PackageInfo().apply {
                     packageName = "nobody"
-                    versionCode = Build.VERSION.SDK_INT
                     versionName = Build.VERSION.RELEASE
                     applicationInfo = ApplicationInfo().apply {
                         uid = 9999

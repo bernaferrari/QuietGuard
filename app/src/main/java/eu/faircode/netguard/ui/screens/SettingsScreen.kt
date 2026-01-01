@@ -17,7 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Forward
+import androidx.compose.material.icons.automirrored.filled.Forward
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.AlertDialog
@@ -361,7 +361,7 @@ fun SettingsScreen(
 
         SettingsSection(title = stringResource(R.string.setting_forwarding)) {
             FilledTonalButton(onClick = onOpenForwarding) {
-                Icon(imageVector = Icons.Default.Forward, contentDescription = null)
+                Icon(imageVector = Icons.AutoMirrored.Filled.Forward, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = stringResource(R.string.setting_forwarding))
             }

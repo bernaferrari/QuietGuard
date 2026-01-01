@@ -255,6 +255,8 @@ class ServiceSinkhole : VpnService() {
                     Log.i(TAG, "Starting listening for call states")
                     val listener =
                         object : PhoneStateListener() {
+                            @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+                            @Deprecated("Deprecated in framework")
                             override fun onCallStateChanged(state: Int, incomingNumber: String?) {
                                 Log.i(TAG, "New call state=$state")
                                 if (prefs.getBoolean("enabled", false)) {
@@ -1047,7 +1049,10 @@ class ServiceSinkhole : VpnService() {
                                 if (ias != null) {
                                     for (ia in ias) {
                                         if (ia.address is Inet4Address) {
-                                            listExclude.add(IPUtil.CIDR(ia.address.hostAddress, 24))
+                                            val host = ia.address.hostAddress
+                                            if (host != null) {
+                                                listExclude.add(IPUtil.CIDR(host, 24))
+                                            }
                                         }
                                     }
                                 }
@@ -1068,17 +1073,23 @@ class ServiceSinkhole : VpnService() {
             if (!filter) {
                 for (dns in getDns(this@ServiceSinkhole)) {
                     if (dns is Inet4Address) {
-                        listExclude.add(IPUtil.CIDR(dns.hostAddress, 32))
+                        val host = dns.hostAddress
+                        if (host != null) {
+                            listExclude.add(IPUtil.CIDR(host, 32))
+                        }
                     }
                 }
 
                 val dnsSpecifier = Util.getPrivateDnsSpecifier(this@ServiceSinkhole)
-                if (!TextUtils.isEmpty(dnsSpecifier)) {
+                if (!dnsSpecifier.isNullOrEmpty()) {
                     try {
                         Log.i(TAG, "Resolving private dns=$dnsSpecifier")
                         for (pdns in InetAddress.getAllByName(dnsSpecifier)) {
                             if (pdns is Inet4Address) {
-                                listExclude.add(IPUtil.CIDR(pdns.hostAddress, 32))
+                                val host = pdns.hostAddress
+                                if (host != null) {
+                                    listExclude.add(IPUtil.CIDR(host, 32))
+                                }
                             }
                         }
                     } catch (ex: Throwable) {
@@ -2119,6 +2130,8 @@ class ServiceSinkhole : VpnService() {
         object : PhoneStateListener() {
             private var lastGeneration: String? = null
 
+            @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+            @Deprecated("Deprecated in framework")
             override fun onDataConnectionStateChanged(state: Int, networkType: Int) {
                 if (state == TelephonyManager.DATA_CONNECTED) {
                     val currentGeneration = Util.getNetworkGeneration(this@ServiceSinkhole)
@@ -3174,7 +3187,8 @@ class ServiceSinkhole : VpnService() {
         }
 
         override fun addRoute(address: InetAddress, prefixLength: Int): Builder {
-            listRoute.add(address.hostAddress + "/" + prefixLength)
+            val host = address.hostAddress ?: return this
+            listRoute.add("$host/$prefixLength")
             super.addRoute(address, prefixLength)
             return this
         }

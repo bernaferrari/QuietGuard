@@ -3,7 +3,7 @@ package eu.faircode.netguard.ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tune
@@ -39,12 +39,12 @@ import eu.faircode.netguard.ui.screens.SettingsScreen
 
 private enum class NavDestination(
     val key: AppNavKey,
-    @StringRes val label: Int,
+    @param:StringRes val label: Int,
     val icon: androidx.compose.ui.graphics.vector.ImageVector,
 ) {
     HomeTab(Home, R.string.app_name, Icons.Default.Security),
     AppsTab(Apps, R.string.menu_firewall, Icons.Default.Tune),
-    LogsTab(Logs, R.string.menu_log, Icons.Default.List),
+    LogsTab(Logs, R.string.menu_log, Icons.AutoMirrored.Filled.List),
     SettingsTab(Settings, R.string.menu_settings, Icons.Default.Settings),
 }
 

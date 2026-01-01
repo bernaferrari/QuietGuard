@@ -16,7 +16,7 @@ import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.LinkProperties
 import android.net.Network
-import android.net.NetworkInfo
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -31,7 +31,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.net.ConnectivityManagerCompat
+import androidx.core.content.pm.PackageInfoCompat
 import eu.faircode.netguard.data.Prefs
 import java.io.BufferedReader
 import java.io.File
@@ -114,11 +114,10 @@ object Util {
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
     fun getSelfVersionCode(context: Context): Int {
         return try {
             val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            pInfo.versionCode
+            PackageInfoCompat.getLongVersionCode(pInfo).toInt()
         } catch (_: PackageManager.NameNotFoundException) {
             -1
         }
@@ -127,24 +126,21 @@ object Util {
     @JvmStatic
     fun isNetworkActive(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        return cm?.activeNetworkInfo != null
+        return cm?.activeNetwork != null
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
     fun isConnected(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager? ?: return false
 
-        val active = cm.activeNetworkInfo
-        if (active != null && active.isConnected) {
+        val activeNetwork = cm.activeNetwork
+        if (activeNetwork != null) {
+            val caps = cm.getNetworkCapabilities(activeNetwork)
+            if (caps != null &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                !caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+            ) {
             return true
-        }
-
-        val networks = cm.allNetworks ?: return false
-        for (network in networks) {
-            val ni = cm.getNetworkInfo(network)
-            if (ni != null && ni.type != ConnectivityManager.TYPE_VPN && ni.isConnected) {
-                return true
             }
         }
 
@@ -152,52 +148,65 @@ object Util {
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
     fun isWifiActive(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        val ni = cm?.activeNetworkInfo
-        return ni != null && ni.type == ConnectivityManager.TYPE_WIFI
+        val active = cm?.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(active) ?: return false
+        return caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
 
     @JvmStatic
     fun isMeteredNetwork(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        return cm != null && ConnectivityManagerCompat.isActiveNetworkMetered(cm)
+        return cm?.isActiveNetworkMetered == true
     }
 
     @JvmStatic
     fun getWifiSSID(context: Context): String {
         val wm = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
-        val ssid = wm?.connectionInfo?.ssid
-        return ssid ?: "NULL"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+            val active = cm?.activeNetwork
+            val caps = if (active != null) cm.getNetworkCapabilities(active) else null
+            val info = caps?.transportInfo as? android.net.wifi.WifiInfo
+            val ssid = info?.ssid?.trim('"')
+            if (!ssid.isNullOrBlank()) {
+                return ssid
+            }
+        }
+
+        @Suppress("DEPRECATION")
+        val legacy = wm?.connectionInfo?.ssid
+        return legacy?.trim('"') ?: "NULL"
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
     fun getNetworkType(context: Context): Int {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        val ni = cm?.activeNetworkInfo
-        return ni?.subtype ?: TelephonyManager.NETWORK_TYPE_UNKNOWN
-    }
-
-    @JvmStatic
-    @Suppress("DEPRECATION")
-    fun getNetworkGeneration(context: Context): String? {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val ni = cm.activeNetworkInfo
-        return if (ni != null && ni.type == ConnectivityManager.TYPE_MOBILE) {
-            getNetworkGeneration(ni.subtype)
+        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        val active = cm?.activeNetwork
+        val caps = if (active != null) cm.getNetworkCapabilities(active) else null
+        val isCellular = caps?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
+        return if (isCellular) {
+            tm?.dataNetworkType ?: TelephonyManager.NETWORK_TYPE_UNKNOWN
         } else {
-            null
+            TelephonyManager.NETWORK_TYPE_UNKNOWN
         }
     }
 
     @JvmStatic
-    @Suppress("DEPRECATION")
+    fun getNetworkGeneration(context: Context): String? {
+        val type = getNetworkType(context)
+        return if (type == TelephonyManager.NETWORK_TYPE_UNKNOWN) null else getNetworkGeneration(type)
+    }
+
+    @JvmStatic
     fun isRoaming(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        val ni = cm?.activeNetworkInfo
-        return ni != null && ni.isRoaming
+        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        if (tm != null) {
+            return tm.isNetworkRoaming
+        }
+        return false
     }
 
     @JvmStatic
@@ -246,6 +255,7 @@ object Util {
     }
 
     @JvmStatic
+    @Suppress("DEPRECATION")
     fun getNetworkGeneration(networkType: Int): String {
         return when (networkType) {
             TelephonyManager.NETWORK_TYPE_1xRTT,
@@ -295,8 +305,11 @@ object Util {
                 val dns = lp?.dnsServers
                 if (dns != null) {
                     for (address in dns) {
-                        Log.i(TAG, "DNS from LP: " + address.hostAddress)
-                        listDns.add(address.hostAddress.split("%")[0])
+                        val host = address.hostAddress
+                        if (host != null) {
+                            Log.i(TAG, "DNS from LP: $host")
+                            listDns.add(host.split("%")[0])
+                        }
                     }
                 }
             }
@@ -322,11 +335,7 @@ object Util {
     @JvmStatic
     fun isInteractive(context: Context): Boolean {
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager?
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
-            pm != null && pm.isScreenOn
-        } else {
-            pm != null && pm.isInteractive
-        }
+        return pm?.isInteractive == true
     }
 
     @JvmStatic
@@ -465,8 +474,15 @@ object Util {
             return true
         }
         return try {
-            "com.android.vending" ==
-                context.packageManager.getInstallerPackageName(context.packageName)
+            val pm = context.packageManager
+            val installer =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    pm.getInstallSourceInfo(context.packageName).installingPackageName
+                } else {
+                    @Suppress("DEPRECATION")
+                    pm.getInstallerPackageName(context.packageName)
+                }
+            "com.android.vending" == installer
         } catch (ex: Throwable) {
             Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
             false
@@ -551,7 +567,12 @@ object Util {
     private fun setTaskColor(context: Context) {
         val tv = TypedValue()
         context.theme.resolveAttribute(R.attr.colorPrimary, tv, true)
-        (context as Activity).setTaskDescription(ActivityManager.TaskDescription(null, null, tv.data))
+        val activity = context as Activity
+        val description =
+            ActivityManager.TaskDescription.Builder()
+                .setPrimaryColor(tv.data)
+                .build()
+        activity.setTaskDescription(description)
     }
 
     @JvmStatic
@@ -646,10 +667,10 @@ object Util {
         AlertDialog.Builder(context)
             .setView(view)
             .setCancelable(true)
-            .setPositiveButton(android.R.string.yes) { _, _ ->
+            .setPositiveButton(R.string.menu_ok) { _, _ ->
                 listener.onSure()
             }
-            .setNegativeButton(android.R.string.no) { _, _ ->
+            .setNegativeButton(R.string.menu_cancel) { _, _ ->
                 // Do nothing
             }
             .create()
@@ -705,6 +726,7 @@ object Util {
     }
 
     @JvmStatic
+    @Suppress("DEPRECATION")
     fun logBundle(data: Bundle?) {
         if (data != null) {
             val keys = data.keySet()
@@ -838,48 +860,43 @@ object Util {
     fun getNetworkInfo(context: Context): String {
         val sb = StringBuilder()
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val active = cm.activeNetwork
 
-        val ani = cm.activeNetworkInfo
-        val listNI = mutableListOf<NetworkInfo>()
+        for (network in cm.allNetworks) {
+            val caps = cm.getNetworkCapabilities(network) ?: continue
+            val lp = cm.getLinkProperties(network)
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            listNI.addAll(cm.allNetworkInfo)
-        } else {
-            for (network in cm.allNetworks) {
-                val ni = cm.getNetworkInfo(network)
-                if (ni != null) {
-                    listNI.add(ni)
-                }
-            }
-        }
+            val transports =
+                buildList {
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) add("WIFI")
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) add("CELL")
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) add("ETH")
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) add("VPN")
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH)) add("BT")
+                }.joinToString("+")
 
-        for (ni in listNI) {
-            sb.append(ni.typeName)
-                .append('/')
-                .append(ni.subtypeName)
+            val internet = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            val validated = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            val metered = !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+            val roaming = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING).not()
+
+            sb.append(if (transports.isBlank()) "UNKNOWN" else transports)
                 .append(' ')
-                .append(ni.detailedState)
-                .append(if (TextUtils.isEmpty(ni.extraInfo)) "" else " " + ni.extraInfo)
-                .append(
-                    if (ni.type == ConnectivityManager.TYPE_MOBILE) {
-                        " " + getNetworkGeneration(ni.subtype)
-                    } else {
-                        ""
-                    },
-                )
-                .append(if (ni.isRoaming) " R" else "")
-                .append(
-                    if (
-                        ani != null &&
-                            ni.type == ani.type &&
-                            ni.subtype == ani.subtype
-                    ) {
-                        " *"
-                    } else {
-                        ""
-                    },
-                )
-                .append("\r\n")
+                .append(if (internet) "I" else "-")
+                .append(if (validated) "V" else "-")
+                .append(if (metered) " M" else "")
+                .append(if (roaming) " R" else "")
+                .append(if (network == active) " *" else "")
+
+            if (lp?.interfaceName != null) {
+                sb.append(' ').append(lp.interfaceName)
+            }
+            if (!lp?.linkAddresses.isNullOrEmpty()) {
+                sb.append(" [")
+                sb.append(lp?.linkAddresses?.joinToString { it.address.hostAddress ?: "" })
+                sb.append("]")
+            }
+            sb.append("\r\n")
         }
 
         try {

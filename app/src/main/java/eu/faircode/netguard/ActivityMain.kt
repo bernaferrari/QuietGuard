@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
 import eu.faircode.netguard.ui.Home
 import eu.faircode.netguard.ui.AppNavigation
-import eu.faircode.netguard.ui.theme.NetGuardTheme
+import eu.faircode.netguard.ui.theme.NetGuardThemeFromPrefs
 import eu.faircode.netguard.ui.util.InfoScreen
 import eu.faircode.netguard.ui.main.MainViewModel
 
@@ -32,20 +32,20 @@ class ActivityMain : ComponentActivity() {
         pendingRoute.value = intent.getStringExtra(EXTRA_ROUTE)
 
         setContent {
-            NetGuardTheme {
+            NetGuardThemeFromPrefs {
                 if (isUnsupported) {
                     InfoScreen(
                         title = stringResource(R.string.app_name),
                         body = stringResource(R.string.app_android),
                     )
-                    return@NetGuardTheme
+                    return@NetGuardThemeFromPrefs
                 }
                 if (isXposed) {
                     InfoScreen(
                         title = stringResource(R.string.app_name),
                         body = stringResource(R.string.app_xposed),
                     )
-                    return@NetGuardTheme
+                    return@NetGuardThemeFromPrefs
                 }
 
                 val vpnLauncher =

@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import eu.faircode.netguard.ui.theme.NetGuardTheme
+import eu.faircode.netguard.ui.theme.NetGuardThemeFromPrefs
 import java.net.InetAddress
 
 class ActivityForwardApproval : ComponentActivity() {
@@ -53,7 +53,7 @@ class ActivityForwardApproval : ComponentActivity() {
             }
 
         setContent {
-            NetGuardTheme {
+            NetGuardThemeFromPrefs {
                 ForwardApprovalContent(
                     text =
                         if (ACTION_START_PORT_FORWARD == intent.action) {

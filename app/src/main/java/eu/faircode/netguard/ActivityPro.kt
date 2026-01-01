@@ -44,7 +44,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
-import eu.faircode.netguard.ui.theme.NetGuardTheme
+import eu.faircode.netguard.ui.theme.NetGuardThemeFromPrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -69,11 +69,10 @@ class ActivityPro : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "Create")
-        Util.setTheme(this)
         super.onCreate(savedInstanceState)
 
         setContent {
-            NetGuardTheme {
+            NetGuardThemeFromPrefs {
                 ProContent(
                     availability = availability,
                     refreshKey = refreshKey,

@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package eu.faircode.netguard
 
 import android.annotation.TargetApi
@@ -26,7 +24,6 @@ import android.net.ConnectivityManager
 import android.net.LinkProperties
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.net.TrafficStats
 import android.net.Uri
@@ -41,7 +38,7 @@ import android.os.PowerManager
 import android.os.Process
 import android.os.SystemClock
 import android.provider.Settings
-import android.telephony.PhoneStateListener
+import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.text.Spannable
 import android.text.SpannableString
@@ -55,7 +52,6 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import eu.faircode.netguard.data.Prefs
 import java.io.BufferedReader
 import java.io.File
@@ -88,14 +84,16 @@ class ServiceSinkhole : VpnService() {
     private var registeredUser = false
     private var registeredIdleState = false
     private var registeredApState = false
-    private var registeredConnectivityChanged = false
     private var registeredPackageChanged = false
 
-    private var phoneState = false
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
     private var registeredInteractiveState = false
-    private var callStateListener: PhoneStateListener? = null
+    private var legacyCallStateToken: Any? = null
+    private var legacyDataConnectionToken: Any? = null
+    private var callStateCallback: TelephonyCallback? = null
+    private var dataConnectionCallback: TelephonyCallback? = null
+    private var lastGeneration: String? = null
 
     private var state = State.none
     private var userForeground = true
@@ -156,9 +154,9 @@ class ServiceSinkhole : VpnService() {
         var queue = 0
 
         private fun reportQueueSize() {
-            val ruleset = Intent(ActivityMain.ACTION_QUEUE_CHANGED)
+            val ruleset = Intent(ActivityMain.ACTION_QUEUE_CHANGED).setPackage(packageName)
             ruleset.putExtra(ActivityMain.EXTRA_SIZE, queue)
-            LocalBroadcastManager.getInstance(this@ServiceSinkhole).sendBroadcast(ruleset)
+            sendBroadcast(ruleset)
         }
 
         fun queue(intent: Intent) {
@@ -166,7 +164,7 @@ class ServiceSinkhole : VpnService() {
                 queue++
                 reportQueueSize()
             }
-            val cmd = intent.getSerializableExtra(EXTRA_COMMAND) as Command
+            val cmd = getCommandExtra(intent) ?: return
             val msg = obtainMessage()
             msg.obj = intent
             msg.what = cmd.ordinal
@@ -202,7 +200,7 @@ class ServiceSinkhole : VpnService() {
         private fun handleIntent(intent: Intent) {
             val prefs = Prefs
 
-            val cmd = intent.getSerializableExtra(EXTRA_COMMAND) as Command
+            val cmd = getCommandExtra(intent) ?: return
             val reason = intent.getStringExtra(EXTRA_REASON)
             Log.i(
                 TAG,
@@ -251,31 +249,14 @@ class ServiceSinkhole : VpnService() {
 
             val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
             if (prefs.getBoolean("disable_on_call", false)) {
-                if (tm != null && callStateListener == null && Util.hasPhoneStatePermission(this@ServiceSinkhole)) {
+                if (tm != null) {
                     Log.i(TAG, "Starting listening for call states")
-                    val listener =
-                        object : PhoneStateListener() {
-                            @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-                            @Deprecated("Deprecated in framework")
-                            override fun onCallStateChanged(state: Int, incomingNumber: String?) {
-                                Log.i(TAG, "New call state=$state")
-                                if (prefs.getBoolean("enabled", false)) {
-                                    if (state == TelephonyManager.CALL_STATE_IDLE) {
-                                        start("call state", this@ServiceSinkhole)
-                                    } else {
-                                        stop("call state", this@ServiceSinkhole, true)
-                                    }
-                                }
-                            }
-                        }
-                    tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
-                    callStateListener = listener
+                    registerCallStateListener(tm)
                 }
             } else {
-                if (tm != null && callStateListener != null) {
+                if (tm != null) {
                     Log.i(TAG, "Stopping listening for call states")
-                    tm.listen(callStateListener, PhoneStateListener.LISTEN_NONE)
-                    callStateListener = null
+                    unregisterCallStateListener(tm)
                 }
             }
 
@@ -312,10 +293,10 @@ class ServiceSinkhole : VpnService() {
                 }
 
                 if (cmd == Command.start || cmd == Command.reload || cmd == Command.stop) {
-                    val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED)
+                    val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED).setPackage(packageName)
                     ruleset.putExtra(ActivityMain.EXTRA_CONNECTED, cmd != Command.stop && lastConnected)
                     ruleset.putExtra(ActivityMain.EXTRA_METERED, cmd != Command.stop && lastMetered)
-                    LocalBroadcastManager.getInstance(this@ServiceSinkhole).sendBroadcast(ruleset)
+                    sendBroadcast(ruleset)
 
                     WidgetMain.updateWidgets(this@ServiceSinkhole)
                 }
@@ -326,7 +307,7 @@ class ServiceSinkhole : VpnService() {
                         !prefs.getBoolean("enabled", false) &&
                         !prefs.getBoolean("show_stats", false)
                 ) {
-                    stopForeground(true)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
                 }
 
                 System.gc()
@@ -359,7 +340,7 @@ class ServiceSinkhole : VpnService() {
             if (vpn == null) {
                 if (state != State.none) {
                     Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(true)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
                 }
                 startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
                 state = State.enforcing
@@ -405,7 +386,7 @@ class ServiceSinkhole : VpnService() {
             if (state != State.enforcing) {
                 if (state != State.none) {
                     Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(true)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
                 }
                 startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
                 state = State.enforcing
@@ -499,7 +480,7 @@ class ServiceSinkhole : VpnService() {
                 lastBlocked = -1
                 lastHosts = -1
 
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
 
                 val prefs = Prefs
                 if (prefs.getBoolean("show_stats", false)) {
@@ -744,7 +725,7 @@ class ServiceSinkhole : VpnService() {
             removeMessages(MSG_STATS_UPDATE)
             if (state == State.stats) {
                 Log.d(TAG, "Stop foreground state=$state")
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
                 state = State.none
             } else {
                 NotificationManagerCompat.from(this@ServiceSinkhole).cancel(NOTIFY_TRAFFIC)
@@ -938,7 +919,7 @@ class ServiceSinkhole : VpnService() {
             if (state == State.none || state == State.waiting) {
                 if (state != State.none) {
                     Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(true)
+                    stopForeground(STOP_FOREGROUND_REMOVE)
                 }
                 startForeground(NOTIFY_TRAFFIC, builder.build())
                 state = State.stats
@@ -955,15 +936,6 @@ class ServiceSinkhole : VpnService() {
     private fun startVPN(builder: Builder): ParcelFileDescriptor? {
         return try {
             val pfd = builder.establish()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && false) {
-                val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-                val active = cm?.activeNetwork
-                if (active != null) {
-                    Log.i(TAG, "Setting underlying network=$active " + cm.getNetworkInfo(active))
-                    setUnderlyingNetworks(arrayOf(active))
-                }
-            }
 
             pfd
         } catch (ex: SecurityException) {
@@ -2011,26 +1983,6 @@ class ServiceSinkhole : VpnService() {
             }
         }
 
-    private val connectivityChangedReceiver: BroadcastReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    val networkType =
-                        intent.getIntExtra(
-                            ConnectivityManager.EXTRA_NETWORK_TYPE,
-                            ConnectivityManager.TYPE_DUMMY,
-                        )
-                    if (networkType == ConnectivityManager.TYPE_VPN) {
-                        return
-                    }
-                }
-
-                Log.i(TAG, "Received $intent")
-                Util.logExtras(intent)
-                reload("connectivity changed", this@ServiceSinkhole, false)
-            }
-        }
-
     private val networkMonitorCallback: ConnectivityManager.NetworkCallback =
         object : ConnectivityManager.NetworkCallback() {
             private val tag = "NetGuard.Monitor"
@@ -2038,31 +1990,24 @@ class ServiceSinkhole : VpnService() {
 
             override fun onAvailable(network: Network) {
                 val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val ni = cm.getNetworkInfo(network)
                 val capabilities = cm.getNetworkCapabilities(network)
-                Log.i(tag, "Available network $network $ni")
+                Log.i(tag, "Available network $network")
                 Log.i(tag, "Capabilities=$capabilities")
-                checkConnectivity(network, ni, capabilities)
+                checkConnectivity(network, capabilities)
             }
 
             override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
-                val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val ni = cm.getNetworkInfo(network)
-                Log.i(tag, "New capabilities network $network $ni")
+                Log.i(tag, "New capabilities network $network")
                 Log.i(tag, "Capabilities=$capabilities")
-                checkConnectivity(network, ni, capabilities)
+                checkConnectivity(network, capabilities)
             }
 
             override fun onLosing(network: Network, maxMsToLive: Int) {
-                val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val ni = cm.getNetworkInfo(network)
-                Log.i(tag, "Losing network $network within $maxMsToLive ms $ni")
+                Log.i(tag, "Losing network $network within $maxMsToLive ms")
             }
 
             override fun onLost(network: Network) {
-                val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val ni = cm.getNetworkInfo(network)
-                Log.i(tag, "Lost network $network $ni")
+                Log.i(tag, "Lost network $network")
 
                 synchronized(validated) { validated.remove(network) }
             }
@@ -2073,46 +2018,42 @@ class ServiceSinkhole : VpnService() {
 
             private fun checkConnectivity(
                 network: Network,
-                ni: NetworkInfo?,
                 capabilities: NetworkCapabilities?,
             ) {
                 if (
                     isActiveNetwork(network) &&
-                        ni != null &&
                         capabilities != null &&
-                        ni.detailedState != NetworkInfo.DetailedState.SUSPENDED &&
-                        ni.detailedState != NetworkInfo.DetailedState.BLOCKED &&
-                        ni.detailedState != NetworkInfo.DetailedState.DISCONNECTED &&
                         capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN) &&
+                        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
                         !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
                 ) {
                     synchronized(validated) {
                         if (validated.containsKey(network) &&
                             (validated[network] ?: 0L) + 20 * 1000 > Date().time
                         ) {
-                            Log.i(tag, "Already validated $network $ni")
+                            Log.i(tag, "Already validated $network")
                             return
                         }
                     }
 
                     val prefs = Prefs
                     val host = prefs.getString("validate", "www.google.com") ?: "www.google.com"
-                    Log.i(tag, "Validating $network $ni host=$host")
+                    Log.i(tag, "Validating $network host=$host")
 
                     var socket: Socket? = null
                     try {
                         socket = network.socketFactory.createSocket()
                         socket.connect(InetSocketAddress(host, 443), 10000)
-                        Log.i(tag, "Validated $network $ni host=$host")
+                        Log.i(tag, "Validated $network host=$host")
                         synchronized(validated) { validated[network] = Date().time }
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                             cm.reportNetworkConnectivity(network, true)
-                            Log.i(tag, "Reported $network $ni")
+                            Log.i(tag, "Reported $network")
                         }
                     } catch (ex: IOException) {
                         Log.e(tag, ex.toString())
-                        Log.i(tag, "No connectivity $network $ni")
+                        Log.i(tag, "No connectivity $network")
                     } finally {
                         if (socket != null) {
                             try {
@@ -2126,33 +2067,95 @@ class ServiceSinkhole : VpnService() {
             }
         }
 
-    private val phoneStateListener: PhoneStateListener =
-        object : PhoneStateListener() {
-            private var lastGeneration: String? = null
+    private fun handleDataConnectionStateChanged(state: Int) {
+        if (state == TelephonyManager.DATA_CONNECTED) {
+            val currentGeneration = Util.getNetworkGeneration(this)
+            Log.i(TAG, "Data connected generation=$currentGeneration")
 
-            @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-            @Deprecated("Deprecated in framework")
-            override fun onDataConnectionStateChanged(state: Int, networkType: Int) {
-                if (state == TelephonyManager.DATA_CONNECTED) {
-                    val currentGeneration = Util.getNetworkGeneration(this@ServiceSinkhole)
-                    Log.i(TAG, "Data connected generation=$currentGeneration")
+            if (lastGeneration == null || lastGeneration != currentGeneration) {
+                Log.i(TAG, "New network generation=$currentGeneration")
+                lastGeneration = currentGeneration
 
-                    if (lastGeneration == null || lastGeneration != currentGeneration) {
-                        Log.i(TAG, "New network generation=$currentGeneration")
-                        lastGeneration = currentGeneration
-
-                        val prefs = Prefs
-                        if (
-                            prefs.getBoolean("unmetered_2g", false) ||
-                                prefs.getBoolean("unmetered_3g", false) ||
-                                prefs.getBoolean("unmetered_4g", false)
-                        ) {
-                            reload("data connection state changed", this@ServiceSinkhole, false)
-                        }
-                    }
+                val prefs = Prefs
+                if (
+                    prefs.getBoolean("unmetered_2g", false) ||
+                        prefs.getBoolean("unmetered_3g", false) ||
+                        prefs.getBoolean("unmetered_4g", false)
+                ) {
+                    reload("data connection state changed", this, false)
                 }
             }
         }
+    }
+
+    private fun handleCallStateChanged(state: Int) {
+        Log.i(TAG, "New call state=$state")
+        if (Prefs.getBoolean("enabled", false)) {
+            if (state == TelephonyManager.CALL_STATE_IDLE) {
+                start("call state", this)
+            } else {
+                stop("call state", this, true)
+            }
+        }
+    }
+
+    private fun registerCallStateListener(tm: TelephonyManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (callStateCallback == null) {
+                val callback =
+                    object : TelephonyCallback(), TelephonyCallback.CallStateListener {
+                        override fun onCallStateChanged(state: Int) {
+                            handleCallStateChanged(state)
+                        }
+                    }
+                tm.registerTelephonyCallback(ContextCompat.getMainExecutor(this), callback)
+                callStateCallback = callback
+            }
+        } else if (legacyCallStateToken == null && Util.hasPhoneStatePermission(this)) {
+            legacyCallStateToken = LegacyTelephony.registerCallState(tm) { state ->
+                handleCallStateChanged(state)
+            }
+        }
+    }
+
+    private fun unregisterCallStateListener(tm: TelephonyManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            callStateCallback?.let { tm.unregisterTelephonyCallback(it) }
+            callStateCallback = null
+        } else if (legacyCallStateToken != null) {
+            LegacyTelephony.unregisterCallState(tm, legacyCallStateToken)
+            legacyCallStateToken = null
+        }
+    }
+
+    private fun registerDataConnectionListener(tm: TelephonyManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (dataConnectionCallback == null) {
+                val callback =
+                    object : TelephonyCallback(), TelephonyCallback.DataConnectionStateListener {
+                        override fun onDataConnectionStateChanged(state: Int, networkType: Int) {
+                            handleDataConnectionStateChanged(state)
+                        }
+                    }
+                tm.registerTelephonyCallback(ContextCompat.getMainExecutor(this), callback)
+                dataConnectionCallback = callback
+            }
+        } else if (legacyDataConnectionToken == null) {
+            legacyDataConnectionToken = LegacyTelephony.registerDataConnection(tm) { state ->
+                handleDataConnectionStateChanged(state)
+            }
+        }
+    }
+
+    private fun unregisterDataConnectionListener(tm: TelephonyManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            dataConnectionCallback?.let { tm.unregisterTelephonyCallback(it) }
+            dataConnectionCallback = null
+        } else if (legacyDataConnectionToken != null) {
+            LegacyTelephony.unregisterDataConnection(tm, legacyDataConnectionToken)
+            legacyDataConnectionToken = null
+        }
+    }
 
     private val packageChangedReceiver: BroadcastReceiver =
         object : BroadcastReceiver() {
@@ -2395,16 +2398,12 @@ class ServiceSinkhole : VpnService() {
         ContextCompat.registerReceiver(this, packageChangedReceiver, ifPackage, ContextCompat.RECEIVER_NOT_EXPORTED)
         registeredPackageChanged = true
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                listenNetworkChanges()
-            } catch (ex: Throwable) {
-                Log.w(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                listenConnectivityChanges()
-            }
-        } else {
-            listenConnectivityChanges()
+        try {
+            listenNetworkChanges()
+        } catch (ex: Throwable) {
+            Log.w(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
         }
+        listenConnectivityChanges()
 
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         cm.registerNetworkCallback(
@@ -2538,56 +2537,37 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun listenConnectivityChanges() {
-        Log.i(TAG, "Starting listening to connectivity changes")
-        val ifConnectivity = IntentFilter()
-        ifConnectivity.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        ContextCompat.registerReceiver(this, connectivityChangedReceiver, ifConnectivity, ContextCompat.RECEIVER_NOT_EXPORTED)
-        registeredConnectivityChanged = true
-
         Log.i(TAG, "Starting listening to service state changes")
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
         if (tm != null) {
-            tm.listen(phoneStateListener, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE)
-            phoneState = true
+            registerDataConnectionListener(tm)
         }
     }
 
     private fun getActiveNetwork(): Network? {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager? ?: return null
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val active = cm.activeNetwork ?: return null
-            val caps = cm.getNetworkCapabilities(active)
-            if (caps != null && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)) {
-                return active
-            } else {
-                Log.w(TAG, "getActiveNetwork: active network is VPN")
-            }
+        val active = cm.activeNetwork ?: return null
+        val caps = cm.getNetworkCapabilities(active)
+        return if (caps != null && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)) {
+            active
+        } else {
+            Log.w(TAG, "getActiveNetwork: active network is VPN")
+            null
         }
-
-        val ani = cm.activeNetworkInfo ?: return null
-
-        val networks = cm.allNetworks
-        for (network in networks) {
-            val caps = cm.getNetworkCapabilities(network)
-            Log.i(TAG, "getActiveNetwork: network=$network caps=$caps")
-            if (caps == null || !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)) {
-                continue
-            }
-
-            val ni = cm.getNetworkInfo(network) ?: continue
-            if (ni.type == ani.type && ni.subtype == ani.subtype) {
-                Log.i(TAG, "getActiveNetwork: returning network=$network")
-                return network
-            }
-        }
-
-        Log.i(TAG, "getActiveNetwork: no active network found")
-        return null
     }
 
     private fun isActiveNetwork(network: Network?): Boolean {
         return network != null && network == getActiveNetwork()
+    }
+
+    private fun getCommandExtra(intent: Intent): Command? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(EXTRA_COMMAND, Command::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getSerializableExtra(EXTRA_COMMAND) as? Command
+        }
     }
 
     private fun onPreferenceChanged(name: String?) {
@@ -2596,7 +2576,7 @@ class ServiceSinkhole : VpnService() {
             Util.setTheme(this)
             if (state != State.none) {
                 Log.d(TAG, "Stop foreground state=$state")
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
             }
             if (state == State.enforcing) {
                 startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
@@ -2625,7 +2605,7 @@ class ServiceSinkhole : VpnService() {
         var actualIntent = intent
 
         if (actualIntent != null && actualIntent.hasExtra(EXTRA_COMMAND) &&
-            actualIntent.getSerializableExtra(EXTRA_COMMAND) == Command.set
+            getCommandExtra(actualIntent) == Command.set
         ) {
             set(actualIntent)
             return START_STICKY
@@ -2648,10 +2628,10 @@ class ServiceSinkhole : VpnService() {
             actualIntent.putExtra(EXTRA_COMMAND, Command.watchdog)
         }
 
-        var cmd = actualIntent.getSerializableExtra(EXTRA_COMMAND) as? Command
+        var cmd = getCommandExtra(actualIntent)
         if (cmd == null) {
             actualIntent.putExtra(EXTRA_COMMAND, if (enabled) Command.start else Command.stop)
-            cmd = actualIntent.getSerializableExtra(EXTRA_COMMAND) as Command
+            cmd = getCommandExtra(actualIntent) ?: Command.stop
         }
         val reason = actualIntent.getStringExtra(EXTRA_REASON)
         Log.i(
@@ -2688,8 +2668,8 @@ class ServiceSinkhole : VpnService() {
 
         notifyNewApplication(uid, false)
 
-        val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED)
-        LocalBroadcastManager.getInstance(this@ServiceSinkhole).sendBroadcast(ruleset)
+        val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED).setPackage(packageName)
+        sendBroadcast(ruleset)
     }
 
     override fun onRevoke() {
@@ -2719,11 +2699,8 @@ class ServiceSinkhole : VpnService() {
                 unregisterReceiver(interactiveStateReceiver)
                 registeredInteractiveState = false
             }
-            if (callStateListener != null) {
-                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                tm.listen(callStateListener, PhoneStateListener.LISTEN_NONE)
-                callStateListener = null
-            }
+            val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            unregisterCallStateListener(tm)
 
             if (registeredUser) {
                 unregisterReceiver(userReceiver)
@@ -2746,19 +2723,10 @@ class ServiceSinkhole : VpnService() {
                 unlistenNetworkChanges()
                 networkCallback = null
             }
-            if (registeredConnectivityChanged) {
-                unregisterReceiver(connectivityChangedReceiver)
-                registeredConnectivityChanged = false
-            }
-
             val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             cm.unregisterNetworkCallback(networkMonitorCallback)
 
-            if (phoneState) {
-                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                tm.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE)
-                phoneState = false
-            }
+            unregisterDataConnectionListener(tm)
 
             try {
                 if (vpn != null) {
@@ -3154,7 +3122,7 @@ class ServiceSinkhole : VpnService() {
 
     private inner class Builder : VpnService.Builder() {
         private val activeNetwork: Network?
-        private val networkInfo: NetworkInfo?
+        private val activeTransports: Set<Int>
         private var mtu: Int = 0
         private val listAddress = ArrayList<String>()
         private val listRoute = ArrayList<String>()
@@ -3165,7 +3133,16 @@ class ServiceSinkhole : VpnService() {
         init {
             val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             activeNetwork = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) null else cm.activeNetwork
-            networkInfo = cm.activeNetworkInfo
+            val caps = if (activeNetwork != null) cm.getNetworkCapabilities(activeNetwork) else null
+            activeTransports =
+                buildSet {
+                    if (caps == null) return@buildSet
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) add(NetworkCapabilities.TRANSPORT_WIFI)
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) add(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) add(NetworkCapabilities.TRANSPORT_ETHERNET)
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) add(NetworkCapabilities.TRANSPORT_VPN)
+                    if (caps.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH)) add(NetworkCapabilities.TRANSPORT_BLUETOOTH)
+                }
         }
 
         override fun setMtu(mtu: Int): VpnService.Builder {
@@ -3217,7 +3194,7 @@ class ServiceSinkhole : VpnService() {
 
             if (!Objects.equals(activeNetwork, otherBuilder.activeNetwork)) return false
 
-            if (networkInfo == null || otherBuilder.networkInfo == null || networkInfo.type != otherBuilder.networkInfo.type) {
+            if (activeTransports != otherBuilder.activeTransports) {
                 return false
             }
 

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
 import eu.faircode.netguard.data.Prefs
 import java.util.Date
@@ -25,8 +26,14 @@ class WidgetAdmin : ReceiverAutostart() {
             am.cancel(pi)
         }
 
-        val vs = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (vs.hasVibrator()) {
+        val vs =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                context.getSystemService(VibratorManager::class.java)?.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
+        if (vs != null && vs.hasVibrator()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vs.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {

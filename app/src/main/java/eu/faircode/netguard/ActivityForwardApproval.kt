@@ -116,7 +116,7 @@ private fun ForwardApprovalContent(
         Text(text = text, style = MaterialTheme.typography.bodyLarge)
         Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
             TextButton(onClick = onCancel) {
-                Text(text = stringResource(android.R.string.cancel))
+                Text(text = stringResource(R.string.menu_cancel))
             }
             Spacer(modifier = Modifier.width(8.dp))
             FilledTonalButton(onClick = onApprove) {

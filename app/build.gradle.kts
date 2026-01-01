@@ -160,6 +160,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.google.material)
+    implementation(libs.materialkolor)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.glide) {

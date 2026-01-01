@@ -48,7 +48,6 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.util.Pair
 import android.util.TypedValue
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -733,7 +732,6 @@ class ServiceSinkhole : VpnService() {
         }
 
         private fun updateStats() {
-            val remoteViews = RemoteViews(packageName, R.layout.traffic)
             val prefs = Prefs
             val frequency = prefs.getString("stats_frequency", "1000")?.toLongOrNull() ?: 1000
             val samples = prefs.getString("stats_samples", "90")?.toLongOrNull() ?: 90
@@ -771,6 +769,7 @@ class ServiceSinkhole : VpnService() {
                 grx.add(rxsec)
             }
 
+            var topText = ""
             if (showTop) {
                 if (mapUidBytes.size == 0) {
                     for (ainfo in packageManager.getInstalledApplications(0)) {
@@ -809,8 +808,8 @@ class ServiceSinkhole : VpnService() {
                     }
                     if (sb.isNotEmpty()) {
                         sb.setLength(sb.length - 2)
+                        topText = sb.toString()
                     }
-                    remoteViews.setTextViewText(R.id.tvTop, sb.toString())
                 }
             }
 
@@ -868,33 +867,38 @@ class ServiceSinkhole : VpnService() {
             paint.color = ContextCompat.getColor(this@ServiceSinkhole, R.color.colorReceive)
             canvas.drawPath(prx, paint)
 
-            remoteViews.setImageViewBitmap(R.id.ivTraffic, bitmap)
-            if (txsec < 1000 * 1000) {
-                remoteViews.setTextViewText(R.id.tvTx, getString(R.string.msg_kbsec, txsec / 1000))
-            } else {
-                remoteViews.setTextViewText(R.id.tvTx, getString(R.string.msg_mbsec, txsec / 1000 / 1000))
-            }
-
-            if (rxsec < 1000 * 1000) {
-                remoteViews.setTextViewText(R.id.tvRx, getString(R.string.msg_kbsec, rxsec / 1000))
-            } else {
-                remoteViews.setTextViewText(R.id.tvRx, getString(R.string.msg_mbsec, rxsec / 1000 / 1000))
-            }
-
-            if (max < 1000 * 1000) {
-                remoteViews.setTextViewText(R.id.tvMax, getString(R.string.msg_kbsec, max / 2 / 1000))
-            } else {
-                remoteViews.setTextViewText(R.id.tvMax, getString(R.string.msg_mbsec, max / 2 / 1000 / 1000))
-            }
-
-            if (BuildConfig.DEBUG) {
-                val count = jni_get_stats(jni_context)
-                remoteViews.setTextViewText(R.id.tvSessions, count[0].toString() + "/" + count[1] + "/" + count[2])
-                remoteViews.setTextViewText(R.id.tvFiles, count[3].toString() + "/" + count[4])
-            } else {
-                remoteViews.setTextViewText(R.id.tvSessions, "")
-                remoteViews.setTextViewText(R.id.tvFiles, "")
-            }
+            val txText =
+                if (txsec < 1000 * 1000) {
+                    getString(R.string.msg_kbsec, txsec / 1000)
+                } else {
+                    getString(R.string.msg_mbsec, txsec / 1000 / 1000)
+                }
+            val rxText =
+                if (rxsec < 1000 * 1000) {
+                    getString(R.string.msg_kbsec, rxsec / 1000)
+                } else {
+                    getString(R.string.msg_mbsec, rxsec / 1000 / 1000)
+                }
+            val maxText =
+                if (max < 1000 * 1000) {
+                    getString(R.string.msg_kbsec, max / 2 / 1000)
+                } else {
+                    getString(R.string.msg_mbsec, max / 2 / 1000 / 1000)
+                }
+            val statsSummary =
+                getString(
+                    R.string.notify_traffic_summary,
+                    txText,
+                    rxText,
+                    maxText,
+                )
+            val debugText =
+                if (BuildConfig.DEBUG) {
+                    val count = jni_get_stats(jni_context)
+                    getString(R.string.notify_traffic_debug, count[0], count[1], count[2], count[3], count[4])
+                } else {
+                    ""
+                }
 
             val main = Intent(this@ServiceSinkhole, ActivityMain::class.java)
             val pi = PendingIntentCompat.getActivity(this@ServiceSinkhole, 0, main, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -905,11 +909,30 @@ class ServiceSinkhole : VpnService() {
             builder
                 .setWhen(whenMs)
                 .setSmallIcon(R.drawable.ic_equalizer_white_24dp)
-                .setContent(remoteViews)
+                .setContentTitle(getString(R.string.notify_traffic_title))
+                .setContentText(statsSummary)
                 .setContentIntent(pi)
                 .setColor(tv.data)
                 .setOngoing(true)
                 .setAutoCancel(false)
+                .setLargeIcon(bitmap)
+
+            val style = NotificationCompat.BigPictureStyle()
+                .bigPicture(bitmap)
+                .bigLargeIcon(null as Bitmap?)
+            builder.setStyle(style)
+
+            if (topText.isNotBlank() || debugText.isNotBlank()) {
+                val inbox = NotificationCompat.InboxStyle()
+                    .setSummaryText(statsSummary)
+                if (topText.isNotBlank()) {
+                    topText.split("\r\n").forEach { inbox.addLine(it) }
+                }
+                if (debugText.isNotBlank()) {
+                    inbox.addLine(debugText)
+                }
+                builder.setStyle(inbox)
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 builder.setCategory(NotificationCompat.CATEGORY_STATUS)

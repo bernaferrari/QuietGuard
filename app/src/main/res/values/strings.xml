@@ -45,6 +45,10 @@
     <string name="menu_firewall">Firewall</string>
     <string name="status_enabled">Firewall enabled</string>
     <string name="status_disabled">Firewall disabled</string>
+    <string name="widget_firewall_enabled">Firewall ON</string>
+    <string name="widget_firewall_disabled">Firewall OFF</string>
+    <string name="widget_lockdown_enabled">Lockdown ON</string>
+    <string name="widget_lockdown_disabled">Lockdown OFF</string>
     <string name="status_running">Traffic is being filtered</string>
     <string name="status_not_running">Traffic is not being filtered</string>
     <string name="action_enable">Enable</string>

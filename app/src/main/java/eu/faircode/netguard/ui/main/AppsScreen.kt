@@ -47,7 +47,7 @@ import eu.faircode.netguard.R
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
-import eu.faircode.netguard.WidgetMain
+import eu.faircode.netguard.Widgets
 import eu.faircode.netguard.data.Prefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -353,7 +353,7 @@ private fun persistRuleInternal(
     rule.updateChanged(context)
     NotificationManagerCompat.from(context).cancel(rule.uid)
     ServiceSinkhole.reload("rule changed", context, false)
-    WidgetMain.updateWidgets(context)
+    Widgets.updateFirewall(context)
 
     rule.related?.forEach { relatedPkg ->
         val related = allRules.firstOrNull { it.packageName == relatedPkg } ?: return@forEach

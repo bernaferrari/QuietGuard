@@ -44,7 +44,7 @@ class ServiceTileLockdown : TileService() {
         val enabled = !Prefs.getBoolean("lockdown", false)
         Prefs.putBoolean("lockdown", enabled)
         ServiceSinkhole.reload("tile", this, false)
-        WidgetLockdown.updateWidgets(this)
+        Widgets.updateLockdown(this)
     }
 
     companion object {

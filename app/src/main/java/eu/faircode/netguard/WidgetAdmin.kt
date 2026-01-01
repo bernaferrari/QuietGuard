@@ -68,7 +68,7 @@ class WidgetAdmin : ReceiverAutostart() {
                     val lockdown = INTENT_LOCKDOWN_ON == intent.action
                     Prefs.putBoolean("lockdown", lockdown)
                     ServiceSinkhole.reload("widget", context, false)
-                    WidgetLockdown.updateWidgets(context)
+                    Widgets.updateLockdown(context)
                 }
             }
         } catch (ex: Throwable) {

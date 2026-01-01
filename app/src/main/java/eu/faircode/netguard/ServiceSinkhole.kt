@@ -298,7 +298,7 @@ class ServiceSinkhole : VpnService() {
                     ruleset.putExtra(ActivityMain.EXTRA_METERED, cmd != Command.stop && lastMetered)
                     sendBroadcast(ruleset)
 
-                    WidgetMain.updateWidgets(this@ServiceSinkhole)
+                    Widgets.updateFirewall(this@ServiceSinkhole)
                 }
 
                 if (
@@ -327,7 +327,7 @@ class ServiceSinkhole : VpnService() {
 
                         if (ex !is StartFailedException) {
                             Prefs.putBoolean("enabled", false)
-                            WidgetMain.updateWidgets(this@ServiceSinkhole)
+                            Widgets.updateFirewall(this@ServiceSinkhole)
                         }
                     }
                 } else {
@@ -1715,7 +1715,7 @@ class ServiceSinkhole : VpnService() {
             showErrorNotification(reason)
 
             Prefs.putBoolean("enabled", false)
-            WidgetMain.updateWidgets(this)
+            Widgets.updateFirewall(this)
         }
     }
 
@@ -2678,7 +2678,7 @@ class ServiceSinkhole : VpnService() {
         Prefs.putBoolean("enabled", false)
 
         showDisabledNotification()
-        WidgetMain.updateWidgets(this)
+        Widgets.updateFirewall(this)
 
         super.onRevoke()
     }

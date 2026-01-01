@@ -90,7 +90,7 @@ fun DnsScreen() {
                     style = MaterialTheme.typography.headlineSmall,
                 )
                 Text(
-                    text = stringResource(R.string.menu_refresh),
+                    text = stringResource(R.string.ui_dns_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

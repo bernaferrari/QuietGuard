@@ -17,8 +17,14 @@ fun ProScreen() {
     StatePlaceholder(
         title = stringResource(R.string.title_pro),
         message = stringResource(R.string.ui_empty_pro_body),
+        secondaryMessage = stringResource(R.string.ui_empty_pro_details),
         icon = Icons.Default.Shield,
         actionLabel = stringResource(R.string.menu_support),
         onAction = { context.startActivity(Intent(context, ActivityPro::class.java)) },
+        secondaryActionLabel = stringResource(R.string.ui_learn_more),
+        onSecondaryAction = {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.netguard.me/#pro1"))
+            context.startActivity(intent)
+        },
     )
 }

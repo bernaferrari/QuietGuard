@@ -29,7 +29,7 @@ class ServiceTileMain : TileService() {
             val tile = qsTile
         if (tile != null) {
             tile.state = if (enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = MaterialIconsCompat.asTileIcon(this, MaterialIconsCompat.security(this))
+            tile.icon = MaterialIcons.security(this)
             tile.updateTile()
         }
     }

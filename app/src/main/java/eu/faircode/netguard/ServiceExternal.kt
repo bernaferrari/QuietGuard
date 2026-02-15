@@ -1,12 +1,12 @@
 package eu.faircode.netguard
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import eu.faircode.netguard.data.Prefs
 import java.io.File
 import java.io.FileOutputStream
@@ -126,11 +126,11 @@ class ServiceExternal : Service() {
         const val ACTION_DOWNLOAD_HOSTS_FILE = "eu.faircode.netguard.DOWNLOAD_HOSTS_FILE"
 
         private fun getForegroundNotification(context: Context): Notification {
-            val builder = NotificationCompat.Builder(context, Notifications.CHANNEL_FOREGROUND)
-            builder.setSmallIcon(MaterialIconsCompat.hourglass(context))
-            builder.priority = NotificationCompat.PRIORITY_MIN
-            builder.setCategory(NotificationCompat.CATEGORY_STATUS)
-            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            val builder = Notification.Builder(context, Notifications.CHANNEL_FOREGROUND)
+            builder.setSmallIcon(MaterialIcons.hourglass(context))
+            builder.setPriority(Notification.PRIORITY_MIN)
+            builder.setCategory(Notification.CATEGORY_STATUS)
+            builder.setVisibility(Notification.VISIBILITY_PUBLIC)
             builder.setContentTitle(context.getString(R.string.app_name))
             return builder.build()
         }

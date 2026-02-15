@@ -1,6 +1,7 @@
 package eu.faircode.netguard.ui.main
 
 import android.content.Intent
+import android.app.NotificationManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.Image
@@ -45,7 +46,6 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.graphics.drawable.toBitmap
 import eu.faircode.netguard.R
 import eu.faircode.netguard.DatabaseHelper
@@ -407,7 +407,8 @@ private fun persistRuleInternal(
     if (rule.notify) Prefs.remove(notifyKey) else Prefs.putBoolean(notifyKey, rule.notify)
 
     rule.updateChanged(context)
-    NotificationManagerCompat.from(context).cancel(rule.uid)
+    val notificationManager = context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.cancel(rule.uid)
     ServiceSinkhole.reload("rule changed", context, false)
     Widgets.updateFirewall(context)
 

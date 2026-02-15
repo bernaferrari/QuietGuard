@@ -1,6 +1,8 @@
 package eu.faircode.netguard
 
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -8,8 +10,6 @@ import android.os.Build
 import android.os.PowerManager
 import android.util.Log
 import android.widget.Toast
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.theme.themeOffColor
 import java.io.File
@@ -132,20 +132,23 @@ class DownloadTask(
 
     private fun finishSuccess() {
         wakeLock?.release()
-        NotificationManagerCompat.from(context).cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
+        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nm.cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
         listener.onCompleted()
     }
 
     private fun finishCancelled() {
         Log.i(TAG, "Cancelled")
         wakeLock?.release()
-        NotificationManagerCompat.from(context).cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
+        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nm.cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
         listener.onCancelled()
     }
 
     private fun finishException(ex: Throwable) {
         wakeLock?.release()
-        NotificationManagerCompat.from(context).cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
+        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nm.cancel(ServiceSinkhole.NOTIFY_DOWNLOAD)
         Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
         listener.onException(ex)
     }
@@ -160,8 +163,8 @@ class DownloadTask(
         )
 
         val notificationColor = themeOffColor(Prefs.getString("theme", eu.faircode.netguard.ui.theme.THEME_DEFAULT))
-        val builder = NotificationCompat.Builder(context, Notifications.CHANNEL_NOTIFY)
-            .setSmallIcon(MaterialIconsCompat.fileDownload(context))
+        val builder = Notification.Builder(context, Notifications.CHANNEL_NOTIFY)
+            .setSmallIcon(MaterialIcons.fileDownload(context))
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.msg_downloading, url.toString()))
             .setContentIntent(pi)
@@ -171,12 +174,13 @@ class DownloadTask(
             .setAutoCancel(false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setCategory(NotificationCompat.CATEGORY_STATUS)
-                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+            builder.setCategory(Notification.CATEGORY_STATUS)
+                .setVisibility(Notification.VISIBILITY_SECRET)
         }
 
         if (Util.canNotify(context)) {
-            NotificationManagerCompat.from(context).notify(ServiceSinkhole.NOTIFY_DOWNLOAD, builder.build())
+            val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.notify(ServiceSinkhole.NOTIFY_DOWNLOAD, builder.build())
         }
     }
 

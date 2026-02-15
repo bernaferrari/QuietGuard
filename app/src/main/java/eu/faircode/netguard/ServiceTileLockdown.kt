@@ -24,7 +24,7 @@ class ServiceTileLockdown : TileService() {
             val tile = qsTile
         if (tile != null) {
             tile.state = if (lockdown) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = MaterialIcons.lock(this)
+            tile.icon = this.lockIcon()
             tile.updateTile()
         }
     }

@@ -1,7 +1,6 @@
 package eu.faircode.netguard
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -127,7 +126,7 @@ class ServiceExternal : Service() {
 
         private fun getForegroundNotification(context: Context): Notification {
             val builder = Notification.Builder(context, Notifications.CHANNEL_FOREGROUND)
-            builder.setSmallIcon(MaterialIcons.hourglass(context))
+            builder.setSmallIcon(context.hourglassIcon())
             builder.setPriority(Notification.PRIORITY_MIN)
             builder.setCategory(Notification.CATEGORY_STATUS)
             builder.setVisibility(Notification.VISIBILITY_PUBLIC)

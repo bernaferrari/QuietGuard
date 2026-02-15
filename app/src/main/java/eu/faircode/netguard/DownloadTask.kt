@@ -164,7 +164,7 @@ class DownloadTask(
 
         val notificationColor = themeOffColor(Prefs.getString("theme", eu.faircode.netguard.ui.theme.THEME_DEFAULT))
         val builder = Notification.Builder(context, Notifications.CHANNEL_NOTIFY)
-            .setSmallIcon(MaterialIcons.fileDownload(context))
+            .setSmallIcon(context.fileDownloadIcon())
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.msg_downloading, url.toString()))
             .setContentIntent(pi)

@@ -25,7 +25,7 @@ class ServiceTileGraph : TileService() {
             val tile = qsTile
         if (tile != null) {
             tile.state = if (stats) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = MaterialIcons.equalizer(this)
+            tile.icon = this.equalizerIcon()
             tile.updateTile()
         }
     }

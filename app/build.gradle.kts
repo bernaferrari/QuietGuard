@@ -30,7 +30,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags += ""
-                arguments += listOf("-DANDROID_PLATFORM=android-23")
+                arguments += listOf("-DANDROID_PLATFORM=android-26")
             }
         }
 

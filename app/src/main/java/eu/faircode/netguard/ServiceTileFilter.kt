@@ -25,7 +25,7 @@ class ServiceTileFilter : TileService() {
             val tile = qsTile
         if (tile != null) {
             tile.state = if (filter) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = MaterialIcons.filterList(this)
+            tile.icon = this.filterListIcon()
             tile.updateTile()
         }
     }

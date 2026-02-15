@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -27,13 +26,10 @@ class ServiceTileMain : TileService() {
 
     private fun update() {
         val enabled = Prefs.getBoolean("enabled", false)
-        val tile = qsTile
+            val tile = qsTile
         if (tile != null) {
             tile.state = if (enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = Icon.createWithResource(
-                this,
-                if (enabled) R.drawable.ic_security_white_24dp else R.drawable.ic_security_white_24dp_60,
-            )
+            tile.icon = MaterialIconsCompat.asTileIcon(this, MaterialIconsCompat.security(this))
             tile.updateTile()
         }
     }

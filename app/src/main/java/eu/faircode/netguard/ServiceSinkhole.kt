@@ -924,7 +924,7 @@ class ServiceSinkhole : VpnService() {
 
             builder
                 .setWhen(whenMs)
-                .setSmallIcon(R.drawable.ic_equalizer_white_24dp)
+                .setSmallIcon(MaterialIconsCompat.equalizer(this@ServiceSinkhole))
                 .setContentTitle(getString(R.string.notify_traffic_title))
                 .setContentText(headline)
                 .setSubText(statsSummary.takeIf { extraLines.isNotEmpty() })
@@ -2268,7 +2268,7 @@ class ServiceSinkhole : VpnService() {
             val notificationColor = themePrimaryColor(Prefs.getString("theme", THEME_DEFAULT))
             val builder = NotificationCompat.Builder(this, if (malware) Notifications.CHANNEL_MALWARE else Notifications.CHANNEL_NOTIFY)
             builder
-                .setSmallIcon(R.drawable.ic_security_white_24dp)
+                .setSmallIcon(MaterialIconsCompat.security(this))
                 .setContentIntent(pi)
                 .setColor(notificationColor)
                 .setAutoCancel(true)
@@ -2311,7 +2311,7 @@ class ServiceSinkhole : VpnService() {
             val piWifi = PendingIntentCompat.getService(this, uid, riWifi, PendingIntent.FLAG_UPDATE_CURRENT)
             val wAction =
                 NotificationCompat.Action.Builder(
-                    if (wifi) R.drawable.wifi_on else R.drawable.wifi_off,
+                    if (wifi) MaterialIconsCompat.wifi(this, true) else MaterialIconsCompat.wifi(this, false),
                     getString(if (wifi) R.string.title_allow_wifi else R.string.title_block_wifi),
                     piWifi,
                 ).build()
@@ -2327,7 +2327,7 @@ class ServiceSinkhole : VpnService() {
                 PendingIntentCompat.getService(this, uid + 10000, riOther, PendingIntent.FLAG_UPDATE_CURRENT)
             val oAction =
                 NotificationCompat.Action.Builder(
-                    if (other) R.drawable.other_on else R.drawable.other_off,
+                    if (other) MaterialIconsCompat.cellular(this, true) else MaterialIconsCompat.cellular(this, false),
                     getString(if (other) R.string.title_allow_other else R.string.title_block_other),
                     piOther,
                 ).build()
@@ -2796,9 +2796,9 @@ class ServiceSinkhole : VpnService() {
             builder
                 .setSmallIcon(
                     if (isLockedDown(lastMetered)) {
-                        R.drawable.ic_lock_outline_white_24dp
+                        MaterialIconsCompat.lock(this)
                 } else {
-                    R.drawable.ic_security_white_24dp
+                    MaterialIconsCompat.security(this)
                 },
             )
                 .setContentIntent(pi)
@@ -2875,7 +2875,7 @@ class ServiceSinkhole : VpnService() {
 
         val notificationColor = themePrimaryColor(Prefs.getString("theme", THEME_DEFAULT))
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_FOREGROUND)
-        builder.setSmallIcon(R.drawable.ic_security_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.security(this))
             .setContentIntent(pi)
             .setColor(notificationColor)
             .setOngoing(true)
@@ -2903,7 +2903,7 @@ class ServiceSinkhole : VpnService() {
 
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         val notificationColor = themeOffColor(Prefs.getString("theme", THEME_DEFAULT))
-        builder.setSmallIcon(R.drawable.ic_error_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.error(this))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_revoked))
             .setContentIntent(pi)
@@ -2931,7 +2931,7 @@ class ServiceSinkhole : VpnService() {
 
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         val notificationColor = themeOffColor(Prefs.getString("theme", THEME_DEFAULT))
-        builder.setSmallIcon(R.drawable.ic_error_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.error(this))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_always_on_lockdown))
             .setContentIntent(pi)
@@ -2965,7 +2965,7 @@ class ServiceSinkhole : VpnService() {
 
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         val notificationColor = themeOffColor(Prefs.getString("theme", THEME_DEFAULT))
-        builder.setSmallIcon(R.drawable.ic_error_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.error(this))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_autostart))
             .setContentIntent(pi)
@@ -2993,7 +2993,7 @@ class ServiceSinkhole : VpnService() {
 
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
         val notificationColor = themeOffColor(Prefs.getString("theme", THEME_DEFAULT))
-        builder.setSmallIcon(R.drawable.ic_error_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.error(this))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.msg_error, message))
             .setContentIntent(pi)
@@ -3031,7 +3031,7 @@ class ServiceSinkhole : VpnService() {
         val colorOff = themeOffColor(theme)
 
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_ACCESS)
-        builder.setSmallIcon(R.drawable.ic_cloud_upload_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.cloudUpload(this))
             .setGroup("AccessAttempt")
             .setContentIntent(pi)
             .setColor(colorOff)
@@ -3116,7 +3116,7 @@ class ServiceSinkhole : VpnService() {
 
         val notificationColor = themePrimaryColor(Prefs.getString("theme", THEME_DEFAULT))
         val builder = NotificationCompat.Builder(this, Notifications.CHANNEL_NOTIFY)
-        builder.setSmallIcon(R.drawable.ic_security_white_24dp)
+        builder.setSmallIcon(MaterialIconsCompat.security(this))
             .setContentTitle(name)
             .setContentText(getString(R.string.msg_update))
             .setContentIntent(pi)

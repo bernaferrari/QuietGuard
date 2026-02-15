@@ -546,26 +546,15 @@ object Util {
 
     @JvmStatic
     fun setTheme(context: Context) {
-        val dark = Prefs.getBoolean("dark_theme", false)
-        val theme = Prefs.getString("theme", "teal")
-        when (theme) {
-            "teal" -> context.setTheme(if (dark) R.style.AppThemeTealDark else R.style.AppThemeTeal)
-            "blue" -> context.setTheme(if (dark) R.style.AppThemeBlueDark else R.style.AppThemeBlue)
-            "purple" -> context.setTheme(if (dark) R.style.AppThemePurpleDark else R.style.AppThemePurple)
-            "amber" -> context.setTheme(if (dark) R.style.AppThemeAmberDark else R.style.AppThemeAmber)
-            "orange" -> context.setTheme(if (dark) R.style.AppThemeOrangeDark else R.style.AppThemeOrange)
-            "green" -> context.setTheme(if (dark) R.style.AppThemeGreenDark else R.style.AppThemeGreen)
-            else -> context.setTheme(if (dark) R.style.AppThemeTealDark else R.style.AppThemeTeal)
-        }
+        val theme = Prefs.getString("theme", THEME_DEFAULT)
 
         if (context is Activity && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setTaskColor(context)
+            setTaskColor(context, theme)
         }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setTaskColor(context: Context) {
-        val theme = Prefs.getString("theme", THEME_DEFAULT)
+    private fun setTaskColor(context: Context, theme: String?) {
         val defaultColor = themePrimaryColor(theme)
         val activity = context as Activity
         val description =

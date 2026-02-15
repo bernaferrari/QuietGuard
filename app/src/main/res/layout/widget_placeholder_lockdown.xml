@@ -9,5 +9,5 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:contentDescription="@null"
-        android:src="@drawable/ic_lock_outline_white_24dp" />
+        android:src="@mipmap/ic_launcher" />
 </FrameLayout>

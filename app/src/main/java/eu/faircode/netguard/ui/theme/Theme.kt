@@ -51,6 +51,7 @@ private val ThemeSeeds =
         "amber" to AmberPrimary,
         "orange" to OrangePrimary,
         "green" to GreenPrimary,
+        "dynamic" to Teal500,
     )
 
 
@@ -119,6 +120,7 @@ fun NetGuardThemeFromPrefs(content: @Composable () -> Unit) {
     NetGuardTheme(
         darkTheme = darkTheme,
         themeName = themeName,
+        dynamicColor = true,
         content = content,
     )
 }

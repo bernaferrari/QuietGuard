@@ -1,6 +1,7 @@
 package eu.faircode.netguard.ui.screens
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
@@ -200,18 +201,43 @@ fun SettingsScreen(
                     Widgets.updateAll(context)
                 }
 
-                Text(text = stringResource(R.string.setting_theme, str("theme", "teal")))
-                val themes = listOf("teal", "blue", "purple", "amber", "orange", "green")
-                themes.chunked(3).forEach { row ->
+                val currentTheme = str("theme", "teal")
+                val dynamicThemeEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                val themeChoices =
+                    listOf(
+                        Pair(stringResource(R.string.theme_dynamic), "dynamic"),
+                        Pair("Teal", "teal"),
+                        Pair("Blue", "blue"),
+                        Pair("Purple", "purple"),
+                        Pair("Amber", "amber"),
+                        Pair("Orange", "orange"),
+                        Pair("Green", "green"),
+                    )
+                val currentThemeLabel =
+                    when (currentTheme) {
+                        "dynamic" -> stringResource(R.string.theme_dynamic)
+                        else -> themeChoices.firstOrNull { it.second == currentTheme }?.first?.lowercase()
+                            ?: currentTheme
+                    }.replaceFirstChar { it.uppercase() }
+
+                Text(
+                    text = stringResource(R.string.setting_theme, currentThemeLabel),
+                )
+                themeChoices.chunked(3).forEach { row ->
                     Row(horizontalArrangement = Arrangement.spacedBy(spacing.small)) {
-                        row.forEach { theme ->
+                        row.forEach { (label, theme) ->
+                            val isDynamic = theme == "dynamic"
+                            val isEnabled = !isDynamic || dynamicThemeEnabled
                             FilterChip(
-                                selected = str("theme", "teal") == theme,
+                                selected = currentTheme == theme,
+                                enabled = isEnabled,
                                 onClick = {
-                                    Prefs.putString("theme", theme)
-                                    Widgets.updateAll(context)
+                                    if (isEnabled) {
+                                        Prefs.putString("theme", theme)
+                                        Widgets.updateAll(context)
+                                    }
                                 },
-                                label = { Text(text = theme.replaceFirstChar { it.uppercase() }) },
+                                label = { Text(text = if (isDynamic) label else label.replaceFirstChar { it.uppercase() }) },
                             )
                         }
                     }

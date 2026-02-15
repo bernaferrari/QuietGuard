@@ -127,7 +127,7 @@ class ServiceExternal : Service() {
 
         private fun getForegroundNotification(context: Context): Notification {
             val builder = NotificationCompat.Builder(context, Notifications.CHANNEL_FOREGROUND)
-            builder.setSmallIcon(R.drawable.ic_hourglass_empty_white_24dp)
+            builder.setSmallIcon(MaterialIconsCompat.hourglass(context))
             builder.priority = NotificationCompat.PRIORITY_MIN
             builder.setCategory(NotificationCompat.CATEGORY_STATUS)
             builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

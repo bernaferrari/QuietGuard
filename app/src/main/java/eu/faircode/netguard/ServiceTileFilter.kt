@@ -1,6 +1,5 @@
 package eu.faircode.netguard
 
-import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -23,13 +22,10 @@ class ServiceTileFilter : TileService() {
 
     private fun update() {
         val filter = Prefs.getBoolean("filter", false)
-        val tile = qsTile
+            val tile = qsTile
         if (tile != null) {
             tile.state = if (filter) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = Icon.createWithResource(
-                this,
-                if (filter) R.drawable.ic_filter_list_white_24dp else R.drawable.ic_filter_list_white_24dp_60,
-            )
+            tile.icon = MaterialIconsCompat.asTileIcon(this, MaterialIconsCompat.filterList(this))
             tile.updateTile()
         }
     }

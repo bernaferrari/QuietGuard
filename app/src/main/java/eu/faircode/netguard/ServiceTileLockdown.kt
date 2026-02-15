@@ -1,6 +1,5 @@
 package eu.faircode.netguard
 
-import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -22,13 +21,10 @@ class ServiceTileLockdown : TileService() {
 
     private fun update() {
         val lockdown = Prefs.getBoolean("lockdown", false)
-        val tile = qsTile
+            val tile = qsTile
         if (tile != null) {
             tile.state = if (lockdown) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
-            tile.icon = Icon.createWithResource(
-                this,
-                if (lockdown) R.drawable.ic_lock_outline_white_24dp else R.drawable.ic_lock_outline_white_24dp_60,
-            )
+            tile.icon = MaterialIconsCompat.asTileIcon(this, MaterialIconsCompat.lock(this))
             tile.updateTile()
         }
     }

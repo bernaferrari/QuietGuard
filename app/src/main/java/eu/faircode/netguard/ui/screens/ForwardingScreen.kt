@@ -2,6 +2,7 @@ package eu.faircode.netguard.ui.screens
 
 import android.content.Context
 import android.widget.Toast
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.Arrangement
@@ -13,17 +14,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Forward
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -39,21 +48,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
 import eu.faircode.netguard.Util
+import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForwardingScreen() {
     val context = LocalContext.current
+    val spacing = MaterialTheme.spacing
     var entries by remember { mutableStateOf<List<ForwardingEntry>>(emptyList()) }
     var showDialog by remember { mutableStateOf(false) }
     var loading by remember { mutableStateOf(true) }
@@ -81,37 +95,36 @@ fun ForwardingScreen() {
         loading = false
     }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.ui_forwarding_title),
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { showDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(R.string.menu_add),
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            )
+        },
+    ) { padding ->
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(padding)
+            .padding(spacing.default),
+        verticalArrangement = Arrangement.spacedBy(spacing.medium),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(R.string.setting_forwarding),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = stringResource(R.string.menu_add),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            FilledTonalButton(onClick = { showDialog = true }) {
-                androidx.compose.material3.Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(R.string.menu_add))
-            }
-        }
 
         when {
             loading -> {
@@ -134,42 +147,65 @@ fun ForwardingScreen() {
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
                     items(entries, key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                        val routeText =
+                            Util.getProtocolName(entry.protocol, 0, false) +
+                                " ${entry.dport} > ${entry.raddr}/${entry.rport}"
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                         ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = Util.getProtocolName(entry.protocol, 0, false) +
-                                        " ${entry.dport} > ${entry.raddr}/${entry.rport}",
-                                    style = MaterialTheme.typography.titleMedium,
-                                )
-                                Text(
-                                    text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                            IconButton(
-                                onClick = {
-                                    DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
-                                    ServiceSinkhole.reload("forwarding", context, false)
-                                    scope.launch {
-                                        entries = loadForwarding(context)
-                                        loading = false
-                                    }
-                                },
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(spacing.medium),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
-                                androidx.compose.material3.Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = stringResource(R.string.menu_delete),
-                                )
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = routeText,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                    Surface(
+                                        color = MaterialTheme.colorScheme.secondaryContainer,
+                                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                        shape = MaterialTheme.shapes.extraLarge,
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
+                                    }
+                                }
+                                IconButton(
+                                    onClick = {
+                                        DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
+                                        ServiceSinkhole.reload("forwarding", context, false)
+                                        scope.launch {
+                                            entries = loadForwarding(context)
+                                            loading = false
+                                        }
+                                    },
+                                ) {
+                                    Surface(
+                                        shape = MaterialTheme.shapes.small,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    ) {
+                                        androidx.compose.material3.Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = stringResource(R.string.menu_delete),
+                                            tint = MaterialTheme.colorScheme.onErrorContainer,
+                                            modifier = Modifier.padding(6.dp),
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -177,6 +213,7 @@ fun ForwardingScreen() {
             }
         }
     }
+    } // end Scaffold
 
     if (showDialog) {
         ForwardingAddDialog(
@@ -294,7 +331,7 @@ private fun ForwardingAddDialog(
             Text(text = stringResource(R.string.menu_add))
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)) {
                 ExposedDropdownMenuBox(
                     expanded = protocolExpanded,
                     onExpandedChange = { protocolExpanded = !protocolExpanded },

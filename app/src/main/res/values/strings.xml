@@ -37,6 +37,7 @@
     <string name="menu_launch">Launch app</string>
     <string name="menu_log">Show log</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_home">Home</string>
     <string name="menu_invite">Invite</string>
     <string name="menu_legend">Legend</string>
     <string name="menu_support">Support</string>
@@ -63,7 +64,18 @@
     <string name="ui_empty_forwarding_body">Add a rule to start forwarding traffic.</string>
     <string name="ui_empty_pro_body">Support unlocks extra features and keeps the project alive.</string>
     <string name="ui_empty_pro_details">Pro unlocks: filtering, logging, notifications, themes, and speed limits.</string>
+    <string name="ui_home_hint">Control internet access for every app.</string>
+    <string name="ui_apps_title">Firewall</string>
+    <string name="ui_logs_title">Traffic log</string>
+    <string name="ui_settings_title">Settings</string>
+    <string name="ui_dns_title">Resolved DNS</string>
+    <string name="ui_forwarding_title">Port forwarding</string>
     <string name="ui_dns_hint">Recently resolved domains and responses.</string>
+    <string name="ui_forwarding_hint">Manage forwarding rules and target apps.</string>
+    <string name="ui_rule_custom">Custom</string>
+    <string name="ui_dns_expired">Expired</string>
+    <string name="ui_filter_all">All</string>
+    <string name="ui_filter_empty">No apps match this filter.</string>
     <string name="ui_learn_more">Learn more</string>
     <string name="status_running">Traffic is being filtered</string>
     <string name="status_not_running">Traffic is not being filtered</string>
@@ -81,6 +93,7 @@
     <string name="search_settings">Search settings</string>
     <string name="content_desc_security_status">Firewall security status</string>
     <string name="content_desc_app_icon">App icon for %s</string>
+    <string name="content_desc_show_info">Show information about %1$s</string>
 
     <!-- Dashboard stats -->
     <string name="stat_blocked_today">Blocked today</string>
@@ -133,6 +146,15 @@
     <string name="setting_options">Options</string>
     <string name="setting_theme">Theme: %1$s</string>
     <string name="setting_dark">Use dark theme</string>
+    <string name="setting_theme_palette">Pick a color style</string>
+    <string name="setting_dynamic_unavailable">Dynamic colors require Android 12 or later.</string>
+    <string name="setting_appearance_mode">Appearance mode</string>
+    <string name="setting_appearance_mode_title">Dark mode</string>
+    <string name="setting_appearance_mode_summary">Choose Off, On, or Follow system.</string>
+    <string name="setting_appearance_preview">Current: %1$s · %2$s</string>
+    <string name="setting_appearance_auto">Auto</string>
+    <string name="setting_appearance_light">Light</string>
+    <string name="setting_appearance_dark">Dark</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Notify on new install</string>
     <string name="setting_screen_on">Apply \'when screen on\' rules</string>
@@ -193,7 +215,7 @@
     <string name="setting_stats">Show speed notification</string>
     <string name="setting_stats_top">Show top apps</string>
     <string name="setting_stats_frequency">Sample interval: %s ms</string>
-    <string name="setting_stats_samples">Number of samples: %s s</string>
+    <string name="setting_stats_samples">Number of samples: %s</string>
 
     <string name="setting_backup">Backup</string>
     <string name="setting_export">Export settings</string>
@@ -212,6 +234,7 @@
     <string name="setting_section_firewall">Firewall rules</string>
     <string name="setting_section_advanced">Advanced behavior</string>
     <string name="setting_section_hosts">Hosts &amp; DNS</string>
+    <string name="setting_section_network">Network configuration</string>
     <string name="setting_section_dns">DNS details</string>
     <string name="setting_section_proxy">Proxy</string>
     <string name="setting_section_vpn">VPN configuration</string>
@@ -362,6 +385,7 @@ Your internet traffic is not being sent to a remote VPN server.</string>
     <string name="title_rate">Rate</string>
     <string name="title_allow">Allow</string>
     <string name="title_block">Block</string>
+    <string name="title_wifi">Wi-Fi</string>
     <string name="title_allow_wifi">Allow Wi-Fi</string>
     <string name="title_block_wifi">Block Wi-Fi</string>
     <string name="title_allow_other">Allow mobile</string>

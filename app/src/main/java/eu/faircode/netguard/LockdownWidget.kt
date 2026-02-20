@@ -17,7 +17,6 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
 import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.data.Prefs
 
@@ -39,8 +38,6 @@ private fun LockdownWidgetContent() {
         } else {
             context.getString(R.string.widget_lockdown_disabled)
         }
-    val tint = ColorProvider(Widgets.themeColorRes(lockdown))
-
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
@@ -49,7 +46,7 @@ private fun LockdownWidgetContent() {
     ) {
         Text(
             text = label,
-            style = TextStyle(color = tint),
+            style = TextStyle(),
         )
     }
 }

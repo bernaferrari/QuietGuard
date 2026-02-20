@@ -161,6 +161,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.materialkolor)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.foundation)
     ksp(libs.hilt.android.compiler)
     implementation(libs.glide) {
         exclude(group = "com.android.support")

@@ -104,10 +104,14 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 try {
                     cursor = dh.getApp(packageNameValue)
                     if (cursor.moveToNext()) {
-                        name = cursor.getString(cursor.getColumnIndex("label"))
-                        system = cursor.getInt(cursor.getColumnIndex("system")) > 0
-                        internet = cursor.getInt(cursor.getColumnIndex("internet")) > 0
-                        enabled = cursor.getInt(cursor.getColumnIndex("enabled")) > 0
+                        val labelColumn = cursor.getColumnIndexOrThrow("label")
+                        val systemColumn = cursor.getColumnIndexOrThrow("system")
+                        val internetColumn = cursor.getColumnIndexOrThrow("internet")
+                        val enabledColumn = cursor.getColumnIndexOrThrow("enabled")
+                        name = cursor.getString(labelColumn)
+                        system = cursor.getInt(systemColumn) > 0
+                        internet = cursor.getInt(internetColumn) > 0
+                        enabled = cursor.getInt(enabledColumn) > 0
                     } else {
                         name = getLabel(info, context)
                         system = isSystem(packageNameValue, context)

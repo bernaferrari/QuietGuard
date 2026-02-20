@@ -286,6 +286,7 @@ private fun ChallengeDialog(
     onSuccess: () -> Unit,
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
+    val challengeLabel = stringResource(R.string.title_pro_challenge)
     var response by remember { mutableStateOf("") }
     val expected = remember(challenge, seed) { runCatching { Util.md5(challenge, seed) }.getOrDefault("") }
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -316,7 +317,7 @@ private fun ChallengeDialog(
                     FilledTonalButton(
                         onClick = {
                             val clip = ClipData.newPlainText(
-                                context.getString(R.string.title_pro_challenge),
+                                challengeLabel,
                                 challenge,
                             )
                             clipboard.setPrimaryClip(clip)

@@ -4,9 +4,14 @@ import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -14,53 +19,72 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.automirrored.filled.Forward
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -73,10 +97,14 @@ import eu.faircode.netguard.Widgets
 import eu.faircode.netguard.WorkScheduler
 import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.components.ExpandableContent
-import eu.faircode.netguard.ui.components.animateContentHeight
-import eu.faircode.netguard.ui.theme.LocalMotion
 import eu.faircode.netguard.ui.theme.TouchTargets
 import eu.faircode.netguard.ui.theme.spacing
+import eu.faircode.netguard.ui.theme.Teal500
+import eu.faircode.netguard.ui.theme.BluePrimary
+import eu.faircode.netguard.ui.theme.PurplePrimary
+import eu.faircode.netguard.ui.theme.AmberPrimary
+import eu.faircode.netguard.ui.theme.OrangePrimary
+import eu.faircode.netguard.ui.theme.GreenPrimary
 import java.io.File
 import java.io.FileOutputStream
 import kotlinx.coroutines.CoroutineScope
@@ -96,9 +124,6 @@ fun SettingsScreen(
     val prefs by Prefs.data.collectAsState()
     val scrollState = rememberScrollState()
     val scope = androidx.compose.runtime.rememberCoroutineScope()
-
-    // Search state
-    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     fun bool(key: String, default: Boolean) = prefs[booleanPreferencesKey(key)] ?: default
     fun str(key: String, default: String) = prefs[stringPreferencesKey(key)] ?: default
@@ -134,130 +159,207 @@ fun SettingsScreen(
             }
         }
 
-    // Filter sections based on search
-    val isSearching = searchQuery.isNotBlank()
+    val appearanceMode =
+        when (str("appearance", "")) {
+            "light", "dark", "auto" -> str("appearance", "auto")
+            else ->
+                if (prefs.asMap().containsKey(booleanPreferencesKey("dark_theme"))) {
+                    if (bool("dark_theme", false)) "dark" else "light"
+                } else {
+                    "auto"
+                }
+        }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(spacing.large),
-        verticalArrangement = Arrangement.spacedBy(spacing.default),
-    ) {
-        // Header
-        Icon(
-            imageVector = Icons.Default.Settings,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Text(
-            text = stringResource(R.string.menu_settings),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-        Text(
-            text = stringResource(R.string.setting_options),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+    fun updateAppearance(mode: String) {
+        Prefs.putString("appearance", mode)
+        when (mode) {
+            "auto" -> Prefs.remove("dark_theme")
+            "dark" -> Prefs.putBoolean("dark_theme", true)
+            "light" -> Prefs.putBoolean("dark_theme", false)
+        }
+        Widgets.updateAll(context)
+    }
 
-        // Search Bar
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { searchQuery = it },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text(stringResource(R.string.search_settings)) },
-            leadingIcon = {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = stringResource(R.string.search_settings),
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.ui_settings_title),
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            )
+        },
+    ) { innerPadding ->
+        val topPadding = innerPadding.calculateTopPadding()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = topPadding)
+                .verticalScroll(scrollState)
+                .padding(spacing.large),
+            verticalArrangement = Arrangement.spacedBy(spacing.default),
+        ) {
+
+            // Appearance Section
+            val appearanceTitle = stringResource(R.string.setting_section_appearance)
+            CollapsibleSettingsSection(
+                title = appearanceTitle,
+            ) {
+                val currentTheme = str("theme", "teal")
+                val dynamicThemeEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                val modeOptions = listOf(
+                    Triple("light", stringResource(R.string.setting_appearance_light), Icons.Default.LightMode),
+                    Triple("dark", stringResource(R.string.setting_appearance_dark), Icons.Default.DarkMode),
+                    Triple("auto", stringResource(R.string.setting_appearance_auto), Icons.Default.Settings),
                 )
-            },
-            trailingIcon = {
-                if (searchQuery.isNotEmpty()) {
-                    IconButton(onClick = { searchQuery = "" }) {
-                        Icon(
-                            Icons.Default.Clear,
-                            contentDescription = stringResource(R.string.action_clear_search),
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = spacing.small),
+                    horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    modeOptions.forEach { (mode, label, icon) ->
+                        AppearanceModeToggle(
+                            label = label,
+                            icon = icon,
+                            isSelected = appearanceMode == mode,
+                            onClick = { updateAppearance(mode) },
+                            modifier = Modifier.weight(1f),
                         )
                     }
                 }
-            },
-            singleLine = true,
-        )
 
-        // Appearance Section
-        val appearanceTitle = stringResource(R.string.setting_section_appearance)
-        if (!isSearching || appearanceTitle.contains(searchQuery, ignoreCase = true) ||
-            "dark theme".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(
-                title = appearanceTitle,
-                initiallyExpanded = !isSearching,
-            ) {
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_dark),
-                    checked = bool("dark_theme", false),
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.surfaceContainer,
+                    shape = MaterialTheme.shapes.large,
                 ) {
-                    updateFlag("dark_theme", it)
-                    Widgets.updateAll(context)
-                }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(spacing.large),
+                        verticalArrangement = Arrangement.spacedBy(spacing.default),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.setting_theme_palette),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
 
-                val currentTheme = str("theme", "teal")
-                val dynamicThemeEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                val themeChoices =
-                    listOf(
-                        Pair(stringResource(R.string.theme_dynamic), "dynamic"),
-                        Pair("Teal", "teal"),
-                        Pair("Blue", "blue"),
-                        Pair("Purple", "purple"),
-                        Pair("Amber", "amber"),
-                        Pair("Orange", "orange"),
-                        Pair("Green", "green"),
-                    )
-                val currentThemeLabel =
-                    when (currentTheme) {
-                        "dynamic" -> stringResource(R.string.theme_dynamic)
-                        else -> themeChoices.firstOrNull { it.second == currentTheme }?.first?.lowercase()
-                            ?: currentTheme
-                    }.replaceFirstChar { it.uppercase() }
+                        // Theme color swatches
+                        val themeChoices = listOf(
+                            Pair("dynamic", null), // null color = dynamic
+                            Pair("teal", Teal500),
+                            Pair("blue", BluePrimary),
+                            Pair("purple", PurplePrimary),
+                            Pair("amber", AmberPrimary),
+                            Pair("orange", OrangePrimary),
+                            Pair("green", GreenPrimary),
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            themeChoices.forEach { (theme, seedColor) ->
+                                val isDynamic = theme == "dynamic"
+                                val isEnabled = !isDynamic || dynamicThemeEnabled
+                                val isSelected = currentTheme == theme
+                                val displayColor = seedColor ?: MaterialTheme.colorScheme.primary
+                                val selectionScale by animateFloatAsState(
+                                    targetValue = if (isSelected) 1.08f else 1f,
+                                    animationSpec = tween(
+                                        durationMillis = 180,
+                                        easing = FastOutSlowInEasing,
+                                    ),
+                                    label = "appearanceThemeScale",
+                                )
+                                val iconScale by animateFloatAsState(
+                                    targetValue = if (isSelected) 1.05f else 0.86f,
+                                    animationSpec = tween(
+                                        durationMillis = 180,
+                                        easing = FastOutSlowInEasing,
+                                    ),
+                                    label = "appearanceThemeIcon",
+                                )
 
-                Text(
-                    text = stringResource(R.string.setting_theme, currentThemeLabel),
-                )
-                themeChoices.chunked(3).forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(spacing.small)) {
-                        row.forEach { (label, theme) ->
-                            val isDynamic = theme == "dynamic"
-                            val isEnabled = !isDynamic || dynamicThemeEnabled
-                            FilterChip(
-                                selected = currentTheme == theme,
-                                enabled = isEnabled,
-                                onClick = {
-                                    if (isEnabled) {
-                                        Prefs.putString("theme", theme)
-                                        Widgets.updateAll(context)
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .graphicsLayer {
+                                            scaleX = selectionScale
+                                            scaleY = selectionScale
+                                        }
+                                        .clip(CircleShape)
+                                        .background(
+                                            color = if (isEnabled) displayColor else displayColor.copy(
+                                                alpha = 0.3f
+                                            ),
+                                            shape = CircleShape,
+                                        )
+                                        .clickable(enabled = isEnabled) {
+                                            Prefs.putString("theme", theme)
+                                            Widgets.updateAll(context)
+                                        },
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    if (isSelected) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                                .graphicsLayer {
+                                                    scaleX = iconScale
+                                                    scaleY = iconScale
+                                                },
+                                            tint = Color.White,
+                                        )
+                                    } else if (isDynamic) {
+                                        Icon(
+                                            imageVector = Icons.Default.Palette,
+                                            contentDescription = stringResource(R.string.theme_dynamic),
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                                .graphicsLayer {
+                                                    scaleX = iconScale
+                                                    scaleY = iconScale
+                                                },
+                                            tint = Color.White,
+                                        )
                                     }
-                                },
-                                label = { Text(text = if (isDynamic) label else label.replaceFirstChar { it.uppercase() }) },
+                                }
+                            }
+                        }
+
+                        if (!dynamicThemeEnabled) {
+                            Text(
+                                text = stringResource(R.string.setting_dynamic_unavailable),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     }
                 }
             }
-        }
 
-        // Firewall Section
-        val firewallTitle = stringResource(R.string.setting_section_firewall)
-        if (!isSearching || firewallTitle.contains(searchQuery, ignoreCase = true) ||
-            "wifi block mobile".contains(searchQuery, ignoreCase = true)) {
+            // Firewall Section
+            val firewallTitle = stringResource(R.string.setting_section_firewall)
             CollapsibleSettingsSection(title = firewallTitle) {
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_whitelist_wifi),
-                    checked = bool("whitelist_wifi", true),
-                ) { updateFlag("whitelist_wifi", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_whitelist_other),
-                    checked = bool("whitelist_other", true),
-                ) { updateFlag("whitelist_other", it, reload = true) }
+                SettingTogglePairRow(
+                    firstTitle = stringResource(R.string.setting_whitelist_wifi),
+                    firstChecked = bool("whitelist_wifi", true),
+                    onFirstCheckedChange = { updateFlag("whitelist_wifi", it, reload = true) },
+                    secondTitle = stringResource(R.string.setting_whitelist_other),
+                    secondChecked = bool("whitelist_other", true),
+                    onSecondCheckedChange = { updateFlag("whitelist_other", it, reload = true) },
+                    isFirst = true,
+                )
                 SettingToggleRow(
                     title = stringResource(R.string.setting_whitelist_roaming),
                     checked = bool("whitelist_roaming", true),
@@ -266,14 +368,14 @@ fun SettingsScreen(
                     title = stringResource(R.string.setting_screen_on),
                     checked = bool("screen_on", true),
                 ) { updateFlag("screen_on", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_screen_wifi),
-                    checked = bool("screen_wifi", false),
-                ) { updateFlag("screen_wifi", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_screen_other),
-                    checked = bool("screen_other", false),
-                ) { updateFlag("screen_other", it, reload = true) }
+                SettingTogglePairRow(
+                    firstTitle = stringResource(R.string.setting_screen_wifi),
+                    firstChecked = bool("screen_wifi", false),
+                    onFirstCheckedChange = { updateFlag("screen_wifi", it, reload = true) },
+                    secondTitle = stringResource(R.string.setting_screen_other),
+                    secondChecked = bool("screen_other", false),
+                    onSecondCheckedChange = { updateFlag("screen_other", it, reload = true) },
+                )
                 SettingToggleRow(
                     title = stringResource(R.string.setting_subnet),
                     checked = bool("subnet", false),
@@ -309,7 +411,8 @@ fun SettingsScreen(
                     title = stringResource(R.string.setting_wifi_home, homes.ifEmpty { "-" }),
                     value = homes,
                     onValueChange = { value ->
-                        val set = value.split(",").map { it.trim() }.filter { it.isNotEmpty() }.toSet()
+                        val set =
+                            value.split(",").map { it.trim() }.filter { it.isNotEmpty() }.toSet()
                         Prefs.putStringSet("wifi_homes", set)
                     },
                 )
@@ -318,14 +421,14 @@ fun SettingsScreen(
                     title = stringResource(R.string.setting_metered),
                     checked = bool("use_metered", true),
                 ) { updateFlag("use_metered", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_metered_2g),
-                    checked = bool("unmetered_2g", false),
-                ) { updateFlag("unmetered_2g", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_metered_3g),
-                    checked = bool("unmetered_3g", false),
-                ) { updateFlag("unmetered_3g", it, reload = true) }
+                SettingTogglePairRow(
+                    firstTitle = stringResource(R.string.setting_metered_2g),
+                    firstChecked = bool("unmetered_2g", false),
+                    onFirstCheckedChange = { updateFlag("unmetered_2g", it, reload = true) },
+                    secondTitle = stringResource(R.string.setting_metered_3g),
+                    secondChecked = bool("unmetered_3g", false),
+                    onSecondCheckedChange = { updateFlag("unmetered_3g", it, reload = true) },
+                )
                 SettingToggleRow(
                     title = stringResource(R.string.setting_metered_4g),
                     checked = bool("unmetered_4g", false),
@@ -341,18 +444,17 @@ fun SettingsScreen(
                 SettingToggleRow(
                     title = stringResource(R.string.setting_call),
                     checked = bool("disable_on_call", false),
+                    isLast = true,
                 ) { updateFlag("disable_on_call", it, reload = true) }
             }
-        }
 
-        // Advanced Section
-        val advancedTitle = stringResource(R.string.setting_section_advanced)
-        if (!isSearching || advancedTitle.contains(searchQuery, ignoreCase = true) ||
-            "filter lockdown".contains(searchQuery, ignoreCase = true)) {
+            // Advanced Section
+            val advancedTitle = stringResource(R.string.setting_section_advanced)
             CollapsibleSettingsSection(title = advancedTitle) {
                 SettingToggleRow(
                     title = stringResource(R.string.setting_system),
                     checked = bool("manage_system", false),
+                    isFirst = true,
                 ) { updateFlag("manage_system", it, reload = true) }
                 SettingToggleRow(
                     title = stringResource(R.string.setting_log_app),
@@ -383,14 +485,14 @@ fun SettingsScreen(
                         updateWidgets = { Widgets.updateLockdown(context) },
                     )
                 }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_lockdown_wifi),
-                    checked = bool("lockdown_wifi", false),
-                ) { updateFlag("lockdown_wifi", it, reload = true) }
-                SettingToggleRow(
-                    title = stringResource(R.string.setting_lockdown_other),
-                    checked = bool("lockdown_other", false),
-                ) { updateFlag("lockdown_other", it, reload = true) }
+                SettingTogglePairRow(
+                    firstTitle = stringResource(R.string.setting_lockdown_wifi),
+                    firstChecked = bool("lockdown_wifi", false),
+                    onFirstCheckedChange = { updateFlag("lockdown_wifi", it, reload = true) },
+                    secondTitle = stringResource(R.string.setting_lockdown_other),
+                    secondChecked = bool("lockdown_other", false),
+                    onSecondCheckedChange = { updateFlag("lockdown_other", it, reload = true) },
+                )
                 SettingToggleRow(
                     title = stringResource(R.string.setting_malware),
                     checked = bool("malware", false),
@@ -409,76 +511,119 @@ fun SettingsScreen(
                 ) { updateFlag("show_top", it, reloadStats = true) }
 
                 SettingTextRow(
-                    title = stringResource(R.string.setting_stats_frequency, str("stats_frequency", "0")),
+                    title = stringResource(
+                        R.string.setting_stats_frequency,
+                        str("stats_frequency", "1000")
+                    ),
                     value = str("stats_frequency", "1000"),
                     keyboardType = KeyboardType.Number,
                     onValueChange = { Prefs.putString("stats_frequency", it) },
                 )
                 SettingTextRow(
-                    title = stringResource(R.string.setting_stats_samples, str("stats_samples", "0")),
+                    title = stringResource(
+                        R.string.setting_stats_samples,
+                        str("stats_samples", "10")
+                    ),
                     value = str("stats_samples", "10"),
                     keyboardType = KeyboardType.Number,
+                    isLast = true,
                     onValueChange = { Prefs.putString("stats_samples", it) },
                 )
             }
-        }
 
-        // Hosts Section
-        val hostsTitle = stringResource(R.string.setting_section_hosts)
-        if (!isSearching || hostsTitle.contains(searchQuery, ignoreCase = true) ||
-            "hosts dns block".contains(searchQuery, ignoreCase = true)) {
+            // Hosts Section
+            val hostsTitle = stringResource(R.string.setting_section_hosts)
             CollapsibleSettingsSection(title = hostsTitle) {
                 SettingToggleRow(
                     title = stringResource(R.string.setting_use_hosts),
                     checked = bool("use_hosts", false),
+                    isFirst = true,
                 ) { updateFlag("use_hosts", it, reload = true) }
 
                 SettingTextRow(
                     title = stringResource(R.string.setting_hosts_url),
                     value = str("hosts_url", ""),
+                    isLast = true,
                     onValueChange = { Prefs.putString("hosts_url", it) },
                 )
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(spacing.small),
-                ) {
-                    FilledTonalButton(onClick = { importHostsLauncher.launch(arrayOf("*/*")) }) {
+                // Single button with dropdown for hosts file operations
+                Box {
+                    var showHostsMenu by remember { mutableStateOf(false) }
+                    FilledTonalButton(
+                        onClick = { showHostsMenu = true },
+                    ) {
                         Icon(imageVector = Icons.Default.Download, contentDescription = null)
                         Spacer(modifier = Modifier.width(spacing.small))
-                        Text(text = stringResource(R.string.setting_hosts))
+                        Text(text = stringResource(R.string.setting_section_hosts))
                     }
-                    FilledTonalButton(onClick = { appendHostsLauncher.launch(arrayOf("*/*")) }) {
-                        Icon(imageVector = Icons.Default.Download, contentDescription = null)
-                        Spacer(modifier = Modifier.width(spacing.small))
-                        Text(text = stringResource(R.string.setting_hosts_append))
+                    DropdownMenu(
+                        expanded = showHostsMenu,
+                        onDismissRequest = { showHostsMenu = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.setting_hosts)) },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Default.Download,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                showHostsMenu = false
+                                importHostsLauncher.launch(arrayOf("*/*"))
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.setting_hosts_append)) },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Default.Download,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                showHostsMenu = false
+                                appendHostsLauncher.launch(arrayOf("*/*"))
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.setting_hosts_download)) },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Default.Download,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                showHostsMenu = false
+                                val intent =
+                                    android.content.Intent(context, ServiceExternal::class.java)
+                                intent.action = ServiceExternal.ACTION_DOWNLOAD_HOSTS_FILE
+                                ContextCompat.startForegroundService(context, intent)
+                            },
+                        )
                     }
-                }
-
-                FilledTonalButton(
-                    onClick = {
-                        val intent = android.content.Intent(context, ServiceExternal::class.java)
-                        intent.action = ServiceExternal.ACTION_DOWNLOAD_HOSTS_FILE
-                        ContextCompat.startForegroundService(context, intent)
-                    },
-                ) {
-                    Icon(imageVector = Icons.Default.Download, contentDescription = null)
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    Text(text = stringResource(R.string.setting_hosts_download))
                 }
             }
-        }
 
-        // DNS Section
-        val dnsTitle = stringResource(R.string.setting_section_dns)
-        if (!isSearching || dnsTitle.contains(searchQuery, ignoreCase = true) ||
-            "dns rcode ttl".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(title = dnsTitle) {
+            // Network Section (DNS + Proxy + VPN)
+            val networkSectionTitle = stringResource(R.string.setting_section_network)
+            val dnsTitle = stringResource(R.string.setting_section_dns)
+            val proxyTitle = stringResource(R.string.setting_section_proxy)
+            val vpnTitle = stringResource(R.string.setting_section_vpn)
+            CollapsibleSettingsSection(title = networkSectionTitle) {
+                Text(
+                    text = dnsTitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 SettingTextRowWithTooltip(
                     title = stringResource(R.string.setting_rcode, str("rcode", "3")),
                     tooltip = stringResource(R.string.tooltip_rcode),
                     value = str("rcode", "3"),
                     keyboardType = KeyboardType.Number,
+                    isFirst = true,
                     onValueChange = { Prefs.putString("rcode", it) },
                 )
                 SettingTextRowWithTooltip(
@@ -493,32 +638,22 @@ fun SettingsScreen(
                     value = str("validate", ""),
                     onValueChange = { Prefs.putString("validate", it) },
                 )
-                FilledTonalButton(onClick = onOpenDns) {
+                FilledTonalButton(
+                    onClick = onOpenDns,
+                    modifier = Modifier.align(Alignment.Start),
+                ) {
                     Icon(imageVector = Icons.Default.Dns, contentDescription = null)
                     Spacer(modifier = Modifier.width(spacing.small))
                     Text(text = stringResource(R.string.setting_show_resolved))
                 }
-            }
-        }
 
-        // Forwarding Section
-        val forwardingTitle = stringResource(R.string.setting_forwarding)
-        if (!isSearching || forwardingTitle.contains(searchQuery, ignoreCase = true) ||
-            "forward port".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(title = forwardingTitle) {
-                FilledTonalButton(onClick = onOpenForwarding) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.Forward, contentDescription = null)
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    Text(text = stringResource(R.string.setting_forwarding))
-                }
-            }
-        }
+                HorizontalDivider(modifier = Modifier.padding(vertical = spacing.default))
 
-        // Proxy Section
-        val proxyTitle = stringResource(R.string.setting_section_proxy)
-        if (!isSearching || proxyTitle.contains(searchQuery, ignoreCase = true) ||
-            "socks proxy".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(title = proxyTitle) {
+                Text(
+                    text = proxyTitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 SettingToggleRow(
                     title = stringResource(R.string.setting_socks5_enabled),
                     checked = bool("socks5_enabled", false),
@@ -535,23 +670,29 @@ fun SettingsScreen(
                     onValueChange = { Prefs.putString("socks5_port", it) },
                 )
                 SettingTextRow(
-                    title = stringResource(R.string.setting_socks5_username, str("socks5_username", "")),
+                    title = stringResource(
+                        R.string.setting_socks5_username,
+                        str("socks5_username", "")
+                    ),
                     value = str("socks5_username", ""),
                     onValueChange = { Prefs.putString("socks5_username", it) },
                 )
                 SettingTextRow(
-                    title = stringResource(R.string.setting_socks5_password, str("socks5_password", "")),
+                    title = stringResource(
+                        R.string.setting_socks5_password,
+                        str("socks5_password", "")
+                    ),
                     value = str("socks5_password", ""),
                     onValueChange = { Prefs.putString("socks5_password", it) },
                 )
-            }
-        }
 
-        // VPN Section
-        val vpnTitle = stringResource(R.string.setting_section_vpn)
-        if (!isSearching || vpnTitle.contains(searchQuery, ignoreCase = true) ||
-            "vpn dns address".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(title = vpnTitle) {
+                HorizontalDivider(modifier = Modifier.padding(vertical = spacing.default))
+
+                Text(
+                    text = vpnTitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 SettingTextRow(
                     title = stringResource(R.string.setting_vpn4, str("vpn4", "10.1.10.1")),
                     value = str("vpn4", "10.1.10.1"),
@@ -570,20 +711,29 @@ fun SettingsScreen(
                 SettingTextRow(
                     title = stringResource(R.string.setting_dns2, str("dns2", "")),
                     value = str("dns2", ""),
+                    isLast = true,
                     onValueChange = { Prefs.putString("dns2", it) },
                 )
             }
-        }
 
-        // Background Section
-        val backgroundTitle = stringResource(R.string.setting_section_background)
-        if (!isSearching || backgroundTitle.contains(searchQuery, ignoreCase = true) ||
-            "watchdog update".contains(searchQuery, ignoreCase = true)) {
+            // Forwarding Section
+            val forwardingTitle = stringResource(R.string.setting_forwarding)
+            CollapsibleSettingsSection(title = forwardingTitle) {
+                FilledTonalButton(onClick = onOpenForwarding) {
+                    Icon(imageVector = Icons.AutoMirrored.Filled.Forward, contentDescription = null)
+                    Spacer(modifier = Modifier.width(spacing.small))
+                    Text(text = stringResource(R.string.setting_forwarding))
+                }
+            }
+
+            // Background Section
+            val backgroundTitle = stringResource(R.string.setting_section_background)
             CollapsibleSettingsSection(title = backgroundTitle) {
                 SettingTextRow(
                     title = stringResource(R.string.setting_watchdog, str("watchdog", "0")),
                     value = str("watchdog", "0"),
                     keyboardType = KeyboardType.Number,
+                    isFirst = true,
                     onValueChange = { value ->
                         Prefs.putString("watchdog", value)
                         val enabled = Prefs.getBoolean("enabled", false)
@@ -593,40 +743,59 @@ fun SettingsScreen(
                 SettingToggleRow(
                     title = stringResource(R.string.setting_update),
                     checked = bool("update_check", true),
+                    isLast = true,
                 ) { Prefs.putBoolean("update_check", it) }
             }
-        }
 
-        // Diagnostics Section
-        val diagnosticsTitle = stringResource(R.string.setting_section_diagnostics)
-        if (!isSearching || diagnosticsTitle.contains(searchQuery, ignoreCase = true) ||
-            "pcap record".contains(searchQuery, ignoreCase = true)) {
+            // Diagnostics Section
+            val diagnosticsTitle = stringResource(R.string.setting_section_diagnostics)
             CollapsibleSettingsSection(title = diagnosticsTitle) {
                 SettingToggleRowWithTooltip(
                     title = stringResource(R.string.setting_pcap),
                     tooltip = stringResource(R.string.tooltip_pcap),
                     checked = bool("pcap", false),
+                    isFirst = true,
                 ) { Prefs.putBoolean("pcap", it) }
                 SettingTextRow(
-                    title = stringResource(R.string.setting_pcap_record_size, str("pcap_record_size", "64")),
+                    title = stringResource(
+                        R.string.setting_pcap_record_size,
+                        str("pcap_record_size", "64")
+                    ),
                     value = str("pcap_record_size", "64"),
                     keyboardType = KeyboardType.Number,
                     onValueChange = { Prefs.putString("pcap_record_size", it) },
                 )
                 SettingTextRow(
-                    title = stringResource(R.string.setting_pcap_file_size, str("pcap_file_size", "2")),
+                    title = stringResource(
+                        R.string.setting_pcap_file_size,
+                        str("pcap_file_size", "2")
+                    ),
                     value = str("pcap_file_size", "2"),
                     keyboardType = KeyboardType.Number,
+                    isLast = true,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                Prefs.putBoolean("pcap", false)
+                                Prefs.putString("pcap_record_size", "64")
+                                Prefs.putString("pcap_file_size", "2")
+                            },
+                            modifier = Modifier.size(TouchTargets.minimum),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Refresh,
+                                contentDescription = stringResource(R.string.menu_reset),
+                                modifier = Modifier.size(18.dp),
+                            )
+                        }
+                    },
                     onValueChange = { Prefs.putString("pcap_file_size", it) },
                 )
             }
-        }
 
-        // Support Section
-        val supportTitle = stringResource(R.string.setting_section_support)
-        if (!isSearching || supportTitle.contains(searchQuery, ignoreCase = true) ||
-            "pro support".contains(searchQuery, ignoreCase = true)) {
-            CollapsibleSettingsSection(title = supportTitle, initiallyExpanded = true) {
+            // Support Section
+            val supportTitle = stringResource(R.string.setting_section_support)
+            CollapsibleSettingsSection(title = supportTitle) {
                 FilledTonalButton(onClick = onOpenPro) {
                     Icon(imageVector = Icons.Default.Shield, contentDescription = null)
                     Spacer(modifier = Modifier.width(spacing.small))
@@ -634,7 +803,7 @@ fun SettingsScreen(
                 }
             }
         }
-    }
+    } // end Scaffold
 
     if (showHostImportHint) {
         AlertDialog(
@@ -651,71 +820,76 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun CollapsibleSettingsSection(
-    title: String,
-    initiallyExpanded: Boolean = false,
-    content: @Composable ColumnScope.() -> Unit,
+private fun AppearanceModeToggle(
+    label: String,
+    icon: ImageVector,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val spacing = MaterialTheme.spacing
-    val motion = LocalMotion.current
-    var expanded by rememberSaveable { mutableStateOf(initiallyExpanded) }
-
-    // Animated rotation for chevron
-    val iconRotation by animateFloatAsState(
-        targetValue = if (expanded) 180f else 0f,
-        animationSpec = tween(motion.durationMedium),
-        label = "chevronRotation"
+    val cornerRadius by animateDpAsState(
+        targetValue = if (isSelected) 26.dp else 16.dp,
+        animationSpec = tween(durationMillis = 220),
+        label = "appearanceModeCornerRadius",
     )
-
-    val expandDescription = if (expanded) {
-        stringResource(R.string.action_collapse)
-    } else {
-        stringResource(R.string.action_expand)
-    }
-
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+    val borderWidth by animateDpAsState(
+        targetValue = if (isSelected) 2.dp else 1.dp,
+        animationSpec = tween(durationMillis = 220),
+        label = "appearanceModeBorderWidth",
+    )
+    OutlinedCard(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 84.dp)
+            .semantics { role = Role.RadioButton },
+        shape = RoundedCornerShape(cornerRadius),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = if (isSelected) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.surface
+            },
         ),
-        modifier = Modifier.animateContentHeight(),
+        border = BorderStroke(
+            width = borderWidth,
+            color = if (isSelected) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.outlineVariant
+            },
+        ),
     ) {
-        Column {
-            // Header - always visible, clickable
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { expanded = !expanded }
-                    .padding(spacing.default),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
             ) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.weight(1f),
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label,
+                    modifier = Modifier.size(22.dp),
+                    tint = if (isSelected) {
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
-                IconButton(
-                    onClick = { expanded = !expanded },
-                    modifier = Modifier.size(TouchTargets.minimum),
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ExpandMore,
-                        contentDescription = expandDescription,
-                        modifier = Modifier.graphicsLayer { rotationZ = iconRotation },
-                    )
-                }
-            }
-
-            // Expandable content
-            ExpandableContent(expanded = expanded) {
-                Column(
-                    modifier = Modifier.padding(
-                        start = spacing.default,
-                        end = spacing.default,
-                        bottom = spacing.default,
-                    ),
-                    verticalArrangement = Arrangement.spacedBy(spacing.medium),
-                    content = content,
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelMedium,
+                    textAlign = TextAlign.Center,
+                    color = if (isSelected) {
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
+                    maxLines = 1,
                 )
             }
         }
@@ -723,29 +897,133 @@ private fun CollapsibleSettingsSection(
 }
 
 @Composable
+private fun CollapsibleSettingsSection(
+    title: String,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+    Column(
+        verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = spacing.extraSmall),
+        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+            content = content,
+        )
+    }
+}
+
+@Composable
+private fun settingItemShape(
+    isFirst: Boolean,
+    isLast: Boolean,
+    baseShape: Shape,
+): Shape {
+    if (!isFirst && !isLast) {
+        return baseShape
+    }
+
+    val base = baseShape as? RoundedCornerShape ?: return baseShape
+    val emphasis = MaterialTheme.shapes.large as? RoundedCornerShape ?: return baseShape
+
+    return RoundedCornerShape(
+        topStart = if (isFirst) emphasis.topStart else base.topStart,
+        topEnd = if (isFirst) emphasis.topEnd else base.topEnd,
+        bottomEnd = if (isLast) emphasis.bottomEnd else base.bottomEnd,
+        bottomStart = if (isLast) emphasis.bottomStart else base.bottomStart,
+    )
+}
+
+@Composable
+private fun settingPairTileShape(
+    isLeadingTile: Boolean,
+    isFirstRow: Boolean,
+    isLastRow: Boolean,
+    baseShape: Shape,
+): Shape {
+    if (!isFirstRow && !isLastRow) {
+        return baseShape
+    }
+
+    val base = baseShape as? RoundedCornerShape ?: return baseShape
+    val emphasis = MaterialTheme.shapes.large as? RoundedCornerShape ?: return baseShape
+
+    return RoundedCornerShape(
+        topStart = if (isLeadingTile && isFirstRow) emphasis.topStart else base.topStart,
+        topEnd = if (!isLeadingTile && isFirstRow) emphasis.topEnd else base.topEnd,
+        bottomEnd = if (!isLeadingTile && isLastRow) emphasis.bottomEnd else base.bottomEnd,
+        bottomStart = if (isLeadingTile && isLastRow) emphasis.bottomStart else base.bottomStart,
+    )
+}
+
+@Composable
 private fun SettingToggleRow(
     title: String,
+    subtitle: String? = null,
     checked: Boolean,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
     onCheckedChange: (Boolean) -> Unit,
 ) {
+    val spacing = MaterialTheme.spacing
+    val rowShape =
+        settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
     val haptic = LocalHapticFeedback.current
+    val onToggle = { newValue: Boolean ->
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        onCheckedChange(newValue)
+    }
 
-    Row(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = rowShape,
     ) {
-        Text(text = title, modifier = Modifier.weight(1f))
-        Switch(
-            checked = checked,
-            onCheckedChange = { newValue ->
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                onCheckedChange(newValue)
-            },
-            modifier = Modifier.semantics {
-                contentDescription = "$title: ${if (checked) "enabled" else "disabled"}"
-            },
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 56.dp)
+                .clip(rowShape)
+                .toggleable(
+                    value = checked,
+                    role = Role.Switch,
+                    onValueChange = onToggle,
+                )
+                .padding(horizontal = spacing.default, vertical = spacing.small),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = spacing.small),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                subtitle?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            Switch(
+                checked = checked,
+                onCheckedChange = null,
+                modifier = Modifier.semantics {
+                    contentDescription = "$title: ${if (checked) "enabled" else "disabled"}"
+                },
+            )
+        }
     }
 }
 
@@ -754,56 +1032,90 @@ private fun SettingToggleRowWithTooltip(
     title: String,
     tooltip: String,
     checked: Boolean,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
     onCheckedChange: (Boolean) -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
+    val rowShape =
+        settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
     val haptic = LocalHapticFeedback.current
     var showTooltip by remember { mutableStateOf(false) }
+    val onToggle = { newValue: Boolean ->
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        onCheckedChange(newValue)
+    }
 
-    Column {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = rowShape,
+    ) {
+        Column {
             Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clip(rowShape)
+                    .toggleable(
+                        value = checked,
+                        role = Role.Switch,
+                        onValueChange = onToggle,
+                    )
+                    .padding(horizontal = spacing.default, vertical = spacing.small),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.weight(1f),
             ) {
-                Text(text = title)
-                IconButton(
-                    onClick = { showTooltip = !showTooltip },
-                    modifier = Modifier.size(TouchTargets.minimum),
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = spacing.small),
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Info,
-                        contentDescription = "Show information about $title",
-                        modifier = Modifier.size(18.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                    IconButton(
+                        onClick = { showTooltip = !showTooltip },
+                        modifier = Modifier.size(TouchTargets.minimum),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = stringResource(
+                                R.string.content_desc_show_info,
+                                title
+                            ),
+                            modifier = Modifier
+                                .size(18.dp)
+                                .padding(bottom = 1.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+                Switch(
+                    checked = checked,
+                    onCheckedChange = null,
+                    modifier = Modifier.semantics {
+                        contentDescription = "$title: ${if (checked) "enabled" else "disabled"}"
+                    },
+                )
+            }
+            ExpandableContent(expanded = showTooltip) {
+                Surface(
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = MaterialTheme.shapes.medium,
+                    modifier = Modifier.padding(
+                        horizontal = spacing.small,
+                        vertical = spacing.extraSmall
+                    ),
+                ) {
+                    Text(
+                        text = tooltip,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(spacing.small),
                     )
                 }
-            }
-            Switch(
-                checked = checked,
-                onCheckedChange = { newValue ->
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    onCheckedChange(newValue)
-                },
-            )
-        }
-
-        // Animated tooltip
-        ExpandableContent(expanded = showTooltip) {
-            Surface(
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier.padding(bottom = spacing.small),
-            ) {
-                Text(
-                    text = tooltip,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(spacing.small),
-                )
             }
         }
     }
@@ -814,22 +1126,36 @@ private fun SettingTextRow(
     title: String,
     value: String,
     keyboardType: KeyboardType = KeyboardType.Text,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
+    trailingIcon: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
-
-    Column(
+    val rowShape =
+        settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(spacing.small),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = rowShape,
     ) {
-        Text(text = title, style = MaterialTheme.typography.bodyMedium)
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-        )
+        Column(
+            modifier = Modifier.padding(spacing.default),
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            OutlinedTextField(
+                value = value,
+                onValueChange = onValueChange,
+                keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                trailingIcon = trailingIcon,
+            )
+        }
     }
 }
 
@@ -839,54 +1165,156 @@ private fun SettingTextRowWithTooltip(
     tooltip: String,
     value: String,
     keyboardType: KeyboardType = KeyboardType.Text,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
     onValueChange: (String) -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
+    val rowShape =
+        settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
     var showTooltip by remember { mutableStateOf(false) }
 
-    Column(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(spacing.small),
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = rowShape,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            modifier = Modifier.padding(spacing.default),
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
         ) {
-            Text(text = title, style = MaterialTheme.typography.bodyMedium)
-            IconButton(
-                onClick = { showTooltip = !showTooltip },
-                modifier = Modifier.size(TouchTargets.minimum),
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Info,
-                    contentDescription = "Show information about $title",
-                    modifier = Modifier.size(18.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-
-        // Animated tooltip
-        ExpandableContent(expanded = showTooltip) {
-            Surface(
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier.padding(bottom = spacing.small),
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = tooltip,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(spacing.small),
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
+                IconButton(
+                    onClick = { showTooltip = !showTooltip },
+                    modifier = Modifier.size(TouchTargets.minimum),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = stringResource(R.string.content_desc_show_info, title),
+                        modifier = Modifier
+                            .size(18.dp)
+                            .padding(bottom = 1.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
-        }
 
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
+            ExpandableContent(expanded = showTooltip) {
+                Surface(
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = MaterialTheme.shapes.medium,
+                ) {
+                    Text(
+                        text = tooltip,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(spacing.small),
+                    )
+                }
+            }
+
+            OutlinedTextField(
+                value = value,
+                onValueChange = onValueChange,
+                keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingTogglePairRow(
+    firstTitle: String,
+    firstChecked: Boolean,
+    onFirstCheckedChange: (Boolean) -> Unit,
+    secondTitle: String,
+    secondChecked: Boolean,
+    onSecondCheckedChange: (Boolean) -> Unit,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
+) {
+    val spacing = MaterialTheme.spacing
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+    ) {
+        CompactSettingToggleTile(
+            modifier = Modifier.weight(1f),
+            title = firstTitle,
+            checked = firstChecked,
+            onCheckedChange = onFirstCheckedChange,
+            shape = settingPairTileShape(
+                isLeadingTile = true,
+                isFirstRow = isFirst,
+                isLastRow = isLast,
+                baseShape = MaterialTheme.shapes.small,
+            ),
         )
+        CompactSettingToggleTile(
+            modifier = Modifier.weight(1f),
+            title = secondTitle,
+            checked = secondChecked,
+            onCheckedChange = onSecondCheckedChange,
+            shape = settingPairTileShape(
+                isLeadingTile = false,
+                isFirstRow = isFirst,
+                isLastRow = isLast,
+                baseShape = MaterialTheme.shapes.small,
+            ),
+        )
+    }
+}
+
+@Composable
+private fun CompactSettingToggleTile(
+    title: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    shape: Shape? = null,
+) {
+    val tileShape = shape ?: MaterialTheme.shapes.small
+    val spacing = MaterialTheme.spacing
+    val haptic = LocalHapticFeedback.current
+    Surface(
+        modifier = modifier
+            .heightIn(min = 72.dp)
+            .toggleable(
+                value = checked,
+                role = Role.Switch,
+                onValueChange = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    onCheckedChange(it)
+                },
+            ),
+        shape = tileShape,
+        color = if (checked) MaterialTheme.colorScheme.primaryContainer
+        else MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(spacing.default),
+            verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (checked) MaterialTheme.colorScheme.onPrimaryContainer
+                else MaterialTheme.colorScheme.onSurface,
+            )
+            Spacer(modifier = Modifier.heightIn(min = spacing.small))
+            Switch(
+                checked = checked,
+                onCheckedChange = null,
+                modifier = Modifier.align(Alignment.End),
+            )
+        }
     }
 }
 

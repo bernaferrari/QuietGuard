@@ -54,6 +54,16 @@ private val ThemeSeeds =
         "dynamic" to Teal500,
     )
 
+private enum class AppearanceMode(val value: String) {
+    Auto("auto"),
+    Light("light"),
+    Dark("dark"),
+    ;
+
+    companion object {
+        fun from(value: String?): AppearanceMode? = entries.firstOrNull { it.value == value }
+    }
+}
 
 @Composable
 fun NetGuardTheme(
@@ -84,9 +94,14 @@ fun NetGuardTheme(
             @Suppress("DEPRECATION")
             window.statusBarColor = colorScheme.background.toArgb()
             val taskDescription =
-                ActivityManager.TaskDescription.Builder()
-                    .setPrimaryColor(colorScheme.primary.toArgb())
-                    .build()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    ActivityManager.TaskDescription.Builder()
+                        .setPrimaryColor(colorScheme.primary.toArgb())
+                        .build()
+                } else {
+                    @Suppress("DEPRECATION")
+                    ActivityManager.TaskDescription(null, null, colorScheme.primary.toArgb())
+                }
             activity.setTaskDescription(taskDescription)
             WindowCompat.getInsetsController(window, view).apply {
                 isAppearanceLightStatusBars = !darkTheme
@@ -101,6 +116,7 @@ fun NetGuardTheme(
     ) {
         MaterialExpressiveTheme(
             colorScheme = colorScheme,
+            typography = Typography,
             content = content,
         )
     }
@@ -110,12 +126,19 @@ fun NetGuardTheme(
 fun NetGuardThemeFromPrefs(content: @Composable () -> Unit) {
     val prefsState = Prefs.data.collectAsState()
     val prefs = prefsState.value
-    val darkTheme =
-        if (prefs.asMap().containsKey(booleanPreferencesKey("dark_theme"))) {
-            prefs[booleanPreferencesKey("dark_theme")] ?: false
-        } else {
+    val appearance = AppearanceMode.from(prefs[stringPreferencesKey("appearance")])
+    val darkTheme = when (appearance) {
+        AppearanceMode.Light -> false
+        AppearanceMode.Dark -> true
+        AppearanceMode.Auto ->
             isSystemInDarkTheme()
-        }
+        null ->
+            if (prefs.asMap().containsKey(booleanPreferencesKey("dark_theme"))) {
+                prefs[booleanPreferencesKey("dark_theme")] ?: false
+            } else {
+                isSystemInDarkTheme()
+            }
+    }
     val themeName = prefs[stringPreferencesKey("theme")] ?: "teal"
     NetGuardTheme(
         darkTheme = darkTheme,

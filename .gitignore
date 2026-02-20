@@ -14,3 +14,4 @@
 keystore.properties
 crowdin.properties
 app/.cxx/
+.kotlin

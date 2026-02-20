@@ -42,6 +42,11 @@ data object Pro : AppNavKey {
     override val route = "pro"
 }
 
+@Serializable
+data class AppRuleDetail(val uid: Int) : AppNavKey {
+    override val route = "app_rule_detail"
+}
+
 object NavRoutes {
     fun fromRoute(route: String?): AppNavKey =
         when (route) {

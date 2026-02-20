@@ -1,6 +1,7 @@
 package eu.faircode.netguard.ui.screens
 
 import android.content.Intent
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,13 +13,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.ActivityPro
 import eu.faircode.netguard.DatabaseHelper
@@ -37,15 +49,18 @@ import eu.faircode.netguard.IAB
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Util
 import eu.faircode.netguard.data.Prefs
+import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
 import java.text.SimpleDateFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.runBlocking
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LogsScreen() {
     val context = LocalContext.current
+    val spacing = MaterialTheme.spacing
     val hasLog = remember { IAB.isPurchased(ActivityPro.SKU_LOG, context) }
     var entries by remember { mutableStateOf<List<LogEntry>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -86,54 +101,45 @@ fun LogsScreen() {
         isLoading = false
     }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.ui_logs_title),
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { refreshKey += 1 }) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.menu_refresh),
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            )
+        },
+    ) { padding ->
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(padding)
+            .padding(spacing.default),
+        verticalArrangement = Arrangement.spacedBy(spacing.medium),
     ) {
         if (!hasLog) {
-            Text(
-                text = stringResource(R.string.title_pro),
-                style = MaterialTheme.typography.headlineSmall,
+            StatePlaceholder(
+                title = stringResource(R.string.title_pro),
+                message = stringResource(R.string.msg_log_disabled),
+                icon = Icons.Default.Inbox,
+                actionLabel = stringResource(R.string.title_pro),
+                onAction = { context.startActivity(Intent(context, ActivityPro::class.java)) },
             )
-            Text(
-                text = stringResource(R.string.msg_log_disabled),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            FilledTonalButton(
-                onClick = { context.startActivity(Intent(context, ActivityPro::class.java)) },
-            ) {
-                Text(text = stringResource(R.string.title_pro))
-            }
             return@Column
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(R.string.menu_log),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = stringResource(R.string.home_logs_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            FilledTonalButton(onClick = { refreshKey += 1 }) {
-                androidx.compose.material3.Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(R.string.menu_refresh))
-            }
         }
 
         when {
@@ -157,46 +163,84 @@ fun LogsScreen() {
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
                     items(entries, key = { "${it.time}_${it.uid}_${it.daddr}_${it.dport}" }) { entry ->
-                        val allowedColor =
-                            if (entry.allowed > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        val isAllowed = entry.allowed > 0
+                        val signalColor =
+                            if (isAllowed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        val signalContainer =
+                            if (isAllowed) MaterialTheme.colorScheme.primaryContainer
+                            else MaterialTheme.colorScheme.errorContainer
+                        val signalContent =
+                            if (isAllowed) MaterialTheme.colorScheme.onPrimaryContainer
+                            else MaterialTheme.colorScheme.onErrorContainer
                         Card(
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
                         ) {
-                            Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Column(
+                                modifier = Modifier.padding(spacing.medium),
+                                verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+                            ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Text(
                                         text = entry.timeText,
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
-                                    Text(
-                                        text = entry.protocolLabel,
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Text(
+                                            text = entry.protocolLabel,
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                        Surface(
+                                            color = signalContainer,
+                                            contentColor = signalContent,
+                                            shape = MaterialTheme.shapes.extraLarge,
+                                        ) {
+                                            Text(
+                                                text = if (isAllowed) {
+                                                    stringResource(R.string.menu_traffic_allowed)
+                                                } else {
+                                                    stringResource(R.string.menu_traffic_blocked)
+                                                },
+                                                style = MaterialTheme.typography.labelSmall,
+                                                modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                            )
+                                        }
+                                    }
                                 }
                                 Text(
                                     text = "${entry.daddr}:${entry.dport}",
                                     style = MaterialTheme.typography.titleSmall,
-                                    color = if (entry.allowed >= 0) allowedColor else MaterialTheme.colorScheme.onSurface,
+                                    color = if (entry.allowed >= 0) signalColor else MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
                                 )
                                 entry.dname?.let {
                                     Text(
                                         text = it,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
                                     )
                                 }
                                 if (entry.uid > 0) {
+                                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                                     Text(
                                         text = Util.getApplicationNames(entry.uid, context).joinToString(", "),
                                         style = MaterialTheme.typography.bodySmall,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
                                     )
                                 }
                             }
@@ -206,6 +250,7 @@ fun LogsScreen() {
             }
         }
     }
+    } // end Scaffold
 }
 
 private data class LogEntry(

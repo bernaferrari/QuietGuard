@@ -17,7 +17,9 @@
     <!-- http://developer.android.com/guide/topics/security/permissions.html#normal-dangerous -->
 
     <!-- https://developer.android.com/preview/privacy/package-visibility -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <!--queries>
         <intent>
             <action android:name="android.intent.action.MAIN" />

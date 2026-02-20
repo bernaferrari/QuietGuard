@@ -5,6 +5,8 @@ import android.util.Xml
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,12 +25,20 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,10 +47,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ServiceSinkhole
+import eu.faircode.netguard.ui.components.ScreenHeader
+import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,11 +69,15 @@ import java.util.Locale
 
 private const val TAG = "NetGuard.DNS.Compose"
 
+@ExperimentalMaterial3Api
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DnsScreen() {
     val context = LocalContext.current
+    val spacing = MaterialTheme.spacing
     var entries by remember { mutableStateOf<List<DnsEntry>>(emptyList()) }
-    var refreshKey by remember { mutableStateOf(0) }
+    var isLoading by remember { mutableStateOf(true) }
+    var refreshKey by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
 
     val exportLauncher =
@@ -70,44 +88,47 @@ fun DnsScreen() {
         }
 
     LaunchedEffect(refreshKey) {
+        isLoading = true
         entries = loadDns(context)
+        isLoading = false
     }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(R.string.ui_dns_title),
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { refreshKey += 1 }) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.menu_refresh),
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            )
+        },
+    ) { padding ->
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(padding)
+            .padding(spacing.default),
+        verticalArrangement = Arrangement.spacedBy(spacing.medium),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(R.string.setting_show_resolved),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = stringResource(R.string.ui_dns_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            FilledTonalButton(onClick = { refreshKey += 1 }) {
-                androidx.compose.material3.Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(R.string.menu_refresh))
-            }
-        }
 
-        Row(
+        FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(spacing.small),
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+            maxItemsInEachRow = 2,
         ) {
             FilledTonalButton(
                 onClick = {
@@ -116,44 +137,51 @@ fun DnsScreen() {
                     }
                 },
             ) {
-                androidx.compose.material3.Icon(
+                Icon(
                     imageVector = Icons.Default.Tune,
                     contentDescription = null,
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(spacing.small))
                 Text(text = stringResource(R.string.menu_cleanup))
             }
-            FilledTonalButton(
+            OutlinedButton(
                 onClick = {
                     runDnsClear(context, scope) {
                         refreshKey += 1
                     }
                 },
             ) {
-                androidx.compose.material3.Icon(
+                Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = null,
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(spacing.small))
                 Text(text = stringResource(R.string.menu_clear))
             }
-            FilledTonalButton(
+            OutlinedButton(
                 onClick = {
                     val filename =
                         "netguard_dns_" + SimpleDateFormat("yyyyMMdd", Locale.US).format(Date()) + ".xml"
                     exportLauncher.launch(filename)
                 },
             ) {
-                androidx.compose.material3.Icon(
+                Icon(
                     imageVector = Icons.Default.Download,
                     contentDescription = null,
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(spacing.small))
                 Text(text = stringResource(R.string.menu_export))
             }
         }
 
-        if (entries.isEmpty()) {
+        if (isLoading) {
+            StatePlaceholder(
+                title = stringResource(R.string.ui_loading),
+                message = stringResource(R.string.ui_dns_hint),
+                icon = Icons.Default.Dns,
+                isLoading = true,
+            )
+        } else if (entries.isEmpty()) {
             StatePlaceholder(
                 title = stringResource(R.string.ui_empty_dns_title),
                 message = stringResource(R.string.ui_empty_dns_body),
@@ -164,36 +192,65 @@ fun DnsScreen() {
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(spacing.small),
             ) {
                 items(entries, key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
                     val expired = entry.time + entry.ttl < Date().time
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor =
-                                if (expired) MaterialTheme.colorScheme.surfaceVariant
-                                else MaterialTheme.colorScheme.surface,
+                                if (expired) MaterialTheme.colorScheme.surfaceContainer
+                                else MaterialTheme.colorScheme.surfaceContainerLow,
                         ),
+                        shape = MaterialTheme.shapes.medium,
                     ) {
-                        Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            Text(
-                                text = "${entry.qname} -> ${entry.aname}",
-                                style = MaterialTheme.typography.titleSmall,
-                            )
+                        Column(
+                            modifier = Modifier.padding(spacing.small),
+                            verticalArrangement = Arrangement.spacedBy(2.dp),
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = "${entry.qname} → ${entry.aname}",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                if (expired) {
+                                    Text(
+                                        text = stringResource(R.string.ui_dns_expired),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.error,
+                                    )
+                                }
+                            }
                             Text(
                                 text = entry.resource,
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                             )
-                            Text(
-                                text = stringResource(R.string.label_ttl, entry.ttl / 1000),
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                            if (entry.uid > 0) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                            ) {
                                 Text(
-                                    text = stringResource(R.string.label_uid, entry.uid),
-                                    style = MaterialTheme.typography.bodySmall,
+                                    text = stringResource(R.string.label_ttl, entry.ttl / 1000),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
+                                if (entry.uid > 0) {
+                                    Text(
+                                        text = stringResource(R.string.label_uid, entry.uid),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
                             }
                         }
                     }
@@ -201,6 +258,7 @@ fun DnsScreen() {
             }
         }
     }
+    } // end Scaffold
 }
 
 private data class DnsEntry(

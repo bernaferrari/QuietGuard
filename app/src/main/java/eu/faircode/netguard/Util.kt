@@ -187,7 +187,11 @@ object Util {
         val caps = if (active != null) cm.getNetworkCapabilities(active) else null
         val isCellular = caps?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
         return if (isCellular) {
-            tm?.dataNetworkType ?: TelephonyManager.NETWORK_TYPE_UNKNOWN
+            try {
+                tm?.dataNetworkType ?: TelephonyManager.NETWORK_TYPE_UNKNOWN
+            } catch (_: SecurityException) {
+                TelephonyManager.NETWORK_TYPE_UNKNOWN
+            }
         } else {
             TelephonyManager.NETWORK_TYPE_UNKNOWN
         }
@@ -558,9 +562,14 @@ object Util {
         val defaultColor = themePrimaryColor(theme)
         val activity = context as Activity
         val description =
-            ActivityManager.TaskDescription.Builder()
-                .setPrimaryColor(defaultColor)
-                .build()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityManager.TaskDescription.Builder()
+                    .setPrimaryColor(defaultColor)
+                    .build()
+            } else {
+                @Suppress("DEPRECATION")
+                ActivityManager.TaskDescription(null, null, defaultColor)
+            }
         activity.setTaskDescription(description)
     }
 

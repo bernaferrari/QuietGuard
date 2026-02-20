@@ -1,147 +1,328 @@
 package eu.faircode.netguard.ui.main
 
-import android.content.Intent
 import android.app.NotificationManager
-import android.net.Uri
-import android.provider.Settings
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material.icons.filled.Smartphone
+import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.outlined.Block
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.ButtonGroupDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import eu.faircode.netguard.R
-import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
 import eu.faircode.netguard.Widgets
 import eu.faircode.netguard.data.Prefs
-import eu.faircode.netguard.ui.components.ExpandableContent
-import eu.faircode.netguard.ui.components.animateContentHeight
-import eu.faircode.netguard.ui.components.animatedRotation
-import eu.faircode.netguard.ui.theme.TouchTargets
+import eu.faircode.netguard.ui.components.IndexedFastScroller
 import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3ExpressiveApi::class,
+)
 @Composable
-fun AppsScreen() {
-    val context = LocalContext.current
+fun AppsScreen(
+    viewModel: MainViewModel,
+    onNavigateToDetail: (Rule) -> Unit = {},
+) {
     val spacing = MaterialTheme.spacing
-    val rules = remember { mutableStateListOf<Rule>() }
-    var isLoading by remember { mutableStateOf(true) }
-    var refreshKey by remember { mutableStateOf(0) }
+    val listState = rememberLazyListState()
+    val rulesUiState by viewModel.rulesUiState.collectAsStateWithLifecycle()
+    val rules = rulesUiState.rules
+    val isLoading = rulesUiState.isLoading && rulesUiState.rules.isEmpty()
+    var filter by remember { mutableStateOf(AppsFilter.All) }
 
-    LaunchedEffect(refreshKey) {
-        isLoading = true
-        val loaded = withContext(Dispatchers.IO) {
-            Rule.getRules(false, context)
-        }
-        rules.clear()
-        rules.addAll(loaded)
-        isLoading = false
+    LaunchedEffect(Unit) {
+        viewModel.ensureRulesLoaded()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(spacing.default),
-        verticalArrangement = Arrangement.spacedBy(spacing.medium),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    text = stringResource(R.string.menu_firewall),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Text(
-                    text = stringResource(R.string.home_apps_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            FilledTonalButton(onClick = { refreshKey += 1 }) {
-                Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(spacing.small))
-                Text(text = stringResource(R.string.menu_refresh))
+    val filteredRules by remember(rulesUiState.rules, filter) {
+        derivedStateOf {
+            when (filter) {
+                AppsFilter.All -> rules
+                AppsFilter.Blocked -> rules.filter { it.wifi_blocked || it.other_blocked }
+                AppsFilter.Allowed -> rules.filter { !it.wifi_blocked && !it.other_blocked }
             }
         }
+    }
+    val badgeCount by remember(rulesUiState.rules, filteredRules, filter) {
+        derivedStateOf {
+            when (filter) {
+                AppsFilter.All -> rules.size
+                AppsFilter.Blocked, AppsFilter.Allowed -> filteredRules.size
+            }
+        }
+    }
 
-        when {
-            isLoading -> {
-                StatePlaceholder(
-                    title = stringResource(R.string.ui_loading),
-                    message = stringResource(R.string.home_apps_hint),
-                    icon = Icons.Default.Apps,
-                    isLoading = true,
-                )
+    // Group by first letter for section headers
+    val groupedRules by remember(filteredRules) {
+        derivedStateOf {
+            val items = mutableListOf<AppListItem>()
+            var lastLetter = ""
+            filteredRules.forEach { rule ->
+                val name = rule.name ?: rule.packageName.orEmpty()
+                val letter = name.firstOrNull()?.uppercaseChar()?.toString() ?: "#"
+                val section = if (letter.first().isLetter()) letter else "#"
+                if (section != lastLetter) {
+                    items.add(AppListItem.Header(section))
+                    lastLetter = section
+                }
+                items.add(AppListItem.App(rule, position = CardPosition.Middle))
             }
-            rules.isEmpty() -> {
-                StatePlaceholder(
-                    title = stringResource(R.string.ui_empty_apps_title),
-                    message = stringResource(R.string.ui_empty_apps_body),
-                    icon = Icons.Default.Apps,
-                    actionLabel = stringResource(R.string.menu_refresh),
-                    onAction = { refreshKey += 1 },
-                )
+            // Assign positions within each section
+            var i = 0
+            while (i < items.size) {
+                if (items[i] is AppListItem.Header) {
+                    val sectionStart = i + 1
+                    var sectionEnd = sectionStart
+                    while (sectionEnd < items.size && items[sectionEnd] is AppListItem.App) sectionEnd++
+                    val count = sectionEnd - sectionStart
+                    for (j in sectionStart until sectionEnd) {
+                        val pos = when {
+                            count == 1 -> CardPosition.Single
+                            j == sectionStart -> CardPosition.First
+                            j == sectionEnd - 1 -> CardPosition.Last
+                            else -> CardPosition.Middle
+                        }
+                        items[j] = (items[j] as AppListItem.App).copy(position = pos)
+                    }
+                    i = sectionEnd
+                } else {
+                    i++
+                }
             }
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(spacing.small),
-                ) {
-                    items(rules, key = { it.uid }) { rule ->
-                        RuleCard(
-                            rule = rule,
-                            onToggle = {
-                                persistRule(context, rule, rules)
-                            },
+            items
+        }
+    }
+    val showFastScroller by remember(filteredRules) {
+        derivedStateOf { filteredRules.size >= 24 }
+    }
+
+    Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.ui_apps_title),
+                            fontWeight = FontWeight.Bold,
                         )
+                        if (badgeCount > 0) {
+                            Surface(
+                                shape = MaterialTheme.shapes.extraLarge,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
+                            ) {
+                                Text(
+                                    text = badgeCount.toString(),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    modifier = Modifier.padding(
+                                        horizontal = spacing.small,
+                                        vertical = 2.dp,
+                                    ),
+                                )
+                            }
+                        }
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { viewModel.refreshRules() }) {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = stringResource(R.string.menu_refresh),
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            )
+        },
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+        ) {
+            // Filter chips
+            val filterOptions = listOf(
+                Triple(AppsFilter.All, stringResource(R.string.ui_filter_all), Icons.Filled.Tune to Icons.Outlined.Tune),
+                Triple(AppsFilter.Blocked, stringResource(R.string.menu_traffic_blocked), Icons.Filled.Block to Icons.Outlined.Block),
+                Triple(AppsFilter.Allowed, stringResource(R.string.menu_traffic_allowed), Icons.Filled.CheckCircle to Icons.Outlined.CheckCircle),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = spacing.default),
+                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+            ) {
+                filterOptions.forEachIndexed { index, (option, label, icons) ->
+                    ToggleButton(
+                        checked = filter == option,
+                        onCheckedChange = { checked ->
+                            if (checked) {
+                                filter = option
+                            }
+                        },
+                        shapes =
+                            when (index) {
+                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                filterOptions.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                            },
+                        colors = ToggleButtonDefaults.toggleButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            checkedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        ),
+                        modifier = Modifier
+                            .weight(1f)
+                            .semantics { role = Role.RadioButton },
+                    ) {
+                        Icon(
+                            imageVector = if (filter == option) icons.first else icons.second,
+                            contentDescription = null,
+                        )
+                        Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
+                        Text(text = label, maxLines = 1)
+                    }
+                }
+            }
+
+            when {
+                isLoading -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_loading),
+                        message = stringResource(R.string.home_apps_hint),
+                        icon = Icons.Default.Apps,
+                        isLoading = true,
+                    )
+                }
+                rules.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_empty_apps_title),
+                        message = stringResource(R.string.ui_empty_apps_body),
+                        icon = Icons.Default.Apps,
+                        actionLabel = stringResource(R.string.menu_refresh),
+                        onAction = { viewModel.refreshRules() },
+                    )
+                }
+                filteredRules.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_empty_apps_title),
+                        message = stringResource(R.string.ui_filter_empty),
+                        icon = Icons.Default.Apps,
+                        actionLabel = stringResource(R.string.ui_filter_all),
+                        onAction = { filter = AppsFilter.All },
+                    )
+                }
+                else -> {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            state = listState,
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(end = if (showFastScroller) 32.dp else 0.dp),
+                        ) {
+                            groupedRules.forEach { item ->
+                                when (item) {
+                                    is AppListItem.Header -> {
+                                        item(key = "header_${item.letter}") {
+                                            SectionHeader(letter = item.letter)
+                                        }
+                                    }
+                                    is AppListItem.App -> {
+                                        item(key = "${item.rule.packageName ?: "uid"}_${item.rule.uid}") {
+                                            RuleCard(
+                                                rule = item.rule,
+                                                position = item.position,
+                                                onClick = {
+                                                    onNavigateToDetail(item.rule)
+                                                },
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (showFastScroller) {
+                            IndexedFastScroller(
+                                items = filteredRules,
+                                listState = listState,
+                                getIndexKey = { rule -> rule.name ?: rule.packageName.orEmpty() },
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .padding(vertical = spacing.small),
+                            )
+                        }
                     }
                 }
             }
@@ -149,15 +330,47 @@ fun AppsScreen() {
     }
 }
 
+private enum class AppsFilter {
+    All,
+    Blocked,
+    Allowed,
+}
+
+private enum class CardPosition {
+    First, Middle, Last, Single
+}
+
+private sealed interface AppListItem {
+    data class Header(val letter: String) : AppListItem
+    data class App(val rule: Rule, val position: CardPosition) : AppListItem
+}
+
+@Composable
+private fun SectionHeader(letter: String) {
+    Text(
+        text = letter,
+        style = MaterialTheme.typography.titleSmall,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = 32.dp,
+                end = 16.dp,
+                top = 16.dp,
+                bottom = 4.dp,
+            ),
+    )
+}
+
 @Composable
 private fun RuleCard(
     rule: Rule,
-    onToggle: () -> Unit,
+    position: CardPosition,
+    onClick: () -> Unit,
 ) {
     val context = LocalContext.current
     val spacing = MaterialTheme.spacing
-    val haptic = LocalHapticFeedback.current
-    var expanded by remember(rule.uid) { mutableStateOf(rule.expanded) }
 
     val iconBitmap = remember(rule.packageName) {
         runCatching {
@@ -167,176 +380,92 @@ private fun RuleCard(
         }.getOrNull()
     }
 
-    // Animated rotation for expand icon
-    val iconRotation = animatedRotation(expanded)
-
     val appName = rule.name ?: rule.packageName.orEmpty()
-    val expandDescription = if (expanded) {
-        stringResource(R.string.action_collapse)
-    } else {
-        stringResource(R.string.action_expand)
+
+    val shape = when (position) {
+        CardPosition.Single -> RoundedCornerShape(16.dp)
+        CardPosition.First -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
+        CardPosition.Last -> RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp, bottomStart = 16.dp, bottomEnd = 16.dp)
+        CardPosition.Middle -> RoundedCornerShape(4.dp)
     }
 
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        modifier = Modifier.animateContentHeight(),
+    Surface(
+        onClick = onClick,
+        shape = shape,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(
+                top = if (position == CardPosition.First || position == CardPosition.Single) 0.dp else 2.dp,
+            ),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(spacing.small),
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Row(
-                    modifier = Modifier.weight(1f),
-                    verticalAlignment = Alignment.CenterVertically,
+            // App icon
+            if (iconBitmap == null) {
+                Surface(
+                    modifier = Modifier.size(40.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
                 ) {
-                    if (iconBitmap != null) {
-                        Image(
-                            bitmap = iconBitmap,
-                            contentDescription = stringResource(R.string.content_desc_app_icon, appName),
-                            modifier = Modifier.size(TouchTargets.appIconSize),
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(spacing.medium))
-                    Column {
-                        Text(
-                            text = appName,
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = rule.packageName.orEmpty(),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.Apps,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
-                // Accessible expand button with proper touch target
-                IconButton(
-                    onClick = {
-                        expanded = !expanded
-                        rule.expanded = expanded
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    },
-                    modifier = Modifier.size(TouchTargets.minimum),
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ExpandMore,
-                        contentDescription = expandDescription,
-                        modifier = Modifier.graphicsLayer { rotationZ = iconRotation },
-                    )
-                }
+            } else {
+                Image(
+                    bitmap = iconBitmap,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                )
             }
 
-            // Primary toggles - always visible
-            RuleToggleRow(
-                label = stringResource(R.string.title_block_wifi),
-                checked = rule.wifi_blocked,
-                onCheckedChange = {
-                    rule.wifi_blocked = it
-                    onToggle()
-                },
-            )
-            RuleToggleRow(
-                label = stringResource(R.string.title_block_other),
-                checked = rule.other_blocked,
-                onCheckedChange = {
-                    rule.other_blocked = it
-                    onToggle()
-                },
-            )
-
-            // Expanded content with animation
-            ExpandableContent(expanded = expanded) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(spacing.small),
-                ) {
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_screen_wifi),
-                        checked = rule.screen_wifi,
-                        onCheckedChange = {
-                            rule.screen_wifi = it
-                            onToggle()
-                        },
-                    )
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_screen_other),
-                        checked = rule.screen_other,
-                        onCheckedChange = {
-                            rule.screen_other = it
-                            onToggle()
-                        },
-                    )
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_roaming),
-                        checked = rule.roaming,
-                        onCheckedChange = {
-                            rule.roaming = it
-                            onToggle()
-                        },
-                    )
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_lockdown),
-                        checked = rule.lockdown,
-                        onCheckedChange = {
-                            rule.lockdown = it
-                            onToggle()
-                        },
-                    )
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_apply),
-                        checked = rule.apply,
-                        onCheckedChange = {
-                            rule.apply = it
-                            onToggle()
-                        },
-                    )
-                    RuleToggleRow(
-                        label = stringResource(R.string.title_notify),
-                        checked = rule.notify,
-                        onCheckedChange = {
-                            rule.notify = it
-                            onToggle()
-                        },
-                    )
-
-                    AccessLogSection(rule = rule)
-
+            // App name + status
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = appName,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (rule.wifi_blocked || rule.other_blocked) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        FilledTonalButton(
-                            onClick = {
-                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                    .setData(Uri.parse("package:${rule.packageName}"))
-                                context.startActivity(intent)
-                            },
-                        ) {
-                            Text(text = stringResource(R.string.menu_settings))
+                        if (rule.wifi_blocked) {
+                            Icon(
+                                imageVector = Icons.Default.Wifi,
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                            )
                         }
-                        FilledTonalButton(
-                            onClick = {
-                                val intent = context.packageManager
-                                    .getLaunchIntentForPackage(rule.packageName.orEmpty())
-                                if (intent != null) {
-                                    context.startActivity(intent)
-                                }
-                            },
-                        ) {
-                            Text(text = stringResource(R.string.menu_launch))
+                        if (rule.wifi_blocked && rule.other_blocked) {
+                            Text(
+                                text = "—",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                            )
                         }
-                        FilledTonalButton(
-                            onClick = {
-                                DatabaseHelper.getInstance(context).clearAccess(rule.uid, true)
-                            },
-                        ) {
-                            Text(text = stringResource(R.string.menu_clear))
+                        if (rule.other_blocked) {
+                            Icon(
+                                imageVector = Icons.Default.Smartphone,
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                            )
                         }
                     }
                 }
@@ -345,38 +474,8 @@ private fun RuleCard(
     }
 }
 
-@Composable
-private fun RuleToggleRow(
-    label: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-) {
-    val haptic = LocalHapticFeedback.current
-    val spacing = MaterialTheme.spacing
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = label,
-            modifier = Modifier.weight(1f),
-        )
-        Switch(
-            checked = checked,
-            onCheckedChange = { newValue ->
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                onCheckedChange(newValue)
-            },
-            modifier = Modifier.semantics {
-                contentDescription = "$label: ${if (checked) "enabled" else "disabled"}"
-            },
-        )
-    }
-}
-
-private fun persistRule(context: android.content.Context, rule: Rule, allRules: List<Rule>) {
+fun persistRule(context: android.content.Context, rule: Rule, allRules: List<Rule>) {
     persistRuleInternal(context, rule, allRules, mutableSetOf())
 }
 
@@ -425,77 +524,3 @@ private fun persistRuleInternal(
         persistRuleInternal(context, related, allRules, visited)
     }
 }
-
-@Composable
-private fun AccessLogSection(rule: Rule) {
-    val context = LocalContext.current
-    val spacing = MaterialTheme.spacing
-    var accessEntries by remember(rule.uid) { mutableStateOf<List<AccessEntry>>(emptyList()) }
-    var loading by remember(rule.uid) { mutableStateOf(false) }
-
-    LaunchedEffect(rule.uid) {
-        loading = true
-        accessEntries = loadAccess(context, rule.uid)
-        loading = false
-    }
-
-    if (loading) {
-        Text(
-            text = stringResource(R.string.menu_log),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    } else if (accessEntries.isNotEmpty()) {
-        Column(verticalArrangement = Arrangement.spacedBy(spacing.extraSmall)) {
-            Text(
-                text = stringResource(R.string.menu_log),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            accessEntries.forEach { entry ->
-                val color = if (entry.allowed > 0) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.error
-                }
-                Text(
-                    text = "${entry.timeText} ${entry.daddr}:${entry.dport}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (entry.allowed >= 0) color else Color.Unspecified,
-                )
-            }
-        }
-    }
-}
-
-private data class AccessEntry(
-    val time: Long,
-    val timeText: String,
-    val daddr: String,
-    val dport: Int,
-    val allowed: Int,
-)
-
-private suspend fun loadAccess(context: android.content.Context, uid: Int): List<AccessEntry> =
-    withContext(Dispatchers.IO) {
-        val result = mutableListOf<AccessEntry>()
-        DatabaseHelper.getInstance(context).getAccess(uid).use { cursor ->
-            val colTime = cursor.getColumnIndex("time")
-            val colDAddr = cursor.getColumnIndex("daddr")
-            val colDPort = cursor.getColumnIndex("dport")
-            val colAllowed = cursor.getColumnIndex("allowed")
-            val timeFormat = java.text.SimpleDateFormat("HH:mm")
-            while (cursor.moveToNext() && result.size < 5) {
-                result.add(
-                    AccessEntry(
-                        time = cursor.getLong(colTime),
-                        timeText = timeFormat.format(cursor.getLong(colTime)),
-                        daddr = cursor.getString(colDAddr),
-                        dport = cursor.getInt(colDPort),
-                        allowed = cursor.getInt(colAllowed),
-                    ),
-                )
-            }
-        }
-        result
-    }

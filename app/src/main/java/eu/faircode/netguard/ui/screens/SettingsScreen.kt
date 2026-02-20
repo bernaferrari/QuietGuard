@@ -218,131 +218,155 @@ fun SettingsScreen(
                     Triple("auto", stringResource(R.string.setting_appearance_auto), Icons.Default.Settings),
                 )
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = spacing.small),
-                    horizontalArrangement = Arrangement.spacedBy(spacing.small),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    modeOptions.forEach { (mode, label, icon) ->
-                        AppearanceModeToggle(
-                            label = label,
-                            icon = icon,
-                            isSelected = appearanceMode == mode,
-                            onClick = { updateAppearance(mode) },
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                }
-
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.surfaceContainer,
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
                     shape = MaterialTheme.shapes.large,
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(spacing.large),
-                        verticalArrangement = Arrangement.spacedBy(spacing.default),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(spacing.extraLarge),
                     ) {
-                        Text(
-                            text = stringResource(R.string.setting_theme_palette),
-                            style = MaterialTheme.typography.titleSmall,
-                        )
-
-                        // Theme color swatches
-                        val themeChoices = listOf(
-                            Pair("dynamic", null), // null color = dynamic
-                            Pair("teal", Teal500),
-                            Pair("blue", BluePrimary),
-                            Pair("purple", PurplePrimary),
-                            Pair("amber", AmberPrimary),
-                            Pair("orange", OrangePrimary),
-                            Pair("green", GreenPrimary),
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-                            modifier = Modifier.fillMaxWidth(),
+                        // Appearance Mode
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(spacing.medium),
                         ) {
-                            themeChoices.forEach { (theme, seedColor) ->
-                                val isDynamic = theme == "dynamic"
-                                val isEnabled = !isDynamic || dynamicThemeEnabled
-                                val isSelected = currentTheme == theme
-                                val displayColor = seedColor ?: MaterialTheme.colorScheme.primary
-                                val selectionScale by animateFloatAsState(
-                                    targetValue = if (isSelected) 1.08f else 1f,
-                                    animationSpec = tween(
-                                        durationMillis = 180,
-                                        easing = FastOutSlowInEasing,
-                                    ),
-                                    label = "appearanceThemeScale",
-                                )
-                                val iconScale by animateFloatAsState(
-                                    targetValue = if (isSelected) 1.05f else 0.86f,
-                                    animationSpec = tween(
-                                        durationMillis = 180,
-                                        easing = FastOutSlowInEasing,
-                                    ),
-                                    label = "appearanceThemeIcon",
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .graphicsLayer {
-                                            scaleX = selectionScale
-                                            scaleY = selectionScale
-                                        }
-                                        .clip(CircleShape)
-                                        .background(
-                                            color = if (isEnabled) displayColor else displayColor.copy(
-                                                alpha = 0.3f
-                                            ),
-                                            shape = CircleShape,
-                                        )
-                                        .clickable(enabled = isEnabled) {
-                                            Prefs.putString("theme", theme)
-                                            Widgets.updateAll(context)
-                                        },
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    if (isSelected) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .graphicsLayer {
-                                                    scaleX = iconScale
-                                                    scaleY = iconScale
-                                                },
-                                            tint = Color.White,
-                                        )
-                                    } else if (isDynamic) {
-                                        Icon(
-                                            imageVector = Icons.Default.Palette,
-                                            contentDescription = stringResource(R.string.theme_dynamic),
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .graphicsLayer {
-                                                    scaleX = iconScale
-                                                    scaleY = iconScale
-                                                },
-                                            tint = Color.White,
-                                        )
-                                    }
+                            Text(
+                                text = stringResource(R.string.setting_appearance_mode),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = spacing.small),
+                                horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                modeOptions.forEach { (mode, label, icon) ->
+                                    AppearanceModeToggle(
+                                        label = label,
+                                        icon = icon,
+                                        isSelected = appearanceMode == mode,
+                                        onClick = { updateAppearance(mode) },
+                                        modifier = Modifier.weight(1f),
+                                    )
                                 }
                             }
                         }
 
-                        if (!dynamicThemeEnabled) {
+                        HorizontalDivider(
+                            modifier = Modifier.fillMaxWidth(0.5f),
+                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+                        )
+
+                        // Theme Palette
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(spacing.medium),
+                        ) {
                             Text(
-                                text = stringResource(R.string.setting_dynamic_unavailable),
-                                style = MaterialTheme.typography.bodySmall,
+                                text = stringResource(R.string.setting_theme_palette),
+                                style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
+
+                            val themeChoices = listOf(
+                                Pair("dynamic", null),
+                                Pair("teal", Teal500),
+                                Pair("blue", BluePrimary),
+                                Pair("purple", PurplePrimary),
+                                Pair("amber", AmberPrimary),
+                                Pair("orange", OrangePrimary),
+                                Pair("green", GreenPrimary),
+                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                            ) {
+                                themeChoices.forEach { (theme, seedColor) ->
+                                    val isDynamic = theme == "dynamic"
+                                    val isEnabled = !isDynamic || dynamicThemeEnabled
+                                    val isSelected = currentTheme == theme
+                                    val displayColor = seedColor ?: MaterialTheme.colorScheme.primary
+                                    val selectionScale by animateFloatAsState(
+                                        targetValue = if (isSelected) 1.08f else 1f,
+                                        animationSpec = tween(
+                                            durationMillis = 180,
+                                            easing = FastOutSlowInEasing,
+                                        ),
+                                        label = "appearanceThemeScale",
+                                    )
+                                    val iconScale by animateFloatAsState(
+                                        targetValue = if (isSelected) 1.05f else 0.86f,
+                                        animationSpec = tween(
+                                            durationMillis = 180,
+                                            easing = FastOutSlowInEasing,
+                                        ),
+                                        label = "appearanceThemeIcon",
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .graphicsLayer {
+                                                scaleX = selectionScale
+                                                scaleY = selectionScale
+                                            }
+                                            .clip(CircleShape)
+                                            .background(
+                                                color = if (isEnabled) displayColor else displayColor.copy(
+                                                    alpha = 0.3f
+                                                ),
+                                                shape = CircleShape,
+                                            )
+                                            .clickable(enabled = isEnabled) {
+                                                Prefs.putString("theme", theme)
+                                                Widgets.updateAll(context)
+                                            },
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        if (isSelected) {
+                                            Icon(
+                                                imageVector = Icons.Default.Check,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .size(20.dp)
+                                                    .graphicsLayer {
+                                                        scaleX = iconScale
+                                                        scaleY = iconScale
+                                                    },
+                                                tint = Color.White,
+                                            )
+                                        } else if (isDynamic) {
+                                            Icon(
+                                                imageVector = Icons.Default.Palette,
+                                                contentDescription = stringResource(R.string.theme_dynamic),
+                                                modifier = Modifier
+                                                    .size(20.dp)
+                                                    .graphicsLayer {
+                                                        scaleX = iconScale
+                                                        scaleY = iconScale
+                                                    },
+                                                tint = Color.White,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (!dynamicThemeEnabled) {
+                                Text(
+                                    text = stringResource(R.string.setting_dynamic_unavailable),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                     }
                 }

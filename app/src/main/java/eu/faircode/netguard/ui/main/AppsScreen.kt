@@ -29,6 +29,8 @@ import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.filled.MobileOff
+import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material.icons.outlined.Block
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Tune
@@ -53,6 +55,11 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,6 +75,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import eu.faircode.netguard.R
@@ -93,6 +101,7 @@ fun AppsScreen(
     val rulesUiState by viewModel.rulesUiState.collectAsStateWithLifecycle()
     val rules = rulesUiState.rules
     val isLoading = rulesUiState.isLoading && rulesUiState.rules.isEmpty()
+    val isRefreshing = rulesUiState.isLoading
     var filter by remember { mutableStateOf(AppsFilter.All) }
 
     LaunchedEffect(Unit) {
@@ -193,10 +202,25 @@ fun AppsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.refreshRules() }) {
+                    val infiniteTransition = rememberInfiniteTransition(label = "refresh")
+                    val rotation by infiniteTransition.animateFloat(
+                        initialValue = 0f,
+                        targetValue = if (isRefreshing) 360f else 0f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(durationMillis = 800, easing = LinearEasing),
+                        ),
+                        label = "refreshRotation",
+                    )
+                    IconButton(
+                        onClick = { viewModel.refreshRules() },
+                        enabled = !isRefreshing,
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(R.string.menu_refresh),
+                            modifier = Modifier.graphicsLayer {
+                                rotationZ = if (isRefreshing) rotation else 0f
+                            },
                         )
                     }
                 },
@@ -213,9 +237,21 @@ fun AppsScreen(
         ) {
             // Filter chips
             val filterOptions = listOf(
-                Triple(AppsFilter.All, stringResource(R.string.ui_filter_all), Icons.Filled.Tune to Icons.Outlined.Tune),
-                Triple(AppsFilter.Blocked, stringResource(R.string.menu_traffic_blocked), Icons.Filled.Block to Icons.Outlined.Block),
-                Triple(AppsFilter.Allowed, stringResource(R.string.menu_traffic_allowed), Icons.Filled.CheckCircle to Icons.Outlined.CheckCircle),
+                Triple(
+                    AppsFilter.All,
+                    stringResource(R.string.ui_filter_all),
+                    Icons.Filled.Tune
+                ),
+                Triple(
+                    AppsFilter.Blocked,
+                    stringResource(R.string.menu_traffic_blocked),
+                    Icons.Filled.Block
+                ),
+                Triple(
+                    AppsFilter.Allowed,
+                    stringResource(R.string.menu_traffic_allowed),
+                    Icons.Filled.CheckCircle
+                ),
             )
             Row(
                 modifier = Modifier
@@ -248,7 +284,7 @@ fun AppsScreen(
                             .semantics { role = Role.RadioButton },
                     ) {
                         Icon(
-                            imageVector = if (filter == option) icons.first else icons.second,
+                            imageVector = icons,
                             contentDescription = null,
                         )
                         Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
@@ -266,6 +302,7 @@ fun AppsScreen(
                         isLoading = true,
                     )
                 }
+
                 rules.isEmpty() -> {
                     StatePlaceholder(
                         title = stringResource(R.string.ui_empty_apps_title),
@@ -275,6 +312,7 @@ fun AppsScreen(
                         onAction = { viewModel.refreshRules() },
                     )
                 }
+
                 filteredRules.isEmpty() -> {
                     StatePlaceholder(
                         title = stringResource(R.string.ui_empty_apps_title),
@@ -284,6 +322,7 @@ fun AppsScreen(
                         onAction = { filter = AppsFilter.All },
                     )
                 }
+
                 else -> {
                     Box(modifier = Modifier.fillMaxSize()) {
                         LazyColumn(
@@ -298,6 +337,7 @@ fun AppsScreen(
                                             SectionHeader(letter = item.letter)
                                         }
                                     }
+
                                     is AppListItem.App -> {
                                         item(key = "${item.rule.packageName ?: "uid"}_${item.rule.uid}") {
                                             RuleCard(
@@ -315,9 +355,15 @@ fun AppsScreen(
 
                         if (showFastScroller) {
                             IndexedFastScroller(
-                                items = filteredRules,
+                                items = groupedRules,
                                 listState = listState,
-                                getIndexKey = { rule -> rule.name ?: rule.packageName.orEmpty() },
+                                getIndexKey = { item ->
+                                    when (item) {
+                                        is AppListItem.Header -> item.letter
+                                        is AppListItem.App -> item.rule.name ?: item.rule.packageName.orEmpty()
+                                    }
+                                },
+                                scrollItemOffset = 2,
                                 modifier = Modifier
                                     .align(Alignment.CenterEnd)
                                     .padding(vertical = spacing.small),
@@ -441,35 +487,54 @@ private fun RuleCard(
                 )
                 if (rule.wifi_blocked || rule.other_blocked) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(top = 2.dp),
                     ) {
                         if (rule.wifi_blocked) {
-                            Icon(
-                                imageVector = Icons.Default.Wifi,
-                                contentDescription = null,
-                                modifier = Modifier.size(14.dp),
-                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
-                            )
-                        }
-                        if (rule.wifi_blocked && rule.other_blocked) {
-                            Text(
-                                text = "—",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                            BlockedBadge(
+                                icon = Icons.Default.WifiOff,
+                                label = stringResource(R.string.title_wifi),
                             )
                         }
                         if (rule.other_blocked) {
-                            Icon(
-                                imageVector = Icons.Default.Smartphone,
-                                contentDescription = null,
-                                modifier = Modifier.size(14.dp),
-                                tint = MaterialTheme.colorScheme.error.copy(alpha = 0.85f),
+                            BlockedBadge(
+                                icon = Icons.Default.MobileOff,
+                                label = stringResource(R.string.title_mobile),
                             )
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun BlockedBadge(
+    icon: ImageVector,
+    label: String,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.extraSmall,
+        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.55f),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(3.dp),
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(10.dp),
+                tint = MaterialTheme.colorScheme.onErrorContainer,
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+            )
         }
     }
 }
@@ -497,16 +562,26 @@ private fun persistRuleInternal(
     val notifyKey = Prefs.namespaced("notify", packageName)
 
     if (rule.wifi_blocked == rule.wifi_default) Prefs.remove(wifiKey) else Prefs.putBoolean(wifiKey, rule.wifi_blocked)
-    if (rule.other_blocked == rule.other_default) Prefs.remove(otherKey) else Prefs.putBoolean(otherKey, rule.other_blocked)
+    if (rule.other_blocked == rule.other_default) Prefs.remove(otherKey) else Prefs.putBoolean(
+        otherKey,
+        rule.other_blocked
+    )
     if (rule.apply) Prefs.remove(applyKey) else Prefs.putBoolean(applyKey, rule.apply)
-    if (rule.screen_wifi == rule.screen_wifi_default) Prefs.remove(screenWifiKey) else Prefs.putBoolean(screenWifiKey, rule.screen_wifi)
-    if (rule.screen_other == rule.screen_other_default) Prefs.remove(screenOtherKey) else Prefs.putBoolean(screenOtherKey, rule.screen_other)
+    if (rule.screen_wifi == rule.screen_wifi_default) Prefs.remove(screenWifiKey) else Prefs.putBoolean(
+        screenWifiKey,
+        rule.screen_wifi
+    )
+    if (rule.screen_other == rule.screen_other_default) Prefs.remove(screenOtherKey) else Prefs.putBoolean(
+        screenOtherKey,
+        rule.screen_other
+    )
     if (rule.roaming == rule.roaming_default) Prefs.remove(roamingKey) else Prefs.putBoolean(roamingKey, rule.roaming)
     if (rule.lockdown) Prefs.putBoolean(lockdownKey, rule.lockdown) else Prefs.remove(lockdownKey)
     if (rule.notify) Prefs.remove(notifyKey) else Prefs.putBoolean(notifyKey, rule.notify)
 
     rule.updateChanged(context)
-    val notificationManager = context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as NotificationManager
+    val notificationManager =
+        context.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.cancel(rule.uid)
     ServiceSinkhole.reload("rule changed", context, false)
     Widgets.updateFirewall(context)

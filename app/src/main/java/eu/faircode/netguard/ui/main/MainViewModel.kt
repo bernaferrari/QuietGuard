@@ -12,10 +12,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import eu.faircode.netguard.data.Prefs
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 data class RulesUiState(
@@ -37,6 +40,16 @@ class MainViewModel @Inject constructor(
         )
     private val _rulesUiState = MutableStateFlow(RulesUiState())
     val rulesUiState: StateFlow<RulesUiState> = _rulesUiState.asStateFlow()
+
+    init {
+        // Auto-refresh the app list whenever any preference changes (e.g. settings toggles)
+        viewModelScope.launch {
+            Prefs.data
+                .drop(1) // skip the initial emission
+                .debounce(300L) // coalesce rapid back-to-back changes
+                .collect { refreshRules() }
+        }
+    }
 
     fun setEnabled(enabled: Boolean) {
         viewModelScope.launch {

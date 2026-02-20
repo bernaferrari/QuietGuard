@@ -52,6 +52,7 @@ fun <T> IndexedFastScroller(
     minItemCount: Int = 24,
     onInteractionStart: () -> Unit = {},
     onInteractionEnd: () -> Unit = {},
+    scrollItemOffset: Int = 0,
 ) {
     if (items.size < minItemCount) return
 
@@ -93,7 +94,7 @@ fun <T> IndexedFastScroller(
     fun scrollToLabel(label: String) {
         val targetIndex = labelToIndexMap[label] ?: return
         coroutineScope.launch {
-            listState.scrollToItem(targetIndex)
+            listState.scrollToItem((targetIndex - scrollItemOffset).coerceAtLeast(0))
         }
     }
 
@@ -212,10 +213,10 @@ fun <T> IndexedFastScroller(
                             Modifier
                                 .fillMaxWidth()
                                 .graphicsLayer {
-                                scaleX = scale
-                                scaleY = scale
-                                this.alpha = alpha
-                            },
+                                    scaleX = scale
+                                    scaleY = scale
+                                    this.alpha = alpha
+                                },
                     )
                 }
             }

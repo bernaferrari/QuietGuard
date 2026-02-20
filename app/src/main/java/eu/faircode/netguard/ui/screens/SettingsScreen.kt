@@ -431,8 +431,21 @@ fun SettingsScreen(
                 ) { updateFlag("manage_system", it, reload = true) }
                 SettingToggleRow(
                     title = stringResource(R.string.setting_log_app),
-                    checked = bool("log_app", false),
-                ) { updateFlag("log_app", it) }
+                    checked = bool("log", false),
+                ) { enabled ->
+                    Prefs.putBoolean("log", enabled)
+                    ServiceSinkhole.reload("settings", context, false)
+                }
+                SettingTextRowWithTooltip(
+                    title = stringResource(R.string.setting_log_retention_days),
+                    tooltip = stringResource(R.string.summary_log_retention_days),
+                    value = str("log_retention_days", "3"),
+                    keyboardType = KeyboardType.Number,
+                ) { input ->
+                    val numeric = input.filter(Char::isDigit).take(3)
+                    val normalized = numeric.toIntOrNull()?.coerceIn(0, 365)?.toString() ?: numeric
+                    Prefs.putString("log_retention_days", normalized)
+                }
                 SettingToggleRow(
                     title = stringResource(R.string.setting_access),
                     checked = bool("notify_access", false),
@@ -793,8 +806,9 @@ fun SettingsScreen(
 }
 
 /**
- * A compact color-theme swatch circle with animated selection state.
- * Touch target is 44dp but the visible circle is 32dp to keep things neat.
+ * A color-theme swatch that is a rounded square at rest and morphs to a
+ * circle when selected. The selection ring uses the theme outline colour for
+ * contrast, is thicker, and has a visible gap from the fill.
  */
 @Composable
 private fun ThemeSwatch(
@@ -806,28 +820,35 @@ private fun ThemeSwatch(
     onClick: () -> Unit,
 ) {
     val baseColor = seedColor ?: dynamicColor
-    val displayColor = if (isEnabled) baseColor else baseColor.copy(alpha = 0.3f)
+    val displayColor = if (isEnabled) baseColor else baseColor.copy(alpha = 0.38f)
     val isDynamic = theme == "dynamic"
+    val outlineColor = MaterialTheme.colorScheme.outline
 
-    // Outer ring alpha — only visible when selected
+    // Corner radius fraction: 0.25 (rounded square) → 0.5 (full circle)
+    val cornerFraction by animateFloatAsState(
+        targetValue = if (isSelected) 0.5f else 0.28f,
+        animationSpec = spring(dampingRatio = 0.6f, stiffness = 450f),
+        label = "corner_$theme",
+    )
+    // Scale: unselected swatches shrink slightly so the selected one pops
+    val fillScale by animateFloatAsState(
+        targetValue = if (isSelected) 1f else 0.82f,
+        animationSpec = spring(dampingRatio = 0.55f, stiffness = 450f),
+        label = "scale_$theme",
+    )
+    // Ring appears on selection using the outline colour for contrast
     val ringAlpha by animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,
-        animationSpec = tween(durationMillis = 200),
+        animationSpec = tween(durationMillis = 180),
         label = "ring_$theme",
-    )
-    // Inner circle scale — shrinks when selected to reveal the ring gap
-    val fillScale by animateFloatAsState(
-        targetValue = if (isSelected) 0.7f else 1f,
-        animationSpec = spring(dampingRatio = 0.5f, stiffness = 500f),
-        label = "fill_$theme",
     )
     val iconAlpha by animateFloatAsState(
         targetValue = if (isSelected) 1f else if (isDynamic) 0.85f else 0f,
-        animationSpec = tween(durationMillis = 200),
+        animationSpec = tween(durationMillis = 180),
         label = "icon_$theme",
     )
 
-    // 44dp tap target wrapping a 32dp visible circle
+    // 44dp touch target
     Box(
         modifier = Modifier
             .size(44.dp)
@@ -835,27 +856,30 @@ private fun ThemeSwatch(
             .clickable(enabled = isEnabled, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        // Outer ring (only drawn when selected)
+        // Selection ring — uses outline colour, 3dp thick with a 3dp gap from fill
         if (ringAlpha > 0f) {
             Box(
                 modifier = Modifier
-                    .size(42.dp)
+                    .size(40.dp)
+                    .graphicsLayer { alpha = ringAlpha }
                     .drawBehind {
                         drawCircle(
-                            color = displayColor.copy(alpha = ringAlpha),
+                            color = outlineColor,
                             radius = size.minDimension / 2f,
-                            style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2.dp.toPx()),
+                            style = androidx.compose.ui.graphics.drawscope.Stroke(
+                                width = 2.5.dp.toPx(),
+                            ),
                         )
                     },
             )
         }
 
-        // Inner filled circle — always 36dp, scales down when selected
+        // Filled swatch — rounded-square at rest, circle when selected
         Box(
             modifier = Modifier
-                .size(36.dp)
+                .size(32.dp)
                 .graphicsLayer { scaleX = fillScale; scaleY = fillScale }
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(percent = (cornerFraction * 100).toInt()))
                 .background(displayColor),
             contentAlignment = Alignment.Center,
         ) {
@@ -1259,16 +1283,11 @@ private fun CompactSettingToggleTile(
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     Surface(
-        modifier = modifier
-            .heightIn(min = 72.dp)
-            .toggleable(
-                value = checked,
-                role = Role.Switch,
-                onValueChange = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                    onCheckedChange(it)
-                },
-            ),
+        onClick = {
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            onCheckedChange(!checked)
+        },
+        modifier = modifier.heightIn(min = 72.dp),
         shape = tileShape,
         color = if (checked) MaterialTheme.colorScheme.primaryContainer
         else MaterialTheme.colorScheme.surfaceContainerLow,

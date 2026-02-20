@@ -438,7 +438,14 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         }
     }
 
-    fun getLog(udp: Boolean, tcp: Boolean, other: Boolean, allowed: Boolean, blocked: Boolean): Cursor {
+    fun getLog(
+        udp: Boolean,
+        tcp: Boolean,
+        other: Boolean,
+        allowed: Boolean,
+        blocked: Boolean,
+        limit: Int = 0,
+    ): Cursor {
         lock.readLock().lock()
         try {
             val db = readableDatabase
@@ -465,6 +472,9 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
             }
             query += ")"
             query += " ORDER BY time DESC"
+            if (limit > 0) {
+                query += " LIMIT $limit"
+            }
             return db.rawQuery(query, arrayOf())
         } finally {
             lock.readLock().unlock()

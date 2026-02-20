@@ -73,7 +73,8 @@ fun NetGuardTheme(
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
-    val useDynamic = dynamicColor && themeName == "dynamic" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val useDynamic =
+        dynamicColor && themeName == "dynamic" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val seedColor = ThemeSeeds[themeName] ?: Teal500
     val colorScheme =
         if (useDynamic) {
@@ -81,7 +82,7 @@ fun NetGuardTheme(
         } else {
             rememberDynamicMaterialThemeState(
                 seedColor = seedColor,
-                style = PaletteStyle.TonalSpot,
+                style = PaletteStyle.Vibrant,
                 isDark = darkTheme,
                 specVersion = ColorSpec.SpecVersion.SPEC_2025,
             ).colorScheme
@@ -132,6 +133,7 @@ fun NetGuardThemeFromPrefs(content: @Composable () -> Unit) {
         AppearanceMode.Dark -> true
         AppearanceMode.Auto ->
             isSystemInDarkTheme()
+
         null ->
             if (prefs.asMap().containsKey(booleanPreferencesKey("dark_theme"))) {
                 prefs[booleanPreferencesKey("dark_theme")] ?: false

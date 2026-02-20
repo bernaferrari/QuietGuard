@@ -20,10 +20,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
@@ -40,6 +44,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -55,6 +60,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -63,21 +70,30 @@ import androidx.compose.animation.core.tween
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.distinctUntilChanged
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
@@ -95,35 +111,54 @@ import eu.faircode.netguard.ui.util.StatePlaceholder
 fun AppsScreen(
     viewModel: MainViewModel,
     onNavigateToDetail: (Rule) -> Unit = {},
+    initialFilter: AppsFilter = AppsFilter.All,
+    initialFilterVersion: Int = 0,
 ) {
     val spacing = MaterialTheme.spacing
+    val focusManager = LocalFocusManager.current
+    val searchFocusRequester = remember { FocusRequester() }
     val listState = rememberLazyListState()
     val rulesUiState by viewModel.rulesUiState.collectAsStateWithLifecycle()
     val rules = rulesUiState.rules
     val isLoading = rulesUiState.isLoading && rulesUiState.rules.isEmpty()
     val isRefreshing = rulesUiState.isLoading
-    var filter by remember { mutableStateOf(AppsFilter.All) }
+    var filter by remember(initialFilterVersion) { mutableStateOf(initialFilter) }
+    var isSearchOpen by rememberSaveable { mutableStateOf(false) }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    val normalizedSearchQuery = searchQuery.trim()
 
     LaunchedEffect(Unit) {
         viewModel.ensureRulesLoaded()
     }
 
-    val filteredRules by remember(rulesUiState.rules, filter) {
+    LaunchedEffect(isSearchOpen) {
+        if (isSearchOpen) {
+            searchFocusRequester.requestFocus()
+        }
+    }
+
+    LaunchedEffect(listState, isSearchOpen) {
+        snapshotFlow { listState.isScrollInProgress }
+            .distinctUntilChanged()
+            .collect { scrolling ->
+                if (scrolling && isSearchOpen) {
+                    focusManager.clearFocus()
+                }
+            }
+    }
+
+    val filteredRules by remember(rulesUiState.rules, filter, normalizedSearchQuery) {
         derivedStateOf {
-            when (filter) {
+            val base = when (filter) {
                 AppsFilter.All -> rules
                 AppsFilter.Blocked -> rules.filter { it.wifi_blocked || it.other_blocked }
                 AppsFilter.Allowed -> rules.filter { !it.wifi_blocked && !it.other_blocked }
             }
+            if (normalizedSearchQuery.isEmpty()) base else base.filter { matchesAppQuery(it, normalizedSearchQuery) }
         }
     }
-    val badgeCount by remember(rulesUiState.rules, filteredRules, filter) {
-        derivedStateOf {
-            when (filter) {
-                AppsFilter.All -> rules.size
-                AppsFilter.Blocked, AppsFilter.Allowed -> filteredRules.size
-            }
-        }
+    val badgeCount by remember(filteredRules) {
+        derivedStateOf { filteredRules.size }
     }
 
     // Group by first letter for section headers
@@ -212,6 +247,26 @@ fun AppsScreen(
                         label = "refreshRotation",
                     )
                     IconButton(
+                        onClick = {
+                            if (isSearchOpen) {
+                                isSearchOpen = false
+                                searchQuery = ""
+                                focusManager.clearFocus()
+                            } else {
+                                isSearchOpen = true
+                            }
+                        },
+                    ) {
+                        Icon(
+                            imageVector = if (isSearchOpen) Icons.Default.Close else Icons.Default.Search,
+                            contentDescription = if (isSearchOpen) {
+                                stringResource(R.string.action_clear_search)
+                            } else {
+                                stringResource(R.string.menu_search)
+                            },
+                        )
+                    }
+                    IconButton(
                         onClick = { viewModel.refreshRules() },
                         enabled = !isRefreshing,
                     ) {
@@ -293,6 +348,40 @@ fun AppsScreen(
                 }
             }
 
+            if (isSearchOpen) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(searchFocusRequester)
+                        .padding(horizontal = spacing.default, vertical = spacing.small),
+                    shape = MaterialTheme.shapes.extraLarge,
+                    singleLine = true,
+                    placeholder = { Text(stringResource(R.string.menu_search)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                        )
+                    },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = stringResource(R.string.action_clear_search),
+                                )
+                            }
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(
+                        onSearch = { focusManager.clearFocus() },
+                    ),
+                )
+            }
+
             when {
                 isLoading -> {
                     StatePlaceholder(
@@ -314,13 +403,23 @@ fun AppsScreen(
                 }
 
                 filteredRules.isEmpty() -> {
-                    StatePlaceholder(
-                        title = stringResource(R.string.ui_empty_apps_title),
-                        message = stringResource(R.string.ui_filter_empty),
-                        icon = Icons.Default.Apps,
-                        actionLabel = stringResource(R.string.ui_filter_all),
-                        onAction = { filter = AppsFilter.All },
-                    )
+                    if (normalizedSearchQuery.isNotEmpty()) {
+                        StatePlaceholder(
+                            title = stringResource(R.string.ui_empty_apps_title),
+                            message = stringResource(R.string.ui_apps_search_empty),
+                            icon = Icons.Default.Search,
+                            actionLabel = stringResource(R.string.action_clear_search),
+                            onAction = { searchQuery = "" },
+                        )
+                    } else {
+                        StatePlaceholder(
+                            title = stringResource(R.string.ui_empty_apps_title),
+                            message = stringResource(R.string.ui_filter_empty),
+                            icon = Icons.Default.Apps,
+                            actionLabel = stringResource(R.string.ui_filter_all),
+                            onAction = { filter = AppsFilter.All },
+                        )
+                    }
                 }
 
                 else -> {
@@ -343,6 +442,7 @@ fun AppsScreen(
                                             RuleCard(
                                                 rule = item.rule,
                                                 position = item.position,
+                                                searchQuery = normalizedSearchQuery,
                                                 onClick = {
                                                     onNavigateToDetail(item.rule)
                                                 },
@@ -376,7 +476,7 @@ fun AppsScreen(
     }
 }
 
-private enum class AppsFilter {
+enum class AppsFilter {
     All,
     Blocked,
     Allowed,
@@ -413,6 +513,7 @@ private fun SectionHeader(letter: String) {
 private fun RuleCard(
     rule: Rule,
     position: CardPosition,
+    searchQuery: String,
     onClick: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -427,6 +528,14 @@ private fun RuleCard(
     }
 
     val appName = rule.name ?: rule.packageName.orEmpty()
+    val highlightColor = MaterialTheme.colorScheme.primary
+    val highlightedAppName = remember(appName, searchQuery, highlightColor) {
+        buildMatchHighlightedText(
+            text = appName,
+            query = searchQuery,
+            highlightColor = highlightColor,
+        )
+    }
 
     val shape = when (position) {
         CardPosition.Single -> RoundedCornerShape(16.dp)
@@ -480,7 +589,7 @@ private fun RuleCard(
             // App name + status
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = appName,
+                    text = highlightedAppName,
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -537,6 +646,54 @@ private fun BlockedBadge(
             )
         }
     }
+}
+
+private fun matchesAppQuery(rule: Rule, query: String): Boolean {
+    if (query.isBlank()) return true
+    val appName = rule.name ?: rule.packageName.orEmpty()
+    val packageName = rule.packageName.orEmpty()
+    return findSubsequenceMatchIndices(appName, query) != null ||
+        findSubsequenceMatchIndices(packageName, query) != null
+}
+
+private fun buildMatchHighlightedText(
+    text: String,
+    query: String,
+    highlightColor: androidx.compose.ui.graphics.Color,
+): AnnotatedString {
+    val matchedIndices = findSubsequenceMatchIndices(text, query) ?: return AnnotatedString(text)
+    if (matchedIndices.isEmpty()) return AnnotatedString(text)
+
+    return buildAnnotatedString {
+        text.forEachIndexed { index, c ->
+            if (index in matchedIndices) {
+                withStyle(SpanStyle(color = highlightColor)) {
+                    append(c)
+                }
+            } else {
+                append(c)
+            }
+        }
+    }
+}
+
+private fun findSubsequenceMatchIndices(text: String, query: String): Set<Int>? {
+    if (query.isBlank()) return emptySet()
+
+    val normalizedQuery = query.filterNot(Char::isWhitespace)
+    if (normalizedQuery.isEmpty()) return emptySet()
+
+    val matched = mutableSetOf<Int>()
+    var qIndex = 0
+    for (i in text.indices) {
+        if (qIndex >= normalizedQuery.length) break
+        if (text[i].equals(normalizedQuery[qIndex], ignoreCase = true)) {
+            matched.add(i)
+            qIndex++
+        }
+    }
+
+    return if (qIndex == normalizedQuery.length) matched else null
 }
 
 

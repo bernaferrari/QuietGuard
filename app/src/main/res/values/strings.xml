@@ -60,22 +60,34 @@
     <string name="ui_empty_apps_body">Try refreshing the list.</string>
     <string name="ui_empty_dns_title">No resolved DNS yet</string>
     <string name="ui_empty_dns_body">DNS responses will appear here after browsing.</string>
+    <string name="ui_dns_filter_empty">No DNS entries match this filter.</string>
     <string name="ui_empty_forwarding_title">No forwarding rules</string>
     <string name="ui_empty_forwarding_body">Add a rule to start forwarding traffic.</string>
+    <string name="ui_forwarding_filter_empty">No forwarding rules match this filter.</string>
     <string name="ui_empty_pro_body">Support unlocks extra features and keeps the project alive.</string>
     <string name="ui_empty_pro_details">Pro unlocks: filtering, logging, notifications, themes, and speed limits.</string>
     <string name="ui_home_hint">Control internet access for every app.</string>
+    <string name="ui_home_quick_actions">Quick actions</string>
     <string name="ui_apps_title">Firewall</string>
     <string name="ui_logs_title">Traffic log</string>
+    <string name="ui_logs_filters">Filters</string>
+    <string name="ui_logs_filter_status">Status</string>
+    <string name="ui_logs_filter_protocol">Protocol</string>
+    <string name="ui_logs_filter_view">View</string>
+    <string name="ui_logs_group_timeline">Timeline</string>
+    <string name="ui_logs_group_by_app">By app</string>
+    <string name="ui_logs_unknown_source">Unknown source</string>
     <string name="ui_settings_title">Settings</string>
     <string name="ui_dns_title">Resolved DNS</string>
     <string name="ui_forwarding_title">Port forwarding</string>
     <string name="ui_dns_hint">Recently resolved domains and responses.</string>
     <string name="ui_forwarding_hint">Manage forwarding rules and target apps.</string>
+    <string name="ui_dns_active">Active</string>
     <string name="ui_rule_custom">Custom</string>
     <string name="ui_dns_expired">Expired</string>
     <string name="ui_filter_all">All</string>
     <string name="ui_filter_empty">No apps match this filter.</string>
+    <string name="ui_apps_search_empty">No apps match this search.</string>
     <string name="ui_learn_more">Learn more</string>
     <string name="status_running">Traffic is being filtered</string>
     <string name="status_not_running">Traffic is not being filtered</string>
@@ -96,8 +108,8 @@
     <string name="content_desc_show_info">Show information about %1$s</string>
 
     <!-- Dashboard stats -->
-    <string name="stat_blocked_today">Blocked today</string>
-    <string name="stat_allowed_today">Allowed today</string>
+    <string name="stat_blocked_today">Blocked</string>
+    <string name="stat_allowed_today">Allowed</string>
     <string name="stat_active_rules">Active rules</string>
 
     <!-- Tooltips -->
@@ -182,6 +194,7 @@
     <string name="setting_advanced_options">Advanced options</string>
     <string name="setting_system">Manage system apps</string>
     <string name="setting_log_app">Log internet access</string>
+    <string name="setting_log_retention_days">Traffic log retention days</string>
     <string name="setting_access">Notify on internet access</string>
     <string name="setting_filter">Filter traffic</string>
     <string name="setting_filter_udp">Filter UDP traffic</string>
@@ -262,6 +275,7 @@
 
     <string name="summary_system">Define rules for system apps (for experts)</string>
     <string name="summary_log_app">Log attempts to access the internet for apps. This might result in extra battery usage.</string>
+    <string name="summary_log_retention_days">Automatically remove old traffic logs during housekeeping. Set 0 to keep logs forever.</string>
     <string name="summary_access">Show a status bar notification when an app attempts to access a new internet address (when filtering is disabled, only blocked internet access attempts will be notified)</string>
     <string name="summary_filter">Filter IP packets going out of the VPN tunnel. This might result in extra battery usage.</string>
     <string name="summary_track_usage">Track the number of bytes sent and received for each app and address. This might result in extra battery usage.</string>
@@ -467,6 +481,8 @@ Your internet traffic is not being sent to a remote VPN server.</string>
         <item>17</item>
         <item>6</item>
     </string-array>
+
+    <string name="label_dns_summary">%1$d entries • %2$d expired</string>
 
     <string name="fingerprint" translatable="false">ef46f813d2c8a064d72c936b9b96d1cccc989378</string>
 </resources>

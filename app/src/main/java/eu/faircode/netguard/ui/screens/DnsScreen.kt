@@ -5,10 +5,10 @@ import android.util.Xml
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,14 +29,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,21 +58,26 @@ import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.DatabaseHelper
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ServiceSinkhole
-import eu.faircode.netguard.ui.components.ScreenHeader
 import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.xmlpull.v1.XmlSerializer
 import java.io.IOException
 import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.xmlpull.v1.XmlSerializer
 
 private const val TAG = "NetGuard.DNS.Compose"
+
+private enum class DnsFilter {
+    All,
+    Active,
+    Expired,
+}
 
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalLayoutApi::class)
@@ -78,6 +88,7 @@ fun DnsScreen() {
     var entries by remember { mutableStateOf<List<DnsEntry>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var refreshKey by remember { mutableIntStateOf(0) }
+    var dnsFilter by remember { mutableStateOf(DnsFilter.All) }
     val scope = rememberCoroutineScope()
 
     val exportLauncher =
@@ -93,14 +104,50 @@ fun DnsScreen() {
         isLoading = false
     }
 
+    val now = remember(entries, refreshKey) { System.currentTimeMillis() }
+    val filteredEntries by remember(entries, dnsFilter, now) {
+        derivedStateOf {
+            entries.filter { entry ->
+                val expired = entry.time + entry.ttl < now
+                when (dnsFilter) {
+                    DnsFilter.All -> true
+                    DnsFilter.Active -> !expired
+                    DnsFilter.Expired -> expired
+                }
+            }
+        }
+    }
+
+    val expiredCount by remember(entries, now) {
+        derivedStateOf { entries.count { it.time + it.ttl < now } }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(R.string.ui_dns_title),
-                        fontWeight = FontWeight.Bold,
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.ui_dns_title),
+                            fontWeight = FontWeight.Bold,
+                        )
+                        if (!isLoading && filteredEntries.isNotEmpty()) {
+                            Surface(
+                                shape = MaterialTheme.shapes.extraLarge,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
+                            ) {
+                                Text(
+                                    text = filteredEntries.size.toString(),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                )
+                            }
+                        }
+                    }
                 },
                 actions = {
                     IconButton(onClick = { refreshKey += 1 }) {
@@ -116,149 +163,250 @@ fun DnsScreen() {
             )
         },
     ) { padding ->
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(spacing.default),
-        verticalArrangement = Arrangement.spacedBy(spacing.medium),
-    ) {
-
-        FlowRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(spacing.small),
-            verticalArrangement = Arrangement.spacedBy(spacing.small),
-            maxItemsInEachRow = 2,
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(spacing.default),
+            verticalArrangement = Arrangement.spacedBy(spacing.medium),
         ) {
-            FilledTonalButton(
-                onClick = {
-                    runDnsCleanup(context, scope) {
-                        refreshKey += 1
-                    }
-                },
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             ) {
-                Icon(
-                    imageVector = Icons.Default.Tune,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(spacing.small))
-                Text(text = stringResource(R.string.menu_cleanup))
-            }
-            OutlinedButton(
-                onClick = {
-                    runDnsClear(context, scope) {
-                        refreshKey += 1
-                    }
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(spacing.small))
-                Text(text = stringResource(R.string.menu_clear))
-            }
-            OutlinedButton(
-                onClick = {
-                    val filename =
-                        "netguard_dns_" + SimpleDateFormat("yyyyMMdd", Locale.US).format(Date()) + ".xml"
-                    exportLauncher.launch(filename)
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Download,
-                    contentDescription = null,
-                )
-                Spacer(modifier = Modifier.width(spacing.small))
-                Text(text = stringResource(R.string.menu_export))
-            }
-        }
-
-        if (isLoading) {
-            StatePlaceholder(
-                title = stringResource(R.string.ui_loading),
-                message = stringResource(R.string.ui_dns_hint),
-                icon = Icons.Default.Dns,
-                isLoading = true,
-            )
-        } else if (entries.isEmpty()) {
-            StatePlaceholder(
-                title = stringResource(R.string.ui_empty_dns_title),
-                message = stringResource(R.string.ui_empty_dns_body),
-                icon = Icons.Default.Dns,
-                actionLabel = stringResource(R.string.menu_refresh),
-                onAction = { refreshKey += 1 },
-            )
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(spacing.small),
-            ) {
-                items(entries, key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
-                    val expired = entry.time + entry.ttl < Date().time
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor =
-                                if (expired) MaterialTheme.colorScheme.surfaceContainer
-                                else MaterialTheme.colorScheme.surfaceContainerLow,
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(spacing.small),
-                            verticalArrangement = Arrangement.spacedBy(2.dp),
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    text = "${entry.qname} → ${entry.aname}",
-                                    style = MaterialTheme.typography.titleSmall,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.weight(1f),
-                                )
-                                if (expired) {
-                                    Text(
-                                        text = stringResource(R.string.ui_dns_expired),
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.error,
-                                    )
-                                }
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(spacing.medium),
+                    horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
+                    maxItemsInEachRow = 2,
+                ) {
+                    FilledTonalButton(
+                        onClick = {
+                            runDnsCleanup(context, scope) {
+                                refreshKey += 1
                             }
-                            Text(
-                                text = entry.resource,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Tune,
+                            contentDescription = null,
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        Text(text = stringResource(R.string.menu_cleanup))
+                    }
+                    OutlinedButton(
+                        onClick = {
+                            runDnsClear(context, scope) {
+                                refreshKey += 1
+                            }
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        Text(text = stringResource(R.string.menu_clear))
+                    }
+                    OutlinedButton(
+                        onClick = {
+                            val filename =
+                                "netguard_dns_" + SimpleDateFormat("yyyyMMdd", Locale.US).format(Date()) + ".xml"
+                            exportLauncher.launch(filename)
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Download,
+                            contentDescription = null,
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        Text(text = stringResource(R.string.menu_export))
+                    }
+                }
+            }
+
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(spacing.medium),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
+                ) {
+                    Text(
+                        text = stringResource(R.string.ui_logs_filter_status),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    SingleChoiceSegmentedButtonRow(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        val options = listOf(
+                            DnsFilter.All to stringResource(R.string.ui_filter_all),
+                            DnsFilter.Active to stringResource(R.string.ui_dns_active),
+                            DnsFilter.Expired to stringResource(R.string.ui_dns_expired),
+                        )
+                        options.forEachIndexed { index, (value, label) ->
+                            SegmentedButton(
+                                selected = dnsFilter == value,
+                                onClick = { dnsFilter = value },
+                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                                modifier = Modifier.weight(1f),
                             ) {
-                                Text(
-                                    text = stringResource(R.string.label_ttl, entry.ttl / 1000),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                if (entry.uid > 0) {
-                                    Text(
-                                        text = stringResource(R.string.label_uid, entry.uid),
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
+                                Text(text = label, maxLines = 1)
                             }
                         }
                     }
                 }
             }
+
+            when {
+                isLoading -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_loading),
+                        message = stringResource(R.string.ui_dns_hint),
+                        icon = Icons.Default.Dns,
+                        isLoading = true,
+                    )
+                }
+
+                filteredEntries.isEmpty() && entries.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_empty_dns_title),
+                        message = stringResource(R.string.ui_empty_dns_body),
+                        icon = Icons.Default.Dns,
+                        actionLabel = stringResource(R.string.menu_refresh),
+                        onAction = { refreshKey += 1 },
+                    )
+                }
+
+                filteredEntries.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_dns_title),
+                        message = stringResource(R.string.ui_dns_filter_empty),
+                        icon = Icons.Default.Dns,
+                        actionLabel = stringResource(R.string.ui_filter_all),
+                        onAction = { dnsFilter = DnsFilter.All },
+                    )
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(spacing.small),
+                    ) {
+                        items(filteredEntries, key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
+                            val expired = entry.time + entry.ttl < now
+                            DnsEntryCard(
+                                entry = entry,
+                                expired = expired,
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (!isLoading && entries.isNotEmpty()) {
+                Text(
+                    text = stringResource(R.string.label_dns_summary, entries.size, expiredCount),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
-    } // end Scaffold
+}
+
+@Composable
+private fun DnsEntryCard(
+    entry: DnsEntry,
+    expired: Boolean,
+) {
+    val spacing = MaterialTheme.spacing
+    val statusContainer =
+        if (expired) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.secondaryContainer
+    val statusContent =
+        if (expired) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSecondaryContainer
+
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor =
+                if (expired) MaterialTheme.colorScheme.surfaceContainer
+                else MaterialTheme.colorScheme.surfaceContainerLow,
+        ),
+        shape = MaterialTheme.shapes.medium,
+    ) {
+        Column(
+            modifier = Modifier.padding(spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "${entry.qname} → ${entry.aname}",
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                Surface(
+                    color = statusContainer,
+                    contentColor = statusContent,
+                    shape = MaterialTheme.shapes.extraLarge,
+                ) {
+                    Text(
+                        text = if (expired) stringResource(R.string.ui_dns_expired) else stringResource(R.string.ui_dns_active),
+                        style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                    )
+                }
+            }
+
+            Text(
+                text = entry.resource,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = MaterialTheme.shapes.extraLarge,
+                ) {
+                    Text(
+                        text = stringResource(R.string.label_ttl, entry.ttl / 1000),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                    )
+                }
+                if (entry.uid > 0) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        shape = MaterialTheme.shapes.extraLarge,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.label_uid, entry.uid),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 private data class DnsEntry(

@@ -499,12 +499,19 @@ class ServiceSinkhole : VpnService() {
         }
 
         private fun householding(intent: Intent) {
-            DatabaseHelper.getInstance(this@ServiceSinkhole)
-                .cleanupLog(Date().time - 3 * 24 * 3600 * 1000L)
+            val prefs = Prefs
+            val retentionDays =
+                (prefs.getString("log_retention_days", "3")?.toIntOrNull() ?: 3)
+                    .coerceIn(0, 365)
+            if (retentionDays > 0) {
+                val cutoffTime = Date().time - retentionDays * 24L * 3600L * 1000L
+                DatabaseHelper.getInstance(this@ServiceSinkhole).cleanupLog(cutoffTime)
+            } else {
+                Log.i(TAG, "Log cleanup disabled by preference")
+            }
 
             DatabaseHelper.getInstance(this@ServiceSinkhole).cleanupDns()
 
-            val prefs = Prefs
             if (
                 !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
                     Util.hasValidFingerprint(this@ServiceSinkhole) &&
@@ -630,7 +637,6 @@ class ServiceSinkhole : VpnService() {
         private fun log(packet: Packet, connection: Int, interactive: Boolean) {
             val prefs = Prefs
             val log = prefs.getBoolean("log", false)
-            val logApp = prefs.getBoolean("log_app", false)
 
             val dh = DatabaseHelper.getInstance(this@ServiceSinkhole)
 
@@ -642,7 +648,7 @@ class ServiceSinkhole : VpnService() {
             }
 
             if (
-                logApp &&
+                log &&
                     packet.uid >= 0 &&
                     !(packet.uid == 0 && (packet.protocol == 6 || packet.protocol == 17) && packet.dport == 53)
             ) {
@@ -663,9 +669,9 @@ class ServiceSinkhole : VpnService() {
             if (usage.Uid >= 0 && !(usage.Uid == 0 && usage.Protocol == 17 && usage.DPort == 53)) {
                 val prefs = Prefs
                 val filter = prefs.getBoolean("filter", false)
-                val logApp = prefs.getBoolean("log_app", false)
+                val log = prefs.getBoolean("log", false)
                 val trackUsage = prefs.getBoolean("track_usage", false)
-                if (filter && logApp && trackUsage) {
+                if (filter && log && trackUsage) {
                     val dh = DatabaseHelper.getInstance(this@ServiceSinkhole)
                     val daddr = usage.DAddr ?: return
                     val dname = dh.getQName(usage.Uid, daddr)
@@ -1266,10 +1272,9 @@ class ServiceSinkhole : VpnService() {
     private fun startNative(vpn: ParcelFileDescriptor, listAllowed: List<Rule>, listRule: List<Rule>) {
         val prefs = Prefs
         val log = prefs.getBoolean("log", false)
-        val logApp = prefs.getBoolean("log_app", false)
         val filter = prefs.getBoolean("filter", false)
 
-        Log.i(TAG, "Start native log=$log/$logApp filter=$filter")
+        Log.i(TAG, "Start native log=$log filter=$filter")
 
         if (filter) {
             prepareUidAllowed(listAllowed, listRule)
@@ -1288,7 +1293,7 @@ class ServiceSinkhole : VpnService() {
             lock.writeLock().unlock()
         }
 
-        if (logApp) {
+        if (log) {
             prepareNotify(listRule)
         } else {
             lock.writeLock().lock()
@@ -1296,7 +1301,7 @@ class ServiceSinkhole : VpnService() {
             lock.writeLock().unlock()
         }
 
-        if (log || logApp || filter) {
+        if (log || filter) {
             val prio = prefs.getString("loglevel", Log.WARN.toString())?.toIntOrNull() ?: Log.WARN
             val rcode = prefs.getString("rcode", "3")?.toIntOrNull() ?: 3
             if (prefs.getBoolean("socks5_enabled", false)) {
@@ -1886,7 +1891,7 @@ class ServiceSinkhole : VpnService() {
 
         lock.readLock().unlock()
 
-        if (prefs.getBoolean("log", false) || prefs.getBoolean("log_app", false)) {
+        if (prefs.getBoolean("log", false)) {
             if (packet.protocol != 6 || packet.flags != "") {
                 if (packet.uid != Process.myUid()) {
                     logPacket(packet)

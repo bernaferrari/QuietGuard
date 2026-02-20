@@ -1,19 +1,26 @@
 package eu.faircode.netguard.ui.main
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-
+import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
@@ -34,14 +41,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -54,6 +65,9 @@ import eu.faircode.netguard.ui.theme.spacing
 fun HomeScreen(
     viewModel: MainViewModel,
     onToggleEnabled: (Boolean) -> Unit,
+    onOpenFirewall: (AppsFilter) -> Unit = {},
+    onOpenLogs: () -> Unit = {},
+    onOpenSettings: () -> Unit = {},
 ) {
     val enabled by viewModel.enabled.collectAsStateWithLifecycle()
     val rulesUiState by viewModel.rulesUiState.collectAsStateWithLifecycle()
@@ -70,6 +84,7 @@ fun HomeScreen(
     val totalApps = rules.size
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBar(
                 title = {
@@ -84,52 +99,54 @@ fun HomeScreen(
             )
         },
     ) { padding ->
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .verticalScroll(scrollState)
-            .padding(spacing.large),
-        verticalArrangement = Arrangement.spacedBy(spacing.large),
-    ) {
-
-        // Main Status Card with animated color
-        StatusCard(
-            enabled = enabled,
-            onToggle = onToggleEnabled,
-        )
-
-        // Stats
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .verticalScroll(scrollState)
+                .padding(spacing.large),
+            verticalArrangement = Arrangement.spacedBy(spacing.large),
         ) {
-            StatCard(
-                modifier = Modifier.weight(1f),
-                title = stringResource(R.string.stat_blocked_today),
-                value = blockedApps,
-                icon = Icons.Default.Block,
-                tint = MaterialTheme.colorScheme.error,
+
+            StatusCard(
+                enabled = enabled,
+                onToggle = onToggleEnabled,
             )
+
+            // Stats row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+            ) {
+                StatCard(
+                    modifier = Modifier.weight(1f),
+                    title = stringResource(R.string.stat_blocked_today),
+                    value = blockedApps,
+                    icon = Icons.Default.Block,
+                    tint = MaterialTheme.colorScheme.error,
+                    onClick = { onOpenFirewall(AppsFilter.Blocked) },
+                )
+                StatCard(
+                    modifier = Modifier.weight(1f),
+                    title = stringResource(R.string.stat_allowed_today),
+                    value = allowedApps,
+                    icon = Icons.Default.CheckCircle,
+                    tint = MaterialTheme.colorScheme.primary,
+                    onClick = { onOpenFirewall(AppsFilter.Allowed) },
+                )
+            }
+
             StatCard(
-                modifier = Modifier.weight(1f),
-                title = stringResource(R.string.stat_allowed_today),
-                value = allowedApps,
-                icon = Icons.Default.CheckCircle,
-                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.fillMaxWidth(),
+                title = stringResource(R.string.stat_active_rules),
+                value = totalApps,
+                icon = Icons.Default.Tune,
+                tint = MaterialTheme.colorScheme.tertiary,
+                emphasized = true,
+                onClick = { onOpenFirewall(AppsFilter.All) },
             )
         }
-
-        StatCard(
-            modifier = Modifier.fillMaxWidth(),
-            title = stringResource(R.string.stat_active_rules),
-            value = totalApps,
-            icon = Icons.Default.Tune,
-            tint = MaterialTheme.colorScheme.tertiary,
-            emphasized = true,
-        )
     }
-    } // end Scaffold
 }
 
 @Composable
@@ -146,8 +163,28 @@ private fun StatusCard(
         } else {
             MaterialTheme.colorScheme.surfaceContainerLow
         },
+        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
+        label = "containerColor",
+    )
+    val iconContainerColor by animateColorAsState(
+        targetValue = if (enabled) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.errorContainer,
         animationSpec = tween(motion.durationMedium),
-        label = "statusColor",
+        label = "iconBg",
+    )
+    val iconTint by animateColorAsState(
+        targetValue = if (enabled) MaterialTheme.colorScheme.onPrimary
+        else MaterialTheme.colorScheme.onErrorContainer,
+        animationSpec = tween(motion.durationMedium),
+        label = "iconTint",
+    )
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (isPressed) 0.97f else 1f,
+        animationSpec = spring(stiffness = Spring.StiffnessHigh),
+        label = "pressScale",
     )
 
     val statusDescription = if (enabled) {
@@ -155,58 +192,82 @@ private fun StatusCard(
     } else {
         stringResource(R.string.status_disabled)
     }
+    val supportingTextColor by animateColorAsState(
+        targetValue = if (enabled) {
+            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+        } else {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        },
+        animationSpec = tween(motion.durationMedium),
+        label = "supportingTextColor",
+    )
 
-    val cardShape = MaterialTheme.shapes.large
-    Card(
+    Surface(
         onClick = { onToggle(!enabled) },
-        shape = cardShape,
-        colors = CardDefaults.cardColors(containerColor = containerColor),
+        shape = MaterialTheme.shapes.extraLarge,
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .semantics { contentDescription = statusDescription },
+        interactionSource = interactionSource,
+        color = containerColor,
     ) {
-        Column(
-            modifier = Modifier.padding(spacing.large),
-            verticalArrangement = Arrangement.spacedBy(spacing.default),
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = spacing.extraLarge, vertical = spacing.large),
+            contentAlignment = Alignment.Center,
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(spacing.medium),
             ) {
+                // Large icon pill
                 Surface(
                     shape = MaterialTheme.shapes.extraLarge,
-                    color =
-                        if (enabled) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.surfaceContainerHighest,
+                    color = iconContainerColor,
+                    modifier = Modifier.size(64.dp),
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Security,
-                        contentDescription = stringResource(R.string.content_desc_security_status),
-                        tint =
-                            if (enabled) MaterialTheme.colorScheme.onPrimary
-                            else MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(spacing.small),
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.Security,
+                            contentDescription = null,
+                            tint = iconTint,
+                            modifier = Modifier.size(32.dp),
+                        )
+                    }
                 }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = statusDescription,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                    )
+
+                // Status text — unrestricted, can wrap
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
                     Text(
                         text = if (enabled) {
-                            stringResource(R.string.status_running)
+                            stringResource(R.string.status_enabled)
                         } else {
-                            stringResource(R.string.status_not_running)
+                            stringResource(R.string.status_disabled)
                         },
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = if (enabled) "Monitoring all traffic" else "Protection off",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = supportingTextColor,
+                        textAlign = TextAlign.Center,
                     )
                 }
+
+                // Switch
                 Switch(
                     checked = enabled,
                     onCheckedChange = onToggle,
-                    modifier = Modifier.semantics {
-                        contentDescription = statusDescription
-                    },
                 )
             }
         }
@@ -221,26 +282,30 @@ private fun StatCard(
     icon: ImageVector,
     tint: Color,
     emphasized: Boolean = false,
+    onClick: (() -> Unit)? = null,
 ) {
     val motion = LocalMotion.current
     val spacing = MaterialTheme.spacing
 
     val animatedValue by animateIntAsState(
         targetValue = value,
-        animationSpec = tween(motion.durationMedium),
+        animationSpec = tween(motion.durationSlow, easing = FastOutSlowInEasing),
         label = "statValue",
     )
 
-    Card(
-        modifier = modifier,
-        colors =
-            CardDefaults.cardColors(
-                containerColor =
-                    if (emphasized) MaterialTheme.colorScheme.tertiaryContainer
-                    else MaterialTheme.colorScheme.surfaceContainerLow,
-            ),
+    val containerColor = if (emphasized) {
+        MaterialTheme.colorScheme.tertiaryContainer
+    } else {
+        MaterialTheme.colorScheme.surfaceContainerLow
+    }
 
-    ) {
+    val onContainer = if (emphasized) {
+        MaterialTheme.colorScheme.onTertiaryContainer
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
+
+    val cardContent: @Composable () -> Unit = {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -248,25 +313,57 @@ private fun StatCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = title,
-                tint = tint,
-            )
+            // Tinted circular icon badge — use onContainer colour for contrast when emphasized
+            val iconTint = if (emphasized) onContainer else tint
+            val iconBg = if (emphasized) onContainer.copy(alpha = 0.15f) else tint.copy(alpha = 0.15f)
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(iconBg),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = title,
+                    tint = iconTint,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+
             Text(
                 text = animatedValue.toString(),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
             )
             Text(
                 text = title,
                 style = MaterialTheme.typography.labelMedium,
-                color =
-                    if (emphasized) MaterialTheme.colorScheme.onTertiaryContainer
-                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                color = onContainer,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
             )
+        }
+    }
+
+    if (onClick != null) {
+        Card(
+            onClick = onClick,
+            modifier = modifier,
+            colors = CardDefaults.cardColors(containerColor = containerColor),
+            shape = MaterialTheme.shapes.extraLarge,
+        ) {
+            cardContent()
+        }
+    } else {
+        Card(
+            modifier = modifier,
+            colors = CardDefaults.cardColors(containerColor = containerColor),
+            shape = MaterialTheme.shapes.extraLarge,
+        ) {
+            cardContent()
         }
     }
 }

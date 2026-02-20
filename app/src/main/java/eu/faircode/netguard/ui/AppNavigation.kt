@@ -5,29 +5,24 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material3.Icon
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
@@ -42,7 +37,10 @@ import androidx.navigation3.ui.defaultTransitionSpec
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
 import eu.faircode.netguard.R
+import eu.faircode.netguard.ui.main.AppsFilter
 import eu.faircode.netguard.ui.main.AppsScreen
 import eu.faircode.netguard.ui.main.HomeScreen
 import eu.faircode.netguard.ui.main.MainViewModel
@@ -52,6 +50,7 @@ import eu.faircode.netguard.ui.screens.ForwardingScreen
 import eu.faircode.netguard.ui.screens.LogsScreen
 import eu.faircode.netguard.ui.screens.ProScreen
 import eu.faircode.netguard.ui.screens.SettingsScreen
+import eu.faircode.netguard.ui.util.StatePlaceholder
 
 private enum class NavDestination(
     val key: AppNavKey,
@@ -64,7 +63,11 @@ private enum class NavDestination(
     SettingsTab(Settings, R.string.menu_settings, Icons.Default.Settings),
 }
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3AdaptiveApi::class,
+    ExperimentalMaterial3AdaptiveNavigationSuiteApi::class,
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun AppNavigation(
     viewModel: MainViewModel,
@@ -75,6 +78,8 @@ fun AppNavigation(
 ) {
     val startKey = remember(startRoute) { NavRoutes.fromRoute(startRoute) }
     val backStack = rememberNavBackStack(startKey)
+    var appsLaunchFilter by remember { mutableStateOf(AppsFilter.All) }
+    var appsLaunchFilterVersion by remember { mutableIntStateOf(0) }
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
     fun Scene<NavKey>.hasAppDetailEntry(): Boolean {
         return entries.any { entry ->
@@ -82,8 +87,22 @@ fun AppNavigation(
         }
     }
     fun popBackStack() {
-        if (backStack.isNotEmpty()) {
-            backStack.removeAt(backStack.lastIndex)
+        val current = backStack.lastOrNull() as? AppNavKey ?: return
+
+        when {
+            // Keep detail navigation behavior: detail -> list.
+            current is AppRuleDetail && backStack.size > 1 -> {
+                backStack.removeAt(backStack.lastIndex)
+            }
+            // From any non-home top-level destination, go to Home first.
+            current != Home -> {
+                backStack.clear()
+                backStack.add(Home)
+            }
+            // Already at Home, allow the activity to close on next back.
+            else -> {
+                backStack.removeAt(backStack.lastIndex)
+            }
         }
     }
 
@@ -94,10 +113,13 @@ fun AppNavigation(
 
     fun navigateTo(destination: AppNavKey) {
         when (destination) {
-            Logs -> setStack(Apps, Logs)
-            Dns -> setStack(Settings, Dns)
-            Forwarding -> setStack(Settings, Forwarding)
-            Pro -> setStack(Settings, Pro)
+            Home -> setStack(Home)
+            Apps -> setStack(Home, Apps)
+            Logs -> setStack(Home, Logs)
+            Settings -> setStack(Home, Settings)
+            Dns -> setStack(Home, Settings, Dns)
+            Forwarding -> setStack(Home, Settings, Forwarding)
+            Pro -> setStack(Home, Settings, Pro)
             else -> setStack(destination)
         }
     }
@@ -118,41 +140,25 @@ fun AppNavigation(
         }
     }
 
-    Scaffold(
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            ) {
-                val currentKey = backStack.lastOrNull()
-                val selectedTab = selectedTabFor(currentKey)
-                NavDestination.entries.forEach { destination ->
-                    val selected = selectedTab == destination.key
-                    NavigationBarItem(
-                        selected = selected,
-                        onClick = { navigateTo(destination.key) },
-                        icon = {
-                            Icon(
-                                imageVector = destination.icon,
-                                contentDescription = stringResource(destination.label),
-                            )
-                        },
-                        label = {
-                            Text(stringResource(destination.label))
-                        },
-                        colors =
-                            NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                selectedTextColor = MaterialTheme.colorScheme.onSurface,
-                                indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
-                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            ),
-                    )
-                }
+    NavigationSuiteScaffold(
+        navigationSuiteItems = {
+            val currentKey = backStack.lastOrNull()
+            val selectedTab = selectedTabFor(currentKey)
+            NavDestination.entries.forEach { destination ->
+                item(
+                    selected = selectedTab == destination.key,
+                    onClick = { navigateTo(destination.key) },
+                    icon = {
+                        Icon(
+                            imageVector = destination.icon,
+                            contentDescription = stringResource(destination.label),
+                        )
+                    },
+                    label = { Text(stringResource(destination.label)) },
+                )
             }
         },
-    ) { padding ->
+    ) {
         val overlayDetail = backStack.lastOrNull() as? AppRuleDetail
         val baseBackStack =
             if (overlayDetail != null && backStack.size > 1) {
@@ -170,8 +176,7 @@ fun AppNavigation(
 
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
+                .fillMaxSize(),
         ) {
             NavDisplay(
                 backStack = baseBackStack,
@@ -215,15 +220,23 @@ fun AppNavigation(
                             HomeScreen(
                                 viewModel = viewModel,
                                 onToggleEnabled = onToggleEnabled,
+                                onOpenFirewall = { filter ->
+                                    appsLaunchFilter = filter
+                                    appsLaunchFilterVersion++
+                                    navigateTo(Apps)
+                                },
+                                onOpenLogs = { navigateTo(Logs) },
+                                onOpenSettings = { navigateTo(Settings) },
                             )
                         }
                         entry<Apps>(
                             metadata =
                                 ListDetailSceneStrategy.listPane(
                                     detailPlaceholder = {
-                                        Text(
-                                            text = stringResource(R.string.home_logs_hint),
-                                            modifier = Modifier.padding(24.dp),
+                                        StatePlaceholder(
+                                            title = stringResource(R.string.ui_apps_title),
+                                            message = stringResource(R.string.home_apps_hint),
+                                            icon = Icons.Default.Tune,
                                         )
                                     },
                                 ),
@@ -233,6 +246,8 @@ fun AppNavigation(
                                 onNavigateToDetail = { rule ->
                                     backStack.add(AppRuleDetail(rule.uid))
                                 },
+                                initialFilter = appsLaunchFilter,
+                                initialFilterVersion = appsLaunchFilterVersion,
                             )
                         }
                         entry<AppRuleDetail>(

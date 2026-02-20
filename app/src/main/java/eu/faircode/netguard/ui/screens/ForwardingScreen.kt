@@ -30,6 +30,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Surface
@@ -38,6 +41,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,15 +67,34 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
 
+private enum class ForwardingProtocolFilter {
+    All,
+    Udp,
+    Tcp,
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForwardingScreen() {
     val context = LocalContext.current
     val spacing = MaterialTheme.spacing
     var entries by remember { mutableStateOf<List<ForwardingEntry>>(emptyList()) }
+    var protocolFilter by remember { mutableStateOf(ForwardingProtocolFilter.All) }
     var showDialog by remember { mutableStateOf(false) }
     var loading by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
+
+    val filteredEntries by remember(entries, protocolFilter) {
+        derivedStateOf {
+            entries.filter { entry ->
+                when (protocolFilter) {
+                    ForwardingProtocolFilter.All -> true
+                    ForwardingProtocolFilter.Udp -> entry.protocol == 17
+                    ForwardingProtocolFilter.Tcp -> entry.protocol == 6
+                }
+            }
+        }
+    }
 
     val forwardListener =
         remember {
@@ -99,10 +122,28 @@ fun ForwardingScreen() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(R.string.ui_forwarding_title),
-                        fontWeight = FontWeight.Bold,
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.ui_forwarding_title),
+                            fontWeight = FontWeight.Bold,
+                        )
+                        if (!loading && filteredEntries.isNotEmpty()) {
+                            Surface(
+                                shape = MaterialTheme.shapes.extraLarge,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
+                            ) {
+                                Text(
+                                    text = filteredEntries.size.toString(),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                )
+                            }
+                        }
+                    }
                 },
                 actions = {
                     IconButton(onClick = { showDialog = true }) {
@@ -125,6 +166,47 @@ fun ForwardingScreen() {
             .padding(spacing.default),
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
     ) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(spacing.small),
+            ) {
+                FilledTonalButton(onClick = { showDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
+                    Spacer(modifier = Modifier.width(spacing.small))
+                    Text(text = stringResource(R.string.menu_add))
+                }
+                Text(
+                    text = stringResource(R.string.ui_logs_filter_protocol),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                    val options = listOf(
+                        ForwardingProtocolFilter.All to stringResource(R.string.ui_filter_all),
+                        ForwardingProtocolFilter.Udp to stringResource(R.string.menu_protocol_udp),
+                        ForwardingProtocolFilter.Tcp to stringResource(R.string.menu_protocol_tcp),
+                    )
+                    options.forEachIndexed { index, (value, label) ->
+                        SegmentedButton(
+                            selected = protocolFilter == value,
+                            onClick = { protocolFilter = value },
+                            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(text = label, maxLines = 1)
+                        }
+                    }
+                }
+            }
+        }
 
         when {
             loading -> {
@@ -144,70 +226,32 @@ fun ForwardingScreen() {
                     onAction = { showDialog = true },
                 )
             }
+            filteredEntries.isEmpty() -> {
+                StatePlaceholder(
+                    title = stringResource(R.string.ui_forwarding_title),
+                    message = stringResource(R.string.ui_forwarding_filter_empty),
+                    icon = Icons.AutoMirrored.Filled.Forward,
+                    actionLabel = stringResource(R.string.ui_filter_all),
+                    onAction = { protocolFilter = ForwardingProtocolFilter.All },
+                )
+            }
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
-                    items(entries, key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
-                        val routeText =
-                            Util.getProtocolName(entry.protocol, 0, false) +
-                                " ${entry.dport} > ${entry.raddr}/${entry.rport}"
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(spacing.medium),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        text = routeText,
-                                        style = MaterialTheme.typography.titleMedium,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                    )
-                                    Surface(
-                                        color = MaterialTheme.colorScheme.secondaryContainer,
-                                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                        shape = MaterialTheme.shapes.extraLarge,
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
-                                            style = MaterialTheme.typography.labelSmall,
-                                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                        )
-                                    }
+                    items(filteredEntries, key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
+                        ForwardingEntryCard(
+                            entry = entry,
+                            onDelete = {
+                                DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
+                                ServiceSinkhole.reload("forwarding", context, false)
+                                scope.launch {
+                                    entries = loadForwarding(context)
+                                    loading = false
                                 }
-                                IconButton(
-                                    onClick = {
-                                        DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
-                                        ServiceSinkhole.reload("forwarding", context, false)
-                                        scope.launch {
-                                            entries = loadForwarding(context)
-                                            loading = false
-                                        }
-                                    },
-                                ) {
-                                    Surface(
-                                        shape = MaterialTheme.shapes.small,
-                                        color = MaterialTheme.colorScheme.errorContainer,
-                                    ) {
-                                        androidx.compose.material3.Icon(
-                                            imageVector = Icons.Default.Delete,
-                                            contentDescription = stringResource(R.string.menu_delete),
-                                            tint = MaterialTheme.colorScheme.onErrorContainer,
-                                            modifier = Modifier.padding(6.dp),
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                            },
+                        )
                     }
                 }
             }
@@ -237,6 +281,93 @@ fun ForwardingScreen() {
                 showDialog = false
             },
         )
+    }
+}
+
+@Composable
+private fun ForwardingEntryCard(
+    entry: ForwardingEntry,
+    onDelete: () -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+    val protocolLabel = Util.getProtocolName(entry.protocol, 0, false)
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(spacing.medium),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            Surface(
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.primaryContainer,
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Forward,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                    modifier = Modifier.padding(8.dp),
+                )
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(spacing.small),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        shape = MaterialTheme.shapes.extraLarge,
+                    ) {
+                        Text(
+                            text = protocolLabel,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                        )
+                    }
+                    Surface(
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        shape = MaterialTheme.shapes.extraLarge,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
+                Text(
+                    text = "${entry.dport} → ${entry.raddr}:${entry.rport}",
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+
+            IconButton(onClick = onDelete) {
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colorScheme.errorContainer,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.menu_delete),
+                        tint = MaterialTheme.colorScheme.onErrorContainer,
+                        modifier = Modifier.padding(6.dp),
+                    )
+                }
+            }
+        }
     }
 }
 

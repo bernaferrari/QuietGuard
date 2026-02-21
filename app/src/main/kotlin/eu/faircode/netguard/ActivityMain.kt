@@ -3,7 +3,6 @@ package eu.faircode.netguard
 import android.app.Activity
 import android.content.Intent
 import android.net.VpnService
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,19 +26,11 @@ class ActivityMain : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val isUnsupported = Build.VERSION.SDK_INT < MIN_SDK
         val isXposed = Util.hasXposed(this)
         pendingRoute.value = intent.getStringExtra(EXTRA_ROUTE)
 
         setContent {
             NetGuardThemeFromPrefs {
-                if (isUnsupported) {
-                    InfoScreen(
-                        title = stringResource(R.string.app_name),
-                        body = stringResource(R.string.app_android),
-                    )
-                    return@NetGuardThemeFromPrefs
-                }
                 if (isXposed) {
                     InfoScreen(
                         title = stringResource(R.string.app_name),
@@ -89,8 +80,6 @@ class ActivityMain : ComponentActivity() {
     }
 
     companion object {
-        private const val MIN_SDK = Build.VERSION_CODES.M
-
         const val EXTRA_ROUTE = "Route"
         const val ACTION_RULES_CHANGED = "eu.faircode.netguard.ACTION_RULES_CHANGED"
         const val ACTION_QUEUE_CHANGED = "eu.faircode.netguard.ACTION_QUEUE_CHANGED"

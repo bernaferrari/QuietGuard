@@ -30,14 +30,17 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.toPath
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,7 +48,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Matrix
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -54,8 +61,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.graphics.shapes.Morph
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ui.theme.LocalMotion
 import eu.faircode.netguard.ui.theme.spacing
@@ -149,6 +159,7 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun StatusCard(
     enabled: Boolean,
@@ -178,6 +189,36 @@ private fun StatusCard(
         animationSpec = tween(motion.durationMedium),
         label = "iconTint",
     )
+    val morphProgress by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0f,
+        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
+        label = "badgeMorph",
+    )
+    val badgeMorph = remember { Morph(start = MaterialShapes.Circle, end = MaterialShapes.Cookie9Sided) }
+    val badgeShape = remember(badgeMorph, morphProgress) {
+        object : Shape {
+            override fun createOutline(
+                size: Size,
+                layoutDirection: LayoutDirection,
+                density: Density,
+            ): Outline {
+                val path = badgeMorph.toPath(progress = morphProgress)
+                val scaleMatrix = Matrix().apply { scale(x = size.width, y = size.height) }
+                path.transform(scaleMatrix)
+
+                val bounds = path.getBounds()
+                val translateX = (size.width / 2f) - bounds.center.x
+                val translateY = (size.height / 2f) - bounds.center.y
+                path.transform(
+                    Matrix().apply {
+                        translate(x = translateX, y = translateY)
+                    },
+                )
+
+                return Outline.Generic(path)
+            }
+        }
+    }
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -192,15 +233,6 @@ private fun StatusCard(
     } else {
         stringResource(R.string.status_disabled)
     }
-    val supportingTextColor by animateColorAsState(
-        targetValue = if (enabled) {
-            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-        } else {
-            MaterialTheme.colorScheme.onSurfaceVariant
-        },
-        animationSpec = tween(motion.durationMedium),
-        label = "supportingTextColor",
-    )
 
     Surface(
         onClick = { onToggle(!enabled) },
@@ -227,7 +259,7 @@ private fun StatusCard(
             ) {
                 // Large icon pill
                 Surface(
-                    shape = MaterialTheme.shapes.extraLarge,
+                    shape = badgeShape,
                     color = iconContainerColor,
                     modifier = Modifier.size(64.dp),
                 ) {
@@ -241,28 +273,16 @@ private fun StatusCard(
                     }
                 }
 
-                // Status text — unrestricted, can wrap
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    Text(
-                        text = if (enabled) {
-                            stringResource(R.string.status_enabled)
-                        } else {
-                            stringResource(R.string.status_disabled)
-                        },
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-                    Text(
-                        text = if (enabled) "Monitoring all traffic" else "Protection off",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = supportingTextColor,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                Text(
+                    text = if (enabled) {
+                        stringResource(R.string.status_enabled)
+                    } else {
+                        stringResource(R.string.status_disabled)
+                    },
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
 
                 // Switch
                 Switch(

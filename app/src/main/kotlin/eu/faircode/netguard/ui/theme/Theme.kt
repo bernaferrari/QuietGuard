@@ -94,6 +94,12 @@ fun NetGuardTheme(
             val window = activity.window
             @Suppress("DEPRECATION")
             window.statusBarColor = colorScheme.background.toArgb()
+            @Suppress("DEPRECATION")
+            window.navigationBarColor = colorScheme.background.toArgb()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // Avoid forced dark scrims in light mode when we set explicit nav bar colors.
+                window.isNavigationBarContrastEnforced = false
+            }
             val taskDescription =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     ActivityManager.TaskDescription.Builder()

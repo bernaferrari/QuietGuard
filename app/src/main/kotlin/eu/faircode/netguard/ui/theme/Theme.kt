@@ -82,7 +82,7 @@ fun NetGuardTheme(
         } else {
             rememberDynamicMaterialThemeState(
                 seedColor = seedColor,
-                style = PaletteStyle.Vibrant,
+                style = PaletteStyle.TonalSpot,
                 isDark = darkTheme,
                 specVersion = ColorSpec.SpecVersion.SPEC_2025,
             ).colorScheme

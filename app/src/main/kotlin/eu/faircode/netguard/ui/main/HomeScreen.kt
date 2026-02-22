@@ -3,6 +3,7 @@ package eu.faircode.netguard.ui.main
 import android.os.Build
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
@@ -12,7 +13,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,15 +48,10 @@ import androidx.compose.material3.toPath
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Outline
@@ -77,8 +72,6 @@ import androidx.graphics.shapes.Morph
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ui.theme.LocalMotion
 import eu.faircode.netguard.ui.theme.spacing
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -180,7 +173,7 @@ private fun StatusCard(
 
     val containerColor by animateColorAsState(
         targetValue = if (enabled) {
-            MaterialTheme.colorScheme.primaryContainer
+            MaterialTheme.colorScheme.secondaryContainer
         } else {
             MaterialTheme.colorScheme.surfaceContainerLow
         },
@@ -199,47 +192,81 @@ private fun StatusCard(
         animationSpec = tween(motion.durationMedium),
         label = "iconTint",
     )
-    val iconBorderColor by animateColorAsState(
+    val iconRingColor by animateColorAsState(
         targetValue = if (enabled) {
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.28f)
+            MaterialTheme.colorScheme.tertiary
         } else {
-            MaterialTheme.colorScheme.error.copy(alpha = 0.52f)
+            MaterialTheme.colorScheme.outline
         },
         animationSpec = tween(motion.durationMedium),
-        label = "iconBorder",
+        label = "iconRingColor",
     )
+    val ringRevealProgress by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0f,
+        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
+        label = "ringRevealProgress",
+    )
+    val iconRingAlpha = 0.03f + (0.29f * ringRevealProgress)
     val morphProgress by animateFloatAsState(
         targetValue = if (enabled) 1f else 0f,
         animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
         label = "badgeMorph",
     )
+    val iconBadgeScale by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0.98f,
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow, dampingRatio = Spring.DampingRatioNoBouncy),
+        label = "iconBadgeScale",
+    )
+    val carrierRotation = remember { Animatable(0f) }
+    LaunchedEffect(enabled, motion.durationSlow, motion.durationMedium) {
+        if (enabled) {
+            while (true) {
+                carrierRotation.animateTo(
+                    targetValue = carrierRotation.value + 360f,
+                    animationSpec = tween(
+                        durationMillis = motion.durationSlow * 18,
+                        easing = LinearEasing,
+                    ),
+                )
+                if (carrierRotation.value > 10000f) {
+                    carrierRotation.snapTo(carrierRotation.value % 360f)
+                }
+            }
+        } else {
+            val normalized = ((carrierRotation.value % 360f) + 360f) % 360f
+            val settleTarget = if (normalized > 180f) {
+                carrierRotation.value + (360f - normalized)
+            } else {
+                carrierRotation.value - normalized
+            }
+            carrierRotation.animateTo(
+                targetValue = settleTarget,
+                animationSpec = tween(
+                    durationMillis = motion.durationMedium,
+                    easing = FastOutSlowInEasing,
+                ),
+            )
+            carrierRotation.snapTo(0f)
+        }
+    }
+    val sharedRotation = carrierRotation.value
     val shaderColorProgress by animateFloatAsState(
         targetValue = if (enabled) 1f else 0f,
         animationSpec = tween(durationMillis = motion.durationSlow * 2, easing = FastOutSlowInEasing),
         label = "shaderColorProgress",
     )
-    val switchFx = remember { Animatable(0f) }
-    var rippleTap by remember { mutableStateOf(Offset(-1f, -1f)) }
-    val scope = rememberCoroutineScope()
     val triggerToggle: (Boolean) -> Unit = { next ->
-        scope.launch {
-            switchFx.snapTo(1f)
-            switchFx.animateTo(
-                targetValue = 0f,
-                animationSpec = tween(durationMillis = motion.durationSlow * 2, easing = FastOutSlowInEasing),
-            )
-        }
         onToggle(next)
     }
-    val badgeMorph = remember { Morph(start = MaterialShapes.Circle, end = MaterialShapes.Cookie9Sided) }
+    val badgeMorph = remember { Morph(start = MaterialShapes.Square, end = MaterialShapes.Cookie9Sided) }
     val badgeShape = remember(badgeMorph, morphProgress) {
         object : Shape {
             override fun createOutline(
-                size: Size,
+                size: androidx.compose.ui.geometry.Size,
                 layoutDirection: LayoutDirection,
                 density: Density,
             ): Outline {
-                val path = badgeMorph.toPath(progress = morphProgress)
+                val path = badgeMorph.toPath(progress = morphProgress, startAngle = 0)
                 val scaleMatrix = Matrix().apply { scale(x = size.width, y = size.height) }
                 path.transform(scaleMatrix)
 
@@ -256,15 +283,7 @@ private fun StatusCard(
             }
         }
     }
-
     val interactionSource = remember { MutableInteractionSource() }
-    LaunchedEffect(interactionSource) {
-        interactionSource.interactions.collect { interaction ->
-            if (interaction is PressInteraction.Press) {
-                rippleTap = interaction.pressPosition
-            }
-        }
-    }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.97f else 1f,
@@ -295,8 +314,6 @@ private fun StatusCard(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 FirewallStateShader(
                     enabledProgress = shaderColorProgress,
-                    switchFxProgress = switchFx.value,
-                    tapPosition = rippleTap,
                     modifier = Modifier.matchParentSize(),
                 )
             }
@@ -311,20 +328,40 @@ private fun StatusCard(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(spacing.medium),
                 ) {
-                    // Large icon pill
-                    Surface(
-                        shape = badgeShape,
-                        color = iconContainerColor,
-                        border = if (enabled) BorderStroke(1.dp, iconBorderColor) else null,
-                        modifier = Modifier.size(64.dp),
+                    Box(
+                        modifier = Modifier.size(72.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Icon(
-                                imageVector = Icons.Default.Security,
-                                contentDescription = null,
-                                tint = iconTint,
-                                modifier = Modifier.size(32.dp),
-                            )
+                        Surface(
+                            shape = badgeShape,
+                            color = Color.Transparent,
+                            border = BorderStroke(1.5.dp, iconRingColor.copy(alpha = iconRingAlpha)),
+                            modifier = Modifier
+                                .size(72.dp)
+                                .graphicsLayer { rotationZ = sharedRotation },
+                        ) {}
+
+                        Surface(
+                            shape = badgeShape,
+                            color = iconContainerColor,
+                            modifier = Modifier
+                                .size(60.dp)
+                                .graphicsLayer {
+                                    scaleX = iconBadgeScale
+                                    scaleY = iconBadgeScale
+                                    rotationZ = sharedRotation * 0.72f
+                                },
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.Security,
+                                    contentDescription = null,
+                                    tint = iconTint,
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .graphicsLayer { rotationZ = -(sharedRotation * 0.72f) },
+                                )
+                            }
                         }
                     }
 

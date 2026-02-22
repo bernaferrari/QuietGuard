@@ -1,6 +1,13 @@
 package eu.faircode.netguard.ui.main
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -29,12 +36,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialShapes
@@ -46,9 +55,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.toPath
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,11 +80,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.graphics.shapes.Morph
+import eu.faircode.netguard.Util
 import eu.faircode.netguard.R
 import eu.faircode.netguard.ui.theme.LocalMotion
 import eu.faircode.netguard.ui.theme.spacing
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,6 +102,40 @@ fun HomeScreen(
     onOpenLogs: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val notificationManager = remember(context) { NotificationManagerCompat.from(context) }
+    var notificationsEnabled by remember {
+        mutableStateOf(notificationManager.areNotificationsEnabled() && Util.canNotify(context))
+    }
+    var hasRequestedNotificationPermission by rememberSaveable { mutableStateOf(false) }
+    val notificationPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission(),
+        ) { isGranted ->
+            hasRequestedNotificationPermission = true
+            notificationsEnabled = isGranted && notificationManager.areNotificationsEnabled()
+        }
+    val canRequestNotificationPermission =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) != PackageManager.PERMISSION_GRANTED
+
+    DisposableEffect(lifecycleOwner, context, notificationManager) {
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    notificationsEnabled = notificationManager.areNotificationsEnabled() && Util.canNotify(context)
+                }
+            }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     val enabled by viewModel.enabled.collectAsStateWithLifecycle()
     val rulesUiState by viewModel.rulesUiState.collectAsStateWithLifecycle()
     val spacing = MaterialTheme.spacing
@@ -126,6 +180,29 @@ fun HomeScreen(
                 onToggle = onToggleEnabled,
             )
 
+            if (!notificationsEnabled) {
+                NotificationPermissionCard(
+                    canRequestPermission = canRequestNotificationPermission && !hasRequestedNotificationPermission,
+                    onRequestPermission = {
+                        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    },
+                    onOpenSettings = {
+                        val intent =
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                                }
+                            } else {
+                                Intent(
+                                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    Uri.fromParts("package", context.packageName, null),
+                                )
+                            }
+                        context.startActivity(intent)
+                    },
+                )
+            }
+
             // Stats row
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -158,6 +235,68 @@ fun HomeScreen(
                 emphasized = true,
                 onClick = { onOpenFirewall(AppsFilter.All) },
             )
+        }
+    }
+}
+
+@Composable
+private fun NotificationPermissionCard(
+    canRequestPermission: Boolean,
+    onRequestPermission: () -> Unit,
+    onOpenSettings: () -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        ),
+        shape = MaterialTheme.shapes.extraLarge,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(spacing.small),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
+                Text(
+                    text = stringResource(R.string.title_enable_notify),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Text(
+                text = stringResource(R.string.msg_notifications),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+            )
+            FilledTonalButton(
+                onClick = {
+                    if (canRequestPermission) {
+                        onRequestPermission()
+                    } else {
+                        onOpenSettings()
+                    }
+                },
+                modifier = Modifier.align(Alignment.End),
+            ) {
+                Text(
+                    text = if (canRequestPermission) {
+                        stringResource(R.string.action_enable)
+                    } else {
+                        stringResource(R.string.menu_settings)
+                    },
+                )
+            }
         }
     }
 }

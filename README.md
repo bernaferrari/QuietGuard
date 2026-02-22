@@ -27,7 +27,7 @@ More screenshots are available in `screenshots/`.
 This fork is based on the original NetGuard project by Marcel Bokhorst (M66B):
 https://github.com/M66B/NetGuard
 
-## What Is Better / Different In This Fork
+## What Is Different In This Fork
 
 This fork focuses on a modern UI and navigation model while keeping the core firewall behavior:
 
@@ -42,6 +42,17 @@ This fork focuses on a modern UI and navigation model while keeping the core fir
 - In-app guidance to enable filtering when allowed traffic logs are needed
 - Improved touch/ripple clipping consistency in settings and controls
 - Modernized settings UX with clearer grouped options
+
+### Modern UI Preview
+
+<p>
+  <img src="assets/home.png" width="220" alt="Redesigned home screen" />
+  <img src="assets/firewall.png" width="220" alt="Redesigned firewall screen" />
+  <img src="assets/details.png" width="220" alt="Redesigned app details screen" />
+  <img src="assets/settings.png" width="220" alt="Redesigned settings screen" />
+</p>
+
+These screens highlight this fork's updated look-and-feel.
 
 ## Core Capabilities
 

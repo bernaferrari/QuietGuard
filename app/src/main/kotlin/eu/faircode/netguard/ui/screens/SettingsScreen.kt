@@ -4,11 +4,20 @@ import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +32,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -59,6 +67,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ripple
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -79,6 +88,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -822,64 +834,124 @@ private fun ThemeSwatch(
     val baseColor = seedColor ?: dynamicColor
     val displayColor = if (isEnabled) baseColor else baseColor.copy(alpha = 0.38f)
     val isDynamic = theme == "dynamic"
-    val outlineColor = MaterialTheme.colorScheme.outline
+    val ringColor by animateColorAsState(
+        targetValue = if (isSelected) {
+            MaterialTheme.colorScheme.outline
+        } else {
+            MaterialTheme.colorScheme.outlineVariant
+        },
+        animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
+        label = "ringColor_$theme",
+    )
 
     // Corner radius fraction: 0.25 (rounded square) → 0.5 (full circle)
     val cornerFraction by animateFloatAsState(
         targetValue = if (isSelected) 0.5f else 0.28f,
-        animationSpec = spring(dampingRatio = 0.6f, stiffness = 450f),
+        animationSpec = spring(dampingRatio = 0.72f, stiffness = 430f),
         label = "corner_$theme",
     )
-    // Scale: unselected swatches shrink slightly so the selected one pops
+    // Keep it lively with a gentle spring pop.
     val fillScale by animateFloatAsState(
-        targetValue = if (isSelected) 1f else 0.82f,
-        animationSpec = spring(dampingRatio = 0.55f, stiffness = 450f),
+        targetValue = if (isSelected) 1f else 0.88f,
+        animationSpec = spring(dampingRatio = 0.62f, stiffness = 420f),
         label = "scale_$theme",
     )
-    // Ring appears on selection using the outline colour for contrast
+    // Ring stays mounted and morphs with the same corner model as the fill.
     val ringAlpha by animateFloatAsState(
-        targetValue = if (isSelected) 1f else 0f,
-        animationSpec = tween(durationMillis = 180),
+        targetValue = if (isSelected) 0.95f else 0.08f,
+        animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
         label = "ring_$theme",
     )
+    val ringCornerFraction by animateFloatAsState(
+        targetValue = if (isSelected) 0.5f else 0.30f,
+        animationSpec = spring(dampingRatio = 0.74f, stiffness = 420f),
+        label = "ringCorner_$theme",
+    )
+    val tiltRotation by animateFloatAsState(
+        targetValue = if (isSelected) 9f else 0f,
+        animationSpec = spring(dampingRatio = 0.66f, stiffness = 360f),
+        label = "tilt_$theme",
+    )
+    val idleSpin =
+        if (isSelected) {
+            val infiniteTransition = rememberInfiniteTransition(label = "idleSpin_$theme")
+            infiniteTransition.animateFloat(
+                initialValue = 0f,
+                targetValue = 360f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 4400, easing = LinearEasing),
+                    repeatMode = RepeatMode.Restart,
+                ),
+                label = "idleSpinAnim_$theme",
+            ).value
+        } else {
+            0f
+        }
+    val ringRotation = tiltRotation + (idleSpin * 0.10f)
+    val fillRotation = -(tiltRotation * 0.55f) - (idleSpin * 0.06f)
+
     val iconAlpha by animateFloatAsState(
-        targetValue = if (isSelected) 1f else if (isDynamic) 0.85f else 0f,
-        animationSpec = tween(durationMillis = 180),
+        targetValue = if (isSelected) 1f else if (isDynamic) 0.70f else 0f,
+        animationSpec = tween(durationMillis = 160, easing = FastOutSlowInEasing),
         label = "icon_$theme",
     )
+    val fillShape = RoundedCornerShape(percent = (cornerFraction * 100).toInt())
+    val interactionSource = remember { MutableInteractionSource() }
 
     // 44dp touch target
     Box(
         modifier = Modifier
             .size(44.dp)
-            .clip(CircleShape)
-            .clickable(enabled = isEnabled, onClick = onClick),
+            .clickable(
+                enabled = isEnabled,
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = onClick,
+            ),
         contentAlignment = Alignment.Center,
     ) {
-        // Selection ring — uses outline colour, 3dp thick with a 3dp gap from fill
-        if (ringAlpha > 0f) {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .graphicsLayer { alpha = ringAlpha }
-                    .drawBehind {
-                        drawCircle(
-                            color = outlineColor,
-                            radius = size.minDimension / 2f,
-                            style = androidx.compose.ui.graphics.drawscope.Stroke(
-                                width = 2.5.dp.toPx(),
-                            ),
-                        )
-                    },
-            )
-        }
+        // Selection ring — always mounted; alpha/scale animate for smooth transitions.
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .graphicsLayer {
+                    alpha = ringAlpha
+                    rotationZ = ringRotation
+                }
+                .drawBehind {
+                    val inset = 2.dp.toPx()
+                    val ringSize = size.minDimension - inset * 2f
+                    drawRoundRect(
+                        color = ringColor,
+                        topLeft = Offset(inset, inset),
+                        size = Size(ringSize, ringSize),
+                        cornerRadius = CornerRadius(
+                            x = ringSize * ringCornerFraction,
+                            y = ringSize * ringCornerFraction,
+                        ),
+                        style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2.2.dp.toPx()),
+                    )
+                },
+        )
 
         // Filled swatch — rounded-square at rest, circle when selected
         Box(
             modifier = Modifier
                 .size(32.dp)
-                .graphicsLayer { scaleX = fillScale; scaleY = fillScale }
-                .clip(RoundedCornerShape(percent = (cornerFraction * 100).toInt()))
+                .graphicsLayer {
+                    scaleX = fillScale
+                    scaleY = fillScale
+                    rotationZ = fillRotation
+                }
+                .clip(fillShape)
+                .indication(
+                    interactionSource = interactionSource,
+                    indication = ripple(
+                        bounded = true,
+                        radius = 16.dp,
+                        color = Color.White.copy(alpha = 0.32f),
+                    ),
+                )
                 .background(displayColor),
             contentAlignment = Alignment.Center,
         ) {

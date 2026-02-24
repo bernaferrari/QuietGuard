@@ -1,7 +1,7 @@
 # Re-NetGuard (Compose + M3)
 
 <p align="center">
-  <img src="assets/home.png" alt="Re-NetGuard overview" width="980">
+  <img src="assets/more%20-%20light.png" alt="Re-NetGuard overview" width="980">
 </p>
 
 <p align="center">
@@ -11,7 +11,6 @@
 
 <p align="center">
   <a href="https://kotlinlang.org/"><img src="https://img.shields.io/badge/Kotlin-2.3.10-blue.svg?logo=kotlin" alt="Kotlin 2.3.10"></a>
-  <a href="https://developer.android.com/compose"><img src="https://img.shields.io/badge/Jetpack%20Compose-1.10.x-orange.svg?logo=jetpackcompose" alt="Jetpack Compose 1.10.x"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-green.svg" alt="License"></a>
   <a href="#"><img src="https://img.shields.io/badge/Platform-Android-lightgrey.svg" alt="Platforms"></a>
 </p>

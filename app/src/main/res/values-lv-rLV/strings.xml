@@ -438,7 +438,8 @@ Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
         Mēneša abonements 1 vai 2 eiro apmērā (neieskaitot vietējos nodokļus) aktivizēs visas Pro funkcijas.
         Jūs varat atcelt vai pārvaldīt abonementu Play veikala abonementu cilnē.
     </string>
-    <string name="title_pro_already">Pro funkcijas jau ir aktivizētas</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro funkcijas jau ir aktivizētas</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

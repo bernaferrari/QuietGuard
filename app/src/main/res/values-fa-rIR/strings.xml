@@ -438,7 +438,8 @@
         اشتراک ماهانه 1 یا 2 یورو (بدون احتساب مالیات) همه ویژگی‌ها را فعال می‌کند.
         از تب اشتراک‌ها در Play Store مدیریت کنید.
     </string>
-    <string name="title_pro_already">ویژگی‌های حرفه‌ای قبلاً فعال شده‌اند</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">ویژگی‌های حرفه‌ای قبلاً فعال شده‌اند</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -7,6 +7,11 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import eu.faircode.netguard.data.Prefs
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -17,11 +22,6 @@ import java.net.URL
 import java.net.URLConnection
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 class ServiceExternal : Service() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)

@@ -19,8 +19,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Dns
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
@@ -60,16 +60,16 @@ import eu.faircode.netguard.R
 import eu.faircode.netguard.ServiceSinkhole
 import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.xmlpull.v1.XmlSerializer
 import java.io.IOException
 import java.io.OutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.xmlpull.v1.XmlSerializer
 
 private const val TAG = "NetGuard.DNS.Compose"
 
@@ -143,7 +143,10 @@ fun DnsScreen() {
                                     text = filteredEntries.size.toString(),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                    modifier = Modifier.padding(
+                                        horizontal = spacing.small,
+                                        vertical = 2.dp
+                                    ),
                                 )
                             }
                         }
@@ -212,7 +215,9 @@ fun DnsScreen() {
                     OutlinedButton(
                         onClick = {
                             val filename =
-                                "netguard_dns_" + SimpleDateFormat("yyyyMMdd", Locale.US).format(Date()) + ".xml"
+                                "netguard_dns_" + SimpleDateFormat("yyyyMMdd", Locale.US).format(
+                                    Date()
+                                ) + ".xml"
                             exportLauncher.launch(filename)
                         },
                     ) {
@@ -252,7 +257,10 @@ fun DnsScreen() {
                             SegmentedButton(
                                 selected = dnsFilter == value,
                                 onClick = { dnsFilter = value },
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = options.size
+                                ),
                                 modifier = Modifier.weight(1f),
                             ) {
                                 Text(text = label, maxLines = 1)
@@ -297,7 +305,9 @@ fun DnsScreen() {
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(spacing.small),
                     ) {
-                        items(filteredEntries, key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
+                        items(
+                            filteredEntries,
+                            key = { "${it.qname}_${it.aname}_${it.resource}_${it.time}" }) { entry ->
                             val expired = entry.time + entry.ttl < now
                             DnsEntryCard(
                                 entry = entry,
@@ -360,7 +370,9 @@ private fun DnsEntryCard(
                     shape = MaterialTheme.shapes.extraLarge,
                 ) {
                     Text(
-                        text = if (expired) stringResource(R.string.ui_dns_expired) else stringResource(R.string.ui_dns_active),
+                        text = if (expired) stringResource(R.string.ui_dns_expired) else stringResource(
+                            R.string.ui_dns_active
+                        ),
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
                     )
@@ -400,7 +412,10 @@ private fun DnsEntryCard(
                             text = stringResource(R.string.label_uid, entry.uid),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                            modifier = Modifier.padding(
+                                horizontal = spacing.small,
+                                vertical = 2.dp
+                            ),
                         )
                     }
                 }

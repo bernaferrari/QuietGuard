@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,7 +19,10 @@ class ApplicationEx : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.i(TAG, "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this))
+        Log.i(
+            TAG,
+            "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this)
+        )
         Prefs.init(this)
         WorkScheduler.scheduleHousekeeping(this)
 
@@ -48,8 +50,8 @@ class ApplicationEx : Application() {
                             val bars =
                                 insets.getInsets(
                                     WindowInsetsCompat.Type.systemBars() or
-                                        WindowInsetsCompat.Type.displayCutout() or
-                                        WindowInsetsCompat.Type.ime(),
+                                            WindowInsetsCompat.Type.displayCutout() or
+                                            WindowInsetsCompat.Type.ime(),
                                 )
 
                             val dark = Prefs.getBoolean("dark_theme", false)
@@ -61,7 +63,12 @@ class ApplicationEx : Application() {
                                 isAppearanceLightStatusBars = false
                                 isAppearanceLightNavigationBars = !dark
                             }
-                            v.setPadding(bars.left, bars.top + actionBarHeight, bars.right, bars.bottom)
+                            v.setPadding(
+                                bars.left,
+                                bars.top + actionBarHeight,
+                                bars.right,
+                                bars.bottom
+                            )
 
                             insets
                         }

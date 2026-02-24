@@ -2,9 +2,6 @@ package eu.faircode.netguard.ui.screens
 
 import android.content.Context
 import android.widget.Toast
-
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Forward
 import androidx.compose.material.icons.filled.Add
@@ -33,11 +32,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -139,7 +138,10 @@ fun ForwardingScreen() {
                                     text = filteredEntries.size.toString(),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                                    modifier = Modifier.padding(
+                                        horizontal = spacing.small,
+                                        vertical = 2.dp
+                                    ),
                                 )
                             }
                         }
@@ -159,104 +161,113 @@ fun ForwardingScreen() {
             )
         },
     ) { padding ->
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(spacing.default),
-        verticalArrangement = Arrangement.spacedBy(spacing.medium),
-    ) {
-        Card(
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(spacing.default),
+            verticalArrangement = Arrangement.spacedBy(spacing.medium),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(spacing.small),
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
             ) {
-                FilledTonalButton(onClick = { showDialog = true }) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null,
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(spacing.medium),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
+                ) {
+                    FilledTonalButton(onClick = { showDialog = true }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null,
+                        )
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        Text(text = stringResource(R.string.menu_add))
+                    }
+                    Text(
+                        text = stringResource(R.string.ui_logs_filter_protocol),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    Text(text = stringResource(R.string.menu_add))
+                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                        val options = listOf(
+                            ForwardingProtocolFilter.All to stringResource(R.string.ui_filter_all),
+                            ForwardingProtocolFilter.Udp to stringResource(R.string.menu_protocol_udp),
+                            ForwardingProtocolFilter.Tcp to stringResource(R.string.menu_protocol_tcp),
+                        )
+                        options.forEachIndexed { index, (value, label) ->
+                            SegmentedButton(
+                                selected = protocolFilter == value,
+                                onClick = { protocolFilter = value },
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = options.size
+                                ),
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                Text(text = label, maxLines = 1)
+                            }
+                        }
+                    }
                 }
-                Text(
-                    text = stringResource(R.string.ui_logs_filter_protocol),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                    val options = listOf(
-                        ForwardingProtocolFilter.All to stringResource(R.string.ui_filter_all),
-                        ForwardingProtocolFilter.Udp to stringResource(R.string.menu_protocol_udp),
-                        ForwardingProtocolFilter.Tcp to stringResource(R.string.menu_protocol_tcp),
+            }
+
+            when {
+                loading -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_loading),
+                        message = stringResource(R.string.setting_forwarding),
+                        icon = Icons.Default.Add,
+                        isLoading = true,
                     )
-                    options.forEachIndexed { index, (value, label) ->
-                        SegmentedButton(
-                            selected = protocolFilter == value,
-                            onClick = { protocolFilter = value },
-                            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(text = label, maxLines = 1)
+                }
+
+                entries.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_empty_forwarding_title),
+                        message = stringResource(R.string.ui_empty_forwarding_body),
+                        icon = Icons.Default.Add,
+                        actionLabel = stringResource(R.string.menu_add),
+                        onAction = { showDialog = true },
+                    )
+                }
+
+                filteredEntries.isEmpty() -> {
+                    StatePlaceholder(
+                        title = stringResource(R.string.ui_forwarding_title),
+                        message = stringResource(R.string.ui_forwarding_filter_empty),
+                        icon = Icons.AutoMirrored.Filled.Forward,
+                        actionLabel = stringResource(R.string.ui_filter_all),
+                        onAction = { protocolFilter = ForwardingProtocolFilter.All },
+                    )
+                }
+
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(spacing.small),
+                    ) {
+                        items(
+                            filteredEntries,
+                            key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
+                            ForwardingEntryCard(
+                                entry = entry,
+                                onDelete = {
+                                    DatabaseHelper.getInstance(context)
+                                        .deleteForward(entry.protocol, entry.dport)
+                                    ServiceSinkhole.reload("forwarding", context, false)
+                                    scope.launch {
+                                        entries = loadForwarding(context)
+                                        loading = false
+                                    }
+                                },
+                            )
                         }
                     }
                 }
             }
         }
-
-        when {
-            loading -> {
-                StatePlaceholder(
-                    title = stringResource(R.string.ui_loading),
-                    message = stringResource(R.string.setting_forwarding),
-                    icon = Icons.Default.Add,
-                    isLoading = true,
-                )
-            }
-            entries.isEmpty() -> {
-                StatePlaceholder(
-                    title = stringResource(R.string.ui_empty_forwarding_title),
-                    message = stringResource(R.string.ui_empty_forwarding_body),
-                    icon = Icons.Default.Add,
-                    actionLabel = stringResource(R.string.menu_add),
-                    onAction = { showDialog = true },
-                )
-            }
-            filteredEntries.isEmpty() -> {
-                StatePlaceholder(
-                    title = stringResource(R.string.ui_forwarding_title),
-                    message = stringResource(R.string.ui_forwarding_filter_empty),
-                    icon = Icons.AutoMirrored.Filled.Forward,
-                    actionLabel = stringResource(R.string.ui_filter_all),
-                    onAction = { protocolFilter = ForwardingProtocolFilter.All },
-                )
-            }
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(spacing.small),
-                ) {
-                    items(filteredEntries, key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
-                        ForwardingEntryCard(
-                            entry = entry,
-                            onDelete = {
-                                DatabaseHelper.getInstance(context).deleteForward(entry.protocol, entry.dport)
-                                ServiceSinkhole.reload("forwarding", context, false)
-                                scope.launch {
-                                    entries = loadForwarding(context)
-                                    loading = false
-                                }
-                            },
-                        )
-                    }
-                }
-            }
-        }
-    }
     } // end Scaffold
 
     if (showDialog) {
@@ -270,11 +281,13 @@ fun ForwardingScreen() {
                             throw IllegalArgumentException("Port forwarding to privileged port on local address not possible")
                         }
                         DatabaseHelper.getInstance(context).deleteForward(protocol, dport)
-                        DatabaseHelper.getInstance(context).addForward(protocol, dport, raddr, rport, ruid)
+                        DatabaseHelper.getInstance(context)
+                            .addForward(protocol, dport, raddr, rport, ruid)
                         ServiceSinkhole.reload("forwarding", context, false)
                     } catch (ex: Throwable) {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(context, ex.message ?: ex.toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, ex.message ?: ex.toString(), Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
                 }
@@ -329,7 +342,10 @@ private fun ForwardingEntryCard(
                             text = protocolLabel,
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                            modifier = Modifier.padding(
+                                horizontal = spacing.small,
+                                vertical = 2.dp
+                            ),
                         )
                     }
                     Surface(
@@ -340,7 +356,10 @@ private fun ForwardingEntryCard(
                         Text(
                             text = stringResource(R.string.title_ruid) + ": ${entry.ruid}",
                             style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(horizontal = spacing.small, vertical = 2.dp),
+                            modifier = Modifier.padding(
+                                horizontal = spacing.small,
+                                vertical = 2.dp
+                            ),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -438,7 +457,8 @@ private fun ForwardingAddDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val selectedProtocol = protocolValues.getOrNull(protocolIndex)?.toIntOrNull() ?: 0
+                    val selectedProtocol =
+                        protocolValues.getOrNull(protocolIndex)?.toIntOrNull() ?: 0
                     val dPortValue = dport.toIntOrNull()
                     val rPortValue = rport.toIntOrNull()
                     val raddrValue = raddr.trim()

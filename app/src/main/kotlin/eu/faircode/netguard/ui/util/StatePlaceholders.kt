@@ -82,7 +82,10 @@ fun StatePlaceholder(
         Card(
             modifier = Modifier.widthIn(max = 440.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+            border = BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+            ),
         ) {
             Column(
                 modifier = Modifier.padding(spacing.extraLarge),

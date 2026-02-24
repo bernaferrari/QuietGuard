@@ -10,7 +10,12 @@ object PendingIntentCompat {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || flags and PendingIntent.FLAG_MUTABLE != 0) {
             PendingIntent.getActivity(context, requestCode, intent, flags)
         } else {
-            PendingIntent.getActivity(context, requestCode, intent, flags or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(
+                context,
+                requestCode,
+                intent,
+                flags or PendingIntent.FLAG_IMMUTABLE
+            )
         }
     }
 
@@ -18,23 +23,48 @@ object PendingIntentCompat {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || flags and PendingIntent.FLAG_MUTABLE != 0) {
             PendingIntent.getService(context, requestCode, intent, flags)
         } else {
-            PendingIntent.getService(context, requestCode, intent, flags or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getService(
+                context,
+                requestCode,
+                intent,
+                flags or PendingIntent.FLAG_IMMUTABLE
+            )
         }
     }
 
-    fun getForegroundService(context: Context, requestCode: Int, intent: Intent, flags: Int): PendingIntent {
+    fun getForegroundService(
+        context: Context,
+        requestCode: Int,
+        intent: Intent,
+        flags: Int
+    ): PendingIntent {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || flags and PendingIntent.FLAG_MUTABLE != 0) {
             PendingIntent.getService(context, requestCode, intent, flags)
         } else {
-            PendingIntent.getForegroundService(context, requestCode, intent, flags or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getForegroundService(
+                context,
+                requestCode,
+                intent,
+                flags or PendingIntent.FLAG_IMMUTABLE
+            )
         }
     }
 
-    fun getBroadcast(context: Context, requestCode: Int, intent: Intent, flags: Int): PendingIntent {
+    fun getBroadcast(
+        context: Context,
+        requestCode: Int,
+        intent: Intent,
+        flags: Int
+    ): PendingIntent {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || flags and PendingIntent.FLAG_MUTABLE != 0) {
             PendingIntent.getBroadcast(context, requestCode, intent, flags)
         } else {
-            PendingIntent.getBroadcast(context, requestCode, intent, flags or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                flags or PendingIntent.FLAG_IMMUTABLE
+            )
         }
     }
 }

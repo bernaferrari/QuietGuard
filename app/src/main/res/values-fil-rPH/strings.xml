@@ -443,7 +443,8 @@ Ang iyong internet trapiko ay hindi ipinapadala sa isang remote VPN server.</str
         Ang buwanang subskripsyon na 1 o 2 euro (hindi kasama ang mga lokal na buwis) ay mag-a-activate sa lahat ng pro feature.
         Maaari mong i-cancel o pamahalaan ang isang subskripsyon sa pamamagitan ng tab na mga subskripsyon sa Play store app.
     </string>
-    <string name="title_pro_already">Ang mga pro feature ay naka-activate na</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Ang mga pro feature ay naka-activate na</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

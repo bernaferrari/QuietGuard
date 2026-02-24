@@ -437,7 +437,8 @@ Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
         Igakuine tellimus 1 või 2 eurot (v.a kohalikud maksud) aktiveerib kõik pro-funktsioonid.
         Tellimust saab tühistada või hallata Play poe rakenduse tellimuste vahekaardi kaudu.
     </string>
-    <string name="title_pro_already">Pro funktsioonid on juba aktiveeritud</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro funktsioonid on juba aktiveeritud</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

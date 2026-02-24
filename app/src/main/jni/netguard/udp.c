@@ -31,7 +31,7 @@ int get_udp_timeout(const struct udp_session *u, int sessions, int maxsessions) 
 }
 
 int check_udp_session(const struct arguments *args, struct ng_session *s,
-                      int sessions, int maxsessions) {
+        int sessions, int maxsessions) {
     time_t now = time(NULL);
 
     char source[INET6_ADDRSTRLEN + 1];
@@ -48,19 +48,19 @@ int check_udp_session(const struct arguments *args, struct ng_session *s,
     int timeout = get_udp_timeout(&s->udp, sessions, maxsessions);
     if (s->udp.state == UDP_ACTIVE && s->udp.time + timeout < now) {
         log_android(ANDROID_LOG_WARN, "UDP idle %d/%d sec state %d from %s/%u to %s/%u",
-                    now - s->udp.time, timeout, s->udp.state,
-                    source, ntohs(s->udp.source), dest, ntohs(s->udp.dest));
+                now - s->udp.time, timeout, s->udp.state,
+                source, ntohs(s->udp.source), dest, ntohs(s->udp.dest));
         s->udp.state = UDP_FINISHING;
     }
 
     // Check finished sessions
     if (s->udp.state == UDP_FINISHING) {
         log_android(ANDROID_LOG_INFO, "UDP close from %s/%u to %s/%u socket %d",
-                    source, ntohs(s->udp.source), dest, ntohs(s->udp.dest), s->socket);
+                source, ntohs(s->udp.source), dest, ntohs(s->udp.dest), s->socket);
 
         if (close(s->socket))
             log_android(ANDROID_LOG_ERROR, "UDP close %d error %d: %s",
-                        s->socket, errno, strerror(errno));
+                    s->socket, errno, strerror(errno));
         s->socket = -1;
 
         s->udp.time = time(NULL);
@@ -69,14 +69,14 @@ int check_udp_session(const struct arguments *args, struct ng_session *s,
 
     if (s->udp.state == UDP_CLOSED && (s->udp.sent || s->udp.received)) {
         account_usage(args, s->udp.version, IPPROTO_UDP,
-                      dest, ntohs(s->udp.dest), s->udp.uid, s->udp.sent, s->udp.received);
+                dest, ntohs(s->udp.dest), s->udp.uid, s->udp.sent, s->udp.received);
         s->udp.sent = 0;
         s->udp.received = 0;
     }
 
     // Cleanup lingering sessions
     if ((s->udp.state == UDP_CLOSED || s->udp.state == UDP_BLOCKED) &&
-        s->udp.time + UDP_KEEP_TIMEOUT < now)
+            s->udp.time + UDP_KEEP_TIMEOUT < now)
         return 1;
 
     return 0;
@@ -94,7 +94,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
         int err = getsockopt(s->socket, SOL_SOCKET, SO_ERROR, &serr, &optlen);
         if (err < 0)
             log_android(ANDROID_LOG_ERROR, "UDP getsockopt error %d: %s",
-                        errno, strerror(errno));
+                    errno, strerror(errno));
         else if (serr)
             log_android(ANDROID_LOG_ERROR, "UDP SO_ERROR %d: %s", serr, strerror(serr));
 
@@ -109,7 +109,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
             if (bytes < 0) {
                 // Socket error
                 log_android(ANDROID_LOG_WARN, "UDP recv error %d: %s",
-                            errno, strerror(errno));
+                        errno, strerror(errno));
 
                 if (errno != EINTR && errno != EAGAIN)
                     s->udp.state = UDP_FINISHING;
@@ -125,7 +125,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
                 else
                     inet_ntop(AF_INET6, &s->udp.daddr.ip6, dest, sizeof(dest));
                 log_android(ANDROID_LOG_INFO, "UDP recv bytes %d from %s/%u for tun",
-                            bytes, dest, ntohs(s->udp.dest));
+                        bytes, dest, ntohs(s->udp.dest));
 
                 s->udp.received += bytes;
 
@@ -160,22 +160,22 @@ int has_udp_session(const struct arguments *args, const uint8_t *pkt, const uint
     // Search session
     struct ng_session *cur = args->ctx->ng_session;
     while (cur != NULL &&
-           !(cur->protocol == IPPROTO_UDP &&
-             cur->udp.version == version &&
-             cur->udp.source == udphdr->source && cur->udp.dest == udphdr->dest &&
-             (version == 4 ? cur->udp.saddr.ip4 == ip4->saddr &&
-                             cur->udp.daddr.ip4 == ip4->daddr
-                           : memcmp(&cur->udp.saddr.ip6, &ip6->ip6_src, 16) == 0 &&
-                             memcmp(&cur->udp.daddr.ip6, &ip6->ip6_dst, 16) == 0)))
+            !(cur->protocol == IPPROTO_UDP &&
+                    cur->udp.version == version &&
+                    cur->udp.source == udphdr->source && cur->udp.dest == udphdr->dest &&
+                    (version == 4 ? cur->udp.saddr.ip4 == ip4->saddr &&
+                            cur->udp.daddr.ip4 == ip4->daddr
+                            : memcmp(&cur->udp.saddr.ip6, &ip6->ip6_src, 16) == 0 &&
+                                    memcmp(&cur->udp.daddr.ip6, &ip6->ip6_dst, 16) == 0)))
         cur = cur->next;
 
     return (cur != NULL);
 }
 
 void block_udp(const struct arguments *args,
-               const uint8_t *pkt, size_t length,
-               const uint8_t *payload,
-               int uid) {
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid) {
     // Get headers
     const uint8_t version = (*pkt) >> 4;
     const struct iphdr *ip4 = (struct iphdr *) pkt;
@@ -193,7 +193,7 @@ void block_udp(const struct arguments *args,
     }
 
     log_android(ANDROID_LOG_INFO, "UDP blocked session from %s/%u to %s/%u",
-                source, ntohs(udphdr->source), dest, ntohs(udphdr->dest));
+            source, ntohs(udphdr->source), dest, ntohs(udphdr->dest));
 
     // Register session
     struct ng_session *s = ng_malloc(sizeof(struct ng_session), "udp session block");
@@ -221,10 +221,10 @@ void block_udp(const struct arguments *args,
 }
 
 jboolean handle_udp(const struct arguments *args,
-                    const uint8_t *pkt, size_t length,
-                    const uint8_t *payload,
-                    int uid, struct allowed *redirect,
-                    const int epoll_fd) {
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid, struct allowed *redirect,
+        const int epoll_fd) {
     // Get headers
     const uint8_t version = (*pkt) >> 4;
     const struct iphdr *ip4 = (struct iphdr *) pkt;
@@ -236,13 +236,13 @@ jboolean handle_udp(const struct arguments *args,
     // Search session
     struct ng_session *cur = args->ctx->ng_session;
     while (cur != NULL &&
-           !(cur->protocol == IPPROTO_UDP &&
-             cur->udp.version == version &&
-             cur->udp.source == udphdr->source && cur->udp.dest == udphdr->dest &&
-             (version == 4 ? cur->udp.saddr.ip4 == ip4->saddr &&
-                             cur->udp.daddr.ip4 == ip4->daddr
-                           : memcmp(&cur->udp.saddr.ip6, &ip6->ip6_src, 16) == 0 &&
-                             memcmp(&cur->udp.daddr.ip6, &ip6->ip6_dst, 16) == 0)))
+            !(cur->protocol == IPPROTO_UDP &&
+                    cur->udp.version == version &&
+                    cur->udp.source == udphdr->source && cur->udp.dest == udphdr->dest &&
+                    (version == 4 ? cur->udp.saddr.ip4 == ip4->saddr &&
+                            cur->udp.daddr.ip4 == ip4->daddr
+                            : memcmp(&cur->udp.saddr.ip6, &ip6->ip6_src, 16) == 0 &&
+                                    memcmp(&cur->udp.daddr.ip6, &ip6->ip6_dst, 16) == 0)))
         cur = cur->next;
 
     char source[INET6_ADDRSTRLEN + 1];
@@ -257,14 +257,14 @@ jboolean handle_udp(const struct arguments *args,
 
     if (cur != NULL && cur->udp.state != UDP_ACTIVE) {
         log_android(ANDROID_LOG_INFO, "UDP ignore session from %s/%u to %s/%u state %d",
-                    source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), cur->udp.state);
+                source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), cur->udp.state);
         return 0;
     }
 
     // Create new session if needed
     if (cur == NULL) {
         log_android(ANDROID_LOG_INFO, "UDP new session from %s/%u to %s/%u",
-                    source, ntohs(udphdr->source), dest, ntohs(udphdr->dest));
+                source, ntohs(udphdr->source), dest, ntohs(udphdr->dest));
 
         // Register session
         struct ng_session *s = ng_malloc(sizeof(struct ng_session), "udp session");
@@ -326,7 +326,7 @@ jboolean handle_udp(const struct arguments *args,
     }
 
     log_android(ANDROID_LOG_INFO, "UDP forward from tun %s/%u to %s/%u data %d",
-                source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), datalen);
+            source, ntohs(udphdr->source), dest, ntohs(udphdr->dest), datalen);
 
     cur->udp.time = time(NULL);
 
@@ -347,7 +347,7 @@ jboolean handle_udp(const struct arguments *args,
     } else {
         rversion = (strstr(redirect->raddr, ":") == NULL ? 4 : 6);
         log_android(ANDROID_LOG_WARN, "UDP%d redirect to %s/%u",
-                    rversion, redirect->raddr, redirect->rport);
+                rversion, redirect->raddr, redirect->rport);
 
         if (rversion == 4) {
             addr4.sin_family = AF_INET;
@@ -361,9 +361,9 @@ jboolean handle_udp(const struct arguments *args,
     }
 
     if (sendto(cur->socket, data, (socklen_t) datalen, MSG_NOSIGNAL,
-               (rversion == 4 ? (const struct sockaddr *) &addr4
-                              : (const struct sockaddr *) &addr6),
-               (socklen_t) (rversion == 4 ? sizeof(addr4) : sizeof(addr6))) != datalen) {
+            (rversion == 4 ? (const struct sockaddr *) &addr4
+                    : (const struct sockaddr *) &addr6),
+            (socklen_t) (rversion == 4 ? sizeof(addr4) : sizeof(addr6))) != datalen) {
         log_android(ANDROID_LOG_ERROR, "UDP sendto error %d: %s", errno, strerror(errno));
         if (errno != EINTR && errno != EAGAIN) {
             cur->udp.state = UDP_FINISHING;
@@ -376,7 +376,7 @@ jboolean handle_udp(const struct arguments *args,
 }
 
 int open_udp_socket(const struct arguments *args,
-                    const struct udp_session *cur, const struct allowed *redirect) {
+        const struct udp_session *cur, const struct allowed *redirect) {
     int sock;
     int version;
     if (redirect == NULL)
@@ -403,7 +403,7 @@ int open_udp_socket(const struct arguments *args,
             int on = 1;
             if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)))
                 log_android(ANDROID_LOG_ERROR, "UDP setsockopt SO_BROADCAST error %d: %s",
-                            errno, strerror(errno));
+                        errno, strerror(errno));
         }
     } else {
         // http://man7.org/linux/man-pages/man7/ipv6.7.html
@@ -413,22 +413,22 @@ int open_udp_socket(const struct arguments *args,
             int loop = 1; // true
             if (setsockopt(sock, IPPROTO_IPV6, IPV6_MULTICAST_LOOP, &loop, sizeof(loop)))
                 log_android(ANDROID_LOG_ERROR,
-                            "UDP setsockopt IPV6_MULTICAST_LOOP error %d: %s",
-                            errno, strerror(errno));
+                        "UDP setsockopt IPV6_MULTICAST_LOOP error %d: %s",
+                        errno, strerror(errno));
 
             int ttl = -1; // route default
             if (setsockopt(sock, IPPROTO_IPV6, IPV6_MULTICAST_HOPS, &ttl, sizeof(ttl)))
                 log_android(ANDROID_LOG_ERROR,
-                            "UDP setsockopt IPV6_MULTICAST_HOPS error %d: %s",
-                            errno, strerror(errno));
+                        "UDP setsockopt IPV6_MULTICAST_HOPS error %d: %s",
+                        errno, strerror(errno));
 
             struct ipv6_mreq mreq6;
             memcpy(&mreq6.ipv6mr_multiaddr, &cur->daddr.ip6, sizeof(struct in6_addr));
             mreq6.ipv6mr_interface = INADDR_ANY;
             if (setsockopt(sock, IPPROTO_IPV6, IPV6_ADD_MEMBERSHIP, &mreq6, sizeof(mreq6)))
                 log_android(ANDROID_LOG_ERROR,
-                            "UDP setsockopt IPV6_ADD_MEMBERSHIP error %d: %s",
-                            errno, strerror(errno));
+                        "UDP setsockopt IPV6_ADD_MEMBERSHIP error %d: %s",
+                        errno, strerror(errno));
         }
     }
 
@@ -436,7 +436,7 @@ int open_udp_socket(const struct arguments *args,
 }
 
 ssize_t write_udp(const struct arguments *args, const struct udp_session *cur,
-                  uint8_t *data, size_t datalen) {
+        uint8_t *data, size_t datalen) {
     size_t len;
     u_int8_t *buffer;
     struct udphdr *udp;
@@ -516,18 +516,18 @@ ssize_t write_udp(const struct arguments *args, const struct udp_session *cur,
     udp->check = ~csum;
 
     inet_ntop(cur->version == 4 ? AF_INET : AF_INET6,
-              (cur->version == 4 ? (const void *) &cur->saddr.ip4 : (const void *) &cur->saddr.ip6),
-              source,
-              sizeof(source));
+            (cur->version == 4 ? (const void *) &cur->saddr.ip4 : (const void *) &cur->saddr.ip6),
+            source,
+            sizeof(source));
     inet_ntop(cur->version == 4 ? AF_INET : AF_INET6,
-              (cur->version == 4 ? (const void *) &cur->daddr.ip4 : (const void *) &cur->daddr.ip6),
-              dest,
-              sizeof(dest));
+            (cur->version == 4 ? (const void *) &cur->daddr.ip4 : (const void *) &cur->daddr.ip6),
+            dest,
+            sizeof(dest));
 
     // Send packet
     log_android(ANDROID_LOG_DEBUG,
-                "UDP sending to tun %d from %s/%u to %s/%u data %u",
-                args->tun, dest, ntohs(cur->dest), source, ntohs(cur->source), len);
+            "UDP sending to tun %d from %s/%u to %s/%u data %u",
+            args->tun, dest, ntohs(cur->dest), source, ntohs(cur->source), len);
 
     ssize_t res = write(args->tun, buffer, len);
 

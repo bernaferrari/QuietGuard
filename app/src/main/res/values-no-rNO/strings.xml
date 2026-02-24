@@ -438,7 +438,8 @@ Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
         Et månedlig abonnement på 1 eller 2 euro (ekskludert lokale avgifter) vil aktivere alle pro-funksjoner.
         Du kan kansellere eller administrere et abonnement via abonnement-fanen i Play Store-appen.
     </string>
-    <string name="title_pro_already">Pro-funksjonene er allerede aktivert</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro-funksjonene er allerede aktivert</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -2,6 +2,7 @@ package eu.faircode.netguard
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalContext
@@ -17,7 +18,6 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.data.Prefs
 
 class LockdownWidget : GlanceAppWidget() {
@@ -56,7 +56,11 @@ class LockdownWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 class ToggleLockdownAction : ActionCallback {
-    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
         val lockdown = Prefs.getBoolean("lockdown", false)
         Prefs.putBoolean("lockdown", !lockdown)
         ServiceSinkhole.reload("widget", context, false)

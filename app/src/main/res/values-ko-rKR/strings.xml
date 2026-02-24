@@ -437,7 +437,8 @@
         월 1~2유로(현지 세금 제외)의 정기 구독으로 모든 Pro 기능을 사용할 수 있습니다.
         Play 스토어 앱의 구독 탭에서 구독을 취소하거나 관리할 수 있습니다.
     </string>
-    <string name="title_pro_already">Pro 기능이 이미 활성화되었습니다</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro 기능이 이미 활성화되었습니다</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

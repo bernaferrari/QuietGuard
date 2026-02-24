@@ -438,7 +438,8 @@ A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
         Havi 1 vagy 2 eurós előfizetés (helyi adók nélkül) aktiválja az összes pro funkciót.
         Előfizetését a Play Áruházban kezelheti.
     </string>
-    <string name="title_pro_already">A pro funkciók már aktiválva vannak</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">A pro funkciók már aktiválva vannak</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -1,10 +1,10 @@
 package eu.faircode.netguard
 
 import android.content.Context
+import androidx.glance.appwidget.updateAll
 import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.theme.themeOffColor
 import eu.faircode.netguard.ui.theme.themeOnColor
-import androidx.glance.appwidget.updateAll
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

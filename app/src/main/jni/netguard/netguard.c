@@ -132,7 +132,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1init(
             int flags = fcntl(ctx->pipefds[i], F_GETFL, 0);
             if (flags < 0 || fcntl(ctx->pipefds[i], F_SETFL, flags | O_NONBLOCK) < 0)
                 log_android(ANDROID_LOG_ERROR, "fcntl pipefds[%d] O_NONBLOCK error %d: %s",
-                            i, errno, strerror(errno));
+                        i, errno, strerror(errno));
         }
 
     return (jlong) ctx;
@@ -162,7 +162,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1run(
     int flags = fcntl(tun, F_GETFL, 0);
     if (flags < 0 || fcntl(tun, F_SETFL, flags & ~O_NONBLOCK) < 0)
         log_android(ANDROID_LOG_ERROR, "fcntl tun ~O_NONBLOCK error %d: %s",
-                    errno, strerror(errno));
+                errno, strerror(errno));
 
     // Get arguments
     struct arguments *args = ng_malloc(sizeof(struct arguments), "arguments");
@@ -262,7 +262,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1pcap(
             int flags = fcntl(fileno(pcap_file), F_GETFL, 0);
             if (flags < 0 || fcntl(fileno(pcap_file), F_SETFL, flags & ~O_NONBLOCK) < 0)
                 log_android(ANDROID_LOG_ERROR, "PCAP fcntl ~O_NONBLOCK error %d: %s",
-                            errno, strerror(errno));
+                        errno, strerror(errno));
 
             if (fsync(fileno(pcap_file)))
                 log_android(ANDROID_LOG_ERROR, "PCAP fsync error %d: %s", errno, strerror(errno));
@@ -277,7 +277,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1pcap(
         const char *name = (*env)->GetStringUTFChars(env, name_, 0);
         ng_add_alloc(name, "name");
         log_android(ANDROID_LOG_WARN, "PCAP file %s record size %d truncate @%ld",
-                    name, pcap_record_size, pcap_file_size);
+                name, pcap_record_size, pcap_file_size);
 
         pcap_file = fopen(name, "ab+");
         if (pcap_file == NULL)
@@ -286,7 +286,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1pcap(
             int flags = fcntl(fileno(pcap_file), F_GETFL, 0);
             if (flags < 0 || fcntl(fileno(pcap_file), F_SETFL, flags | O_NONBLOCK) < 0)
                 log_android(ANDROID_LOG_ERROR, "PCAP fcntl O_NONBLOCK error %d: %s",
-                            errno, strerror(errno));
+                        errno, strerror(errno));
 
             long size = ftell(pcap_file);
             if (size == 0) {
@@ -312,8 +312,8 @@ Java_eu_faircode_netguard_ServiceSinkhole_00024Companion_jni_1pcap(
 
 JNIEXPORT void JNICALL
 Java_eu_faircode_netguard_ServiceSinkhole_jni_1socks5(JNIEnv *env, jobject instance, jstring addr_,
-                                                      jint port, jstring username_,
-                                                      jstring password_) {
+        jint port, jstring username_,
+        jstring password_) {
     const char *addr = (*env)->GetStringUTFChars(env, addr_, 0);
     const char *username = (*env)->GetStringUTFChars(env, username_, 0);
     const char *password = (*env)->GetStringUTFChars(env, password_, 0);
@@ -327,7 +327,7 @@ Java_eu_faircode_netguard_ServiceSinkhole_jni_1socks5(JNIEnv *env, jobject insta
     strcpy(socks5_password, password);
 
     log_android(ANDROID_LOG_WARN, "SOCKS5 %s:%d user=%s",
-                socks5_addr, socks5_port, socks5_username);
+            socks5_addr, socks5_port, socks5_username);
 
     (*env)->ReleaseStringUTFChars(env, addr_, addr);
     (*env)->ReleaseStringUTFChars(env, username_, username);
@@ -589,7 +589,7 @@ jfieldID fidTTL = NULL;
 jfieldID fidDnsUid = NULL;
 
 void dns_resolved(const struct arguments *args,
-                  const char *qname, const char *aname, const char *resource, int ttl, jint uid) {
+        const char *qname, const char *aname, const char *resource, int ttl, jint uid) {
 #ifdef PROFILE_JNI
     float mselapsed;
     struct timeval start, end;
@@ -700,9 +700,9 @@ jboolean is_domain_blocked(const struct arguments *args, const char *name) {
 static jmethodID midGetUidQ = NULL;
 
 jint get_uid_q(const struct arguments *args,
-               jint version, jint protocol,
-               const char *source, jint sport,
-               const char *dest, jint dport) {
+        jint version, jint protocol,
+        const char *source, jint sport,
+        const char *dest, jint dport) {
 #ifdef PROFILE_JNI
     float mselapsed;
     struct timeval start, end;
@@ -826,16 +826,16 @@ jfieldID fidUid = NULL;
 jfieldID fidAllowed = NULL;
 
 jobject create_packet(const struct arguments *args,
-                      jint version,
-                      jint protocol,
-                      const char *flags,
-                      const char *source,
-                      jint sport,
-                      const char *dest,
-                      jint dport,
-                      const char *data,
-                      jint uid,
-                      jboolean allowed) {
+        jint version,
+        jint protocol,
+        const char *flags,
+        const char *source,
+        jint sport,
+        const char *dest,
+        jint dport,
+        const char *data,
+        jint uid,
+        jboolean allowed) {
     JNIEnv *env = args->env;
 
 #ifdef PROFILE_JNI
@@ -928,7 +928,7 @@ jfieldID fidUsageSent = NULL;
 jfieldID fidUsageReceived = NULL;
 
 void account_usage(const struct arguments *args, jint version, jint protocol,
-                   const char *daddr, jint dport, jint uid, jlong sent, jlong received) {
+        const char *daddr, jint dport, jint uid, jlong sent, jlong received) {
 #ifdef PROFILE_JNI
     float mselapsed;
     struct timeval start, end;
@@ -1101,8 +1101,8 @@ void ng_dump() {
     for (int c = 0; c < allocs; c++)
         if (alloc[c].ptr != NULL)
             log_android(ANDROID_LOG_WARN,
-                        "holding %d [%s] %s",
-                        ++r, alloc[c].tag, ctime(&alloc[c].time));
+                    "holding %d [%s] %s",
+                    ++r, alloc[c].tag, ctime(&alloc[c].time));
 }
 
 JNIEXPORT void JNICALL

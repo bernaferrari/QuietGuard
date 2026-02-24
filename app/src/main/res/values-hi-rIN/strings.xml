@@ -438,7 +438,8 @@
         1 या 2 यूरो (स्थानीय करों को छोड़कर) की मासिक सदस्यता सभी प्रो सुविधाओं को सक्रिय कर देगी।
         आप Play Store ऐप में सदस्यता टैब के माध्यम से सदस्यता रद्द या प्रबंधित कर सकते हैं।
     </string>
-    <string name="title_pro_already">प्रो विशेषताएं पहले ही सक्रिय हैं</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">प्रो विशेषताएं पहले ही सक्रिय हैं</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -12,14 +12,6 @@ import android.util.Log
 import android.widget.Toast
 import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.theme.themeOffColor
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLConnection
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +21,14 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLConnection
 
 class DownloadTask(
     private val context: Activity,
@@ -53,7 +53,11 @@ class DownloadTask(
         wakeLock?.acquire()
         showNotification(0)
         if (!Util.isPlayStoreInstall(context)) {
-            Toast.makeText(context, context.getString(R.string.msg_downloading, url.toString()), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.msg_downloading, url.toString()),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         job = scope.launch {
@@ -162,7 +166,8 @@ class DownloadTask(
             PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
-        val notificationColor = themeOffColor(Prefs.getString("theme", eu.faircode.netguard.ui.theme.THEME_DEFAULT))
+        val notificationColor =
+            themeOffColor(Prefs.getString("theme", eu.faircode.netguard.ui.theme.THEME_DEFAULT))
         val builder = Notification.Builder(context, Notifications.CHANNEL_NOTIFY)
             .setSmallIcon(context.fileDownloadIcon())
             .setContentTitle(context.getString(R.string.app_name))

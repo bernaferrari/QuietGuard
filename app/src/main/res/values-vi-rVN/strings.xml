@@ -434,7 +434,8 @@
         Gói đăng ký hàng tháng trị giá 1 hoặc 2 euro (không bao gồm thuế địa phương) sẽ kích hoạt tất cả các tính năng pro.
         Bạn có thể hủy hoặc quản lý gói đăng ký thông qua tab gói đăng ký trong ứng dụng Play Store.
     </string>
-    <string name="title_pro_already">Các tính năng chuyên nghiệp đã được kích hoạt</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Các tính năng chuyên nghiệp đã được kích hoạt</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

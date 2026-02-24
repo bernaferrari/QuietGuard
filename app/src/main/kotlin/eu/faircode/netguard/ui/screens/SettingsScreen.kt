@@ -16,8 +16,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -34,75 +34,70 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Forward
+import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MobileOff
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.automirrored.filled.Forward
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.ripple
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -116,20 +111,20 @@ import eu.faircode.netguard.WorkScheduler
 import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.components.ExpandableContent
 import eu.faircode.netguard.ui.components.FirewallTile
+import eu.faircode.netguard.ui.theme.AmberPrimary
+import eu.faircode.netguard.ui.theme.BluePrimary
+import eu.faircode.netguard.ui.theme.GreenPrimary
+import eu.faircode.netguard.ui.theme.OrangePrimary
+import eu.faircode.netguard.ui.theme.PurplePrimary
+import eu.faircode.netguard.ui.theme.Teal500
 import eu.faircode.netguard.ui.theme.TouchTargets
 import eu.faircode.netguard.ui.theme.spacing
-import eu.faircode.netguard.ui.theme.Teal500
-import eu.faircode.netguard.ui.theme.BluePrimary
-import eu.faircode.netguard.ui.theme.PurplePrimary
-import eu.faircode.netguard.ui.theme.AmberPrimary
-import eu.faircode.netguard.ui.theme.OrangePrimary
-import eu.faircode.netguard.ui.theme.GreenPrimary
-import java.io.File
-import java.io.FileOutputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -182,10 +177,14 @@ fun SettingsScreen(
                         when (status) {
                             "available" ->
                                 if (!version.isNullOrBlank()) {
-                                    context.getString(R.string.setting_update_result_available, version)
+                                    context.getString(
+                                        R.string.setting_update_result_available,
+                                        version
+                                    )
                                 } else {
                                     context.getString(R.string.setting_update_result_available_unknown)
                                 }
+
                             "upToDate" -> context.getString(R.string.setting_update_result_up_to_date)
                             "unavailable" -> context.getString(R.string.setting_update_result_unavailable)
                             else -> context.getString(R.string.setting_update_result_failed)
@@ -194,7 +193,12 @@ fun SettingsScreen(
             }
 
         val filter = IntentFilter(ServiceSinkhole.ACTION_UPDATE_CHECK_RESULT)
-        ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        ContextCompat.registerReceiver(
+            context,
+            receiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
 
         onDispose {
             runCatching { context.unregisterReceiver(receiver) }
@@ -267,9 +271,21 @@ fun SettingsScreen(
                 val currentTheme = str("theme", "teal")
                 val dynamicThemeEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                 val modeOptions = listOf(
-                    Triple("light", stringResource(R.string.setting_appearance_light), Icons.Default.LightMode),
-                    Triple("dark", stringResource(R.string.setting_appearance_dark), Icons.Default.DarkMode),
-                    Triple("auto", stringResource(R.string.setting_appearance_auto), Icons.Default.BrightnessAuto),
+                    Triple(
+                        "light",
+                        stringResource(R.string.setting_appearance_light),
+                        Icons.Default.LightMode
+                    ),
+                    Triple(
+                        "dark",
+                        stringResource(R.string.setting_appearance_dark),
+                        Icons.Default.DarkMode
+                    ),
+                    Triple(
+                        "auto",
+                        stringResource(R.string.setting_appearance_auto),
+                        Icons.Default.BrightnessAuto
+                    ),
                 )
 
                 // ── Dark-mode toggle — M3 segmented button ──
@@ -357,7 +373,13 @@ fun SettingsScreen(
                         blockedIcon = Icons.Default.WifiOff,
                         label = stringResource(R.string.title_wifi),
                         allowed = !bool("whitelist_wifi", true),
-                        onToggle = { updateFlag("whitelist_wifi", !bool("whitelist_wifi", true), reload = true) },
+                        onToggle = {
+                            updateFlag(
+                                "whitelist_wifi",
+                                !bool("whitelist_wifi", true),
+                                reload = true
+                            )
+                        },
                         shape = settingPairTileShape(
                             isLeadingTile = true,
                             isFirstRow = true,
@@ -371,7 +393,13 @@ fun SettingsScreen(
                         blockedIcon = Icons.Default.MobileOff,
                         label = stringResource(R.string.title_mobile),
                         allowed = !bool("whitelist_other", true),
-                        onToggle = { updateFlag("whitelist_other", !bool("whitelist_other", true), reload = true) },
+                        onToggle = {
+                            updateFlag(
+                                "whitelist_other",
+                                !bool("whitelist_other", true),
+                                reload = true
+                            )
+                        },
                         shape = settingPairTileShape(
                             isLeadingTile = false,
                             isFirstRow = true,

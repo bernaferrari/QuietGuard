@@ -437,7 +437,8 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
         Aylık 1 veya 2 Euro\'luk (yerel vergiler hariç) bir abonelik tüm Pro özellikleri etkinleştirecektir.
         Aboneliğinizi Play mağazası uygulamasının abonelikler sekmesinden iptal edebilir veya yönetebilirsiniz.
     </string>
-    <string name="title_pro_already">Pro özellikler zaten etkinleştirilmiş</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro özellikler zaten etkinleştirilmiş</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

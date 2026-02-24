@@ -437,7 +437,8 @@
         প্রতি মাসে ১ বা ২ ইউরো (স্থানীয় কর বাদে) সাবস্ক্রিপশন সমস্ত প্রো বৈশিষ্ট্য সক্রিয় করবে।
         আপনি প্লে স্টোর অ্যাপের সাবস্ক্রিপশন ট্যাব থেকে একটি সাবস্ক্রিপশন বাতিল বা পরিচালনা করতে পারেন।
     </string>
-    <string name="title_pro_already">প্রো বৈশিষ্ট্যগুলি ইতিমধ্যেই সক্রিয় করা হয়েছে</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">প্রো বৈশিষ্ট্যগুলি ইতিমধ্যেই সক্রিয় করা হয়েছে</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

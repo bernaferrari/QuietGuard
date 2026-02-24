@@ -174,6 +174,11 @@
     <string name="setting_update">Zkontrolovat aktualizace</string>
     <string name="setting_update_now">Zkontrolovat teď</string>
     <string name="setting_update_checking">Kontroluje se...</string>
+    <string name="setting_update_result_none">Žádné dostupné aktualizace</string>
+    <string name="setting_update_result_available">K dispozici je nová verze: %s</string>
+    <string name="setting_update_result_error">Chyba při kontrole aktualizací</string>
+    <string name="setting_update_result_latest">Používáte nejnovější verzi</string>
+    <string name="setting_update_result_cancelled">Kontrola aktualizací byla zrušena</string>
 
     <string name="setting_network_options">Možnosti sítě</string>
     <string name="setting_subnet">Směrování podsítě</string>
@@ -437,7 +442,9 @@ Váš internetový provoz není odesílán na vzdálený server VPN.</string>
         Měsíční předplatné ve výši 1 nebo 2 eur (bez místních daní) aktivuje všechny pro funkce.
         Předplatné můžete zrušit nebo spravovat v záložce předplatné v aplikaci Play Store.
     </string>
-    <string name="title_pro_already">Pro funkce jsou již aktivovány</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro funkce jsou již aktivovány</string>
+
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

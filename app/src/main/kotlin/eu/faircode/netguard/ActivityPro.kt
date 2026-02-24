@@ -4,26 +4,25 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,7 +30,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -112,7 +110,8 @@ class ActivityPro : ComponentActivity() {
                                             SKU_SUPPORT2,
                                         )
                                     for (sku in skus) {
-                                        map[sku] = runCatching { iab.isAvailable(sku) }.getOrDefault(true)
+                                        map[sku] =
+                                            runCatching { iab.isAvailable(sku) }.getOrDefault(true)
                                     }
                                     withContext(Dispatchers.Main) {
                                         availability = map
@@ -200,7 +199,7 @@ private fun ProContent(
                 actions = {
                     if (!Util.isPlayStoreInstall(context)) {
                         TextButton(onClick = onChallenge) {
-                        Text(text = stringResource(R.string.title_pro_challenge))
+                            Text(text = stringResource(R.string.title_pro_challenge))
                         }
                     }
                 },
@@ -240,7 +239,8 @@ private fun ProContent(
     }
 
     if (showChallenge) {
-        val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        val androidId =
+            Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         val challenge = "O3$androidId"
         val seed = "NetGuard3"
         ChallengeDialog(
@@ -269,7 +269,11 @@ private fun ProRow(
     ) {
         Text(text = title, style = MaterialTheme.typography.bodyLarge)
         when {
-            purchased -> Text(text = stringResource(R.string.title_pro_bought), style = MaterialTheme.typography.bodyMedium)
+            purchased -> Text(
+                text = stringResource(R.string.title_pro_bought),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
             !available -> Text(text = stringResource(R.string.title_pro_unavailable))
             else -> FilledTonalButton(onClick = onBuy) {
                 Text(text = stringResource(R.string.title_pro_buy))
@@ -288,7 +292,8 @@ private fun ChallengeDialog(
     val context = androidx.compose.ui.platform.LocalContext.current
     val challengeLabel = stringResource(R.string.title_pro_challenge)
     var response by remember { mutableStateOf("") }
-    val expected = remember(challenge, seed) { runCatching { Util.md5(challenge, seed) }.getOrDefault("") }
+    val expected =
+        remember(challenge, seed) { runCatching { Util.md5(challenge, seed) }.getOrDefault("") }
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     AlertDialog(

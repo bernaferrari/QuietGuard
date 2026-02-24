@@ -9,12 +9,6 @@ import android.graphics.Bitmap.Config
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.Icon
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.PathFillType
-import androidx.compose.ui.graphics.asAndroidPath
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Equalizer
@@ -28,17 +22,23 @@ import androidx.compose.material.icons.filled.SignalCellular4Bar
 import androidx.compose.material.icons.filled.SignalCellularOff
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.asAndroidPath
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.PathNode
 import androidx.compose.ui.graphics.vector.VectorGroup
 import androidx.compose.ui.graphics.vector.VectorNode
 import androidx.compose.ui.graphics.vector.VectorPath
 import androidx.compose.ui.graphics.vector.toPath
-import kotlin.math.roundToInt
-import kotlin.math.max
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 object Notifications {
     const val CHANNEL_FOREGROUND = "foreground"
@@ -105,7 +105,8 @@ fun Context.lockIcon(): Icon = notificationIcon(Icons.Default.Lock)
 
 fun Context.errorIcon(): Icon = notificationIcon(Icons.Default.Error)
 
-fun Context.wifiIcon(enabled: Boolean): Icon = notificationIcon(if (enabled) Icons.Default.Wifi else Icons.Default.WifiOff)
+fun Context.wifiIcon(enabled: Boolean): Icon =
+    notificationIcon(if (enabled) Icons.Default.Wifi else Icons.Default.WifiOff)
 
 fun Context.cellularIcon(enabled: Boolean): Icon =
     notificationIcon(if (enabled) Icons.Default.SignalCellular4Bar else Icons.Default.SignalCellularOff)
@@ -159,12 +160,12 @@ private fun drawVectorGroup(
     canvas.save()
     if (
         group.rotation != 0f ||
-            group.pivotX != 0f ||
-            group.pivotY != 0f ||
-            group.scaleX != 1f ||
-            group.scaleY != 1f ||
-            group.translationX != 0f ||
-            group.translationY != 0f
+        group.pivotX != 0f ||
+        group.pivotY != 0f ||
+        group.scaleX != 1f ||
+        group.scaleY != 1f ||
+        group.translationX != 0f ||
+        group.translationY != 0f
     ) {
         canvas.translate(group.translationX + group.pivotX, group.translationY + group.pivotY)
         canvas.rotate(group.rotation)

@@ -437,7 +437,8 @@
         ئايغا 1 ياكى 2 ياۋرو (باجنى ئۆز ئىچىگە ئالمايدۇ) تۆلەپ بارلىق Pro ئىقتىدارلارنى قوزغىتالايدىغان ئەزالىق.
         ئەزالىقنى Play Store دىن بىكار قىلالايسىز ياكى باشقۇرالايسىز.
     </string>
-    <string name="title_pro_already">Pro ئىقتىدارلار ئاللىقاچان قوزغىتىلغان</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro ئىقتىدارلار ئاللىقاچان قوزغىتىلغان</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

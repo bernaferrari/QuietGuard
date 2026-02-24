@@ -438,7 +438,8 @@ Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
         Hileko 1 edo 2 euroko harpidetzak (tokiko zergarik gabe) pro ezaugarri guztiak aktibatuko ditu.
         Harpidetza Play Store aplikazioko harpidetzen fitxaren bidez kudeatu edo bertan behera utzi dezakezu.
     </string>
-    <string name="title_pro_already">Pro ezaugarriak aktibatuta daude dagoeneko</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro ezaugarriak aktibatuta daude dagoeneko</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

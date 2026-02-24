@@ -438,7 +438,8 @@ Internet-liikennettäsi ei lähetetä ulkoiselle VPN-palvelimelle.</string>
         1 tai 2 euron kuukausitilaus (ilman paikallisia veroja) aktivoi kaikki pro-ominaisuudet.
         Voit peruuttaa tai hallita tilausta Play Kaupan tilausvälilehdeltä.
     </string>
-    <string name="title_pro_already">Pro-ominaisuudet on jo aktivoitu</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro-ominaisuudet on jo aktivoitu</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

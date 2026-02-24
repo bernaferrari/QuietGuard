@@ -436,7 +436,8 @@ Jou internetverkeer word nie na \'n afgeleë VPN-bediener gestuur nie.</string>
         \'n Maandelikse intekening van 1 of 2 euro (uitgesluit plaaslike belastings) sal alle pro-funksies aktiveer.
         Jy kan \'n intekening kanselleer of bestuur via die intekenings-oortjie in die Play Winkel-toepassing.
     </string>
-    <string name="title_pro_already">Die pro-funksies is reeds geaktiveer</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Die pro-funksies is reeds geaktiveer</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

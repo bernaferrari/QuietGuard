@@ -9,8 +9,8 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
-import eu.faircode.netguard.data.Prefs
 import com.android.vending.billing.IInAppBillingService
+import eu.faircode.netguard.data.Prefs
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -137,10 +137,16 @@ class IAB(
                 }
 
                 Prefs.getBoolean(Prefs.namespaced("IAB", sku), false) ||
-                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_PRO1), false) ||
-                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT1), false) ||
-                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT2), false) ||
-                    Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_DONATION), false)
+                        Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_PRO1), false) ||
+                        Prefs.getBoolean(
+                            Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT1),
+                            false
+                        ) ||
+                        Prefs.getBoolean(
+                            Prefs.namespaced("IAB", ActivityPro.SKU_SUPPORT2),
+                            false
+                        ) ||
+                        Prefs.getBoolean(Prefs.namespaced("IAB", ActivityPro.SKU_DONATION), false)
             } catch (ignored: SecurityException) {
                 false
             }

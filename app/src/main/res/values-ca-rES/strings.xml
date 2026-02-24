@@ -438,7 +438,8 @@ El teu trànsit d\'Internet no s\'està enviant a un servidor VPN remot.</string
         Una subscripció mensual d\'1 o 2 euros (sense impostos locals) activarà totes les funcions pro.
         Pots cancel·lar o gestionar una subscripció mitjançant la pestanya de subscripcions a l\'aplicació Play Store.
     </string>
-    <string name="title_pro_already">Les funcions pro ja estan activades</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Les funcions pro ja estan activades</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -438,7 +438,8 @@
         Месячная подписка за 1 или 2 евро (без учета налогов) активирует все pro-функции.
         Вы можете управлять подпиской в приложении Play Store.
     </string>
-    <string name="title_pro_already">Pro-функции уже активированы</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro-функции уже активированы</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

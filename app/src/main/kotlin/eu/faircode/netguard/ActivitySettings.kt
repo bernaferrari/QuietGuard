@@ -1,7 +1,6 @@
 package eu.faircode.netguard
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import eu.faircode.netguard.ui.Settings
 

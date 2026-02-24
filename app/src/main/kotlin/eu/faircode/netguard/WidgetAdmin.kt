@@ -65,6 +65,7 @@ class WidgetAdmin : ReceiverAutostart() {
                         }
                     }
                 }
+
                 INTENT_LOCKDOWN_ON, INTENT_LOCKDOWN_OFF -> {
                     val lockdown = INTENT_LOCKDOWN_ON == intent.action
                     Prefs.putBoolean("lockdown", lockdown)

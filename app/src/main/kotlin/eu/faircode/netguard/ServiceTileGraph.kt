@@ -22,7 +22,7 @@ class ServiceTileGraph : TileService() {
 
     private fun update() {
         val stats = Prefs.getBoolean("show_stats", false)
-            val tile = qsTile
+        val tile = qsTile
         if (tile != null) {
             tile.state = if (stats) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             tile.icon = this.equalizerIcon()

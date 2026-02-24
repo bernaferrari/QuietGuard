@@ -434,7 +434,8 @@
         Mesačné predplatné vo výške 1 alebo 2 eurá (bez miestnych daní) aktivuje všetky pro funkcie.
         Predplatné môžete zrušiť alebo spravovať prostredníctvom karty predplatného v aplikácii Play Store.
     </string>
-    <string name="title_pro_already">Pro funkcie sú už aktivované</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro funkcie sú už aktivované</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

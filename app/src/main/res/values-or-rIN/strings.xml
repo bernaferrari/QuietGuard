@@ -438,7 +438,8 @@
         ୧ କିମ୍ବା ୨ ୟୁରୋର ମାସିକ ସବସ୍କ୍ରିପସନ୍ (ସ୍ଥାନୀୟ ଟ୍ୟାକ୍ସ ବ୍ୟତୀତ) ସମସ୍ତ ପ୍ରୋ ବୈଶିଷ୍ଟ୍ୟଗୁଡିକୁ ସକ୍ରିୟ କରିବ |
         ଆପଣ ପ୍ଲେ ଷ୍ଟୋର୍ ଆପ୍ ରେ ସବସ୍କ୍ରିପସନ୍ ଟ୍ୟାବ୍ ମାଧ୍ୟମରେ ସବସ୍କ୍ରିପସନ୍ ବାତିଲ୍ କିମ୍ବା ପରିଚାଳନା କରିପାରିବେ |
     </string>
-    <string name="title_pro_already">ପ୍ରୋ ବୈଶିଷ୍ଟ୍ୟଗୁଡିକ ପୂର୍ବରୁ ସକ୍ରିୟ ହୋଇସାରିଛି</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">ପ୍ରୋ ବୈଶିଷ୍ଟ୍ୟଗୁଡିକ ପୂର୍ବରୁ ସକ୍ରିୟ ହୋଇସାରିଛି</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

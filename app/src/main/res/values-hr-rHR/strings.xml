@@ -438,7 +438,8 @@ Vaš promet se ne šalje na udaljeni VPN poslužitelj.</string>
         Mjesečna pretplata od 1 ili 2 eura (bez poreza) aktivirat će sve pro značajke.
         Upravljajte pretplatom putem Play Storea.
     </string>
-    <string name="title_pro_already">Pro značajke su već aktivirane</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro značajke su već aktivirane</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

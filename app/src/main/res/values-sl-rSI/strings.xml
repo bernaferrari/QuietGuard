@@ -439,7 +439,8 @@
         Mesečna naročnina v višini 1 ali 2 evra (brez lokalnih davkov) bo aktivirala vse profesionalne funkcije.
         Naročnino lahko prekličete ali upravljate prek zavihka z naročninami v trgovini Play.
     </string>
-    <string name="title_pro_already">Profesionalne funkcije so že aktivirane</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Profesionalne funkcije so že aktivirane</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

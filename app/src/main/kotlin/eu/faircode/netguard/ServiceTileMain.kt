@@ -26,7 +26,7 @@ class ServiceTileMain : TileService() {
 
     private fun update() {
         val enabled = Prefs.getBoolean("enabled", false)
-            val tile = qsTile
+        val tile = qsTile
         if (tile != null) {
             tile.state = if (enabled) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             tile.icon = this.securityIcon()
@@ -45,7 +45,8 @@ class ServiceTileMain : TileService() {
 
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(WidgetAdmin.INTENT_ON).setPackage(packageName)
-        val pi = PendingIntentCompat.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pi =
+            PendingIntentCompat.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         am.cancel(pi)
 
         val enabled = !Prefs.getBoolean("enabled", false)

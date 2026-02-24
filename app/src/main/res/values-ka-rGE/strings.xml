@@ -438,7 +438,8 @@
         ყოველთვიური გამოწერა 1 ან 2 ევროდ (ადგილობრივი გადასახადების გარეშე) გაააქტიურებს ყველა პრო ფუნქციას.
         გამოწერის მართვა შეგიძლიათ Play Store-ის გამოწერების ჩანართიდან.
     </string>
-    <string name="title_pro_already">პრო ფუნქციები უკვე გააქტიურებულია</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">პრო ფუნქციები უკვე გააქტიურებულია</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

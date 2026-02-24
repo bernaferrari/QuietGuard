@@ -436,7 +436,8 @@
         Месечен абонамент от 1 или 2 евро (без такси и данъци) ще включи всички платени възможности.
         Можете да спрете или управлявате абонамента от раздела за абонаменти в приложението на Play Store.
     </string>
-    <string name="title_pro_already">Платените възможности вече са активирани</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Платените възможности вече са активирани</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -437,7 +437,8 @@
         යුරෝ 1 හෝ 2 ක මාසික දායකත්වයක් (දේශීය බදු හැර) සියලුම pro විශේෂාංග සක්‍රිය කරනු ඇත.
         ඔබට Play Store යෙදුමේ දායකත්ව ටැබය හරහා දායකත්වයක් අවලංගු කිරීමට හෝ කළමනාකරණය කිරීමට හැකිය.
     </string>
-    <string name="title_pro_already">Pro විශේෂාංග දැනටමත් සක්‍රිය කර ඇත</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro විශේෂාංග දැනටමත් සක්‍රිය කර ඇත</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

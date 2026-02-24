@@ -437,7 +437,8 @@
         سيؤدي الاشتراك بمبلغ 1 أو 2 يورو شهريًا (باستثناء الضرائب المحلية) إلى تفعيل جميع ميزات المحترفين.
         يمكنك إلغاء أو إدارة اشتراكك من علامة تبويب الاشتراكات في تطبيق متجر Play.
     </string>
-    <string name="title_pro_already">ميزات المحترفين مفعلة بالفعل</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">ميزات المحترفين مفعلة بالفعل</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

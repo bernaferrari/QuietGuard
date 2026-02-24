@@ -3,7 +3,6 @@ package eu.faircode.netguard
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.content.res.XmlResourceParser
 import android.database.Cursor
 import android.os.Build
@@ -15,39 +14,66 @@ import java.text.Collator
 import java.util.Locale
 
 class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: Context) {
-    @JvmField var uid: Int = 0
-    @JvmField var packageName: String? = null
-    @JvmField var icon: Int = 0
-    @JvmField var name: String? = null
-    @JvmField var version: String? = null
-    @JvmField var system: Boolean = false
-    @JvmField var internet: Boolean = false
-    @JvmField var enabled: Boolean = false
-    @JvmField var pkg: Boolean = true
+    @JvmField
+    var uid: Int = 0
+    @JvmField
+    var packageName: String? = null
+    @JvmField
+    var icon: Int = 0
+    @JvmField
+    var name: String? = null
+    @JvmField
+    var version: String? = null
+    @JvmField
+    var system: Boolean = false
+    @JvmField
+    var internet: Boolean = false
+    @JvmField
+    var enabled: Boolean = false
+    @JvmField
+    var pkg: Boolean = true
 
-    @JvmField var wifi_default: Boolean = false
-    @JvmField var other_default: Boolean = false
-    @JvmField var screen_wifi_default: Boolean = false
-    @JvmField var screen_other_default: Boolean = false
-    @JvmField var roaming_default: Boolean = false
+    @JvmField
+    var wifi_default: Boolean = false
+    @JvmField
+    var other_default: Boolean = false
+    @JvmField
+    var screen_wifi_default: Boolean = false
+    @JvmField
+    var screen_other_default: Boolean = false
+    @JvmField
+    var roaming_default: Boolean = false
 
-    @JvmField var wifi_blocked: Boolean = false
-    @JvmField var other_blocked: Boolean = false
-    @JvmField var screen_wifi: Boolean = false
-    @JvmField var screen_other: Boolean = false
-    @JvmField var roaming: Boolean = false
-    @JvmField var lockdown: Boolean = false
+    @JvmField
+    var wifi_blocked: Boolean = false
+    @JvmField
+    var other_blocked: Boolean = false
+    @JvmField
+    var screen_wifi: Boolean = false
+    @JvmField
+    var screen_other: Boolean = false
+    @JvmField
+    var roaming: Boolean = false
+    @JvmField
+    var lockdown: Boolean = false
 
-    @JvmField var apply: Boolean = true
-    @JvmField var notify: Boolean = true
+    @JvmField
+    var apply: Boolean = true
+    @JvmField
+    var notify: Boolean = true
 
-    @JvmField var relateduids: Boolean = false
-    @JvmField var related: Array<String>? = null
+    @JvmField
+    var relateduids: Boolean = false
+    @JvmField
+    var related: Array<String>? = null
 
-    @JvmField var hosts: Long = 0
-    @JvmField var changed: Boolean = false
+    @JvmField
+    var hosts: Long = 0
+    @JvmField
+    var changed: Boolean = false
 
-    @JvmField var expanded: Boolean = false
+    @JvmField
+    var expanded: Boolean = false
 
     init {
         val appInfo = requireNotNull(info.applicationInfo)
@@ -64,6 +90,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             1013 -> {
                 name = context.getString(R.string.title_mediaserver)
                 system = true
@@ -71,6 +98,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             1020 -> {
                 name = "MulticastDNSResponder"
                 system = true
@@ -78,6 +106,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             1021 -> {
                 name = context.getString(R.string.title_gpsdaemon)
                 system = true
@@ -85,6 +114,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             1051 -> {
                 name = context.getString(R.string.title_dnsdaemon)
                 system = true
@@ -92,6 +122,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             9999 -> {
                 name = context.getString(R.string.title_nobody)
                 system = true
@@ -99,6 +130,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 enabled = true
                 pkg = false
             }
+
             else -> {
                 var cursor: Cursor? = null
                 try {
@@ -127,16 +159,20 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
         }
     }
 
-    private fun updateChanged(default_wifi: Boolean, default_other: Boolean, default_roaming: Boolean) {
+    private fun updateChanged(
+        default_wifi: Boolean,
+        default_other: Boolean,
+        default_roaming: Boolean
+    ) {
         changed =
             wifi_blocked != default_wifi ||
-                other_blocked != default_other ||
-                (wifi_blocked && screen_wifi != screen_wifi_default) ||
-                (other_blocked && screen_other != screen_other_default) ||
-                ((!other_blocked || screen_other) && roaming != default_roaming) ||
-                hosts > 0 ||
-                lockdown ||
-                !apply
+                    other_blocked != default_other ||
+                    (wifi_blocked && screen_wifi != screen_wifi_default) ||
+                    (other_blocked && screen_other != screen_other_default) ||
+                    ((!other_blocked || screen_other) && roaming != default_roaming) ||
+                    hosts > 0 ||
+                    lockdown ||
+                    !apply
     }
 
     fun updateChanged(context: Context) {
@@ -244,21 +280,31 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                             when (xml.name) {
                                 "wifi" -> {
                                     val pkg = xml.getAttributeValue(null, "package")
-                                    val pblocked = xml.getAttributeBooleanValue(null, "blocked", false)
+                                    val pblocked =
+                                        xml.getAttributeBooleanValue(null, "blocked", false)
                                     pre_wifi_blocked[pkg] = pblocked
                                 }
+
                                 "other" -> {
                                     val pkg = xml.getAttributeValue(null, "package")
-                                    val pblocked = xml.getAttributeBooleanValue(null, "blocked", false)
-                                    val proaming = xml.getAttributeBooleanValue(null, "roaming", default_roaming)
+                                    val pblocked =
+                                        xml.getAttributeBooleanValue(null, "blocked", false)
+                                    val proaming = xml.getAttributeBooleanValue(
+                                        null,
+                                        "roaming",
+                                        default_roaming
+                                    )
                                     pre_other_blocked[pkg] = pblocked
                                     pre_roaming[pkg] = proaming
                                 }
+
                                 "relation" -> {
                                     val pkg = xml.getAttributeValue(null, "package")
-                                    val rel = xml.getAttributeValue(null, "related").split(",").toTypedArray()
+                                    val rel = xml.getAttributeValue(null, "related").split(",")
+                                        .toTypedArray()
                                     pre_related[pkg] = rel
                                 }
+
                                 "type" -> {
                                     val pkg = xml.getAttributeValue(null, "package")
                                     val system = xml.getAttributeBooleanValue(null, "system", true)
@@ -352,11 +398,12 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                         if (all ||
                             ((if (rule.system) show_system else show_user) &&
-                                (show_nointernet || rule.internet) &&
-                                (show_disabled || rule.enabled))
+                                    (show_nointernet || rule.internet) &&
+                                    (show_disabled || rule.enabled))
                         ) {
                             rule.wifi_default = pre_wifi_blocked[info.packageName] ?: default_wifi
-                            rule.other_default = pre_other_blocked[info.packageName] ?: default_other
+                            rule.other_default =
+                                pre_other_blocked[info.packageName] ?: default_other
                             rule.screen_wifi_default = default_screen_wifi
                             rule.screen_other_default = default_screen_other
                             rule.roaming_default = pre_roaming[info.packageName] ?: default_roaming
@@ -364,27 +411,46 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                             val packageName = info.packageName
                             rule.wifi_blocked =
                                 (!(rule.system && !manage_system) &&
-                                    Prefs.getBoolean(Prefs.namespaced("wifi", packageName), rule.wifi_default))
+                                        Prefs.getBoolean(
+                                            Prefs.namespaced("wifi", packageName),
+                                            rule.wifi_default
+                                        ))
                             rule.other_blocked =
                                 (!(rule.system && !manage_system) &&
-                                    Prefs.getBoolean(Prefs.namespaced("other", packageName), rule.other_default))
+                                        Prefs.getBoolean(
+                                            Prefs.namespaced("other", packageName),
+                                            rule.other_default
+                                        ))
                             rule.screen_wifi =
-                                Prefs.getBoolean(Prefs.namespaced("screen_wifi", packageName), rule.screen_wifi_default) &&
-                                    screen_on
+                                Prefs.getBoolean(
+                                    Prefs.namespaced("screen_wifi", packageName),
+                                    rule.screen_wifi_default
+                                ) &&
+                                        screen_on
                             rule.screen_other =
-                                Prefs.getBoolean(Prefs.namespaced("screen_other", packageName), rule.screen_other_default) &&
-                                    screen_on
+                                Prefs.getBoolean(
+                                    Prefs.namespaced("screen_other", packageName),
+                                    rule.screen_other_default
+                                ) &&
+                                        screen_on
                             rule.roaming =
-                                Prefs.getBoolean(Prefs.namespaced("roaming", packageName), rule.roaming_default)
+                                Prefs.getBoolean(
+                                    Prefs.namespaced("roaming", packageName),
+                                    rule.roaming_default
+                                )
                             rule.lockdown =
                                 Prefs.getBoolean(Prefs.namespaced("lockdown", packageName), false)
 
-                            rule.apply = Prefs.getBoolean(Prefs.namespaced("apply", packageName), true)
-                            rule.notify = Prefs.getBoolean(Prefs.namespaced("notify", packageName), true)
+                            rule.apply =
+                                Prefs.getBoolean(Prefs.namespaced("apply", packageName), true)
+                            rule.notify =
+                                Prefs.getBoolean(Prefs.namespaced("notify", packageName), true)
 
                             val listPkg = ArrayList<String>()
                             if (pre_related.containsKey(info.packageName)) {
-                                listPkg.addAll(pre_related[info.packageName]?.toList() ?: emptyList())
+                                listPkg.addAll(
+                                    pre_related[info.packageName]?.toList() ?: emptyList()
+                                )
                             }
                             for (pi in listPI) {
                                 val piAppInfo = pi.applicationInfo ?: continue

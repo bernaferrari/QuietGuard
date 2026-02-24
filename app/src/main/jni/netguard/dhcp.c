@@ -20,7 +20,7 @@
 #include "netguard.h"
 
 int check_dhcp(const struct arguments *args, const struct udp_session *u,
-               const uint8_t *data, const size_t datalen) {
+        const uint8_t *data, const size_t datalen) {
 
     // This is untested
     // Android routing of DHCP is erroneous
@@ -41,7 +41,7 @@ int check_dhcp(const struct arguments *args, const struct udp_session *u,
 
     if (request->htype != 1 || request->hlen != 6) {
         log_android(ANDROID_LOG_WARN, "DHCP unknown hardware htype %d hlen %d",
-                    request->htype, request->hlen);
+                request->htype, request->hlen);
         return -1;
     }
 

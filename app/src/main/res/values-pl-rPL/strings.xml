@@ -438,7 +438,8 @@ Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</
         Subskrypcja za 1 lub 2 euro miesięcznie (bez podatków lokalnych) aktywuje wszystkie funkcje Pro.
         Możesz anulować lub zarządzać subskrypcją w zakładce subskrypcji w aplikacji Sklep Play.
     </string>
-    <string name="title_pro_already">Funkcje Pro są już aktywowane</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Funkcje Pro są już aktywowane</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

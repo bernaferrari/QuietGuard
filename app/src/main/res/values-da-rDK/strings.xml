@@ -47,9 +47,9 @@
     <string name="status_enabled">Firewall aktiveret</string>
     <string name="status_disabled">Firewall deaktiveret</string>
     <string name="widget_firewall_enabled">Firewall TIL</string>
-    <string name="widget_firewall_disabled">Firewall FRA</string>
+    <string name="widget_firewall_disabled">Firewall VYP</string>
     <string name="widget_lockdown_enabled">Lockdown TIL</string>
-    <string name="widget_lockdown_disabled">Lockdown FRA</string>
+    <string name="widget_lockdown_disabled">Lockdown VYP</string>
     <string name="notify_traffic_title">Trafikovervågning</string>
     <string name="notify_traffic_summary">Op %1$s • Ned %2$s • Maks %3$s</string>
     <string name="notify_traffic_debug">Sessioner %1$d/%2$d/%3$d • Filer %4$d/%5$d</string>
@@ -175,6 +175,11 @@
     <string name="setting_update">Søg efter opdateringer</string>
     <string name="setting_update_now">Tjek nu</string>
     <string name="setting_update_checking">Kontrollerer...</string>
+    <string name="setting_update_result_none">Ingen opdateringer tilgængelige</string>
+    <string name="setting_update_result_available">Ny version tilgængelig: %s</string>
+    <string name="setting_update_result_error">Fejl ved kontrol af opdateringer</string>
+    <string name="setting_update_result_latest">Du bruger den nyeste version</string>
+    <string name="setting_update_result_cancelled">Opdateringskontrol annulleret</string>
 
     <string name="setting_network_options">Netværksindstillinger</string>
     <string name="setting_subnet">Subnet-routing</string>
@@ -285,7 +290,7 @@
     <string name="summary_rcode">Standardværdien er 3 (NXDOMAIN), som betyder \'ikke-eksisterende domæne\'.</string>
     <string name="summary_validate">Domænenavn der bruges til at validere internetforbindelsen på port 443 (https).</string>
     <string name="summary_socks5_enabled">Kun TCP-trafik vil blive sendt til proxy-serveren</string>
-    <string name="summary_watchdog">Kontroller periodisk, om NetGuard stadig kører (indtast nul for at deaktivere denne mulighed). Dette kan medføre ekstra batteriforbrug.</string>
+    <string name="summary_watchdog">Kontroller periodisk, om NetGuard still kører (indtast nul for at deaktivere denne mulighed). Dette kan medføre ekstra batteriforbrug.</string>
 
     <string name="summary_stats">Vis graf over netværkshastighed i notifikationen i statuslinjen</string>
 
@@ -356,7 +361,7 @@ Din internettrafik bliver ikke sendt til en ekstern VPN-server.</string>
     <string name="msg_private_dns">Slå \"Privat DNS\" fra i Android netværksindstillinger for at bruge NetGuard in filtreringstilstand</string>
 
     <string name="title_lockdown_enabled">Trafik er låst</string>
-    <string name="title_unmetered_allowed">Ikke-forbrugsafregnet trafik er tilladt</string>
+    <string name="title_unmetered_allowed">Ikke-forbrugsafregnet trafik øre tilladt</string>
     <string name="title_unmetered_blocked">Ikke-forbrugsafregnet trafik er blokeret</string>
     <string name="title_unmetered_disabled">Regler for ikke-forbrugsafregnet trafik anvendes ikke</string>
     <string name="title_metered_allowed">Forbrugsafregnet trafik er tilladt</string>
@@ -438,7 +443,9 @@ Din internettrafik bliver ikke sendt til en ekstern VPN-server.</string>
         Et månedligt abonnement på 1 eller 2 euro (ekskl. lokale afgifter) vil aktivere alle pro-funktioner.
         Du kan annullere eller administrere et abonnement via fanen abonnementer i Play Butik-appen.
     </string>
-    <string name="title_pro_already">Pro-funktionerne er allerede aktiveret</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro-funktionerne er allerede aktiveret</string>
+
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

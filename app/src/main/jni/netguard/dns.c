@@ -76,7 +76,7 @@ int32_t get_qname(const uint8_t *data, const size_t datalen, uint16_t off, char 
 }
 
 void parse_dns_response(const struct arguments *args, const struct ng_session *s,
-                        const uint8_t *data, size_t *datalen) {
+        const uint8_t *data, size_t *datalen) {
     if (*datalen < sizeof(struct dns_header) + 1) {
         log_android(ANDROID_LOG_WARN, "DNS response length %d", *datalen);
         return;
@@ -109,13 +109,13 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
                     qtype = ntohs(*((uint16_t *) (data + off)));
                     qclass = ntohs(*((uint16_t *) (data + off + 2)));
                     log_android(ANDROID_LOG_DEBUG,
-                                "DNS question %d qtype %d qclass %d qname %s",
-                                q, qtype, qclass, qname);
+                            "DNS question %d qtype %d qclass %d qname %s",
+                            q, qtype, qclass, qname);
                 }
                 off += 4;
             } else {
                 log_android(ANDROID_LOG_WARN,
-                            "DNS response Q invalid off %d datalen %d", off, *datalen);
+                        "DNS response Q invalid off %d datalen %d", off, *datalen);
                 return;
             }
         }
@@ -133,7 +133,7 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
 
                 if (off + rdlength <= *datalen) {
                     if (qclass == DNS_QCLASS_IN &&
-                        (qtype == DNS_QTYPE_A || qtype == DNS_QTYPE_AAAA)) {
+                            (qtype == DNS_QTYPE_A || qtype == DNS_QTYPE_AAAA)) {
 
                         char rd[INET6_ADDRSTRLEN + 1];
                         if (qtype == DNS_QTYPE_A) {
@@ -150,35 +150,35 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
 
                         dns_resolved(args, qname, name, rd, ttl, -1);
                         log_android(ANDROID_LOG_DEBUG,
-                                    "DNS answer %d qname %s qtype %d ttl %d data %s",
-                                    a, name, qtype, ttl, rd);
+                                "DNS answer %d qname %s qtype %d ttl %d data %s",
+                                a, name, qtype, ttl, rd);
                     } else if (qclass == DNS_QCLASS_IN &&
-                               (qtype == DNS_SVCB || qtype == DNS_HTTPS)) {
+                            (qtype == DNS_SVCB || qtype == DNS_HTTPS)) {
                         // https://tools.ietf.org/id/draft-ietf-dnsop-svcb-https-01.html
                         svcb = 1;
                         log_android(ANDROID_LOG_WARN,
-                                    "SVCB answer %d qname %s qtype %d", a, name, qtype);
+                                "SVCB answer %d qname %s qtype %d", a, name, qtype);
                     } else
                         log_android(ANDROID_LOG_DEBUG,
-                                    "DNS answer %d qname %s qclass %d qtype %d ttl %d length %d",
-                                    a, name, qclass, qtype, ttl, rdlength);
+                                "DNS answer %d qname %s qclass %d qtype %d ttl %d length %d",
+                                a, name, qclass, qtype, ttl, rdlength);
 
                     off += rdlength;
                 } else {
                     log_android(ANDROID_LOG_WARN,
-                                "DNS response A invalid off %d rdlength %d datalen %d",
-                                off, rdlength, *datalen);
+                            "DNS response A invalid off %d rdlength %d datalen %d",
+                            off, rdlength, *datalen);
                     return;
                 }
             } else {
                 log_android(ANDROID_LOG_WARN,
-                            "DNS response A invalid off %d datalen %d", off, *datalen);
+                        "DNS response A invalid off %d datalen %d", off, *datalen);
                 return;
             }
         }
 
         if (qcount > 0 &&
-            (svcb || is_domain_blocked(args, qname))) {
+                (svcb || is_domain_blocked(args, qname))) {
             dns->qr = 1;
             dns->aa = 0;
             dns->tc = 0;
@@ -234,6 +234,6 @@ void parse_dns_response(const struct arguments *args, const struct ng_session *s
         }
     } else if (acount > 0)
         log_android(ANDROID_LOG_WARN,
-                    "DNS response qr %d opcode %d qcount %d acount %d",
-                    dns->qr, dns->opcode, qcount, acount);
+                "DNS response qr %d opcode %d qcount %d acount %d",
+                dns->qr, dns->opcode, qcount, acount);
 }

@@ -280,16 +280,16 @@ int get_sni(
 struct dns_header {
     uint16_t id; // identification number
 # if __BYTE_ORDER == __LITTLE_ENDIAN
-    uint16_t rd :1; // recursion desired
-    uint16_t tc :1; // truncated message
-    uint16_t aa :1; // authoritive answer
-    uint16_t opcode :4; // purpose of message
-    uint16_t qr :1; // query/response flag
-    uint16_t rcode :4; // response code
-    uint16_t cd :1; // checking disabled
-    uint16_t ad :1; // authenticated data
-    uint16_t z :1; // its z! reserved
-    uint16_t ra :1; // recursion available
+    uint16_t rd: 1; // recursion desired
+    uint16_t tc: 1; // truncated message
+    uint16_t aa: 1; // authoritive answer
+    uint16_t opcode: 4; // purpose of message
+    uint16_t qr: 1; // query/response flag
+    uint16_t rcode: 4; // response code
+    uint16_t cd: 1; // checking disabled
+    uint16_t ad: 1; // authenticated data
+    uint16_t z: 1; // its z! reserved
+    uint16_t ra: 1; // recursion available
 #elif __BYTE_ORDER == __BIG_ENDIAN
     uint16_t qr :1; // query/response flag
     uint16_t opcode :4; // purpose of message
@@ -360,16 +360,16 @@ void check_allowed(const struct arguments *args);
 void clear(struct context *ctx);
 
 int check_icmp_session(const struct arguments *args,
-                       struct ng_session *s,
-                       int sessions, int maxsessions);
+        struct ng_session *s,
+        int sessions, int maxsessions);
 
 int check_udp_session(const struct arguments *args,
-                      struct ng_session *s,
-                      int sessions, int maxsessions);
+        struct ng_session *s,
+        int sessions, int maxsessions);
 
 int check_tcp_session(const struct arguments *args,
-                      struct ng_session *s,
-                      int sessions, int maxsessions);
+        struct ng_session *s,
+        int sessions, int maxsessions);
 
 int monitor_tcp_session(const struct arguments *args, struct ng_session *s, int epoll_fd);
 
@@ -384,9 +384,9 @@ uint16_t get_mtu();
 uint16_t get_default_mss(int version);
 
 int check_tun(const struct arguments *args,
-              const struct epoll_event *ev,
-              const int epoll_fd,
-              int sessions, int maxsessions);
+        const struct epoll_event *ev,
+        const int epoll_fd,
+        int sessions, int maxsessions);
 
 void check_icmp_socket(const struct arguments *args, const struct epoll_event *ev);
 
@@ -395,7 +395,7 @@ void check_udp_socket(const struct arguments *args, const struct epoll_event *ev
 int32_t get_qname(const uint8_t *data, const size_t datalen, uint16_t off, char *qname);
 
 void parse_dns_response(const struct arguments *args, const struct ng_session *session,
-                        const uint8_t *data, size_t *datalen);
+        const uint8_t *data, size_t *datalen);
 
 uint32_t get_send_window(const struct tcp_session *cur);
 
@@ -404,60 +404,60 @@ uint32_t get_receive_buffer(const struct ng_session *cur);
 uint32_t get_receive_window(const struct ng_session *cur);
 
 void check_tcp_socket(const struct arguments *args,
-                      const struct epoll_event *ev,
-                      const int epoll_fd);
+        const struct epoll_event *ev,
+        const int epoll_fd);
 
 int is_lower_layer(int protocol);
 
 int is_upper_layer(int protocol);
 
 void handle_ip(const struct arguments *args,
-               const uint8_t *buffer, size_t length,
-               const int epoll_fd,
-               int sessions, int maxsessions);
+        const uint8_t *buffer, size_t length,
+        const int epoll_fd,
+        int sessions, int maxsessions);
 
 jboolean handle_icmp(const struct arguments *args,
-                     const uint8_t *pkt, size_t length,
-                     const uint8_t *payload,
-                     int uid,
-                     const int epoll_fd);
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid,
+        const int epoll_fd);
 
 int has_udp_session(const struct arguments *args, const uint8_t *pkt, const uint8_t *payload);
 
 void block_udp(const struct arguments *args,
-               const uint8_t *pkt, size_t length,
-               const uint8_t *payload,
-               int uid);
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid);
 
 jboolean handle_udp(const struct arguments *args,
-                    const uint8_t *pkt, size_t length,
-                    const uint8_t *payload,
-                    int uid, struct allowed *redirect,
-                    const int epoll_fd);
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid, struct allowed *redirect,
+        const int epoll_fd);
 
 int check_dhcp(const struct arguments *args, const struct udp_session *u,
-               const uint8_t *data, const size_t datalen);
+        const uint8_t *data, const size_t datalen);
 
 void clear_tcp_data(struct tcp_session *cur);
 
 jboolean handle_tcp(const struct arguments *args,
-                    const uint8_t *pkt, size_t length,
-                    const uint8_t *payload,
-                    int uid, int allowed, struct allowed *redirect,
-                    const int epoll_fd);
+        const uint8_t *pkt, size_t length,
+        const uint8_t *payload,
+        int uid, int allowed, struct allowed *redirect,
+        const int epoll_fd);
 
 void queue_tcp(const struct arguments *args,
-               const struct tcphdr *tcphdr,
-               const char *session, struct tcp_session *cur,
-               const uint8_t *data, uint16_t datalen);
+        const struct tcphdr *tcphdr,
+        const char *session, struct tcp_session *cur,
+        const uint8_t *data, uint16_t datalen);
 
 int open_icmp_socket(const struct arguments *args, const struct icmp_session *cur);
 
 int open_udp_socket(const struct arguments *args,
-                    const struct udp_session *cur, const struct allowed *redirect);
+        const struct udp_session *cur, const struct allowed *redirect);
 
 int open_tcp_socket(const struct arguments *args,
-                    const struct tcp_session *cur, const struct allowed *redirect);
+        const struct tcp_session *cur, const struct allowed *redirect);
 
 int32_t get_local_port(const int sock);
 
@@ -466,7 +466,7 @@ int write_syn_ack(const struct arguments *args, struct tcp_session *cur);
 int write_ack(const struct arguments *args, struct tcp_session *cur);
 
 int write_data(const struct arguments *args, struct tcp_session *cur,
-               const uint8_t *buffer, size_t length);
+        const uint8_t *buffer, size_t length);
 
 int write_fin_ack(const struct arguments *args, struct tcp_session *cur);
 
@@ -475,28 +475,28 @@ void write_rst(const struct arguments *args, struct tcp_session *cur);
 void write_rst_ack(const struct arguments *args, struct tcp_session *cur);
 
 ssize_t write_icmp(const struct arguments *args, const struct icmp_session *cur,
-                   uint8_t *data, size_t datalen);
+        uint8_t *data, size_t datalen);
 
 ssize_t write_udp(const struct arguments *args, const struct udp_session *cur,
-                  uint8_t *data, size_t datalen);
+        uint8_t *data, size_t datalen);
 
 ssize_t write_tcp(const struct arguments *args, const struct tcp_session *cur,
-                  const uint8_t *data, size_t datalen,
-                  int syn, int ack, int fin, int rst);
+        const uint8_t *data, size_t datalen,
+        int syn, int ack, int fin, int rst);
 
 uint8_t char2nible(const char c);
 
 void hex2bytes(const char *hex, uint8_t *buffer);
 
 jint get_uid(const int version, const int protocol,
-             const void *saddr, const uint16_t sport,
-             const void *daddr, const uint16_t dport);
+        const void *saddr, const uint16_t sport,
+        const void *daddr, const uint16_t dport);
 
 jint get_uid_sub(const int version, const int protocol,
-                 const void *saddr, const uint16_t sport,
-                 const void *daddr, const uint16_t dport,
-                 const char *source, const char *dest,
-                 long now);
+        const void *saddr, const uint16_t sport,
+        const void *daddr, const uint16_t dport,
+        const char *source, const char *dest,
+        long now);
 
 int protect_socket(const struct arguments *args, int socket);
 
@@ -521,34 +521,34 @@ void log_android(int prio, const char *fmt, ...);
 void log_packet(const struct arguments *args, jobject jpacket);
 
 void dns_resolved(const struct arguments *args,
-                  const char *qname, const char *aname, const char *resource, int ttl, jint uid);
+        const char *qname, const char *aname, const char *resource, int ttl, jint uid);
 
 jboolean is_domain_blocked(const struct arguments *args, const char *name);
 
 jint get_uid_q(const struct arguments *args,
-               jint version,
-               jint protocol,
-               const char *source,
-               jint sport,
-               const char *dest,
-               jint dport);
+        jint version,
+        jint protocol,
+        const char *source,
+        jint sport,
+        const char *dest,
+        jint dport);
 
 struct allowed *is_address_allowed(const struct arguments *args, jobject objPacket);
 
 jobject create_packet(const struct arguments *args,
-                      jint version,
-                      jint protocol,
-                      const char *flags,
-                      const char *source,
-                      jint sport,
-                      const char *dest,
-                      jint dport,
-                      const char *data,
-                      jint uid,
-                      jboolean allowed);
+        jint version,
+        jint protocol,
+        const char *flags,
+        const char *source,
+        jint sport,
+        const char *dest,
+        jint dport,
+        const char *data,
+        jint uid,
+        jboolean allowed);
 
 void account_usage(const struct arguments *args, jint version, jint protocol,
-                   const char *daddr, jint dport, jint uid, jlong sent, jlong received);
+        const char *daddr, jint dport, jint uid, jlong sent, jlong received);
 
 void write_pcap_hdr();
 

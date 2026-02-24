@@ -443,7 +443,8 @@ Ihr Verkehr wird NICHT an einen entfernten VPN-Server gesendet.</string>
         Ein monatliches Abonnement von 1 oder 2 Euro (zzgl. Steuern) aktiviert alle Pro-Funktionen.
         Sie können Abos über den Tab Abonnements im Play Store verwalten oder kündigen.
     </string>
-    <string name="title_pro_already">Die Pro-Funktionen sind bereits aktiviert</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Die Pro-Funktionen sind bereits aktiviert</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

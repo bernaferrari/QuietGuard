@@ -438,7 +438,8 @@
         Месечна претплата у износу од 1 или 2 € (без пореза) активираће све профи могућности.
         Претплату можете отказати или управљати њоме преко језичка Претплате у Плеј продавници.
     </string>
-    <string name="title_pro_already">Профи могућности су већ активиране</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Профи могућности су већ активиране</string>
+    <string-array name="protocolNames">
         <item>УДП</item>
         <item>ТЦП</item>
     </string-array>

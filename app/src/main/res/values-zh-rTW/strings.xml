@@ -438,7 +438,8 @@
         每月 1 或 2 歐元（不含當地稅費）的訂閱即可激活所有專業功能。
         您可以通過 Play 商店應用程式的訂閱索引標籤取消或管理訂閱。
     </string>
-    <string name="title_pro_already">專業功能已激活</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">專業功能已激活</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

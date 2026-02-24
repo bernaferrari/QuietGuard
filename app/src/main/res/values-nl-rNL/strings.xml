@@ -438,7 +438,8 @@ Je verkeer wordt niet naar een externe server gestuurd.</string>
         Een maandelijks abonnement van 1 of 2 euro activeert alle pro-functies.
         Beheer je abonnementen via de Play Store.
     </string>
-    <string name="title_pro_already">De pro-functies zijn al geactiveerd</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">De pro-functies zijn al geactiveerd</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

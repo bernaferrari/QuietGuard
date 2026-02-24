@@ -438,7 +438,8 @@
         Передплата за 1 або 2 євро на місяць (без урахування місцевих податків) активує всі Pro-функції.
         Ви можете скасувати передплату або керувати нею у вкладці передплат у додатку Play Store.
     </string>
-    <string name="title_pro_already">Pro-функції вже активовані</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro-функції вже активовані</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

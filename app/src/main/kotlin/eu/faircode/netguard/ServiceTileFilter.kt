@@ -22,7 +22,7 @@ class ServiceTileFilter : TileService() {
 
     private fun update() {
         val filter = Prefs.getBoolean("filter", false)
-            val tile = qsTile
+        val tile = qsTile
         if (tile != null) {
             tile.state = if (filter) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             tile.icon = this.filterListIcon()

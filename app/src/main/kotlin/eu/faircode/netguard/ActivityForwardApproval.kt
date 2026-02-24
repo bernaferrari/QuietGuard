@@ -70,7 +70,10 @@ class ActivityForwardApproval : ComponentActivity() {
                         },
                     onApprove = {
                         if (ACTION_START_PORT_FORWARD == intent.action) {
-                            Log.i(TAG, "Start forwarding protocol $protocol port $dport to $raddr/$rport uid $ruid")
+                            Log.i(
+                                TAG,
+                                "Start forwarding protocol $protocol port $dport to $raddr/$rport uid $ruid"
+                            )
                             val dh = DatabaseHelper.getInstance(this)
                             dh.deleteForward(protocol, dport)
                             dh.addForward(protocol, dport, raddr, rport, ruid)

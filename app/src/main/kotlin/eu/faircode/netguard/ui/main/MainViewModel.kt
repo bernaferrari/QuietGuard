@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import eu.faircode.netguard.data.PreferencesRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import eu.faircode.netguard.Rule
-import javax.inject.Inject
+import eu.faircode.netguard.data.PreferencesRepository
+import eu.faircode.netguard.data.Prefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,8 +19,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import eu.faircode.netguard.data.Prefs
-import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 data class RulesUiState(
     val rules: List<Rule> = emptyList(),

@@ -2,7 +2,6 @@ package eu.faircode.netguard.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
 import androidx.compose.foundation.gestures.drag
@@ -20,10 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -166,7 +165,8 @@ fun <T> IndexedFastScroller(
             val dragProgress = if (usableHeight > 0f) adjustedDragY / usableHeight else 0f
 
             labels.forEachIndexed { index, label ->
-                val labelPosition = if (labels.size > 1) index.toFloat() / (labels.size - 1) else 0.5f
+                val labelPosition =
+                    if (labels.size > 1) index.toFloat() / (labels.size - 1) else 0.5f
                 val distance = abs(labelPosition - dragProgress)
 
                 val scale by animateFloatAsState(

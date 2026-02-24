@@ -21,7 +21,7 @@ class ServiceTileLockdown : TileService() {
 
     private fun update() {
         val lockdown = Prefs.getBoolean("lockdown", false)
-            val tile = qsTile
+        val tile = qsTile
         if (tile != null) {
             tile.state = if (lockdown) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
             tile.icon = this.lockIcon()

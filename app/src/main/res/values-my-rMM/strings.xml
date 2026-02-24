@@ -437,7 +437,8 @@
         တစ်လလျှင် 1 သို့မဟုတ် 2 ယူရို (အခွန်မပါဝင်) ဖြင့် Pro အင်္ဂါရပ်များ အားလုံးကို အသုံးပြုနိုင်ပါမည်။
         Play Store အက်ပ်ရှိ အသင်းဝင်မှုများ ကဏ္ဍမှတစ်ဆင့် စီမံနိုင်သည် သို့မဟုတ် ပယ်ဖျက်နိုင်သည်။
     </string>
-    <string name="title_pro_already">Pro အင်္ဂါရပ်များကို ဖွင့်ပြီးပါပြီ</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro အင်္ဂါရပ်များကို ဖွင့်ပြီးပါပြီ</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

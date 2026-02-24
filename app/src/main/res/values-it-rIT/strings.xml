@@ -443,7 +443,8 @@ Il tuo traffico non viene inviato a un server VPN remoto.</string>
         Un abbonamento mensile di 1 o 2 euro sbloccherà tutte le funzioni Pro.
         Gestisci gli abbonamenti nel Play Store.
     </string>
-    <string name="title_pro_already">Le funzioni pro sono già attivate</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Le funzioni pro sono già attivate</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

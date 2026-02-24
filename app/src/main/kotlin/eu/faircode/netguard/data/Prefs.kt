@@ -2,8 +2,8 @@ package eu.faircode.netguard.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
@@ -13,7 +13,6 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.preference.PreferenceManager
-import java.util.concurrent.CopyOnWriteArrayList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.concurrent.CopyOnWriteArrayList
 
 object Prefs {
     private const val MIGRATED_KEY = "__prefs_migrated"
@@ -74,7 +74,8 @@ object Prefs {
     fun getStringSet(name: String, default: Set<String> = emptySet()): Set<String> =
         state.value[stringSetPreferencesKey(name)] ?: default
 
-    fun putBoolean(name: String, value: Boolean) = update { it[booleanPreferencesKey(name)] = value }
+    fun putBoolean(name: String, value: Boolean) =
+        update { it[booleanPreferencesKey(name)] = value }
 
     fun putInt(name: String, value: Int) = update { it[intPreferencesKey(name)] = value }
 
@@ -92,7 +93,8 @@ object Prefs {
             }
         }
 
-    fun putStringSet(name: String, value: Set<String>) = update { it[stringSetPreferencesKey(name)] = value }
+    fun putStringSet(name: String, value: Set<String>) =
+        update { it[stringSetPreferencesKey(name)] = value }
 
     fun remove(name: String) =
         update {
@@ -104,13 +106,15 @@ object Prefs {
             it.remove(stringSetPreferencesKey(name))
         }
 
-    fun namespaced(prefix: String, key: String): String = if (prefix.isBlank()) key else "${prefix}_${key}"
+    fun namespaced(prefix: String, key: String): String =
+        if (prefix.isBlank()) key else "${prefix}_${key}"
 
     fun uidKey(prefix: String, uid: Int): String = namespaced(prefix, uid.toString())
 
     fun keysWithPrefix(prefix: String): Set<String> {
         if (prefix.isBlank()) return state.value.asMap().keys.map { it.name }.toSet()
-        return state.value.asMap().keys.map { it.name }.filter { it.startsWith("${prefix}_") }.toSet()
+        return state.value.asMap().keys.map { it.name }.filter { it.startsWith("${prefix}_") }
+            .toSet()
     }
 
     private fun update(mutator: (MutablePreferences) -> Unit) {

@@ -426,7 +426,8 @@
     <string name="title_pro_reponse">பதில்</string>
     <string name="title_pro_feature">இது ஒரு சார்பு அம்சமாகும்</string>
     <string name="title_pro_subscription">1 அல்லது 2 யூரோக்களின் மாதாந்திர சந்தாக்கள் (உள்ளூர் வரிகளைத் தவிர) அனைத்து சார்பு அம்சங்களையும் செயல்படுத்தும். பிளே ஸ்டோர் பயன்பாட்டில் உள்ள சந்தா தாவல் வழியாக சந்தாவை ரத்து செய்யலாம் அல்லது நிர்வகிக்கலாம்.</string>
-    <string name="title_pro_already">ப்ரோ அம்சங்கள் ஏற்கனவே செயல்படுத்தப்பட்டுள்ளன</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">ப்ரோ அம்சங்கள் ஏற்கனவே செயல்படுத்தப்பட்டுள்ளன</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -5,16 +5,16 @@ import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.runtime.mutableStateOf
 import dagger.hilt.android.AndroidEntryPoint
-import eu.faircode.netguard.ui.Home
 import eu.faircode.netguard.ui.AppNavigation
-import eu.faircode.netguard.ui.theme.NetGuardThemeFromPrefs
+import eu.faircode.netguard.ui.Home
 import eu.faircode.netguard.ui.main.MainViewModel
+import eu.faircode.netguard.ui.theme.NetGuardThemeFromPrefs
 
 @AndroidEntryPoint
 class ActivityMain : ComponentActivity() {

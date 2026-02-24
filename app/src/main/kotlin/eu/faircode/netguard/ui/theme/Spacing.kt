@@ -33,8 +33,10 @@ data class Spacing(
 object TouchTargets {
     /** 48.dp - Minimum touch target per WCAG guidelines */
     val minimum: Dp = 48.dp
+
     /** 24.dp - Standard icon size */
     val iconSize: Dp = 24.dp
+
     /** 36.dp - App icon size in lists */
     val appIconSize: Dp = 36.dp
 }

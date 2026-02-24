@@ -438,7 +438,8 @@ Votre trafic n\'est pas envoyé à un serveur VPN distant.</string>
         Un abbonnement mensuel de 1 ou 2 euros (hors taxes) activera toutes les fonctions pro.
         Gérez votre abbonnement via le Play Store.
     </string>
-    <string name="title_pro_already">Les fonctions pro sont déjà activées</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Les fonctions pro sont déjà activées</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

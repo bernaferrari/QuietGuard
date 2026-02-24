@@ -2,8 +2,10 @@ package eu.faircode.netguard
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.LocalContext
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -11,13 +13,11 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.provideContent
-import androidx.glance.LocalContext
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.compose.ui.unit.dp
 import eu.faircode.netguard.data.Prefs
 
 class FirewallWidget : GlanceAppWidget() {
@@ -56,7 +56,11 @@ class FirewallWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 
 class ToggleFirewallAction : ActionCallback {
-    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
         val enabled = Prefs.getBoolean("enabled", false)
         Prefs.putBoolean("enabled", !enabled)
         if (enabled) {

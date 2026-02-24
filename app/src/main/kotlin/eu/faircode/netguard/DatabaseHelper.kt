@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.locks.ReentrantReadWriteLock
 
-class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+class DatabaseHelper private constructor(context: Context) :
+    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val lock = ReentrantReadWriteLock(true)
 
     override fun close() {
@@ -40,22 +41,22 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         Log.i(TAG, "Creating log table")
         db.execSQL(
             "CREATE TABLE log (" +
-                " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
-                ", time INTEGER NOT NULL" +
-                ", version INTEGER" +
-                ", protocol INTEGER" +
-                ", flags TEXT" +
-                ", saddr TEXT" +
-                ", sport INTEGER" +
-                ", daddr TEXT" +
-                ", dport INTEGER" +
-                ", dname TEXT" +
-                ", uid INTEGER" +
-                ", data TEXT" +
-                ", allowed INTEGER" +
-                ", connection INTEGER" +
-                ", interactive INTEGER" +
-                ");",
+                    " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", time INTEGER NOT NULL" +
+                    ", version INTEGER" +
+                    ", protocol INTEGER" +
+                    ", flags TEXT" +
+                    ", saddr TEXT" +
+                    ", sport INTEGER" +
+                    ", daddr TEXT" +
+                    ", dport INTEGER" +
+                    ", dname TEXT" +
+                    ", uid INTEGER" +
+                    ", data TEXT" +
+                    ", allowed INTEGER" +
+                    ", connection INTEGER" +
+                    ", interactive INTEGER" +
+                    ");",
         )
         db.execSQL("CREATE INDEX idx_log_time ON log(time)")
         db.execSQL("CREATE INDEX idx_log_dest ON log(daddr)")
@@ -68,19 +69,19 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         Log.i(TAG, "Creating access table")
         db.execSQL(
             "CREATE TABLE access (" +
-                " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
-                ", uid INTEGER NOT NULL" +
-                ", version INTEGER NOT NULL" +
-                ", protocol INTEGER NOT NULL" +
-                ", daddr TEXT NOT NULL" +
-                ", dport INTEGER NOT NULL" +
-                ", time INTEGER NOT NULL" +
-                ", allowed INTEGER" +
-                ", block INTEGER NOT NULL" +
-                ", sent INTEGER" +
-                ", received INTEGER" +
-                ", connections INTEGER" +
-                ");",
+                    " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", uid INTEGER NOT NULL" +
+                    ", version INTEGER NOT NULL" +
+                    ", protocol INTEGER NOT NULL" +
+                    ", daddr TEXT NOT NULL" +
+                    ", dport INTEGER NOT NULL" +
+                    ", time INTEGER NOT NULL" +
+                    ", allowed INTEGER" +
+                    ", block INTEGER NOT NULL" +
+                    ", sent INTEGER" +
+                    ", received INTEGER" +
+                    ", connections INTEGER" +
+                    ");",
         )
         db.execSQL("CREATE UNIQUE INDEX idx_access ON access(uid, version, protocol, daddr, dport)")
         db.execSQL("CREATE INDEX idx_access_daddr ON access(daddr)")
@@ -91,14 +92,14 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         Log.i(TAG, "Creating dns table")
         db.execSQL(
             "CREATE TABLE dns (" +
-                " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
-                ", time INTEGER NOT NULL" +
-                ", qname TEXT NOT NULL" +
-                ", aname TEXT NOT NULL" +
-                ", resource TEXT NOT NULL" +
-                ", ttl INTEGER" +
-                ", uid INTEGER" +
-                ");",
+                    " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", time INTEGER NOT NULL" +
+                    ", qname TEXT NOT NULL" +
+                    ", aname TEXT NOT NULL" +
+                    ", resource TEXT NOT NULL" +
+                    ", ttl INTEGER" +
+                    ", uid INTEGER" +
+                    ");",
         )
         db.execSQL("CREATE UNIQUE INDEX idx_dns ON dns(qname, aname, resource)")
         db.execSQL("CREATE INDEX idx_dns_resource ON dns(resource)")
@@ -108,13 +109,13 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         Log.i(TAG, "Creating forward table")
         db.execSQL(
             "CREATE TABLE forward (" +
-                " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
-                ", protocol INTEGER NOT NULL" +
-                ", dport INTEGER NOT NULL" +
-                ", raddr TEXT NOT NULL" +
-                ", rport INTEGER NOT NULL" +
-                ", ruid INTEGER NOT NULL" +
-                ");",
+                    " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", protocol INTEGER NOT NULL" +
+                    ", dport INTEGER NOT NULL" +
+                    ", raddr TEXT NOT NULL" +
+                    ", rport INTEGER NOT NULL" +
+                    ", ruid INTEGER NOT NULL" +
+                    ");",
         )
         db.execSQL("CREATE UNIQUE INDEX idx_forward ON forward(protocol, dport)")
     }
@@ -123,13 +124,13 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         Log.i(TAG, "Creating app table")
         db.execSQL(
             "CREATE TABLE app (" +
-                " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
-                ", package TEXT" +
-                ", label TEXT" +
-                ", system INTEGER  NOT NULL" +
-                ", internet INTEGER NOT NULL" +
-                ", enabled INTEGER NOT NULL" +
-                ");",
+                    " ID INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    ", package TEXT" +
+                    ", label TEXT" +
+                    ", system INTEGER  NOT NULL" +
+                    ", internet INTEGER NOT NULL" +
+                    ", enabled INTEGER NOT NULL" +
+                    ");",
         )
         db.execSQL("CREATE UNIQUE INDEX idx_package ON app(package)")
     }
@@ -302,21 +303,21 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
             try {
                 if (
                     packet.protocol == 6 &&
-                        packet.daddr != null &&
-                        packet.dport > 0 &&
-                        packet.uid > 0 &&
-                        "sni" == packet.data
+                    packet.daddr != null &&
+                    packet.dport > 0 &&
+                    packet.uid > 0 &&
+                    "sni" == packet.data
                 ) {
                     val deleted =
                         db.delete(
                             "log",
                             "time > ?" +
-                                " AND protocol = ?" +
-                                " AND version = ?" +
-                                " AND flags = ?" +
-                                " AND daddr = ?" +
-                                " AND dport = ?" +
-                                " AND uid = ?",
+                                    " AND protocol = ?" +
+                                    " AND version = ?" +
+                                    " AND flags = ?" +
+                                    " AND daddr = ?" +
+                                    " AND dport = ?" +
+                                    " AND uid = ?",
                             arrayOf(
                                 (packet.time - SYN_SNI_DELAY).toString(),
                                 packet.protocol.toString(),
@@ -425,8 +426,8 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
                 Log.i(
                     TAG,
                     "Cleanup log" +
-                        " before=" + SimpleDateFormat.getDateTimeInstance().format(Date(time)) +
-                        " rows=$rows",
+                            " before=" + SimpleDateFormat.getDateTimeInstance().format(Date(time)) +
+                            " rows=$rows",
                 )
 
                 db.setTransactionSuccessful()
@@ -564,7 +565,8 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
             db.beginTransactionNonExclusive()
             try {
                 // There is a segmented index on uid, version, protocol, daddr and dport
-                val selection = "uid = ? AND version = ? AND protocol = ? AND daddr = ? AND dport = ?"
+                val selection =
+                    "uid = ? AND version = ? AND protocol = ? AND daddr = ? AND dport = ?"
                 val selectionArgs =
                     arrayOf(
                         usage.Uid.toString(),
@@ -591,8 +593,10 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
                     val colConnections = cursor.getColumnIndex("connections")
                     if (cursor.moveToNext()) {
                         sent = if (cursor.isNull(colSent)) 0 else cursor.getLong(colSent)
-                        received = if (cursor.isNull(colReceived)) 0 else cursor.getLong(colReceived)
-                        connections = if (cursor.isNull(colConnections)) 0 else cursor.getInt(colConnections)
+                        received =
+                            if (cursor.isNull(colReceived)) 0 else cursor.getLong(colReceived)
+                        connections =
+                            if (cursor.isNull(colConnections)) 0 else cursor.getInt(colConnections)
                     }
 
                     val cv = ContentValues()
@@ -1050,7 +1054,13 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
         }
     }
 
-    fun addApp(packageName: String, label: String?, system: Boolean, internet: Boolean, enabled: Boolean) {
+    fun addApp(
+        packageName: String,
+        label: String?,
+        system: Boolean,
+        internet: Boolean,
+        enabled: Boolean
+    ) {
         lock.writeLock().lock()
         try {
             val db = writableDatabase
@@ -1214,6 +1224,7 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
                         }
                     }
                 }
+
                 MSG_ACCESS -> {
                     for (listener in accessChangedListeners) {
                         try {
@@ -1223,6 +1234,7 @@ class DatabaseHelper private constructor(context: Context) : SQLiteOpenHelper(co
                         }
                     }
                 }
+
                 MSG_FORWARD -> {
                     for (listener in forwardChangedListeners) {
                         try {

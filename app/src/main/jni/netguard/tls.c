@@ -36,21 +36,21 @@ int get_sni(
 
     // https://www.rfc-editor.org/rfc/rfc5246#section-7.4.1.2
     if (content_type != TLS_HANDSHAKE_RECORD ||
-        major_version < 0x03 ||
-        5 + content_length != datalen ||
-        message_type != TLS_MESSAGE_CLIENTHELLO) {
+            major_version < 0x03 ||
+            5 + content_length != datalen ||
+            message_type != TLS_MESSAGE_CLIENTHELLO) {
         log_android(ANDROID_LOG_DEBUG, "TLS content %d version %d length %d/%d type %d",
-                    content_type, major_version, 5 + content_length, datalen, message_type);
+                content_type, major_version, 5 + content_length, datalen, message_type);
         return 0;
     }
 
     log_android(ANDROID_LOG_DEBUG, "TLS client hello version %d.%d",
-                major_version, minor_version);
+            major_version, minor_version);
 
     uint8_t index = 6 + // header above
-                    3 + // client hello length
-                    2 + // client hello protocol version
-                    32; // random value
+            3 + // client hello length
+            2 + // client hello protocol version
+            32; // random value
 
     // Session ID
     if (index >= datalen) {
@@ -59,7 +59,7 @@ int get_sni(
     }
 
     log_android(ANDROID_LOG_DEBUG, "TLS hello version %d.%d",
-                data[9], data[10]);
+            data[9], data[10]);
 
     uint8_t session_len = data[index];
     index += 1 + session_len;
@@ -90,7 +90,7 @@ int get_sni(
 
     if (edatalen == 0 || index + edatalen != datalen) {
         log_android(ANDROID_LOG_WARN, "TLS extensions(2) len=%d %d/%d",
-                    edatalen, index + edatalen, datalen);
+                edatalen, index + edatalen, datalen);
         return 0;
     }
 
@@ -130,7 +130,7 @@ int get_sni(
 
             if (eindex + sni_len >= edatalen) {
                 log_android(ANDROID_LOG_WARN, "TLS sni_len(2) len=%d %d/%d",
-                            sni_len, eindex + sni_len, edatalen);
+                        sni_len, eindex + sni_len, edatalen);
                 return 0;
             }
 
@@ -153,12 +153,12 @@ int get_sni(
 
             if (eindex + name_len >= edatalen) {
                 log_android(ANDROID_LOG_WARN, "TLS name_len(2) len=%d %d/%d",
-                            name_len, eindex + name_len, edatalen);
+                        name_len, eindex + name_len, edatalen);
                 return 0;
             }
             if (name_len >= TLS_SNI_LENGTH) {
                 log_android(ANDROID_LOG_WARN, "TLS name_len(3) %d/%d",
-                            name_len, TLS_SNI_LENGTH);
+                        name_len, TLS_SNI_LENGTH);
                 return 0;
             }
 

@@ -438,7 +438,8 @@
         Μια μηνιαία συνδρομή 1 ή 2 ευρώ (εξαιρουμένων των τοπικών φόρων) θα ενεργοποιήσει όλες τις λειτουργίες pro.
         Μπορείτε να ακυρώσετε ή να διαχειριστείτε μια συνδρομή μέσω της καρτέλας συνδρομών στην εφαρμογή Play store.
     </string>
-    <string name="title_pro_already">Οι λειτουργίες pro είναι ήδη ενεργοποιημένες</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Οι λειτουργίες pro είναι ήδη ενεργοποιημένες</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

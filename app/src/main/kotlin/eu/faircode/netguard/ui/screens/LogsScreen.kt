@@ -29,14 +29,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
@@ -62,20 +61,20 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -94,11 +93,11 @@ import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.theme.LocalMotion
 import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
-import java.text.SimpleDateFormat
-import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 private const val LOGS_UI_MAX_ROWS = 2000
 
@@ -176,6 +175,7 @@ fun LogsScreen() {
             loadAppDisplayInfo(uid = uid, context = context, fallbackLabel = unknownSourceLabel)
         }
     }
+
     fun appLabel(uid: Int): String = appDisplay(uid).label
 
     val queryFlags = remember(protocolFilter, outcomeFilter) {
@@ -453,9 +453,17 @@ fun LogsScreen() {
                     AnimatedContent(
                         targetState = groupMode,
                         transitionSpec = {
-                            (fadeIn(animationSpec = tween(motion.durationFast, easing = motion.easingDecelerate)) +
+                            (fadeIn(
+                                animationSpec = tween(
+                                    motion.durationFast,
+                                    easing = motion.easingDecelerate
+                                )
+                            ) +
                                     slideInVertically(
-                                        animationSpec = tween(motion.durationMedium, easing = motion.easingDecelerate),
+                                        animationSpec = tween(
+                                            motion.durationMedium,
+                                            easing = motion.easingDecelerate
+                                        ),
                                     ) { it / 8 })
                                 .togetherWith(
                                     fadeOut(
@@ -509,7 +517,10 @@ fun LogsScreen() {
                                         onSelectUid = { selectedAppUid = it },
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(horizontal = spacing.default, vertical = spacing.small),
+                                            .padding(
+                                                horizontal = spacing.default,
+                                                vertical = spacing.small
+                                            ),
                                     )
 
                                     if (filteredGroupedEntries.isEmpty()) {
@@ -548,7 +559,10 @@ fun LogsScreen() {
                                                         appName = display.label,
                                                         appIcon = display.icon,
                                                         showAppName = false,
-                                                        position = cardPositionFor(index, appEntries.size),
+                                                        position = cardPositionFor(
+                                                            index,
+                                                            appEntries.size
+                                                        ),
                                                         modifier = Modifier.animateItem(),
                                                     )
                                                 }
@@ -960,8 +974,20 @@ private fun LogEntryCard(
     }
     val shape = when (position) {
         LogCardPosition.Single -> RoundedCornerShape(16.dp)
-        LogCardPosition.First -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
-        LogCardPosition.Last -> RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp, bottomStart = 16.dp, bottomEnd = 16.dp)
+        LogCardPosition.First -> RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp,
+            bottomStart = 4.dp,
+            bottomEnd = 4.dp
+        )
+
+        LogCardPosition.Last -> RoundedCornerShape(
+            topStart = 4.dp,
+            topEnd = 4.dp,
+            bottomStart = 16.dp,
+            bottomEnd = 16.dp
+        )
+
         LogCardPosition.Middle -> RoundedCornerShape(4.dp)
     }
 
@@ -1250,40 +1276,42 @@ private suspend fun loadLogs(
 ): List<LogEntry> =
     withContext(Dispatchers.IO) {
         val result = mutableListOf<LogEntry>()
-        DatabaseHelper.getInstance(context).getLog(udp, tcp, other, allowed, blocked, limit).use { cursor ->
-            val colId = cursor.getColumnIndex("ID")
-            val colTime = cursor.getColumnIndex("time")
-            val colProtocol = cursor.getColumnIndex("protocol")
-            val colDAddr = cursor.getColumnIndex("daddr")
-            val colDPort = cursor.getColumnIndex("dport")
-            val colDName = cursor.getColumnIndex("dname")
-            val colUid = cursor.getColumnIndex("uid")
-            val colAllowed = cursor.getColumnIndex("allowed")
-            val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(colId)
-                val time = cursor.getLong(colTime)
-                val protocol = if (cursor.isNull(colProtocol)) -1 else cursor.getInt(colProtocol)
-                val daddr = cursor.getString(colDAddr)
-                val dport = if (cursor.isNull(colDPort)) -1 else cursor.getInt(colDPort)
-                val dname = if (cursor.isNull(colDName)) null else cursor.getString(colDName)
-                val uid = if (cursor.isNull(colUid)) -1 else cursor.getInt(colUid)
-                val allow = if (cursor.isNull(colAllowed)) -1 else cursor.getInt(colAllowed)
-                result.add(
-                    LogEntry(
-                        id = id,
-                        time = time,
-                        timeText = timeFormat.format(time),
-                        protocolLabel = Util.getProtocolName(protocol, 0, false),
-                        daddr = daddr,
-                        dport = dport,
-                        dname = dname,
-                        uid = uid,
-                        allowed = allow,
-                    ),
-                )
+        DatabaseHelper.getInstance(context).getLog(udp, tcp, other, allowed, blocked, limit)
+            .use { cursor ->
+                val colId = cursor.getColumnIndex("ID")
+                val colTime = cursor.getColumnIndex("time")
+                val colProtocol = cursor.getColumnIndex("protocol")
+                val colDAddr = cursor.getColumnIndex("daddr")
+                val colDPort = cursor.getColumnIndex("dport")
+                val colDName = cursor.getColumnIndex("dname")
+                val colUid = cursor.getColumnIndex("uid")
+                val colAllowed = cursor.getColumnIndex("allowed")
+                val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(colId)
+                    val time = cursor.getLong(colTime)
+                    val protocol =
+                        if (cursor.isNull(colProtocol)) -1 else cursor.getInt(colProtocol)
+                    val daddr = cursor.getString(colDAddr)
+                    val dport = if (cursor.isNull(colDPort)) -1 else cursor.getInt(colDPort)
+                    val dname = if (cursor.isNull(colDName)) null else cursor.getString(colDName)
+                    val uid = if (cursor.isNull(colUid)) -1 else cursor.getInt(colUid)
+                    val allow = if (cursor.isNull(colAllowed)) -1 else cursor.getInt(colAllowed)
+                    result.add(
+                        LogEntry(
+                            id = id,
+                            time = time,
+                            timeText = timeFormat.format(time),
+                            protocolLabel = Util.getProtocolName(protocol, 0, false),
+                            daddr = daddr,
+                            dport = dport,
+                            dname = dname,
+                            uid = uid,
+                            allowed = allow,
+                        ),
+                    )
+                }
             }
-        }
         result
     }
 

@@ -439,7 +439,8 @@ Buna görə də, zəhmət olmasa növbəti dialoqda VPN bağlantısına icazə v
         Vergilər xaric aylıq 1 və ya 2 avroluq abunəlik bütün pro özəllkləri aktivləşdirir.
         Play Store tətbiqindəki abunəliklər vərəqi vasitəsilə abunəliyinizi ləğv edə və ya idarə edə bilərsiniz.
     </string>
-    <string name="title_pro_already">Pro özəlliklər artıq fəallaşdırılıb</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Pro özəlliklər artıq fəallaşdırılıb</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

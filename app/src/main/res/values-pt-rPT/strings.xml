@@ -438,7 +438,8 @@ O seu tráfego de Internet não está a ser enviado para um servidor VPN remoto.
         Assinaturas mensais de 1 ou 2 euros (excluindo impostos locais) ativarão todas as funcionalidades pro.
         Pode cancelar ou gerir uma assinatura pela guia de assinaturas na aplicação da Play Store.
     </string>
-    <string name="title_pro_already">As funcionalidades pro já estão ativadas</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">As funcionalidades pro já estão ativadas</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

@@ -438,7 +438,8 @@ Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
         Langganan bulanan 1 atau 2 euro (tidak termasuk pajak) akan mengaktifkan semua fitur pro.
         Kelola langganan melalui Play Store.
     </string>
-    <string name="title_pro_already">Fitur pro sudah diaktifkan</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Fitur pro sudah diaktifkan</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

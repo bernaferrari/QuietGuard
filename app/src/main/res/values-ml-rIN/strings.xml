@@ -437,7 +437,8 @@
         പ്രതിമാസം 1 അല്ലെങ്കിൽ 2 യൂറോയുടെ സബ്‌സ്‌ക്രിപ്‌ഷൻ (പ്രാദേശിക നികുതികൾ ഒഴിവാക്കി) എല്ലാ പ്രോ ഫീച്ചറുകളും സജീവമാക്കും.
         നിങ്ങൾക്ക് Play Store ആപ്പിലെ സബ്‌സ്‌ക്രിപ്‌ഷനുകൾ ടാബ് വഴി സബ്‌സ്‌ക്രിപ്‌ഷൻ റദ്ദാക്കാനോ മാനേജ് ചെയ്യാനോ കഴിയും.
     </string>
-    <string name="title_pro_already">പ്രോ ഫീച്ചറുകൾ ഇതിനകം സജീവമാക്കിയിട്ടുണ്ട്</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">പ്രോ ഫീച്ചറുകൾ ഇതിനകം സജീവമാക്കിയിട്ടുണ്ട്</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

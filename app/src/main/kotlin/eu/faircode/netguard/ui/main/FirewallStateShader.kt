@@ -1,7 +1,6 @@
 package eu.faircode.netguard.ui.main
 
 import android.graphics.RuntimeShader
-import android.graphics.Paint as AndroidPaint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.nativeCanvas
 import eu.faircode.netguard.ui.theme.LocalMotion
+import android.graphics.Paint as AndroidPaint
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -56,8 +56,20 @@ internal fun FirewallStateShader(
         shader.setFloatUniform("iTime", phase)
         shader.setFloatUniform("uEnabled", enabledProgress.coerceIn(0f, 1f))
         shader.setFloatUniform("uDark", if (isDarkTheme) 1f else 0f)
-        shader.setFloatUniform("uSecondary", secondary.red, secondary.green, secondary.blue, secondary.alpha)
-        shader.setFloatUniform("uTertiary", tertiary.red, tertiary.green, tertiary.blue, tertiary.alpha)
+        shader.setFloatUniform(
+            "uSecondary",
+            secondary.red,
+            secondary.green,
+            secondary.blue,
+            secondary.alpha
+        )
+        shader.setFloatUniform(
+            "uTertiary",
+            tertiary.red,
+            tertiary.green,
+            tertiary.blue,
+            tertiary.alpha
+        )
         shader.setFloatUniform("uOutline", outline.red, outline.green, outline.blue, outline.alpha)
         shader.setFloatUniform(
             "uSurfaceVariant",

@@ -438,7 +438,8 @@
         מנוי חודשי של 1 או 2 אירו (לא כולל מסים מקומיים) יפעיל את כל תכונות ה-Pro.
         תוכל לבטל או לנהל מנוי דרך לשונית המנויים באפליקציית חנות Play.
     </string>
-    <string name="title_pro_already">תכונות ה-Pro כבר מופעלות</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">תכונות ה-Pro כבר מופעלות</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

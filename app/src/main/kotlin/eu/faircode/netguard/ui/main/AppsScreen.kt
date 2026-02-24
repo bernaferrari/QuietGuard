@@ -1,9 +1,12 @@
 package eu.faircode.netguard.ui.main
 
 import android.app.NotificationManager
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,29 +18,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MobileOff
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.outlined.Block
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -56,27 +51,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -90,10 +78,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.distinctUntilChanged
 import eu.faircode.netguard.R
 import eu.faircode.netguard.Rule
 import eu.faircode.netguard.ServiceSinkhole
@@ -102,6 +88,7 @@ import eu.faircode.netguard.data.Prefs
 import eu.faircode.netguard.ui.components.IndexedFastScroller
 import eu.faircode.netguard.ui.theme.spacing
 import eu.faircode.netguard.ui.util.StatePlaceholder
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -154,7 +141,12 @@ fun AppsScreen(
                 AppsFilter.Blocked -> rules.filter { it.wifi_blocked || it.other_blocked }
                 AppsFilter.Allowed -> rules.filter { !it.wifi_blocked && !it.other_blocked }
             }
-            if (normalizedSearchQuery.isEmpty()) base else base.filter { matchesAppQuery(it, normalizedSearchQuery) }
+            if (normalizedSearchQuery.isEmpty()) base else base.filter {
+                matchesAppQuery(
+                    it,
+                    normalizedSearchQuery
+                )
+            }
         }
     }
     val badgeCount by remember(filteredRules) {
@@ -460,7 +452,8 @@ fun AppsScreen(
                                 getIndexKey = { item ->
                                     when (item) {
                                         is AppListItem.Header -> item.letter
-                                        is AppListItem.App -> item.rule.name ?: item.rule.packageName.orEmpty()
+                                        is AppListItem.App -> item.rule.name
+                                            ?: item.rule.packageName.orEmpty()
                                     }
                                 },
                                 scrollItemOffset = 2,
@@ -539,8 +532,20 @@ private fun RuleCard(
 
     val shape = when (position) {
         CardPosition.Single -> RoundedCornerShape(16.dp)
-        CardPosition.First -> RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp, bottomStart = 4.dp, bottomEnd = 4.dp)
-        CardPosition.Last -> RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp, bottomStart = 16.dp, bottomEnd = 16.dp)
+        CardPosition.First -> RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp,
+            bottomStart = 4.dp,
+            bottomEnd = 4.dp
+        )
+
+        CardPosition.Last -> RoundedCornerShape(
+            topStart = 4.dp,
+            topEnd = 4.dp,
+            bottomStart = 16.dp,
+            bottomEnd = 16.dp
+        )
+
         CardPosition.Middle -> RoundedCornerShape(4.dp)
     }
 
@@ -653,7 +658,7 @@ private fun matchesAppQuery(rule: Rule, query: String): Boolean {
     val appName = rule.name ?: rule.packageName.orEmpty()
     val packageName = rule.packageName.orEmpty()
     return findSubsequenceMatchIndices(appName, query) != null ||
-        findSubsequenceMatchIndices(packageName, query) != null
+            findSubsequenceMatchIndices(packageName, query) != null
 }
 
 private fun buildMatchHighlightedText(
@@ -718,7 +723,10 @@ private fun persistRuleInternal(
     val lockdownKey = Prefs.namespaced("lockdown", packageName)
     val notifyKey = Prefs.namespaced("notify", packageName)
 
-    if (rule.wifi_blocked == rule.wifi_default) Prefs.remove(wifiKey) else Prefs.putBoolean(wifiKey, rule.wifi_blocked)
+    if (rule.wifi_blocked == rule.wifi_default) Prefs.remove(wifiKey) else Prefs.putBoolean(
+        wifiKey,
+        rule.wifi_blocked
+    )
     if (rule.other_blocked == rule.other_default) Prefs.remove(otherKey) else Prefs.putBoolean(
         otherKey,
         rule.other_blocked
@@ -732,7 +740,10 @@ private fun persistRuleInternal(
         screenOtherKey,
         rule.screen_other
     )
-    if (rule.roaming == rule.roaming_default) Prefs.remove(roamingKey) else Prefs.putBoolean(roamingKey, rule.roaming)
+    if (rule.roaming == rule.roaming_default) Prefs.remove(roamingKey) else Prefs.putBoolean(
+        roamingKey,
+        rule.roaming
+    )
     if (rule.lockdown) Prefs.putBoolean(lockdownKey, rule.lockdown) else Prefs.remove(lockdownKey)
     if (rule.notify) Prefs.remove(notifyKey) else Prefs.putBoolean(notifyKey, rule.notify)
 

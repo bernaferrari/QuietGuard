@@ -438,7 +438,8 @@ Traficul dvs. de internet nu este trimis către un server VPN la distanță.</st
         Un abonament lunar de 1 sau 2 euro (excluzând taxele locale) va activa toate caracteristicile pro.
         Puteți anula sau gestiona un abonament prin intermediul filei de abonamente din aplicația Play Store.
     </string>
-    <string name="title_pro_already">Caracteristicile pro sunt deja activate</string>    <string-array name="protocolNames">
+    <string name="title_pro_already">Caracteristicile pro sunt deja activate</string>
+    <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>
     </string-array>

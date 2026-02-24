@@ -67,11 +67,11 @@ void write_pcap(const void *ptr, size_t len) {
             log_android(ANDROID_LOG_WARN, "PCAP truncate @%ld", fsize);
             if (ftruncate(fileno(pcap_file), sizeof(struct pcap_hdr_s)))
                 log_android(ANDROID_LOG_ERROR, "PCAP ftruncate error %d: %s",
-                            errno, strerror(errno));
+                        errno, strerror(errno));
             else {
                 if (!lseek(fileno(pcap_file), sizeof(struct pcap_hdr_s), SEEK_SET))
                     log_android(ANDROID_LOG_ERROR, "PCAP ftruncate error %d: %s",
-                                errno, strerror(errno));
+                            errno, strerror(errno));
             }
         }
     }

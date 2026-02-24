@@ -15,7 +15,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.LinkProperties
-import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -25,7 +24,6 @@ import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.pm.PackageInfoCompat
@@ -130,7 +128,8 @@ object Util {
 
     @JvmStatic
     fun isConnected(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager? ?: return false
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+            ?: return false
 
         val activeNetwork = cm.activeNetwork
         if (activeNetwork != null) {
@@ -139,7 +138,7 @@ object Util {
                 caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
                 !caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
             ) {
-            return true
+                return true
             }
         }
 
@@ -200,7 +199,9 @@ object Util {
     @JvmStatic
     fun getNetworkGeneration(context: Context): String? {
         val type = getNetworkType(context)
-        return if (type == TelephonyManager.NETWORK_TYPE_UNKNOWN) null else getNetworkGeneration(type)
+        return if (type == TelephonyManager.NETWORK_TYPE_UNKNOWN) null else getNetworkGeneration(
+            type
+        )
     }
 
     @JvmStatic
@@ -290,7 +291,7 @@ object Util {
     fun hasPhoneStatePermission(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) ==
-                PackageManager.PERMISSION_GRANTED
+                    PackageManager.PERMISSION_GRANTED
         } else {
             true
         }
@@ -382,7 +383,7 @@ object Util {
     fun hasInternet(packageName: String, context: Context): Boolean {
         val pm = context.packageManager
         return pm.checkPermission("android.permission.INTERNET", packageName) ==
-            PackageManager.PERMISSION_GRANTED
+                PackageManager.PERMISSION_GRANTED
     }
 
     @JvmStatic
@@ -468,7 +469,7 @@ object Util {
     @JvmStatic
     fun isDebuggable(context: Context): Boolean {
         return context.applicationContext.applicationInfo.flags and
-            ApplicationInfo.FLAG_DEBUGGABLE != 0
+                ApplicationInfo.FLAG_DEBUGGABLE != 0
     }
 
     @JvmStatic
@@ -583,22 +584,27 @@ object Util {
                 p = "HOPO"
                 b = "H"
             }
+
             2 -> {
                 p = "IGMP"
                 b = "G"
             }
+
             1, 58 -> {
                 p = "ICMP"
                 b = "I"
             }
+
             6 -> {
                 p = "TCP"
                 b = "T"
             }
+
             17 -> {
                 p = "UDP"
                 b = "U"
             }
+
             50 -> {
                 p = "ESP"
                 b = "E"
@@ -664,7 +670,8 @@ object Util {
     @Throws(NoSuchAlgorithmException::class, UnsupportedEncodingException::class)
     fun md5(text: String, salt: String): String {
         // MD5
-        val bytes = MessageDigest.getInstance("MD5").digest((text + salt).toByteArray(Charsets.UTF_8))
+        val bytes =
+            MessageDigest.getInstance("MD5").digest((text + salt).toByteArray(Charsets.UTF_8))
         val sb = StringBuilder()
         for (b in bytes) {
             sb.append(String.format("%02X", b))
@@ -906,7 +913,7 @@ object Util {
             true
         } else {
             ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED
+                    PackageManager.PERMISSION_GRANTED
         }
     }
 

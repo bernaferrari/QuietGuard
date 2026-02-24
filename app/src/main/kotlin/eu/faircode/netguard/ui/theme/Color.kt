@@ -11,6 +11,10 @@ val PurplePrimary = Color(0xFF9C27B0)
 val AmberPrimary = Color(0xFFFFC107)
 val OrangePrimary = Color(0xFFFF5722)
 val GreenPrimary = Color(0xFF4CAF50)
+val CyanPrimary = Color(0xFF00BCD4)
+val IndigoPrimary = Color(0xFF3F51B5)
+val PinkPrimary = Color(0xFFE91E63)
+val LimePrimary = Color(0xFF8BC34A)
 
 const val THEME_DEFAULT = "teal"
 
@@ -32,6 +36,10 @@ fun themePrimaryColor(theme: String?): Int =
         "amber" -> AmberPrimary.toArgb()
         "orange" -> OrangePrimary.toArgb()
         "green" -> GreenPrimary.toArgb()
+        "cyan" -> CyanPrimary.toArgb()
+        "indigo" -> IndigoPrimary.toArgb()
+        "pink" -> PinkPrimary.toArgb()
+        "lime" -> LimePrimary.toArgb()
         else -> Teal500.toArgb()
     }
 
@@ -44,6 +52,10 @@ fun themeOnColor(theme: String?): Int =
         "amber" -> AmberPrimary.toArgb()
         "orange" -> OrangePrimary.toArgb()
         "green" -> GreenPrimary.toArgb()
+        "cyan" -> CyanPrimary.toArgb()
+        "indigo" -> IndigoPrimary.toArgb()
+        "pink" -> PinkPrimary.toArgb()
+        "lime" -> LimePrimary.toArgb()
         else -> Teal500.toArgb()
     }
 
@@ -56,5 +68,9 @@ fun themeOffColor(theme: String?): Int =
         "amber" -> AmberPrimary.toArgb()
         "orange" -> OrangePrimary.toArgb()
         "green" -> Color(0xFFF44336).toArgb()
+        "cyan" -> OrangePrimary.toArgb()
+        "indigo" -> OrangePrimary.toArgb()
+        "pink" -> Color(0xFFD32F2F).toArgb()
+        "lime" -> Color(0xFFE53935).toArgb()
         else -> OrangePrimary.toArgb()
     }

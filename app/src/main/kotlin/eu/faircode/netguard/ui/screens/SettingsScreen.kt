@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -20,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,12 +48,17 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material.icons.outlined.BrightnessAuto
+import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LightMode
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -61,13 +66,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.ripple
@@ -82,9 +86,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -94,6 +97,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -113,8 +117,12 @@ import eu.faircode.netguard.ui.components.ExpandableContent
 import eu.faircode.netguard.ui.components.FirewallTile
 import eu.faircode.netguard.ui.theme.AmberPrimary
 import eu.faircode.netguard.ui.theme.BluePrimary
+import eu.faircode.netguard.ui.theme.CyanPrimary
 import eu.faircode.netguard.ui.theme.GreenPrimary
+import eu.faircode.netguard.ui.theme.IndigoPrimary
+import eu.faircode.netguard.ui.theme.LimePrimary
 import eu.faircode.netguard.ui.theme.OrangePrimary
+import eu.faircode.netguard.ui.theme.PinkPrimary
 import eu.faircode.netguard.ui.theme.PurplePrimary
 import eu.faircode.netguard.ui.theme.Teal500
 import eu.faircode.netguard.ui.theme.TouchTargets
@@ -126,7 +134,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SettingsScreen(
     onOpenDns: () -> Unit,
@@ -274,44 +282,63 @@ fun SettingsScreen(
                     Triple(
                         "light",
                         stringResource(R.string.setting_appearance_light),
-                        Icons.Default.LightMode
+                        Pair(Icons.Default.LightMode, Icons.Outlined.LightMode),
                     ),
                     Triple(
                         "dark",
                         stringResource(R.string.setting_appearance_dark),
-                        Icons.Default.DarkMode
+                        Pair(Icons.Default.DarkMode, Icons.Outlined.DarkMode),
                     ),
                     Triple(
                         "auto",
                         stringResource(R.string.setting_appearance_auto),
-                        Icons.Default.BrightnessAuto
+                        Pair(Icons.Default.BrightnessAuto, Icons.Outlined.BrightnessAuto),
                     ),
                 )
 
-                // ── Dark-mode toggle — M3 segmented button ──
+                // ── Appearance mode toggle — connected buttons ──
                 val selectedIndex = modeOptions.indexOfFirst { it.first == appearanceMode }
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth(),
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = spacing.extraSmall, bottom = 0.dp),
+                    horizontalArrangement =
+                        Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                    verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
                 ) {
-                    modeOptions.forEachIndexed { index, (mode, label, icon) ->
-                        SegmentedButton(
-                            selected = index == selectedIndex,
-                            onClick = { updateAppearance(mode) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = modeOptions.size,
-                            ),
-                            icon = {
-                                SegmentedButtonDefaults.Icon(active = index == selectedIndex) {
-                                    Icon(
-                                        imageVector = icon,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
-                                    )
-                                }
+                    modeOptions.forEachIndexed { index, (mode, label, icons) ->
+                        val selected = index == selectedIndex
+                        ToggleButton(
+                            checked = selected,
+                            onCheckedChange = { isChecked ->
+                                if (isChecked) updateAppearance(mode)
                             },
+                            shapes =
+                                when (index) {
+                                    0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                    modeOptions.lastIndex ->
+                                        ButtonGroupDefaults.connectedTrailingButtonShapes()
+
+                                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                                },
+                            colors = ToggleButtonDefaults.toggleButtonColors(
+                                checkedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                checkedContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            ),
+                            modifier = Modifier.semantics { role = Role.RadioButton },
                         ) {
-                            Text(text = label)
+                            Icon(
+                                imageVector = if (selected) Icons.Default.Check else icons.second,
+                                contentDescription = null,
+                                modifier = Modifier.size(ToggleButtonDefaults.IconSize),
+                            )
+                            Spacer(modifier = Modifier.size(ToggleButtonDefaults.IconSpacing))
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelLarge,
+                            )
                         }
                     }
                 }
@@ -325,14 +352,19 @@ fun SettingsScreen(
                     Pair("amber", AmberPrimary as Color?),
                     Pair("orange", OrangePrimary as Color?),
                     Pair("green", GreenPrimary as Color?),
+                    Pair("cyan", CyanPrimary as Color?),
+                    Pair("indigo", IndigoPrimary as Color?),
+                    Pair("pink", PinkPrimary as Color?),
+                    Pair("lime", LimePrimary as Color?),
                 )
 
-                Row(
+                FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = spacing.small),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically,
+                        .padding(top = spacing.extraSmall, bottom = spacing.extraSmall),
+                    horizontalArrangement =
+                        Arrangement.spacedBy(0.dp, Alignment.CenterHorizontally),
+                    verticalArrangement = Arrangement.spacedBy(0.dp),
                 ) {
                     themeChoices.forEach { (theme, seedColor) ->
                         ThemeSwatch(
@@ -912,9 +944,7 @@ fun SettingsScreen(
 }
 
 /**
- * A color-theme swatch that is a rounded square at rest and morphs to a
- * circle when selected. The selection ring uses the theme outline colour for
- * contrast, is thicker, and has a visible gap from the fill.
+ * Animated theme swatch with springy selection, soft glow and shape morphing.
  */
 @Composable
 private fun ThemeSwatch(
@@ -925,123 +955,117 @@ private fun ThemeSwatch(
     dynamicColor: Color,
     onClick: () -> Unit,
 ) {
-    val baseColor = seedColor ?: dynamicColor
-    val displayColor = if (isEnabled) baseColor else baseColor.copy(alpha = 0.38f)
     val isDynamic = theme == "dynamic"
-    val ringColor by animateColorAsState(
-        targetValue = if (isSelected) {
-            MaterialTheme.colorScheme.outline
-        } else {
-            Color.Transparent
-        },
-        animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
-        label = "ringColor_$theme",
+    val baseColor = seedColor ?: dynamicColor
+    val displayColor = if (isEnabled) baseColor else baseColor.copy(alpha = 0.42f)
+    val tokenSize = 50.dp
+    val glowSize = 56.dp
+    val orbSize = 40.dp
+    val orbCornerFraction by animateFloatAsState(
+        targetValue = if (isSelected) 0.5f else 0.26f,
+        animationSpec = spring(dampingRatio = 0.7f, stiffness = 520f),
+        label = "orbCorner_$theme",
     )
+    val orbShape = RoundedCornerShape(percent = (orbCornerFraction * 100).toInt())
 
-    // Corner radius fraction: 0.25 (rounded square) → 0.5 (full circle)
-    val cornerFraction by animateFloatAsState(
-        targetValue = if (isSelected) 0.5f else 0.28f,
-        animationSpec = spring(dampingRatio = 0.72f, stiffness = 430f),
-        label = "corner_$theme",
+    val orbScale by animateFloatAsState(
+        targetValue = if (isSelected) 1.02f else 0.86f,
+        animationSpec = spring(dampingRatio = 0.56f, stiffness = 600f),
+        label = "orbScale_$theme",
     )
-    // Keep it lively with a gentle spring pop.
-    val fillScale by animateFloatAsState(
-        targetValue = if (isSelected) 1f else 0.88f,
-        animationSpec = spring(dampingRatio = 0.62f, stiffness = 420f),
-        label = "scale_$theme",
+    val orbRotation by animateFloatAsState(
+        targetValue = if (isSelected) 8f else 0f,
+        animationSpec = spring(dampingRatio = 0.66f, stiffness = 420f),
+        label = "orbRotation_$theme",
     )
-    // Ring stays mounted and morphs with the same corner model as the fill.
-    val ringAlpha by animateFloatAsState(
-        targetValue = if (isSelected) 0.95f else 0f,
-        animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
-        label = "ring_$theme",
+    val glowAlpha by animateFloatAsState(
+        targetValue = if (isSelected) 1f else 0f,
+        animationSpec = tween(durationMillis = 240, easing = FastOutSlowInEasing),
+        label = "glow_$theme",
     )
-    val ringCornerFraction by animateFloatAsState(
-        targetValue = if (isSelected) 0.5f else 0.30f,
-        animationSpec = spring(dampingRatio = 0.74f, stiffness = 420f),
-        label = "ringCorner_$theme",
-    )
-    val tiltRotation by animateFloatAsState(
-        targetValue = if (isSelected) 9f else 0f,
-        animationSpec = spring(dampingRatio = 0.66f, stiffness = 360f),
-        label = "tilt_$theme",
-    )
-    val ringRotation = tiltRotation
-    val fillRotation = -(tiltRotation * 0.55f)
-
     val iconAlpha by animateFloatAsState(
-        targetValue = if (isSelected) 1f else if (isDynamic) 0.70f else 0f,
-        animationSpec = tween(durationMillis = 160, easing = FastOutSlowInEasing),
+        targetValue = if (isSelected || isDynamic) 1f else 0f,
+        animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing),
         label = "icon_$theme",
     )
-    val fillShape = RoundedCornerShape(percent = (cornerFraction * 100).toInt())
     val interactionSource = remember { MutableInteractionSource() }
+    val overallAlpha = if (isEnabled) 1f else 0.52f
 
-    // 44dp touch target
     Box(
         modifier = Modifier
-            .size(44.dp)
+            .size(tokenSize)
+            .graphicsLayer { alpha = overallAlpha }
             .clickable(
                 enabled = isEnabled,
                 interactionSource = interactionSource,
                 indication = null,
                 onClick = onClick,
-            ),
+            )
+            .semantics {
+                role = Role.RadioButton
+                contentDescription = "$theme theme: ${if (isSelected) "selected" else "not selected"}"
+            },
         contentAlignment = Alignment.Center,
     ) {
-        // Selection ring — always mounted; alpha/scale animate for smooth transitions.
         Box(
             modifier = Modifier
-                .size(44.dp)
+                .size(glowSize)
                 .graphicsLayer {
-                    alpha = ringAlpha
-                    rotationZ = ringRotation
+                    alpha = glowAlpha
                 }
                 .drawBehind {
-                    val inset = 2.dp.toPx()
-                    val ringSize = size.minDimension - inset * 2f
-                    drawRoundRect(
-                        color = ringColor,
-                        topLeft = Offset(inset, inset),
-                        size = Size(ringSize, ringSize),
-                        cornerRadius = CornerRadius(
-                            x = ringSize * ringCornerFraction,
-                            y = ringSize * ringCornerFraction,
-                        ),
-                        style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2.2.dp.toPx()),
+                    drawCircle(
+                        color = displayColor.copy(alpha = 0.44f),
+                        radius = size.minDimension * 0.5f,
                     )
                 },
         )
 
-        // Filled swatch — rounded-square at rest, circle when selected
         Box(
             modifier = Modifier
-                .size(32.dp)
+                .size(orbSize)
                 .graphicsLayer {
-                    scaleX = fillScale
-                    scaleY = fillScale
-                    rotationZ = fillRotation
+                    scaleX = orbScale
+                    scaleY = orbScale
+                    rotationZ = orbRotation
                 }
-                .clip(fillShape)
+                .clip(orbShape)
                 .indication(
                     interactionSource = interactionSource,
                     indication = ripple(
                         bounded = true,
-                        radius = 16.dp,
+                        radius = 18.dp,
                         color = Color.White.copy(alpha = 0.32f),
                     ),
                 )
                 .background(displayColor),
             contentAlignment = Alignment.Center,
         ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color.White.copy(alpha = 0.28f), Color.Transparent),
+                            start = Offset.Zero,
+                            end = Offset(60f, 60f),
+                        ),
+                    ),
+            )
+
             if (isSelected || isDynamic) {
+                val iconSize = if (isSelected) 18.dp else 16.dp
                 Icon(
                     imageVector = if (isSelected) Icons.Default.Check else Icons.Default.Palette,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(16.dp)
-                        .graphicsLayer { alpha = iconAlpha },
-                    tint = Color.White,
+                        .size(iconSize)
+                        .graphicsLayer {
+                            alpha = iconAlpha
+                            // Counter-rotate to keep glyph upright while orb spins.
+                            rotationZ = -orbRotation
+                        },
+                    tint = Color.White.copy(alpha = if (isSelected) 1f else 0.9f),
                 )
             }
         }
@@ -1130,10 +1154,20 @@ private fun SettingToggleRow(
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         onCheckedChange(newValue)
     }
+    val isHighlighted = checked
+    val containerColor =
+        if (isHighlighted) MaterialTheme.colorScheme.primaryContainer
+        else MaterialTheme.colorScheme.surfaceContainerLow
+    val titleColor =
+        if (isHighlighted) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurface
+    val subtitleColor =
+        if (isHighlighted) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+        else MaterialTheme.colorScheme.onSurfaceVariant
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        color = containerColor,
         shape = rowShape,
     ) {
         Row(
@@ -1159,12 +1193,13 @@ private fun SettingToggleRow(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyLarge,
+                    color = titleColor,
                 )
                 subtitle?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = subtitleColor,
                     )
                 }
             }
@@ -1197,10 +1232,20 @@ private fun SettingToggleRowWithTooltip(
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         onCheckedChange(newValue)
     }
+    val isHighlighted = checked
+    val containerColor =
+        if (isHighlighted) MaterialTheme.colorScheme.primaryContainer
+        else MaterialTheme.colorScheme.surfaceContainerLow
+    val titleColor =
+        if (isHighlighted) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurface
+    val infoTint =
+        if (isHighlighted) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+        else MaterialTheme.colorScheme.onSurfaceVariant
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        color = containerColor,
         shape = rowShape,
     ) {
         Column {
@@ -1227,6 +1272,7 @@ private fun SettingToggleRowWithTooltip(
                     Text(
                         text = title,
                         style = MaterialTheme.typography.bodyLarge,
+                        color = titleColor,
                     )
                     IconButton(
                         onClick = { showTooltip = !showTooltip },
@@ -1241,7 +1287,7 @@ private fun SettingToggleRowWithTooltip(
                             modifier = Modifier
                                 .size(18.dp)
                                 .padding(bottom = 1.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = infoTint,
                         )
                     }
                 }

@@ -50,6 +50,10 @@ private val ThemeSeeds =
         "amber" to AmberPrimary,
         "orange" to OrangePrimary,
         "green" to GreenPrimary,
+        "cyan" to CyanPrimary,
+        "indigo" to IndigoPrimary,
+        "pink" to PinkPrimary,
+        "lime" to LimePrimary,
         "dynamic" to Teal500,
     )
 

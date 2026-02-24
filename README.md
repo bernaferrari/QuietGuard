@@ -30,11 +30,7 @@ Re-NetGuard is a modernized fork of the original [NetGuard](https://github.com/M
 
 ## 📸 Screenshots
 
-| Home | App Access |
-| :---: | :---: |
-| ![Home](assets/home.png) | ![App Access](assets/firewall.png) |
-| **Details** | **Settings** |
-| ![Details](assets/details.png) | ![Settings](assets/settings.png) |
+![Comparison](assets/comparison.png)
 
 ## ✨ What's New in Re-NetGuard
 

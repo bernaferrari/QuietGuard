@@ -447,10 +447,19 @@ private fun ToggleRow(
         isLast = isLast,
         baseShape = MaterialTheme.shapes.small,
     )
+    val containerColor =
+        if (checked) MaterialTheme.colorScheme.primaryContainer
+        else MaterialTheme.colorScheme.surfaceContainerLow
+    val iconTint =
+        if (checked) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurfaceVariant
+    val labelColor =
+        if (checked) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurface
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = shape,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        color = containerColor,
     ) {
         Row(
             modifier = Modifier
@@ -469,14 +478,13 @@ private fun ToggleRow(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = if (checked) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = iconTint,
                 modifier = Modifier.size(22.dp),
             )
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = labelColor,
                 modifier = Modifier.weight(1f),
             )
             Switch(

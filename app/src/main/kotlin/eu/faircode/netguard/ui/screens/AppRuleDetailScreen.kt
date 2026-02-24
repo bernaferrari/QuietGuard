@@ -99,6 +99,8 @@ import java.util.Locale
 fun AppRuleDetailScreen(
     rule: Rule,
     allRules: List<Rule>,
+    showBackButton: Boolean = true,
+    enableSlideTransition: Boolean = true,
     onRuleChanged: () -> Unit = {},
     onBack: () -> Unit = {},
 ) {
@@ -120,7 +122,7 @@ fun AppRuleDetailScreen(
     }
 
     var toggleKey by remember { mutableStateOf(0) }
-    var isVisible by remember { mutableStateOf(false) }
+    var isVisible by remember(enableSlideTransition) { mutableStateOf(!enableSlideTransition) }
     var isClosing by remember { mutableStateOf(false) }
 
     fun onToggle() {
@@ -132,32 +134,29 @@ fun AppRuleDetailScreen(
     fun closeWithAnimation() {
         if (isClosing) return
         isClosing = true
-        isVisible = false
-        scope.launch {
-            delay(200)
+        if (enableSlideTransition) {
+            isVisible = false
+            scope.launch {
+                delay(200)
+                onBack()
+            }
+        } else {
             onBack()
         }
     }
 
-    LaunchedEffect(Unit) {
-        isVisible = true
+    LaunchedEffect(enableSlideTransition, rule.uid) {
+        if (enableSlideTransition) {
+            isVisible = true
+        }
+        isClosing = false
     }
 
     BackHandler(enabled = !isClosing) {
         closeWithAnimation()
     }
 
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = slideInHorizontally(
-            initialOffsetX = { fullWidth -> fullWidth },
-            animationSpec = tween(durationMillis = 260, easing = FastOutSlowInEasing),
-        ),
-        exit = slideOutHorizontally(
-            targetOffsetX = { fullWidth -> fullWidth },
-            animationSpec = tween(durationMillis = 220, easing = FastOutLinearInEasing),
-        ),
-    ) {
+    val detailContent: @Composable () -> Unit = {
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
         val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
         val iconTileSize = lerp(48.dp, 32.dp, collapsedFraction)
@@ -229,13 +228,17 @@ fun AppRuleDetailScreen(
                             }
                         }
                     },
-                    navigationIcon = {
-                        IconButton(onClick = ::closeWithAnimation) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                            )
+                    navigationIcon = if (showBackButton) {
+                        {
+                            IconButton(onClick = ::closeWithAnimation) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = null,
+                                )
+                            }
                         }
+                    } else {
+                        {}
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.surface,
@@ -408,6 +411,24 @@ fun AppRuleDetailScreen(
                 Spacer(modifier = Modifier.height(spacing.small))
             }
         }
+    }
+
+    if (enableSlideTransition) {
+        AnimatedVisibility(
+            visible = isVisible,
+            enter = slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(durationMillis = 260, easing = FastOutSlowInEasing),
+            ),
+            exit = slideOutHorizontally(
+                targetOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(durationMillis = 220, easing = FastOutLinearInEasing),
+            ),
+        ) {
+            detailContent()
+        }
+    } else {
+        detailContent()
     }
 }
 

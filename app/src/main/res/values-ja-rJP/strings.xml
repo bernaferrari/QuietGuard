@@ -174,6 +174,11 @@
     <string name="setting_update">アップデートを確認</string>
     <string name="setting_update_now">今すぐ確認</string>
     <string name="setting_update_checking">確認中...</string>
+    <string name="setting_update_result_none">アップデートはありません</string>
+    <string name="setting_update_result_available">新しいバージョンがあります: %s</string>
+    <string name="setting_update_result_error">アップデート確認エラー</string>
+    <string name="setting_update_result_latest">最新バージョンを使用しています</string>
+    <string name="setting_update_result_cancelled">アップデート確認がキャンセルされました</string>
 
     <string name="setting_network_options">ネットワークオプション</string>
     <string name="setting_subnet">サブネットルーティング</string>
@@ -202,7 +207,7 @@
     <string name="setting_handover">リロード時のシームレスな VPN ハンドオーバー</string>
     <string name="setting_clear_onreload">リロード時に接続を閉じる</string>
     <string name="setting_lockdown">トラフィックをロックダウン</string>
-    <string name="setting_malware" translatable="false">Malware protection</string>
+    <string name="setting_malware">マルウェア保護</string>
     <string name="setting_track_usage">ネットワーク使用量を追跡</string>
     <string name="setting_reset_usage">ネットワーク使用量をリセット</string>
     <string name="setting_show_resolved">解決されたドメイン名を表示</string>
@@ -324,8 +329,7 @@
     <string name="msg_count">%d回</string>
     <string name="msg_doze">安定した結果を得るには、NetGuard の Android バッテリー最適化を無効にする必要があります。
 \n\n次のダイアログで、上部の「すべてのアプリ」を選択し、リストで NetGuard をタップして「最適化しない」を選択して確認してください。</string>
-    <string name="msg_datasaving">安定した結果を得るには、NetGuard の Android 데이터 절약 옵션을 비활성화해야 합니다.
-\n\n다음 대화 상자에서 「백그라운드 데이터」 및 「데이터 통신 제한 없음」 옵션을 활성화하세요。</string>
+    <string name="msg_datasaving">安定した結果を得るには、Android のデータ節約設定を NetGuard に対して無効にする必要があります。\n\n次のダイアログで「バックグラウンドデータ」と「データ通信制限なし」を有効にしてくだい。</string>
     <string name="msg_filter">フィルタリングを使用すると、Android はデータと電力の使用量を NetGuard に帰属させます。Android は、元のアプリではなく NetGuard がデータと電力を使用していると想定します。</string>
     <string name="msg_filter4">Android 4 ではフィルタリングを有効にする必要があります</string>
     <string name="msg_log_disabled">トラフィックログは無効です。上のスイッチを使用してログを有効にしてください。トラフィックログにより、バッテリーの使用量が増える可能性があります。</string>

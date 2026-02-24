@@ -16,7 +16,7 @@
         Cette version de l\'application ne demande plus cette permission et,
         malgré cela, presque toutes les applications seront toujours listées,
         sauf certaines applications (système) qui ne peuvent pas être démarrées manuellement.
-        Le trafic Internet de ces applications será toujours autorisé pour garantir le bon fonctionnement de votre appareil.
+        Le trafic Internet de ces applications sera toujours autorisé pour garantir le bon fonctionnement de votre appareil.
         Si vous pensez que c\'est un problème, vous pouvez installer la version GitHub de l\'application pour gérer à nouveau toutes les applications (système).
     </string>
 
@@ -175,6 +175,11 @@
     <string name="setting_update">Vérifier les mises à jour</string>
     <string name="setting_update_now">Vérifier maintenant</string>
     <string name="setting_update_checking">Vérification...</string>
+    <string name="setting_update_result_none">Aucune mise à jour disponible</string>
+    <string name="setting_update_result_available">Nouvelle version disponible : %s</string>
+    <string name="setting_update_result_error">Erreur lors de la vérification des mises à jour</string>
+    <string name="setting_update_result_latest">Vous utilisez la dernière version</string>
+    <string name="setting_update_result_cancelled">Vérification des mises à jour annulée</string>
 
     <string name="setting_network_options">Options réseau</string>
     <string name="setting_subnet">Routage de sous-réseau</string>
@@ -244,7 +249,7 @@
     <string name="setting_technical">Informations techniques</string>
     <string name="setting_technical_general">Général</string>
     <string name="setting_technical_networks">Réseaux</string>
-    <string name="setting_technical_subscription">Abbonnements</string>
+    <string name="setting_technical_subscription">Abonnements</string>
     <string name="setting_section_appearance">Apparence</string>
     <string name="setting_section_firewall">Règles du pare-feu</string>
     <string name="setting_section_advanced">Comportement avancé</string>
@@ -262,7 +267,7 @@
     <string name="summary_delay">Après extinction de l\'écran, garder les règles actives pendant le délai choisi (zéro pour désactiver)</string>
     <string name="summary_update">Vérifier les nouvelles versions sur GitHub deux fois par jour</string>
 
-    <string name="summary_tethering">Selon la version d\'Android, le partage puede fonctionner ou non. Le trafic partagé ne peut être filtré.</string>
+    <string name="summary_tethering">Selon la version d\'Android, le partage peut fonctionner ou non. Le trafic partagé ne peut être filtré.</string>
     <string name="summary_subnet">Activer le routage par sous-réseau ; peut permettre les appels Wi-Fi mais peut aussi causer des bugs et consommer plus de batterie</string>
     <string name="summary_lan">Autoriser les applications à se connecter au réseau local (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)</string>
     <string name="summary_ip6">Router le trafic IPv6 vers NetGuard pour qu\'il puisse être autorisé ou bloqué sélectivement</string>
@@ -336,8 +341,8 @@ Votre trafic n\'est pas envoyé à un serveur VPN distant.</string>
     <string name="msg_downloading">Téléchargement en cours\n%1s</string>
     <string name="msg_downloaded">Fichier hosts téléchargé</string>
     <string name="msg_download_last">Dernier téléchargement : %s</string>
-    <string name="msg_start_forward">Avviare inoltro da %1$s porta %2$d a %3$s:%4$d di \'%5$s\'?</string>
-    <string name="msg_stop_forward">Fermare inoltro di %1$s porta %2$d?</string>
+    <string name="msg_start_forward">Démarrer la redirection du port %1$s %2$d vers %3$s:%4$d de \'%5$s\' ?</string>
+    <string name="msg_stop_forward">Arrêter la redirection du port %1$s %2$d ?</string>
     <string name="msg_metered">Le réseau est limité</string>
     <string name="msg_inactive">Aucune connexion Internet active</string>
     <string name="msg_queue">NetGuard est occupé</string>
@@ -416,7 +421,7 @@ Votre trafic n\'est pas envoyé à un serveur VPN distant.</string>
 
     <string name="title_log_whois">Whois %1$s</string>
     <string name="title_log_port">Port %1$d</string>
-    <string name="title_log_copy">Copier</string>
+    <string name="title_log_copy">Kopier</string>
 
     <string name="title_pro">Fonctions Pro</string>
     <string name="title_pro_description">Les fonctions pro suivantes sont disponibles :</string>
@@ -435,8 +440,8 @@ Votre trafic n\'est pas envoyé à un serveur VPN distant.</string>
     <string name="title_pro_reponse">Réponse</string>
     <string name="title_pro_feature">Ceci est une fonction pro</string>
     <string name="title_pro_subscription">
-        Un abbonnement mensuel de 1 ou 2 euros (hors taxes) activera toutes les fonctions pro.
-        Gérez votre abbonnement via le Play Store.
+        Un abonnement mensuel de 1 ou 2 euros (hors taxes locales) activera toutes les fonctions pro.
+        Vous pouvez annuler ou gérer un abonnement via l\'onglet abonnements de l\'application Play Store.
     </string>
     <string name="title_pro_already">Les fonctions pro sont déjà activées</string>
     <string-array name="protocolNames">

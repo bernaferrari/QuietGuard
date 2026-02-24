@@ -6,6 +6,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Security
@@ -26,6 +27,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -78,8 +81,12 @@ fun AppNavigation(
 ) {
     val startKey = remember(startRoute) { NavRoutes.fromRoute(startRoute) }
     val backStack = rememberNavBackStack(startKey)
+    val configuration = LocalConfiguration.current
+    val isWideScreen = configuration.screenWidthDp >= 600
+    val showDetailBackButton = isWideScreen.not()
     var appsLaunchFilter by remember { mutableStateOf(AppsFilter.All) }
     var appsLaunchFilterVersion by remember { mutableIntStateOf(0) }
+    var selectedFirewallUid by remember { mutableStateOf<Int?>(null) }
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
     fun Scene<NavKey>.hasAppDetailEntry(): Boolean {
         return entries.any { entry ->
@@ -94,6 +101,7 @@ fun AppNavigation(
             // Keep detail navigation behavior: detail -> list.
             current is AppRuleDetail && backStack.size > 1 -> {
                 backStack.removeAt(backStack.lastIndex)
+                selectedFirewallUid = null
             }
             // From any non-home top-level destination, go to Home first.
             current != Home -> {
@@ -113,6 +121,9 @@ fun AppNavigation(
     }
 
     fun navigateTo(destination: AppNavKey) {
+        if (selectedFirewallUid != null && destination !is Apps && destination !is AppRuleDetail) {
+            selectedFirewallUid = null
+        }
         when (destination) {
             Home -> setStack(Home)
             Apps -> setStack(Home, Apps)
@@ -125,6 +136,23 @@ fun AppNavigation(
         }
     }
 
+    fun openFirewallDetail(uid: Int) {
+        selectedFirewallUid = uid
+        if (isWideScreen) {
+            while (backStack.lastOrNull() is AppRuleDetail) {
+                backStack.removeAt(backStack.lastIndex)
+            }
+            if (backStack.isEmpty() || backStack.last() !is Apps) {
+                backStack.clear()
+                backStack.add(Home)
+                backStack.add(Apps)
+            }
+            backStack.add(AppRuleDetail(uid))
+        } else {
+            setStack(Home, Apps, AppRuleDetail(uid))
+        }
+    }
+
     fun selectedTabFor(current: NavKey?): AppNavKey? {
         val appKey = current as? AppNavKey ?: return null
         return when (appKey) {
@@ -134,10 +162,45 @@ fun AppNavigation(
         }
     }
 
+    @Composable
+    fun HalfScreen(content: @Composable () -> Unit) {
+        if (isWideScreen) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.TopCenter,
+            ) {
+                Box(modifier = Modifier.fillMaxWidth(0.5f)) {
+                    content()
+                }
+            }
+        } else {
+            content()
+        }
+    }
+
     LaunchedEffect(pendingRoute) {
         if (!pendingRoute.isNullOrBlank()) {
             navigateTo(NavRoutes.fromRoute(pendingRoute))
             onRouteNavigated()
+        }
+    }
+
+    LaunchedEffect(isWideScreen) {
+        if (!isWideScreen) {
+            selectedFirewallUid = null
+        }
+    }
+
+    LaunchedEffect(isWideScreen, backStack.lastOrNull()) {
+        if (!isWideScreen) {
+            val activeDetail = backStack.lastOrNull { it is AppRuleDetail } as? AppRuleDetail
+            if (activeDetail != null) {
+                backStack.clear()
+                backStack.add(Home)
+                backStack.add(Apps)
+                backStack.add(activeDetail)
+                selectedFirewallUid = activeDetail.uid
+            }
         }
     }
 
@@ -212,17 +275,19 @@ fun AppNavigation(
                 entryProvider =
                     entryProvider {
                         entry<Home> {
-                            HomeScreen(
-                                viewModel = viewModel,
-                                onToggleEnabled = onToggleEnabled,
-                                onOpenFirewall = { filter ->
-                                    appsLaunchFilter = filter
-                                    appsLaunchFilterVersion++
-                                    navigateTo(Apps)
-                                },
-                                onOpenLogs = { navigateTo(Logs) },
-                                onOpenSettings = { navigateTo(Settings) },
-                            )
+                            HalfScreen {
+                                HomeScreen(
+                                    viewModel = viewModel,
+                                    onToggleEnabled = onToggleEnabled,
+                                    onOpenFirewall = { filter ->
+                                        appsLaunchFilter = filter
+                                        appsLaunchFilterVersion++
+                                        navigateTo(Apps)
+                                    },
+                                    onOpenLogs = { navigateTo(Logs) },
+                                    onOpenSettings = { navigateTo(Settings) },
+                                )
+                            }
                         }
                         entry<Apps>(
                             metadata =
@@ -238,8 +303,9 @@ fun AppNavigation(
                         ) {
                             AppsScreen(
                                 viewModel = viewModel,
+                                selectedRuleUid = selectedFirewallUid.takeIf { isWideScreen },
                                 onNavigateToDetail = { rule ->
-                                    backStack.add(AppRuleDetail(rule.uid))
+                                    openFirewallDetail(rule.uid)
                                 },
                                 initialFilter = appsLaunchFilter,
                                 initialFilterVersion = appsLaunchFilterVersion,
@@ -254,6 +320,8 @@ fun AppNavigation(
                                 AppRuleDetailScreen(
                                     rule = targetRule,
                                     allRules = rulesUiState.rules,
+                                    showBackButton = showDetailBackButton,
+                                    enableSlideTransition = isWideScreen.not(),
                                     onRuleChanged = { viewModel.notifyRulesChanged() },
                                     onBack = { popBackStack() },
                                 )
@@ -262,23 +330,33 @@ fun AppNavigation(
                         entry<Logs>(
                             metadata = ListDetailSceneStrategy.detailPane(),
                         ) {
-                            LogsScreen()
+                            HalfScreen {
+                                LogsScreen()
+                            }
                         }
                         entry<Settings> {
-                            SettingsScreen(
-                                onOpenDns = { navigateTo(Dns) },
-                                onOpenForwarding = { navigateTo(Forwarding) },
-                                onOpenPro = { navigateTo(Pro) },
-                            )
+                            HalfScreen {
+                                SettingsScreen(
+                                    onOpenDns = { navigateTo(Dns) },
+                                    onOpenForwarding = { navigateTo(Forwarding) },
+                                    onOpenPro = { navigateTo(Pro) },
+                                )
+                            }
                         }
                         entry<Dns> {
-                            DnsScreen()
+                            HalfScreen {
+                                DnsScreen()
+                            }
                         }
                         entry<Forwarding> {
-                            ForwardingScreen()
+                            HalfScreen {
+                                ForwardingScreen()
+                            }
                         }
                         entry<Pro> {
-                            ProScreen()
+                            HalfScreen {
+                                ProScreen()
+                            }
                         }
                     },
             )

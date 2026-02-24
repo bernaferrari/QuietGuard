@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -97,6 +98,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Composable
 fun AppsScreen(
     viewModel: MainViewModel,
+    selectedRuleUid: Int? = null,
     onNavigateToDetail: (Rule) -> Unit = {},
     initialFilter: AppsFilter = AppsFilter.All,
     initialFilterVersion: Int = 0,
@@ -419,7 +421,10 @@ fun AppsScreen(
                         LazyColumn(
                             state = listState,
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(end = if (showFastScroller) 32.dp else 0.dp),
+                            contentPadding = PaddingValues(
+                                end = if (showFastScroller) 32.dp else 0.dp,
+                                bottom = spacing.default,
+                            ),
                         ) {
                             groupedRules.forEach { item ->
                                 when (item) {
@@ -433,6 +438,7 @@ fun AppsScreen(
                                         item(key = "${item.rule.packageName ?: "uid"}_${item.rule.uid}") {
                                             RuleCard(
                                                 rule = item.rule,
+                                                isSelected = selectedRuleUid == item.rule.uid,
                                                 position = item.position,
                                                 searchQuery = normalizedSearchQuery,
                                                 onClick = {
@@ -505,6 +511,7 @@ private fun SectionHeader(letter: String) {
 @Composable
 private fun RuleCard(
     rule: Rule,
+    isSelected: Boolean = false,
     position: CardPosition,
     searchQuery: String,
     onClick: () -> Unit,
@@ -548,17 +555,37 @@ private fun RuleCard(
 
         CardPosition.Middle -> RoundedCornerShape(4.dp)
     }
+    val selectedShape = RoundedCornerShape(20.dp)
+    val cardShape = if (isSelected) selectedShape else shape
+    val cardColor = if (isSelected) {
+        MaterialTheme.colorScheme.surfaceContainerHigh
+    } else {
+        MaterialTheme.colorScheme.surfaceContainerLow
+    }
+    val contentColor = MaterialTheme.colorScheme.onSurface
+    val cardModifier =
+        if (isSelected) {
+            Modifier
+                .border(
+                    width = 1.25.dp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = cardShape,
+                )
+        } else {
+            Modifier
+        }
 
     Surface(
         onClick = onClick,
-        shape = shape,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        shape = cardShape,
+        color = cardColor,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .padding(
                 top = if (position == CardPosition.First || position == CardPosition.Single) 0.dp else 2.dp,
-            ),
+            )
+            .then(cardModifier),
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -593,12 +620,14 @@ private fun RuleCard(
 
             // App name + status
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = highlightedAppName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+            Text(
+                text = highlightedAppName,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = contentColor,
+                ),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
                 if (rule.wifi_blocked || rule.other_blocked) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),

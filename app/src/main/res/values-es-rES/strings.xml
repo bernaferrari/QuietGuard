@@ -173,8 +173,13 @@
     <string name="setting_auto">Activar automáticamente tras %1$s minutos</string>
     <string name="setting_delay">Retrasar apagado de pantalla %1$s minutos</string>
     <string name="setting_update">Buscar actualizaciones</string>
-    <string name="setting_update_now">Check now</string>
+    <string name="setting_update_now">Comprobar ahora</string>
     <string name="setting_update_checking">Comprobando...</string>
+    <string name="setting_update_result_none">No hay actualizaciones disponibles</string>
+    <string name="setting_update_result_available">Nueva versión disponible: %s</string>
+    <string name="setting_update_result_error">Error al buscar actualizaciones</string>
+    <string name="setting_update_result_latest">Estás usando la última versión</string>
+    <string name="setting_update_result_cancelled">Búsqueda de actualizaciones cancelada</string>
 
     <string name="setting_network_options">Opciones de red</string>
     <string name="setting_subnet">Enrutamiento de subred</string>
@@ -348,7 +353,7 @@ Tu tráfico de Internet no se está enviando a un servidor VPN remoto.</string>
     <string name="msg_push">Los mensajes entrantes (push) los gestiona principalmente el componente del sistema Play Services, que tiene permitido el acceso a Internet por defecto</string>
     <string name="msg_system">La gestión de todas las aplicaciones (sistema) se puede activar en los ajustes</string>
     <string name="msg_issue">Describe el problema e indica cuándo ocurrió:</string>
-    <string name="msg_vpn_cancelled">Connessione VPN annullata. Hai un altro VPN impostato come sempre attivo?</string>
+    <string name="msg_vpn_cancelled">Conexión VPN cancelada\n¿Has configurado otra VPN como Siempre activa?</string>
     <string name="msg_on">Apagar el dispositivo con NetGuard activado hará que se inicie automáticamente al encenderlo</string>
     <string name="msg_unavailable">Esta función no está disponible en esta versión de Android</string>
     <string name="msg_always_on">Otra VPN está configurada como Siempre activa</string>

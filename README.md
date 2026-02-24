@@ -36,28 +36,30 @@ Re-NetGuard is a modernized fork of the original [NetGuard](https://github.com/M
 | **Details** | **Settings** |
 | ![Details](assets/details.png) | ![Settings](assets/settings.png) |
 
-## 🛠️ Tech Stack
+## ✨ What's New in Re-NetGuard
 
-This project is a showcase of modern Android development:
+If you're coming from the original NetGuard, here are the major differences you'll notice:
 
-- **UI:** [Jetpack Compose](https://developer.android.com/compose) (Material 3)
-- **Architecture:** [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) (DI)
-- **Navigation:** [Navigation 3](https://developer.android.com/jetpack/compose/navigation) / Adaptive Navigation Suite
-- **Data/State:** [DataStore](https://developer.android.com/topic/libraries/architecture/datastore), [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
-- **Concurrency:** [Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
-- **Networking:** [OkHttp](https://square.github.io/okhttp/)
-- **Theming:** [Material Kolor](https://github.com/jordond/MaterialKolor) (Dynamic Color)
-- **Native Layer:** C++ JNI core
+- **Complete Visual Overhaul:** Built entirely with Jetpack Compose, the app embraces Google's Material 3 Expressive design language for a modern, fluid experience.
+- **100% Kotlin Rewrite:** The entire original Java codebase has been ported and rewritten in modern Kotlin, leveraging coroutines and current Android architecture patterns.
+- **Adaptive Layouts:** Tablets and foldables get a first-class two-pane layout for managing rules and seeing app details side-by-side.
+- **Improved Log Clarity:** The traffic logs have been completely redesigned so it's instantly clear which connections were blocked, which were allowed, and what protocols were used.
+- **Polished Settings:** We've grouped settings logically with clearer explanations and removed the clutter so the most important controls are easy to find.
+- **Simplified Experience:** The focus is on a streamlined core firewall experience. We haven't ported every obscure legacy and experimental feature from the original; instead we focused on stability, performance, and UI excellence for the features people use most.
 
-## 🏗️ Project Structure
+## ⚙️ How It Works
 
-The project follows a standard Android modular layout:
+Re-NetGuard operates as a local-only application. It uses Android's built-in `VpnService` to route your device's traffic through a local sinkhole. 
 
-- `app/`: Android application module (entry point + UI + services).
-- `app/src/main/kotlin/eu/faircode/netguard/ui/`: Compose screen structure and app shell.
-- `app/src/main/kotlin/eu/faircode/netguard/`: Firewall services and system integration.
-- `app/src/main/kotlin/eu/faircode/netguard/ui/screens/`: Main screen implementations.
-- `app/src/main/jni/netguard/`: Native networking engine.
+Because the app routes the traffic *internally on your device*, **it never sends your data to an external proxy or remote server**. The application can inspect the outbound connection attempts and selectively drop or allow packets based on the rules you set for each app, providing a true on-device firewall without requiring root access.
+
+## 📱 Adaptive Layouts
+
+Re-NetGuard dynamically scales to take advantage of larger screens, offering a dedicated two-pane layout for comfortable viewing on tablets and foldables.
+
+<p align="center">
+  <img src="assets/foldable.png" alt="Foldable experience" width="980">
+</p>
 
 ## 🏁 Getting Started
 
@@ -86,6 +88,10 @@ You can also build a release variant configured for production checks and shrink
 
 - **Original Project:** [NetGuard](https://github.com/M66B/NetGuard) by Marcel Bokhorst.
 - **License:** GNU GPLv3. See [LICENSE](LICENSE) for details.
+
+<p align="center">
+  <img src="assets/more%20-%20dark.png" alt="Re-NetGuard Dark Mode variant" width="980">
+</p>
 
 ---
 <p align="center">Made with ❤️ using Jetpack Compose</p>

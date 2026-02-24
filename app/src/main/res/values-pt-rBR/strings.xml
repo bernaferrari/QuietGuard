@@ -175,6 +175,11 @@
     <string name="setting_update">Verificar atualizações</string>
     <string name="setting_update_now">Verificar agora</string>
     <string name="setting_update_checking">Verificando...</string>
+    <string name="setting_update_result_none">Nenhuma atualização disponível</string>
+    <string name="setting_update_result_available">Nova versão disponível: %s</string>
+    <string name="setting_update_result_error">Erro ao verificar atualizações</string>
+    <string name="setting_update_result_latest">Você está usando a versão mais recente</string>
+    <string name="setting_update_result_cancelled">Verificação de atualização cancelada</string>
 
     <string name="setting_network_options">Opções de rede</string>
     <string name="setting_subnet">Roteamento de sub-rede</string>
@@ -201,9 +206,9 @@
     <string name="setting_filter">Filtrar tráfego</string>
     <string name="setting_filter_udp">Filtrar tráfego UDP</string>
     <string name="setting_handover">Transição contínua da VPN ao recarregar</string>
-    <string name="setting_clear_onreload">Fechar conexões ao recarregar</string>
+    <string name="setting_clear_onreload">Fechar conexões au recarregar</string>
     <string name="setting_lockdown">Bloqueio total de tráfego</string>
-    <string name="setting_malware" translatable="false">Malware protection</string>
+    <string name="setting_malware">Proteção contra malware</string>
     <string name="setting_track_usage">Rastrear uso da rede</string>
     <string name="setting_reset_usage">Redefinir uso da rede</string>
     <string name="setting_show_resolved">Mostrar nomes de domínio resolvidos</string>
@@ -301,7 +306,7 @@
     <string name="msg_revoked">O NetGuard foi desativado, provavelmente por outro aplicativo baseado em VPN</string>
     <string name="msg_installed">\'%1$s\' instalado</string>
     <string name="msg_installed_n">Foi instalado</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware">Possível malware: \'%1$s\'</string>
     <string name="msg_access">%1$s tentou acessar a Internet</string>
     <string name="msg_access_n">Tentativa de acesso à Internet</string>
     <string name="msg_completed">Ação concluída</string>
@@ -381,7 +386,7 @@ Seu tráfego de Internet não está sendo enviado para um servidor VPN remoto.</
     <string name="label_ttl">TTL: %s s</string>
     <string name="label_uid">UID: %s</string>
     <string name="title_lockdown">Permitir no modo de bloqueio</string>
-    <string name="title_related">Filtrar relacionados</string>
+    <string name="title_related">Filtros relacionados</string>
     <string name="title_access">Tentativas de acesso</string>
     <string name="title_precedence">Regras de acesso têm precedência sobre outras regras</string>
     <string name="title_options">Opções</string>
@@ -395,7 +400,7 @@ Seu tráfego de Internet não está sendo enviado para um servidor VPN remoto.</
     <string name="title_enable_filtering">Ativar filtragem para registrar endereços permitidos também</string>
     <string name="title_enable_notify">Ativar notificações de acesso para novos endereços registrados</string>
     <string name="title_enable_help0">Estas são configurações globais que se aplicam a todos os aplicativos</string>
-    <string name="title_enable_help1">A filtragem também é necessária para permitir ou bloquear endereços individuais</string>
+    <string name="title_enable_help1">A filtragem é também necessária para permitir ou bloquear endereços individuais</string>
     <string name="title_enable_help2">Ativar o registro (menos) ou a filtragem (mais) pode aumentar o uso da bateria e afetar a velocidade da rede</string>
 
     <string name="title_rate">Avaliar</string>
@@ -439,6 +444,7 @@ Seu tráfego de Internet não está sendo enviado para um servidor VPN remoto.</
         Você pode cancelar ou gerenciar uma assinatura pela guia de assinaturas no app Play Store.
     </string>
     <string name="title_pro_already">Os recursos Pro já estão ativados</string>
+
     <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>

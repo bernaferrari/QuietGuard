@@ -114,7 +114,7 @@
 
     <!-- Tooltips -->
     <string name="tooltip_rcode">DNS-antwoordcode voor geblokkeerde domeinen. Standaard 3 (NXDOMAIN) betekent dat domein niet bestaat.</string>
-    <string name="tooltip_ttl">Minimale time-to-live voor DNS-cache-items in seconden.</string>
+    <string name="tooltip_ttl">Minimale time-to-live for DNS-cache-items in seconden.</string>
     <string name="tooltip_pcap">Registreer alle netwerkpakketten voor debuggen. Creëert grote bestanden.</string>
     <string name="tooltip_filter">Onderschep en analyseer verkeer. Vereist voor blokkeren per adres. Verbruikt meer batterij.</string>
     <string name="tooltip_lockdown">Blokkeer alle verkeer behalve voor expliciet toegestane apps. Gebruik met zorg.</string>
@@ -173,8 +173,13 @@
     <string name="setting_auto">Auto inschakelen na %1$s minuten</string>
     <string name="setting_delay">Vertraag scherm uit %1$s minuten</string>
     <string name="setting_update">Controleer op updates</string>
-    <string name="setting_update_now">Check now</string>
+    <string name="setting_update_now">Nu controleren</string>
     <string name="setting_update_checking">Controleren...</string>
+    <string name="setting_update_result_none">Geen updates beschikbaar</string>
+    <string name="setting_update_result_available">Nieuwe versie beschikbaar: %s</string>
+    <string name="setting_update_result_error">Fout bij controleren op updates</string>
+    <string name="setting_update_result_latest">U gebruikt de nieuwste versie</string>
+    <string name="setting_update_result_cancelled">Controle op updates geannuleerd</string>
 
     <string name="setting_network_options">Netwerkopties</string>
     <string name="setting_subnet">Subnet routing</string>
@@ -203,7 +208,7 @@
     <string name="setting_handover">Naadloze VPN-overdracht bij herladen</string>
     <string name="setting_clear_onreload">Verbindingen sluiten bij herladen</string>
     <string name="setting_lockdown">Verkeer vergrendelen (lockdown)</string>
-    <string name="setting_malware" translatable="false">Malware protection</string>
+    <string name="setting_malware">Malwarebescherming</string>
     <string name="setting_track_usage">Netwerkgebruik bijhouden</string>
     <string name="setting_reset_usage">Netwerkgebruik resetten</string>
     <string name="setting_show_resolved">Toon opgeloste domeinnamen</string>
@@ -275,7 +280,7 @@
     <string name="summary_eu_roaming">Pas geen roaming-regels toe binnen de EU (roam like at home)</string>
     <string name="summary_call">NetGuard uitschakelen tijdens bellen. Kan problemen met IP/wifi-bellen omzeilen.</string>
 
-    <string name="summary_system">Definieer regels voor systeem-apps (voor experts)</string>
+    <string name="summary_system">Definieer regels voor systeem-apps (for experts)</string>
     <string name="summary_log_app">Log pogingen van apps om verbinding met internet te maken. Kan batterijverbruik verhogen.</string>
     <string name="summary_log_retention_days">Verwijder automatisch oude logs. Stel 0 in om ze voor altijd te bewaren.</string>
     <string name="summary_access">Toon statusbalkmelding bij internettoegang (indien filtering uit is, alleen bij geblokkeerde pogingen)</string>
@@ -439,6 +444,7 @@ Je verkeer wordt niet naar een externe server gestuurd.</string>
         Beheer je abonnementen via de Play Store.
     </string>
     <string name="title_pro_already">De pro-functies zijn al geactiveerd</string>
+
     <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>

@@ -175,6 +175,11 @@
     <string name="setting_update">Sprawdzaj aktualizacje</string>
     <string name="setting_update_now">Sprawdź teraz</string>
     <string name="setting_update_checking">Sprawdzanie...</string>
+    <string name="setting_update_result_none">Brak dostępnych aktualizacji</string>
+    <string name="setting_update_result_available">Dostępna nowa wersja: %s</string>
+    <string name="setting_update_result_error">Błąd podczas sprawdzania aktualizacji</string>
+    <string name="setting_update_result_latest">Używasz najnowszej wersji</string>
+    <string name="setting_update_result_cancelled">Sprawdzanie aktualizacji anulowane</string>
 
     <string name="setting_network_options">Opcje sieciowe</string>
     <string name="setting_subnet">Routing podsieci</string>
@@ -324,7 +329,7 @@ Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
     <string name="msg_doze">Aby uzyskać spójne wyniki, należy wyłączyć optymalizację baterii Androida dla NetGuard.
-\n\nW kolejnym oknie dialogowym wybierz \"Wszystkie aplikacje\" na górze, dotknij NetGuard na liście i wybierz oraz potwierdź \"Nie optymalizuj\".</string>
+\n\nW kolejnym oknie dialogowym wybierz \"Wszystkie aplikacje\" na górze, dotknij NetGuard na liście i wybierz oraz potwierź \"Nie optymalizuj\".</string>
     <string name="msg_datasaving">Aby uzyskać spójne wyniki, należy wyłączyć opcję oszczędzania danych Androida dla NetGuard.
 \n\nW kolejnym oknie dialogowym włącz opcje \"Dane w tle\" i \"Nieograniczone zużycie danych\".</string>
     <string name="msg_filter">Korzystanie z filtrowania spowoduje, że Android przypisze zużycie danych i energii aplikacji NetGuard - Android uzna, że dane i energia są zużywane przez NetGuard zamiast przez oryginalną aplikację.</string>
@@ -439,6 +444,7 @@ Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</
         Możesz anulować lub zarządzać subskrypcją w zakładce subskrypcji w aplikacji Sklep Play.
     </string>
     <string name="title_pro_already">Funkcje Pro są już aktywowane</string>
+
     <string-array name="protocolNames">
         <item>UDP</item>
         <item>TCP</item>

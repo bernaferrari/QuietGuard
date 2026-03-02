@@ -21,10 +21,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.bernaferari.renetguard.data.Prefs
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.materialkolor.rememberDynamicMaterialThemeState
-import com.bernaferari.renetguard.data.Prefs
 
 /**
  * Extension property for accessing spacing design tokens.

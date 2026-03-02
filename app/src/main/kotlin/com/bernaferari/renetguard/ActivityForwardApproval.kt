@@ -93,7 +93,8 @@ class ActivityForwardApproval : ComponentActivity() {
 
     companion object {
         private const val TAG = "NetGuard.Forward"
-        private const val ACTION_START_PORT_FORWARD = "com.bernaferari.renetguard.START_PORT_FORWARD"
+        private const val ACTION_START_PORT_FORWARD =
+            "com.bernaferari.renetguard.START_PORT_FORWARD"
         private const val ACTION_STOP_PORT_FORWARD = "com.bernaferari.renetguard.STOP_PORT_FORWARD"
 
         init {

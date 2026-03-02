@@ -167,7 +167,12 @@ class DownloadTask(
         )
 
         val notificationColor =
-            themeOffColor(Prefs.getString("theme", com.bernaferari.renetguard.ui.theme.THEME_DEFAULT))
+            themeOffColor(
+                Prefs.getString(
+                    "theme",
+                    com.bernaferari.renetguard.ui.theme.THEME_DEFAULT
+                )
+            )
         val builder = Notification.Builder(context, Notifications.CHANNEL_NOTIFY)
             .setSmallIcon(context.fileDownloadIcon())
             .setContentTitle(context.getString(R.string.app_name))

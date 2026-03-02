@@ -3,12 +3,12 @@ package com.bernaferari.renetguard.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.bernaferari.renetguard.data.dataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.bernaferari.renetguard.data.dataStore
 import javax.inject.Singleton
 
 @Module

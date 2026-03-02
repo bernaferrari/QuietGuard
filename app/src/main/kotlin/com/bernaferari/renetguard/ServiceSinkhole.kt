@@ -3563,7 +3563,8 @@ class ServiceSinkhole : VpnService() {
         private var wlInstance: PowerManager.WakeLock? = null
 
         const val ACTION_HOUSE_HOLDING = "com.bernaferari.renetguard.HOUSE_HOLDING"
-        private const val ACTION_SCREEN_OFF_DELAYED = "com.bernaferari.renetguard.SCREEN_OFF_DELAYED"
+        private const val ACTION_SCREEN_OFF_DELAYED =
+            "com.bernaferari.renetguard.SCREEN_OFF_DELAYED"
         const val ACTION_WATCHDOG = "com.bernaferari.renetguard.WATCHDOG"
         const val ACTION_UPDATE_CHECK_RESULT = "com.bernaferari.renetguard.UPDATE_CHECK_RESULT"
 

@@ -10,8 +10,8 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import dagger.hilt.android.HiltAndroidApp
 import com.bernaferari.renetguard.data.Prefs
+import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class ApplicationEx : Application() {

@@ -10,11 +10,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.mutableStateOf
-import dagger.hilt.android.AndroidEntryPoint
 import com.bernaferari.renetguard.ui.AppNavigation
 import com.bernaferari.renetguard.ui.Home
 import com.bernaferari.renetguard.ui.main.MainViewModel
 import com.bernaferari.renetguard.ui.theme.NetGuardThemeFromPrefs
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ActivityMain : ComponentActivity() {

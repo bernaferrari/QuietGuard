@@ -1,6 +1,7 @@
 package com.bernaferari.renetguard.domain
 
 import com.bernaferari.renetguard.data.PreferencesRepository
+import com.bernaferari.renetguard.demo.wasmDemoAppList
 import com.bernaferari.renetguard.platform.NetGuardPlatform
 import org.koin.core.annotation.Single
 
@@ -15,22 +16,16 @@ class WasmRulesRepository(
             return cachedRules!!
         }
         val demo =
-            listOf(
-                demoRule("com.android.chrome", "Chrome", 10101, wifiBlocked = false, otherBlocked = false),
-                demoRule("com.google.android.gm", "Gmail", 10102, wifiBlocked = true, otherBlocked = false),
-                demoRule("com.spotify.music", "Spotify", 10103, wifiBlocked = false, otherBlocked = true),
-                demoRule("com.instagram.android", "Instagram", 10104, wifiBlocked = true, otherBlocked = true),
-                demoRule("com.whatsapp", "WhatsApp", 10105, wifiBlocked = false, otherBlocked = false),
-                demoRule("com.google.android.youtube", "YouTube", 10106, wifiBlocked = false, otherBlocked = false),
-                demoRule("com.twitter.android", "X", 10107, wifiBlocked = true, otherBlocked = false),
-                demoRule("com.facebook.katana", "Facebook", 10108, wifiBlocked = true, otherBlocked = true),
-                demoRule("com.google.android.apps.maps", "Maps", 10109, wifiBlocked = false, otherBlocked = false),
-                demoRule("com.amazon.mShop.android.shopping", "Amazon", 10110, wifiBlocked = false, otherBlocked = true),
-                demoRule("com.netflix.mediaclient", "Netflix", 10111, wifiBlocked = false, otherBlocked = false),
-                demoRule("com.discord", "Discord", 10112, wifiBlocked = true, otherBlocked = false, system = false),
-                demoRule("com.android.vending", "Play Store", 10001, wifiBlocked = false, otherBlocked = false, system = true),
-                demoRule("com.google.android.gms", "Google Play services", 10002, wifiBlocked = false, otherBlocked = false, system = true),
-            )
+            wasmDemoAppList.map { app ->
+                demoRule(
+                    packageName = app.packageName,
+                    name = app.name,
+                    uid = app.uid,
+                    wifiBlocked = app.wifiBlocked,
+                    otherBlocked = app.otherBlocked,
+                    system = app.system,
+                )
+            }
         cachedRules = demo.map { applyPrefs(it) }
         return cachedRules!!
     }

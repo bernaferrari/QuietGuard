@@ -14,7 +14,7 @@ import netguard.shared.generated.resources.demo_mode_banner
 import netguard.shared.generated.resources.demo_mode_hint
 import netguard.shared.generated.resources.status_disabled
 import netguard.shared.generated.resources.status_enabled
-import netguard.shared.generated.resources.status_enabled_demo
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -39,7 +39,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
@@ -148,10 +147,6 @@ fun HomeScreen(
                 .padding(spacing.large),
             verticalArrangement = Arrangement.spacedBy(spacing.large),
         ) {
-
-            if (isDemoMode) {
-                DemoModeBanner()
-            }
 
             StatusCard(
                 enabled = enabled,
@@ -268,38 +263,6 @@ private fun NotificationPermissionCard(
     }
 }
 
-@Composable
-private fun DemoModeBanner() {
-    val spacing = MaterialTheme.spacing
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            ),
-    ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = spacing.medium, vertical = spacing.small),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(spacing.small),
-        ) {
-            Icon(
-                imageVector = Icons.Default.Security,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-            Text(
-                text = stringResource(Res.string.demo_mode_banner),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
-            )
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun StatusCard(
@@ -408,8 +371,8 @@ private fun StatusCard(
     val triggerToggle: (Boolean) -> Unit = { next ->
         onToggle(next)
     }
-    val badgeShape = RoundedCornerShape(percent = 50)
-    val cardShape = RoundedCornerShape(28.dp)
+    val badgeShape = rememberStatusBadgeShape(morphProgress)
+    val cardShape = rememberStatusCardShape(cardMorphProgress)
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val scale by animateFloatAsState(
@@ -419,9 +382,7 @@ private fun StatusCard(
     )
 
     val enabledLabel =
-        if (enabled && isDemoMode) {
-            stringResource(Res.string.status_enabled_demo)
-        } else if (enabled) {
+        if (enabled) {
             stringResource(Res.string.status_enabled)
         } else {
             stringResource(Res.string.status_disabled)
@@ -504,9 +465,14 @@ private fun StatusCard(
                         textAlign = TextAlign.Center,
                     )
 
-                    if (enabled && isDemoMode) {
+                    if (isDemoMode) {
                         Text(
-                            text = stringResource(Res.string.demo_mode_hint),
+                            text =
+                                if (enabled) {
+                                    stringResource(Res.string.demo_mode_hint)
+                                } else {
+                                    stringResource(Res.string.demo_mode_banner)
+                                },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,

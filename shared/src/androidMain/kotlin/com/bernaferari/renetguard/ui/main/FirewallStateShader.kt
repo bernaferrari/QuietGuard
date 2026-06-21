@@ -31,7 +31,14 @@ internal fun FirewallStateShader(
         runCatching { RuntimeShader(FIREWALL_AGSL) }
             .onFailure { error -> Log.w("FirewallShader", "AGSL disabled: ${error.message}") }
             .getOrNull()
-    } ?: return
+    }
+    if (shader == null) {
+        FirewallStateShaderCanvas(
+            enabledProgress = enabledProgress,
+            modifier = modifier,
+        )
+        return
+    }
 
     val motion = LocalMotion.current
     val phase by rememberInfiniteTransition(label = "firewallShader").animateFloat(

@@ -1,32 +1,5 @@
 package com.bernaferari.renetguard.ui.screens
 
-import com.bernaferari.renetguard.data.PreferencesRepository
-import com.bernaferari.renetguard.domain.FirewallRule
-import com.bernaferari.renetguard.platform.*
-import com.bernaferari.renetguard.platform.showToast
-import org.koin.compose.koinInject
-
-import org.jetbrains.compose.resources.stringResource
-import netguard.shared.generated.resources.Res
-import netguard.shared.generated.resources.label_dns_summary
-import netguard.shared.generated.resources.label_ttl
-import netguard.shared.generated.resources.label_uid
-import netguard.shared.generated.resources.menu_cleanup
-import netguard.shared.generated.resources.menu_clear
-import netguard.shared.generated.resources.menu_export
-import netguard.shared.generated.resources.menu_refresh
-import netguard.shared.generated.resources.msg_completed
-import netguard.shared.generated.resources.msg_invalid
-import netguard.shared.generated.resources.ui_dns_active
-import netguard.shared.generated.resources.ui_dns_expired
-import netguard.shared.generated.resources.ui_dns_filter_empty
-import netguard.shared.generated.resources.ui_dns_hint
-import netguard.shared.generated.resources.ui_dns_title
-import netguard.shared.generated.resources.ui_empty_dns_body
-import netguard.shared.generated.resources.ui_empty_dns_title
-import netguard.shared.generated.resources.ui_filter_all
-import netguard.shared.generated.resources.ui_loading
-import netguard.shared.generated.resources.ui_logs_filter_status
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -62,68 +35,54 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bernaferari.renetguard.platform.NetGuardPlatform
+import com.bernaferari.renetguard.platform.DnsEntry
+import com.bernaferari.renetguard.platform.showToast
+import com.bernaferari.renetguard.ui.screens.vm.DnsListFilter
+import com.bernaferari.renetguard.ui.screens.vm.DnsViewModel
 import com.bernaferari.renetguard.ui.theme.spacing
 import com.bernaferari.renetguard.ui.util.StatePlaceholder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
-private const val TAG = "NetGuard.DNS.Compose"
-
-private enum class DnsFilter {
-    All,
-    Active,
-    Expired,
-}
+import netguard.shared.generated.resources.Res
+import netguard.shared.generated.resources.label_dns_summary
+import netguard.shared.generated.resources.label_ttl
+import netguard.shared.generated.resources.label_uid
+import netguard.shared.generated.resources.menu_cleanup
+import netguard.shared.generated.resources.menu_clear
+import netguard.shared.generated.resources.menu_export
+import netguard.shared.generated.resources.menu_refresh
+import netguard.shared.generated.resources.msg_completed
+import netguard.shared.generated.resources.msg_invalid
+import netguard.shared.generated.resources.ui_dns_active
+import netguard.shared.generated.resources.ui_dns_expired
+import netguard.shared.generated.resources.ui_dns_filter_empty
+import netguard.shared.generated.resources.ui_dns_hint
+import netguard.shared.generated.resources.ui_dns_title
+import netguard.shared.generated.resources.ui_empty_dns_body
+import netguard.shared.generated.resources.ui_empty_dns_title
+import netguard.shared.generated.resources.ui_filter_all
+import netguard.shared.generated.resources.ui_loading
+import netguard.shared.generated.resources.ui_logs_filter_status
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun DnsScreen() {
+fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
     val spacing = MaterialTheme.spacing
-    var entries by remember { mutableStateOf<List<com.bernaferari.renetguard.platform.DnsEntry>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
-    var refreshKey by remember { mutableIntStateOf(0) }
-    var dnsFilter by remember { mutableStateOf(DnsFilter.All) }
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(refreshKey) {
-        isLoading = true
-        entries = loadDnsEntries()
-        isLoading = false
-    }
-
-    val now = remember(entries, refreshKey) { com.bernaferari.renetguard.platform.currentTimeMillis() }
-    val filteredEntries by remember(entries, dnsFilter, now) {
-        derivedStateOf {
-            entries.filter { entry ->
-                val expired = entry.time + entry.ttl < now
-                when (dnsFilter) {
-                    DnsFilter.All -> true
-                    DnsFilter.Active -> !expired
-                    DnsFilter.Expired -> expired
-                }
-            }
-        }
-    }
-
-    val expiredCount by remember(entries, now) {
-        derivedStateOf { entries.count { it.time + it.ttl < now } }
-    }
+    val dnsUi by viewModel.uiState.collectAsState()
+    val entries = dnsUi.entries.data
+    val isLoading = dnsUi.entries.isLoading
+    val dnsFilter = dnsUi.filter
+    val now = dnsUi.nowMs
+    val filteredEntries = dnsUi.filtered
+    val expiredCount = dnsUi.expiredCount
     val completedMessage = stringResource(Res.string.msg_completed)
     val invalidMessage = stringResource(Res.string.msg_invalid)
 
@@ -158,7 +117,7 @@ fun DnsScreen() {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { refreshKey += 1 }) {
+                    IconButton(onClick = { /* Room/DB flow auto-refreshes */ }) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(Res.string.menu_refresh),
@@ -189,14 +148,7 @@ fun DnsScreen() {
                     verticalArrangement = Arrangement.spacedBy(spacing.small),
                     maxItemsInEachRow = 2,
                 ) {
-                    FilledTonalButton(
-                        onClick = {
-                            scope.launch {
-                                cleanupDns()
-                                refreshKey++
-                            }
-                        },
-                    ) {
+                    FilledTonalButton(onClick = { viewModel.cleanup() }) {
                         Icon(
                             imageVector = Icons.Default.Tune,
                             contentDescription = null,
@@ -204,14 +156,7 @@ fun DnsScreen() {
                         Spacer(modifier = Modifier.width(spacing.small))
                         Text(text = stringResource(Res.string.menu_cleanup))
                     }
-                    OutlinedButton(
-                        onClick = {
-                            scope.launch {
-                                clearDns()
-                                refreshKey++
-                            }
-                        },
-                    ) {
+                    OutlinedButton(onClick = { viewModel.clearAll() }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = null,
@@ -221,7 +166,7 @@ fun DnsScreen() {
                     }
                     OutlinedButton(
                         onClick = {
-                            exportDnsToFile { success, error ->
+                            viewModel.export { success, error ->
                                 if (success) {
                                     showToast(completedMessage)
                                 } else {
@@ -258,14 +203,14 @@ fun DnsScreen() {
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         val options = listOf(
-                            DnsFilter.All to stringResource(Res.string.ui_filter_all),
-                            DnsFilter.Active to stringResource(Res.string.ui_dns_active),
-                            DnsFilter.Expired to stringResource(Res.string.ui_dns_expired),
+                            DnsListFilter.All to stringResource(Res.string.ui_filter_all),
+                            DnsListFilter.Active to stringResource(Res.string.ui_dns_active),
+                            DnsListFilter.Expired to stringResource(Res.string.ui_dns_expired),
                         )
                         options.forEachIndexed { index, (value, label) ->
                             SegmentedButton(
                                 selected = dnsFilter == value,
-                                onClick = { dnsFilter = value },
+                                onClick = { viewModel.setFilter(value) },
                                 shape = SegmentedButtonDefaults.itemShape(
                                     index = index,
                                     count = options.size
@@ -295,7 +240,7 @@ fun DnsScreen() {
                         message = stringResource(Res.string.ui_empty_dns_body),
                         icon = Icons.Default.Dns,
                         actionLabel = stringResource(Res.string.menu_refresh),
-                        onAction = { refreshKey += 1 },
+                        onAction = { /* Room/DB flow auto-refreshes */ },
                     )
                 }
 
@@ -305,7 +250,7 @@ fun DnsScreen() {
                         message = stringResource(Res.string.ui_dns_filter_empty),
                         icon = Icons.Default.Dns,
                         actionLabel = stringResource(Res.string.ui_filter_all),
-                        onAction = { dnsFilter = DnsFilter.All },
+                        onAction = { viewModel.setFilter(DnsListFilter.All) },
                     )
                 }
 

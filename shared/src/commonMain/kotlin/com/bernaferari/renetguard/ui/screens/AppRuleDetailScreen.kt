@@ -71,6 +71,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -93,10 +94,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import com.bernaferari.renetguard.domain.FirewallRule
+import com.bernaferari.renetguard.ui.screens.vm.AppRuleDetailViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferari.renetguard.platform.HandleBackPress
-import com.bernaferari.renetguard.platform.clearAccess
 import com.bernaferari.renetguard.platform.launchApp
-import com.bernaferari.renetguard.platform.loadAccessEntries
 import com.bernaferari.renetguard.platform.openAppDetails
 import com.bernaferari.renetguard.ui.components.AppIcon
 import com.bernaferari.renetguard.ui.components.FirewallTile
@@ -115,6 +116,7 @@ fun AppRuleDetailScreen(
     onPersistRule: (FirewallRule) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
+    val detailViewModel: AppRuleDetailViewModel = koinViewModel()
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     val scope = rememberCoroutineScope()
@@ -356,7 +358,7 @@ fun AppRuleDetailScreen(
                 }
 
                 // ── Access log ──────────────────────────
-                AccessLogSection(rule = rule)
+                AccessLogSection(rule = rule, viewModel = detailViewModel)
 
                 // ── Actions ─────────────────────────────
                 SectionLabel(stringResource(Res.string.setting_options))
@@ -383,7 +385,7 @@ fun AppRuleDetailScreen(
                         isLast = true,
                         tint = MaterialTheme.colorScheme.error,
                         onClick = {
-                            scope.launch { clearAccess(rule.uid) }
+                            detailViewModel.clearAccess(rule.uid)
                         },
                     )
                 }
@@ -581,15 +583,14 @@ private fun SectionLabel(text: String) {
 }
 
 @Composable
-private fun AccessLogSection(rule: FirewallRule) {
-    var accessEntries by remember(rule.uid) { mutableStateOf<List<com.bernaferari.renetguard.platform.AccessEntry>>(emptyList()) }
-    var loading by remember(rule.uid) { mutableStateOf(false) }
-
-    LaunchedEffect(rule.uid) {
-        loading = true
-        accessEntries = loadAccessEntries(rule.uid)
-        loading = false
-    }
+private fun AccessLogSection(
+    rule: FirewallRule,
+    viewModel: AppRuleDetailViewModel,
+) {
+    LaunchedEffect(rule.uid) { viewModel.bindRule(rule) }
+    val accessUi by viewModel.accessState.collectAsState()
+    val accessEntries = accessUi.data
+    val loading = accessUi.isLoading
 
     if (loading || accessEntries.isEmpty()) return
 

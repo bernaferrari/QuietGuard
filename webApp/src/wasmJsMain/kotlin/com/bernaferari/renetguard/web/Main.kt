@@ -8,6 +8,7 @@ import com.bernaferari.renetguard.platform.installWasmPlatformBindings
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    // Koin provides Room (WebWorkerSQLiteDriver + OPFS) and the rest of the graph.
     initKoin()
     installWasmPlatformBindings()
     ComposeViewport {

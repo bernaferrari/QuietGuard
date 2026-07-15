@@ -64,4 +64,5 @@ dependencyResolutionManagement {
 rootProject.name = "NetGuard"
 include(":app")
 include(":shared")
+include(":sqliteWasmWorker")
 include(":webApp")

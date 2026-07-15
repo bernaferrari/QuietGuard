@@ -1,36 +1,5 @@
 package com.bernaferari.renetguard.ui.screens
 
-import com.bernaferari.renetguard.data.PreferencesRepository
-import com.bernaferari.renetguard.domain.FirewallRule
-import com.bernaferari.renetguard.platform.*
-import com.bernaferari.renetguard.platform.showToast
-import org.koin.compose.koinInject
-
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.resources.stringArrayResource
-import netguard.shared.generated.resources.Res
-import netguard.shared.generated.resources.menu_add
-import netguard.shared.generated.resources.menu_cancel
-import netguard.shared.generated.resources.menu_delete
-import netguard.shared.generated.resources.menu_protocol_tcp
-import netguard.shared.generated.resources.menu_protocol_udp
-import netguard.shared.generated.resources.msg_invalid
-import netguard.shared.generated.resources.menu_ok
-import netguard.shared.generated.resources.setting_forwarding
-import netguard.shared.generated.resources.title_dport
-import netguard.shared.generated.resources.title_protocol
-import netguard.shared.generated.resources.title_raddr
-import netguard.shared.generated.resources.title_rport
-import netguard.shared.generated.resources.title_ruid
-import netguard.shared.generated.resources.ui_empty_forwarding_body
-import netguard.shared.generated.resources.ui_empty_forwarding_title
-import netguard.shared.generated.resources.ui_filter_all
-import netguard.shared.generated.resources.ui_forwarding_filter_empty
-import netguard.shared.generated.resources.ui_forwarding_title
-import netguard.shared.generated.resources.ui_loading
-import netguard.shared.generated.resources.ui_logs_filter_protocol
-import netguard.shared.generated.resources.protocolNames
-import netguard.shared.generated.resources.protocolValues
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,6 +18,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -67,69 +37,63 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bernaferari.renetguard.domain.FirewallRule
+import com.bernaferari.renetguard.platform.ForwardingEntry
 import com.bernaferari.renetguard.platform.NetGuardPlatform
+import com.bernaferari.renetguard.platform.loadAllRulesForPicker
+import com.bernaferari.renetguard.platform.showToast
+import com.bernaferari.renetguard.ui.screens.vm.ForwardingListFilter
+import com.bernaferari.renetguard.ui.screens.vm.ForwardingViewModel
 import com.bernaferari.renetguard.ui.theme.spacing
 import com.bernaferari.renetguard.ui.util.StatePlaceholder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
-private enum class ForwardingProtocolFilter {
-    All,
-    Udp,
-    Tcp,
-}
+import netguard.shared.generated.resources.Res
+import netguard.shared.generated.resources.menu_add
+import netguard.shared.generated.resources.menu_cancel
+import netguard.shared.generated.resources.menu_delete
+import netguard.shared.generated.resources.menu_ok
+import netguard.shared.generated.resources.menu_protocol_tcp
+import netguard.shared.generated.resources.menu_protocol_udp
+import netguard.shared.generated.resources.msg_invalid
+import netguard.shared.generated.resources.protocolNames
+import netguard.shared.generated.resources.protocolValues
+import netguard.shared.generated.resources.setting_forwarding
+import netguard.shared.generated.resources.title_dport
+import netguard.shared.generated.resources.title_protocol
+import netguard.shared.generated.resources.title_raddr
+import netguard.shared.generated.resources.title_rport
+import netguard.shared.generated.resources.title_ruid
+import netguard.shared.generated.resources.ui_empty_forwarding_body
+import netguard.shared.generated.resources.ui_empty_forwarding_title
+import netguard.shared.generated.resources.ui_filter_all
+import netguard.shared.generated.resources.ui_forwarding_filter_empty
+import netguard.shared.generated.resources.ui_forwarding_title
+import netguard.shared.generated.resources.ui_loading
+import netguard.shared.generated.resources.ui_logs_filter_protocol
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ForwardingScreen() {
+fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
     val spacing = MaterialTheme.spacing
-    var entries by remember { mutableStateOf<List<com.bernaferari.renetguard.platform.ForwardingEntry>>(emptyList()) }
-    var protocolFilter by remember { mutableStateOf(ForwardingProtocolFilter.All) }
-    var showDialog by remember { mutableStateOf(false) }
-    var loading by remember { mutableStateOf(true) }
-    val scope = rememberCoroutineScope()
-
-    val filteredEntries by remember(entries, protocolFilter) {
-        derivedStateOf {
-            entries.filter { entry ->
-                when (protocolFilter) {
-                    ForwardingProtocolFilter.All -> true
-                    ForwardingProtocolFilter.Udp -> entry.protocol == 17
-                    ForwardingProtocolFilter.Tcp -> entry.protocol == 6
-                }
-            }
-        }
-    }
-
-    DisposableEffect(Unit) {
-        val dispose =
-            observeForwardingChanges {
-                scope.launch {
-                    entries = loadForwardingEntries()
-                    loading = false
-                }
-            }
-        onDispose { dispose() }
-    }
-
-    LaunchedEffect(Unit) {
-        entries = loadForwardingEntries()
-        loading = false
-    }
+    val fwdUi by viewModel.uiState.collectAsState()
+    val entries = fwdUi.entries.data
+    val loading = fwdUi.entries.isLoading
+    val protocolFilter = fwdUi.protocolFilter
+    val showDialog = fwdUi.showAddDialog
+    val filteredEntries = fwdUi.filtered
 
     Scaffold(
         topBar = {
@@ -162,7 +126,7 @@ fun ForwardingScreen() {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { showDialog = true }) {
+                    IconButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = stringResource(Res.string.menu_add),
@@ -191,7 +155,7 @@ fun ForwardingScreen() {
                         .padding(spacing.medium),
                     verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
-                    FilledTonalButton(onClick = { showDialog = true }) {
+                    FilledTonalButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = null,
@@ -206,14 +170,14 @@ fun ForwardingScreen() {
                     )
                     SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                         val options = listOf(
-                            ForwardingProtocolFilter.All to stringResource(Res.string.ui_filter_all),
-                            ForwardingProtocolFilter.Udp to stringResource(Res.string.menu_protocol_udp),
-                            ForwardingProtocolFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
+                            ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
+                            ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
+                            ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
                         )
                         options.forEachIndexed { index, (value, label) ->
                             SegmentedButton(
                                 selected = protocolFilter == value,
-                                onClick = { protocolFilter = value },
+                                onClick = { viewModel.setProtocolFilter(value) },
                                 shape = SegmentedButtonDefaults.itemShape(
                                     index = index,
                                     count = options.size
@@ -243,7 +207,7 @@ fun ForwardingScreen() {
                         message = stringResource(Res.string.ui_empty_forwarding_body),
                         icon = Icons.Default.Add,
                         actionLabel = stringResource(Res.string.menu_add),
-                        onAction = { showDialog = true },
+                        onAction = { viewModel.setShowAddDialog(true) },
                     )
                 }
 
@@ -253,7 +217,7 @@ fun ForwardingScreen() {
                         message = stringResource(Res.string.ui_forwarding_filter_empty),
                         icon = Icons.AutoMirrored.Filled.Forward,
                         actionLabel = stringResource(Res.string.ui_filter_all),
-                        onAction = { protocolFilter = ForwardingProtocolFilter.All },
+                        onAction = { viewModel.setProtocolFilter(ForwardingListFilter.All) },
                     )
                 }
 
@@ -264,34 +228,24 @@ fun ForwardingScreen() {
                     ) {
                         items(
                             filteredEntries,
-                            key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" }) { entry ->
+                            key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" },
+                        ) { entry ->
                             ForwardingEntryCard(
                                 entry = entry,
-                                onDelete = {
-                                    scope.launch {
-                                        deleteForwardingEntry(entry)
-                                        entries = loadForwardingEntries()
-                                        loading = false
-                                    }
-                                },
+                                onDelete = { viewModel.deleteForward(entry) },
                             )
                         }
                     }
                 }
             }
         }
-    } // end Scaffold
+    }
 
     if (showDialog) {
         ForwardingAddDialog(
-            onDismiss = { showDialog = false },
+            onDismiss = { viewModel.setShowAddDialog(false) },
             onAdd = { protocol, dport, raddr, rport, ruid ->
-                scope.launch {
-                    addForwardingEntry(protocol, dport, raddr, rport, ruid)
-                    entries = loadForwardingEntries()
-                    loading = false
-                }
-                showDialog = false
+                viewModel.addForward(protocol, dport, raddr, rport, ruid)
             },
         )
     }
@@ -299,7 +253,7 @@ fun ForwardingScreen() {
 
 @Composable
 private fun ForwardingEntryCard(
-    entry: com.bernaferari.renetguard.platform.ForwardingEntry,
+    entry: ForwardingEntry,
     onDelete: () -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
@@ -407,7 +361,6 @@ private fun ForwardingAddDialog(
     var rulesLoading by remember { mutableStateOf(true) }
     var ruleExpanded by remember { mutableStateOf(false) }
     var ruleIndex by remember { mutableStateOf(0) }
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         rules = loadAllRulesForPicker()
@@ -464,7 +417,7 @@ private fun ForwardingAddDialog(
                         onDismissRequest = { protocolExpanded = false },
                     ) {
                         protocolNames.forEachIndexed { index, item ->
-                            androidx.compose.material3.DropdownMenuItem(
+                            DropdownMenuItem(
                                 text = { Text(item) },
                                 onClick = {
                                     protocolIndex = index
@@ -519,7 +472,7 @@ private fun ForwardingAddDialog(
                             onDismissRequest = { ruleExpanded = false },
                         ) {
                             rules.forEachIndexed { index, rule ->
-                                androidx.compose.material3.DropdownMenuItem(
+                                DropdownMenuItem(
                                     text = { Text(rule.name ?: rule.packageName ?: "") },
                                     onClick = {
                                         ruleIndex = index

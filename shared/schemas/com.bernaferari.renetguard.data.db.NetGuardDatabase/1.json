@@ -1,0 +1,454 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "269a292e7a202ea7a63b91fe1c958277",
+    "entities": [
+      {
+        "tableName": "log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` INTEGER NOT NULL, `version` INTEGER, `protocol` INTEGER, `flags` TEXT, `saddr` TEXT, `sport` INTEGER, `daddr` TEXT, `dport` INTEGER, `dname` TEXT, `uid` INTEGER, `data` TEXT, `allowed` INTEGER, `connection` INTEGER, `interactive` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "flags",
+            "columnName": "flags",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "saddr",
+            "columnName": "saddr",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sport",
+            "columnName": "sport",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "daddr",
+            "columnName": "daddr",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "dport",
+            "columnName": "dport",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "dname",
+            "columnName": "dname",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "allowed",
+            "columnName": "allowed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "connection",
+            "columnName": "connection",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "interactive",
+            "columnName": "interactive",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_log_time",
+            "unique": false,
+            "columnNames": [
+              "time"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_log_time` ON `${TABLE_NAME}` (`time`)"
+          },
+          {
+            "name": "index_log_daddr",
+            "unique": false,
+            "columnNames": [
+              "daddr"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_log_daddr` ON `${TABLE_NAME}` (`daddr`)"
+          },
+          {
+            "name": "index_log_dname",
+            "unique": false,
+            "columnNames": [
+              "dname"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_log_dname` ON `${TABLE_NAME}` (`dname`)"
+          },
+          {
+            "name": "index_log_dport",
+            "unique": false,
+            "columnNames": [
+              "dport"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_log_dport` ON `${TABLE_NAME}` (`dport`)"
+          },
+          {
+            "name": "index_log_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_log_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ]
+      },
+      {
+        "tableName": "access",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uid` INTEGER NOT NULL, `version` INTEGER NOT NULL, `protocol` INTEGER NOT NULL, `daddr` TEXT NOT NULL, `dport` INTEGER NOT NULL, `time` INTEGER NOT NULL, `allowed` INTEGER, `block` INTEGER NOT NULL, `sent` INTEGER, `received` INTEGER, `connections` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "version",
+            "columnName": "version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "daddr",
+            "columnName": "daddr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dport",
+            "columnName": "dport",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "allowed",
+            "columnName": "allowed",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "block",
+            "columnName": "block",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sent",
+            "columnName": "sent",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "received",
+            "columnName": "received",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "connections",
+            "columnName": "connections",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_access_uid_version_protocol_daddr_dport",
+            "unique": true,
+            "columnNames": [
+              "uid",
+              "version",
+              "protocol",
+              "daddr",
+              "dport"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_access_uid_version_protocol_daddr_dport` ON `${TABLE_NAME}` (`uid`, `version`, `protocol`, `daddr`, `dport`)"
+          },
+          {
+            "name": "index_access_daddr",
+            "unique": false,
+            "columnNames": [
+              "daddr"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_access_daddr` ON `${TABLE_NAME}` (`daddr`)"
+          },
+          {
+            "name": "index_access_block",
+            "unique": false,
+            "columnNames": [
+              "block"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_access_block` ON `${TABLE_NAME}` (`block`)"
+          }
+        ]
+      },
+      {
+        "tableName": "dns",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `time` INTEGER NOT NULL, `qname` TEXT NOT NULL, `aname` TEXT NOT NULL, `resource` TEXT NOT NULL, `ttl` INTEGER, `uid` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "qname",
+            "columnName": "qname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "aname",
+            "columnName": "aname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resource",
+            "columnName": "resource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ttl",
+            "columnName": "ttl",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_dns_qname_aname_resource",
+            "unique": true,
+            "columnNames": [
+              "qname",
+              "aname",
+              "resource"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_dns_qname_aname_resource` ON `${TABLE_NAME}` (`qname`, `aname`, `resource`)"
+          },
+          {
+            "name": "index_dns_resource",
+            "unique": false,
+            "columnNames": [
+              "resource"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_dns_resource` ON `${TABLE_NAME}` (`resource`)"
+          }
+        ]
+      },
+      {
+        "tableName": "forward",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `protocol` INTEGER NOT NULL, `dport` INTEGER NOT NULL, `raddr` TEXT NOT NULL, `rport` INTEGER NOT NULL, `ruid` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "protocol",
+            "columnName": "protocol",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dport",
+            "columnName": "dport",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "raddr",
+            "columnName": "raddr",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rport",
+            "columnName": "rport",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ruid",
+            "columnName": "ruid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_forward_protocol_dport",
+            "unique": true,
+            "columnNames": [
+              "protocol",
+              "dport"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_forward_protocol_dport` ON `${TABLE_NAME}` (`protocol`, `dport`)"
+          }
+        ]
+      },
+      {
+        "tableName": "app",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `package` TEXT NOT NULL, `label` TEXT, `system` INTEGER NOT NULL, `internet` INTEGER NOT NULL, `enabled` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "package",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "system",
+            "columnName": "system",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "internet",
+            "columnName": "internet",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "ID"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_app_package",
+            "unique": true,
+            "columnNames": [
+              "package"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_app_package` ON `${TABLE_NAME}` (`package`)"
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '269a292e7a202ea7a63b91fe1c958277')"
+    ]
+  }
+}

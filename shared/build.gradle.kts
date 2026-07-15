@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.koin.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 kotlin {
@@ -26,6 +28,7 @@ kotlin {
 
     wasmJs {
         browser()
+        useEsModules()
     }
 
     compilerOptions {
@@ -50,8 +53,17 @@ kotlin {
                 "commonMainResourceCollectors",
             )
         }
-        androidMain { addComposeGeneratedSources("androidMainResourceCollectors") }
-        wasmJsMain { addComposeGeneratedSources("wasmJsMainResourceCollectors") }
+        val storageMain by creating {
+            dependsOn(commonMain.get())
+        }
+        androidMain {
+            dependsOn(storageMain)
+            addComposeGeneratedSources("androidMainResourceCollectors")
+        }
+        wasmJsMain {
+            dependsOn(storageMain)
+            addComposeGeneratedSources("wasmJsMainResourceCollectors")
+        }
 
         commonMain.dependencies {
             implementation(project.dependencies.platform(libs.koin.bom))
@@ -103,9 +115,16 @@ kotlin {
             api(libs.koin.androidx.compose)
             api(libs.coil.compose)
             implementation(libs.androidx.datastore.preferences)
+            implementation(libs.androidx.sqlite.bundled)
+        }
+
+        storageMain.dependencies {
+            implementation(libs.androidx.room.runtime)
         }
 
         wasmJsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(project(":sqliteWasmWorker"))
             implementation(libs.okio)
             implementation("com.squareup.okio:okio-fakefilesystem:${libs.versions.okio.get()}")
             implementation(libs.androidx.datastore.preferences.core)
@@ -124,6 +143,12 @@ kotlin {
 dependencies {
     add("androidMainApi", platform(libs.androidx.compose.bom))
     add("androidMainApi", platform(libs.koin.bom))
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspWasmJs", libs.androidx.room.compiler)
+}
+
+room3 {
+    schemaDirectory("$projectDir/schemas")
 }
 
 compose.resources {

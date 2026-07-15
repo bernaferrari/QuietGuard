@@ -29,6 +29,41 @@ val MaterialTheme.motion: Motion
     @ReadOnlyComposable
     get() = LocalMotion.current
 
+data class ThemeSwatchOption(
+    val id: String,
+    val seedColor: Color?,
+)
+
+/** Settings swatches ordered warm → cool by hue. [seedColor] is null for the dynamic theme. */
+val ThemeSwatchOptions: List<ThemeSwatchOption> =
+    listOf(
+        ThemeSwatchOption(id = "dynamic", seedColor = null),
+        ThemeSwatchOption(id = "orange", seedColor = OrangePrimary),
+        ThemeSwatchOption(id = "amber", seedColor = AmberPrimary),
+        ThemeSwatchOption(id = "lime", seedColor = LimePrimary),
+        ThemeSwatchOption(id = "green", seedColor = GreenPrimary),
+        ThemeSwatchOption(id = "teal", seedColor = Teal500),
+        ThemeSwatchOption(id = "cyan", seedColor = CyanPrimary),
+        ThemeSwatchOption(id = "blue", seedColor = BluePrimary),
+        ThemeSwatchOption(id = "indigo", seedColor = IndigoPrimary),
+        ThemeSwatchOption(id = "purple", seedColor = PurplePrimary),
+        ThemeSwatchOption(id = "pink", seedColor = PinkPrimary),
+    )
+
+/** Fallback swatch color when the dynamic theme picker is shown but unavailable. */
+val DynamicThemeSwatchColor: Color = Teal500
+
+/** Swatches visible on the current platform (dynamic is Android-only). */
+fun themeSwatchOptions(): List<ThemeSwatchOption> =
+    if (supportsDynamicTheme()) {
+        ThemeSwatchOptions
+    } else {
+        ThemeSwatchOptions.filter { it.id != "dynamic" }
+    }
+
+fun resolveThemeName(themeName: String): String =
+    if (themeName == "dynamic" && !supportsDynamicTheme()) THEME_DEFAULT else themeName
+
 private val ThemeSeeds =
     mapOf(
         "teal" to Teal500,
@@ -110,7 +145,7 @@ fun NetGuardAppTheme(content: @Composable () -> Unit) {
                     isSystemInDarkTheme()
                 }
         }
-    val themeName = prefs[stringPreferencesKey("theme")] ?: "teal"
+    val themeName = resolveThemeName(prefs[stringPreferencesKey("theme")] ?: THEME_DEFAULT)
     NetGuardTheme(
         darkTheme = darkTheme,
         themeName = themeName,

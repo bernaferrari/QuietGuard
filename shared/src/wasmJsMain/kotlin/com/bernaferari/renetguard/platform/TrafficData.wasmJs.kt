@@ -1,7 +1,21 @@
 package com.bernaferari.renetguard.platform
 
+import com.bernaferari.renetguard.data.db.ForwardEntity
+import com.bernaferari.renetguard.data.db.WasmNetGuardDatabase
+import com.bernaferari.renetguard.data.db.observeRoomInvalidations
+import com.bernaferari.renetguard.data.db.toAccessEntry
+import com.bernaferari.renetguard.data.db.toDnsEntry
+import com.bernaferari.renetguard.data.db.toForwardingEntry
+import com.bernaferari.renetguard.data.db.toLogEntry
 import com.bernaferari.renetguard.demo.wasmDemoApps
 import com.bernaferari.renetguard.domain.FirewallRule
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+
+private suspend fun dao() = WasmNetGuardDatabase.dao.also {
+    WasmNetGuardDatabase.ensureDemoDataSeeded()
+}
 
 actual suspend fun loadLogs(
     udp: Boolean,
@@ -10,47 +24,111 @@ actual suspend fun loadLogs(
     allowed: Boolean,
     blocked: Boolean,
     limit: Int,
-): List<LogEntry> =
-    demoLogs()
-        .filter { entry ->
-            val protocolOk =
-                when {
-                    entry.protocolLabel == "TCP" -> tcp
-                    entry.protocolLabel == "UDP" -> udp
-                    else -> other
-                }
-            val outcomeOk =
-                when {
-                    allowed && blocked -> true
-                    allowed -> entry.allowed == 1
-                    blocked -> entry.allowed == 0
-                    else -> true
-                }
-            protocolOk && outcomeOk
+): List<LogEntry> {
+    val d = dao()
+    val rows =
+        if (limit > 0) {
+            d.getLogLimited(
+                udp = boolInt(udp),
+                tcp = boolInt(tcp),
+                other = boolInt(other),
+                allowed = boolInt(allowed),
+                blocked = boolInt(blocked),
+                limit = limit,
+            )
+        } else {
+            d.getLogUnlimited(
+                udp = boolInt(udp),
+                tcp = boolInt(tcp),
+                other = boolInt(other),
+                allowed = boolInt(allowed),
+                blocked = boolInt(blocked),
+            )
         }
-        .take(limit)
+    return rows.map { it.toLogEntry() }
+}
 
-actual fun observeLogChanges(onChanged: () -> Unit): () -> Unit = { }
+actual fun observeLogs(
+    udp: Boolean,
+    tcp: Boolean,
+    other: Boolean,
+    allowed: Boolean,
+    blocked: Boolean,
+    limit: Int,
+): Flow<List<LogEntry>> =
+    flow {
+        WasmNetGuardDatabase.ensureDemoDataSeeded()
+        val d = WasmNetGuardDatabase.dao
+        d.observeLogTable()
+            .map {
+                if (limit > 0) {
+                    d.getLogLimited(
+                        udp = boolInt(udp),
+                        tcp = boolInt(tcp),
+                        other = boolInt(other),
+                        allowed = boolInt(allowed),
+                        blocked = boolInt(blocked),
+                        limit = limit,
+                    )
+                } else {
+                    d.getLogUnlimited(
+                        udp = boolInt(udp),
+                        tcp = boolInt(tcp),
+                        other = boolInt(other),
+                        allowed = boolInt(allowed),
+                        blocked = boolInt(blocked),
+                    )
+                }.map { it.toLogEntry() }
+            }
+            .collect { emit(it) }
+    }
+
+actual fun observeLogChanges(onChanged: () -> Unit): () -> Unit =
+    observeRoomInvalidations(WasmNetGuardDatabase.dao.observeLogTable(), onChanged)
 
 actual suspend fun loadDnsEntries(): List<DnsEntry> =
-    listOf(
-        DnsEntry(1_700_000_000_000L, "google.com", "google.com", "A", 300_000, 10101),
-        DnsEntry(1_700_000_050_000L, "gmail.com", "gmail.com", "A", 300_000, 10102),
-        DnsEntry(1_700_000_100_000L, "spotify.com", "spotify.com", "A", 300_000, 10103),
-        DnsEntry(1_700_000_150_000L, "cdninstagram.com", "cdninstagram.com", "A", 300_000, 10104),
-        DnsEntry(1_700_000_200_000L, "whatsapp.net", "whatsapp.net", "A", 300_000, 10105),
-    )
+    dao().getAllDns().map { it.toDnsEntry() }
 
-actual suspend fun cleanupDns() {}
+actual suspend fun cleanupDns() {
+    dao().cleanupDns(currentTimeMillis())
+}
 
-actual suspend fun clearDns() {}
+actual suspend fun clearDns() {
+    dao().deleteAllDns()
+}
 
 actual suspend fun loadForwardingEntries(): List<ForwardingEntry> =
-    listOf(
-        ForwardingEntry(protocol = 6, dport = 8080, raddr = "192.168.1.10", rport = 80, ruid = 10101),
-    )
+    dao().getAllForwards().map { it.toForwardingEntry() }
 
-actual fun observeForwardingChanges(onChanged: () -> Unit): () -> Unit = { }
+actual fun observeDnsEntries(): Flow<List<DnsEntry>> =
+    flow {
+        WasmNetGuardDatabase.ensureDemoDataSeeded()
+        val d = WasmNetGuardDatabase.dao
+        d.observeDnsTable()
+            .map { d.getAllDns().map { it.toDnsEntry() } }
+            .collect { emit(it) }
+    }
+
+actual fun observeForwardingEntries(): Flow<List<ForwardingEntry>> =
+    flow {
+        WasmNetGuardDatabase.ensureDemoDataSeeded()
+        val d = WasmNetGuardDatabase.dao
+        d.observeForwardTable()
+            .map { d.getAllForwards().map { it.toForwardingEntry() } }
+            .collect { emit(it) }
+    }
+
+actual fun observeForwardingChanges(onChanged: () -> Unit): () -> Unit =
+    observeRoomInvalidations(WasmNetGuardDatabase.dao.observeForwardTable(), onChanged)
+
+actual fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>> =
+    flow {
+        WasmNetGuardDatabase.ensureDemoDataSeeded()
+        val d = WasmNetGuardDatabase.dao
+        d.observeAccessTable()
+            .map { d.getAccessForUid(uid).map { it.toAccessEntry() } }
+            .collect { emit(it) }
+    }
 
 actual suspend fun addForwardingEntry(
     protocol: Int,
@@ -58,9 +136,15 @@ actual suspend fun addForwardingEntry(
     raddr: String,
     rport: Int,
     ruid: Int,
-) {}
+) {
+    dao().insertForward(
+        ForwardEntity(protocol = protocol, dport = dport, raddr = raddr, rport = rport, ruid = ruid),
+    )
+}
 
-actual suspend fun deleteForwardingEntry(entry: ForwardingEntry) {}
+actual suspend fun deleteForwardingEntry(entry: ForwardingEntry) {
+    dao().deleteForward(entry.protocol, entry.dport)
+}
 
 actual fun loadAppDisplayInfo(uid: Int, fallbackLabel: String): AppDisplayInfo =
     wasmDemoApps[uid] ?: AppDisplayInfo(label = fallbackLabel, packageName = null)
@@ -86,27 +170,14 @@ actual fun importHostsFromFile(onComplete: (success: Boolean) -> Unit) {
 }
 
 actual suspend fun loadAccessEntries(uid: Int): List<AccessEntry> =
-    listOf(
-        AccessEntry(time = 1_700_000_000_000L, timeText = "12:00", daddr = "142.250.80.46", dport = 443, allowed = 0),
-        AccessEntry(time = 1_700_000_100_000L, timeText = "12:01", daddr = "8.8.8.8", dport = 53, allowed = 1),
-    )
+    dao().getAccessForUid(uid).map { it.toAccessEntry() }
 
-actual suspend fun clearAccess(uid: Int) {}
+actual suspend fun clearAccess(uid: Int) {
+    dao().deleteAccessForUid(uid)
+}
 
-actual suspend fun clearLogs() {}
+actual suspend fun clearLogs() {
+    dao().deleteLogs(-1)
+}
 
-private fun demoLogs(): List<LogEntry> =
-    listOf(
-        LogEntry(1, 1_700_000_000_000L, "12:00:00", "TCP", "142.250.80.46", 443, "google.com", 10101, 0),
-        LogEntry(2, 1_700_000_050_000L, "12:00:05", "TCP", "142.251.40.78", 443, "gmail.com", 10102, 0),
-        LogEntry(3, 1_700_000_100_000L, "12:00:10", "UDP", "8.8.8.8", 53, null, 10103, 1),
-        LogEntry(4, 1_700_000_150_000L, "12:00:15", "TCP", "31.13.64.35", 443, "facebook.com", 10108, 0),
-        LogEntry(5, 1_700_000_200_000L, "12:00:20", "TCP", "151.101.1.140", 443, "reddit.com", 10113, 1),
-        LogEntry(6, 1_700_000_250_000L, "12:00:25", "UDP", "1.1.1.1", 53, null, 10105, 1),
-        LogEntry(7, 1_700_000_300_000L, "12:00:30", "TCP", "104.16.132.229", 443, "discord.com", 10112, 0),
-        LogEntry(8, 1_700_000_350_000L, "12:00:35", "TCP", "149.154.167.50", 443, "telegram.org", 10114, 1),
-        LogEntry(9, 1_700_000_400_000L, "12:00:40", "TCP", "13.107.42.14", 443, "tiktokcdn.com", 10115, 0),
-        LogEntry(10, 1_700_000_450_000L, "12:00:45", "TCP", "52.84.0.44", 443, "slack.com", 10116, 1),
-        LogEntry(11, 1_700_000_500_000L, "12:00:50", "TCP", "13.107.42.14", 443, "linkedin.com", 10117, 0),
-        LogEntry(12, 1_700_000_550_000L, "12:00:55", "TCP", "104.18.32.45", 443, "signal.org", 10118, 1),
-    )
+private fun boolInt(value: Boolean): Int = if (value) 1 else 0

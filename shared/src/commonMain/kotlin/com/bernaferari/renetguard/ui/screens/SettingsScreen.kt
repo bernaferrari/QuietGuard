@@ -195,10 +195,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.bernaferari.renetguard.data.PreferencesRepository
 import com.bernaferari.renetguard.platform.NetGuardPlatform
-import com.bernaferari.renetguard.platform.importHostsFromFile
-import com.bernaferari.renetguard.platform.registerUpdateCheckListener
+
 import com.bernaferari.renetguard.platform.showToast
-import org.koin.compose.koinInject
+import com.bernaferari.renetguard.ui.screens.vm.SettingsViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferari.renetguard.ui.components.ExpandableContent
 import com.bernaferari.renetguard.ui.components.FirewallTile
 import com.bernaferari.renetguard.ui.theme.AmberPrimary
@@ -226,8 +226,9 @@ fun SettingsScreen(
     onOpenPro: () -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
-    val preferencesRepository: PreferencesRepository = koinInject()
-    val prefs by preferencesRepository.data.collectAsState()
+    val viewModel: SettingsViewModel = koinViewModel()
+    val preferencesRepository = viewModel.preferencesRepository
+    val prefs by viewModel.preferences.collectAsState()
     val scrollState = rememberScrollState()
     val scope = androidx.compose.runtime.rememberCoroutineScope()
 
@@ -258,7 +259,7 @@ fun SettingsScreen(
 
     DisposableEffect(Unit) {
         val dispose =
-            registerUpdateCheckListener { status, version ->
+            viewModel.registerUpdateCheck { status, version ->
                 updateCheckInProgress = false
                 updateCheckStatus = status
                 updateCheckVersion = version
@@ -710,7 +711,7 @@ fun SettingsScreen(
                             },
                             onClick = {
                                 showHostsMenu = false
-                                importHostsFromFile { showHostImportHint = it }
+                                viewModel.importHosts { showHostImportHint = it }
                             },
                         )
                         DropdownMenuItem(
@@ -723,7 +724,7 @@ fun SettingsScreen(
                             },
                             onClick = {
                                 showHostsMenu = false
-                                importHostsFromFile { showHostImportHint = it }
+                                viewModel.importHosts { showHostImportHint = it }
                             },
                         )
                         DropdownMenuItem(

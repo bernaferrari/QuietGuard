@@ -9,6 +9,11 @@ import com.bernaferari.renetguard.DatabaseHelper
 import com.bernaferari.renetguard.Rule
 import com.bernaferari.renetguard.domain.FirewallRule
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
 import org.koin.core.context.GlobalContext
 import java.text.SimpleDateFormat
@@ -241,3 +246,38 @@ actual suspend fun clearLogs() {
         DatabaseHelper.getInstance(context()).clearLog(-1)
     }
 }
+
+@OptIn(ExperimentalCoroutinesApi::class)
+private fun <T> observeOnLogChanges(load: suspend () -> T): Flow<T> =
+    callbackFlow {
+        val listener = DatabaseHelper.LogChangedListener {
+            trySend(Unit)
+        }
+        DatabaseHelper.getInstance(context()).addLogChangedListener(listener)
+        trySend(Unit)
+        awaitClose {
+            DatabaseHelper.getInstance(context()).removeLogChangedListener(listener)
+        }
+    }.mapLatest { load() }
+
+actual fun observeLogs(
+    udp: Boolean,
+    tcp: Boolean,
+    other: Boolean,
+    allowed: Boolean,
+    blocked: Boolean,
+    limit: Int,
+): Flow<List<LogEntry>> =
+    observeOnLogChanges {
+        loadLogs(udp, tcp, other, allowed, blocked, limit)
+    }
+
+actual fun observeDnsEntries(): Flow<List<DnsEntry>> =
+    observeOnLogChanges { loadDnsEntries() }
+
+actual fun observeForwardingEntries(): Flow<List<ForwardingEntry>> =
+    observeOnLogChanges { loadForwardingEntries() }
+
+actual fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>> =
+    observeOnLogChanges { loadAccessEntries(uid) }
+

@@ -1,6 +1,7 @@
 package com.bernaferari.renetguard.platform
 
 import com.bernaferari.renetguard.domain.FirewallRule
+import kotlinx.coroutines.flow.Flow
 
 data class LogEntry(
     val id: Long,
@@ -45,9 +46,22 @@ expect suspend fun loadLogs(
     limit: Int,
 ): List<LogEntry>
 
+/** Reactive logs stream; re-emits when the log table changes or filters are applied by the caller. */
+expect fun observeLogs(
+    udp: Boolean,
+    tcp: Boolean,
+    other: Boolean,
+    allowed: Boolean,
+    blocked: Boolean,
+    limit: Int,
+): Flow<List<LogEntry>>
+
+@Deprecated("Prefer observeLogs().collectAsState()", ReplaceWith("observeLogs(udp, tcp, other, allowed, blocked, limit)"))
 expect fun observeLogChanges(onChanged: () -> Unit): () -> Unit
 
 expect suspend fun loadDnsEntries(): List<DnsEntry>
+
+expect fun observeDnsEntries(): Flow<List<DnsEntry>>
 
 expect suspend fun cleanupDns()
 
@@ -55,6 +69,9 @@ expect suspend fun clearDns()
 
 expect suspend fun loadForwardingEntries(): List<ForwardingEntry>
 
+expect fun observeForwardingEntries(): Flow<List<ForwardingEntry>>
+
+@Deprecated("Prefer observeForwardingEntries().collectAsState()", ReplaceWith("observeForwardingEntries()"))
 expect fun observeForwardingChanges(onChanged: () -> Unit): () -> Unit
 
 expect suspend fun addForwardingEntry(
@@ -86,6 +103,8 @@ data class AccessEntry(
 )
 
 expect suspend fun loadAccessEntries(uid: Int): List<AccessEntry>
+
+expect fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>>
 
 expect suspend fun clearAccess(uid: Int)
 

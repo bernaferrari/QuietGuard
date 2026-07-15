@@ -1,15 +1,12 @@
 package com.bernaferari.renetguard.ui.screens
 
-import com.bernaferari.renetguard.data.PreferencesRepository
+import com.bernaferari.renetguard.ui.screens.vm.LogsViewModel
 import com.bernaferari.renetguard.platform.AppDisplayInfo
 import com.bernaferari.renetguard.platform.LogEntry
 import com.bernaferari.renetguard.platform.NetGuardPlatform
 import com.bernaferari.renetguard.platform.PlatformContext
-import com.bernaferari.renetguard.platform.loadAppDisplayInfo
-import com.bernaferari.renetguard.platform.loadLogs
-import com.bernaferari.renetguard.platform.observeLogChanges
 import com.bernaferari.renetguard.platform.showToast
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 import org.jetbrains.compose.resources.stringResource
 import netguard.shared.generated.resources.Res
@@ -101,21 +98,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -123,34 +116,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bernaferari.renetguard.ui.components.AppIcon
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import com.bernaferari.renetguard.ui.theme.LocalMotion
 import com.bernaferari.renetguard.ui.theme.spacing
 import com.bernaferari.renetguard.ui.util.StatePlaceholder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
-private const val LOGS_UI_MAX_ROWS = 2000
 private val AllowedStatusContentLight = Color(0xFF1B5E20)
 private val AllowedStatusContentDark = Color(0xFFA5D6A7)
-
-private enum class LogsOutcomeFilter {
-    All,
-    Allowed,
-    Blocked,
-}
-
-private enum class LogsProtocolFilter {
-    All,
-    Udp,
-    Tcp,
-    Other,
-}
-
-private enum class LogsGroupMode {
-    Timeline,
-    ByApp,
-}
 
 private enum class LogCardPosition {
     First,
@@ -159,13 +130,6 @@ private enum class LogCardPosition {
     Single,
 }
 
-private data class LogQueryFlags(
-    val udp: Boolean,
-    val tcp: Boolean,
-    val other: Boolean,
-    val allowed: Boolean,
-    val blocked: Boolean,
-)
 
 private data class AppPickerOption(
     val uid: Int,
@@ -176,70 +140,32 @@ private data class AppPickerOption(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun LogsScreen() {
+fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
     val spacing = MaterialTheme.spacing
     val motion = LocalMotion.current
-    val preferencesRepository: PreferencesRepository = koinInject()
-    val prefsState by preferencesRepository.data.collectAsState(initial = null)
-    val hasLog = remember { NetGuardPlatform.proFeatures.isPurchased(NetGuardPlatform.proFeatures.logSku) }
+    val logsUi by viewModel.uiState.collectAsState()
+    val hasLog = remember { viewModel.hasLogPro() }
     val unknownSourceLabel = stringResource(Res.string.ui_logs_unknown_source)
     val isDemoMode = PlatformContext.isDemoMode()
-    val loggingEnabled =
-        (prefsState?.get(booleanPreferencesKey("log")) ?: false) || isDemoMode
-    val filteringEnabled =
-        (prefsState?.get(booleanPreferencesKey("filter")) ?: false) || isDemoMode
-
-    var outcomeFilter by remember {
-        mutableStateOf(defaultOutcomeFilterFromPrefs(preferencesRepository))
-    }
-    var protocolFilter by remember {
-        mutableStateOf(defaultProtocolFilterFromPrefs(preferencesRepository))
-    }
-    var groupMode by remember { mutableStateOf(LogsGroupMode.Timeline) }
-    var filtersExpanded by remember { mutableStateOf(false) }
-    var selectedAppUid by remember { mutableStateOf<Int?>(null) }
-
-    var entries by remember { mutableStateOf<List<LogEntry>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
-    var refreshKey by remember { mutableStateOf(0) }
+    val loggingEnabled = logsUi.loggingEnabled
+    val filteringEnabled = logsUi.filteringEnabled
+    val outcomeFilter = logsUi.outcomeFilter
+    val protocolFilter = logsUi.protocolFilter
+    val groupMode = logsUi.groupMode
+    val filtersExpanded = logsUi.filtersExpanded
+    val selectedAppUid = logsUi.selectedAppUid
+    val entries = logsUi.logs.data
+    val isLoading = logsUi.logs.isLoading && loggingEnabled
 
     val appDisplayCache = remember { mutableMapOf<Int, AppDisplayInfo>() }
     fun appDisplay(uid: Int): AppDisplayInfo {
         if (uid <= 0) return AppDisplayInfo(label = unknownSourceLabel, packageName = null)
         return appDisplayCache.getOrPut(uid) {
-            loadAppDisplayInfo(uid, unknownSourceLabel)
+            viewModel.appDisplay(uid, unknownSourceLabel)
         }
     }
 
     fun appLabel(uid: Int): String = appDisplay(uid).label
-
-    val queryFlags = remember(protocolFilter, outcomeFilter) {
-        buildLogQueryFlags(protocolFilter, outcomeFilter)
-    }
-    val latestQueryFlags by rememberUpdatedState(queryFlags)
-
-    DisposableEffect(Unit) {
-        val dispose = observeLogChanges { refreshKey++ }
-        onDispose { dispose() }
-    }
-
-    LaunchedEffect(refreshKey, queryFlags) {
-        isLoading = true
-        entries =
-            loadLogs(
-                udp = queryFlags.udp,
-                tcp = queryFlags.tcp,
-                other = queryFlags.other,
-                allowed = queryFlags.allowed,
-                blocked = queryFlags.blocked,
-                limit = LOGS_UI_MAX_ROWS,
-            )
-        isLoading = false
-    }
-
-    LaunchedEffect(groupMode) {
-        if (groupMode != LogsGroupMode.ByApp) selectedAppUid = null
-    }
 
     val groupedEntries by remember(entries) {
         derivedStateOf {
@@ -321,7 +247,7 @@ fun LogsScreen() {
                 actions = {
                     // Filter toggle button — shows a dot badge when filters are active
                     Box {
-                        IconButton(onClick = { filtersExpanded = !filtersExpanded }) {
+                        IconButton(onClick = { viewModel.setFiltersExpanded(!filtersExpanded) }) {
                             Icon(
                                 imageVector = Icons.Default.Tune,
                                 contentDescription = stringResource(Res.string.ui_logs_filters),
@@ -342,7 +268,7 @@ fun LogsScreen() {
                             )
                         }
                     }
-                    IconButton(onClick = { refreshKey += 1 }) {
+                    IconButton(onClick = { /* Room/DB flow auto-refreshes */ }) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(Res.string.menu_refresh),
@@ -379,9 +305,9 @@ fun LogsScreen() {
                     outcomeFilter = outcomeFilter,
                     protocolFilter = protocolFilter,
                     groupMode = groupMode,
-                    onOutcomeFilterChange = { outcomeFilter = it },
-                    onProtocolFilterChange = { protocolFilter = it },
-                    onGroupModeChange = { groupMode = it },
+                    onOutcomeFilterChange = { viewModel.setOutcomeFilter(it) },
+                    onProtocolFilterChange = { viewModel.setProtocolFilter(it) },
+                    onGroupModeChange = { viewModel.setGroupMode(it) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.surfaceContainerLow)
@@ -403,9 +329,9 @@ fun LogsScreen() {
             if (loggingEnabled && !filteringEnabled) {
                 EnableFilteringBanner(
                     onEnableFiltering = {
-                        preferencesRepository.putBoolean("filter", true)
+                        viewModel.enableFiltering()
                         NetGuardPlatform.firewall.reload("logs_enable_filtering", false)
-                        refreshKey += 1
+                        /* flow refreshes */
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -422,9 +348,9 @@ fun LogsScreen() {
                         icon = Icons.Default.Inbox,
                         actionLabel = stringResource(Res.string.action_enable),
                         onAction = {
-                            preferencesRepository.putBoolean("log", true)
+                            viewModel.enableLogging()
                             NetGuardPlatform.firewall.reload("logs", false)
-                            refreshKey += 1
+                            /* flow refreshes */
                         },
                     )
                 }
@@ -511,7 +437,7 @@ fun LogsScreen() {
                                     AppPickerField(
                                         options = appPickerOptions,
                                         selectedUid = selectedAppUid,
-                                        onSelectUid = { selectedAppUid = it },
+                                        onSelectUid = { viewModel.selectAppUid(it) },
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(
@@ -1156,50 +1082,5 @@ private fun cardPositionFor(index: Int, totalCount: Int): LogCardPosition {
     }
 }
 
-private fun defaultOutcomeFilterFromPrefs(prefs: PreferencesRepository): LogsOutcomeFilter {
-    val allowed = prefs.getBoolean("traffic_allowed", true)
-    val blocked = prefs.getBoolean("traffic_blocked", true)
-    return when {
-        allowed && !blocked -> LogsOutcomeFilter.Allowed
-        !allowed && blocked -> LogsOutcomeFilter.Blocked
-        else -> LogsOutcomeFilter.All
-    }
-}
 
-private fun defaultProtocolFilterFromPrefs(prefs: PreferencesRepository): LogsProtocolFilter {
-    val udp = prefs.getBoolean("proto_udp", true)
-    val tcp = prefs.getBoolean("proto_tcp", true)
-    val other = prefs.getBoolean("proto_other", true)
-    return when {
-        udp && !tcp && !other -> LogsProtocolFilter.Udp
-        !udp && tcp && !other -> LogsProtocolFilter.Tcp
-        !udp && !tcp && other -> LogsProtocolFilter.Other
-        else -> LogsProtocolFilter.All
-    }
-}
-
-private fun buildLogQueryFlags(
-    protocolFilter: LogsProtocolFilter,
-    outcomeFilter: LogsOutcomeFilter,
-): LogQueryFlags {
-    val protocolFlags = when (protocolFilter) {
-        LogsProtocolFilter.All -> Triple(true, true, true)
-        LogsProtocolFilter.Udp -> Triple(true, false, false)
-        LogsProtocolFilter.Tcp -> Triple(false, true, false)
-        LogsProtocolFilter.Other -> Triple(false, false, true)
-    }
-    val outcomeFlags = when (outcomeFilter) {
-        LogsOutcomeFilter.All -> Pair(true, true)
-        LogsOutcomeFilter.Allowed -> Pair(true, false)
-        LogsOutcomeFilter.Blocked -> Pair(false, true)
-    }
-
-    return LogQueryFlags(
-        udp = protocolFlags.first,
-        tcp = protocolFlags.second,
-        other = protocolFlags.third,
-        allowed = outcomeFlags.first,
-        blocked = outcomeFlags.second,
-    )
-}
 

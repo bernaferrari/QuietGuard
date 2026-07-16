@@ -184,7 +184,7 @@ class DatabaseHelper private constructor(
         if (ttl < min) {
             ttl = min
         }
-        return dbCall {
+        val changed = dbCall {
             dao.upsertDns(
                 com.bernaferari.renetguard.data.db.DnsEntity(
                     time = rr.Time,
@@ -196,6 +196,8 @@ class DatabaseHelper private constructor(
                 ),
             )
         }
+        notifyDnsChanged()
+        return changed
     }
 
     fun cleanupDns() {
@@ -203,10 +205,12 @@ class DatabaseHelper private constructor(
             dao.cleanupDns(Date().time)
             Log.i(TAG, "Cleanup DNS")
         }
+        notifyDnsChanged()
     }
 
     fun clearDns() {
         dbCall { dao.deleteAllDns() }
+        notifyDnsChanged()
     }
 
     fun getQName(uid: Int, ip: String): String? =
@@ -300,6 +304,14 @@ class DatabaseHelper private constructor(
         forwardChangedListeners.remove(listener)
     }
 
+    fun addDnsChangedListener(listener: DnsChangedListener) {
+        dnsChangedListeners.add(listener)
+    }
+
+    fun removeDnsChangedListener(listener: DnsChangedListener) {
+        dnsChangedListeners.remove(listener)
+    }
+
     private fun notifyLogChanged() {
         val msg = handler.obtainMessage()
         msg.what = MSG_LOG
@@ -318,12 +330,19 @@ class DatabaseHelper private constructor(
         handler.sendMessage(msg)
     }
 
+    private fun notifyDnsChanged() {
+        val msg = handler.obtainMessage()
+        msg.what = MSG_DNS
+        handler.sendMessage(msg)
+    }
+
     companion object {
         private const val TAG = "NetGuard.Database"
 
         private val logChangedListeners = mutableListOf<LogChangedListener>()
         private val accessChangedListeners = mutableListOf<AccessChangedListener>()
         private val forwardChangedListeners = mutableListOf<ForwardChangedListener>()
+        private val dnsChangedListeners = mutableListOf<DnsChangedListener>()
 
         private val handlerThread: HandlerThread = HandlerThread("DatabaseHelper").apply { start() }
         private val handler: Handler =
@@ -337,6 +356,7 @@ class DatabaseHelper private constructor(
         private const val MSG_LOG = 1
         private const val MSG_ACCESS = 2
         private const val MSG_FORWARD = 3
+        private const val MSG_DNS = 4
 
         private const val SYN_SNI_DELAY = 5000L
 
@@ -396,6 +416,16 @@ class DatabaseHelper private constructor(
                         }
                     }
                 }
+
+                MSG_DNS -> {
+                    for (listener in dnsChangedListeners) {
+                        try {
+                            listener.onChanged()
+                        } catch (ex: Throwable) {
+                            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
+                        }
+                    }
+                }
             }
         }
     }
@@ -409,6 +439,10 @@ class DatabaseHelper private constructor(
     }
 
     fun interface ForwardChangedListener {
+        fun onChanged()
+    }
+
+    fun interface DnsChangedListener {
         fun onChanged()
     }
 }

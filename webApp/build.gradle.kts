@@ -20,6 +20,9 @@ kotlin {
     sourceSets {
         wasmJsMain.dependencies {
             implementation(project(":shared"))
+            // The executable web target must depend on the worker directly so Kotlin/webpack
+            // emits the local NPM package used by WebWorkerSQLiteDriver.
+            implementation(project(":sqliteWasmWorker"))
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)

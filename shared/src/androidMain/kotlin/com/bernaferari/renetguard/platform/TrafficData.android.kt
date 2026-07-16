@@ -248,15 +248,16 @@ actual suspend fun clearLogs() {
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-private fun <T> observeOnLogChanges(load: suspend () -> T): Flow<T> =
+internal fun <T> observeOnChanges(
+    register: (onChanged: () -> Unit) -> (() -> Unit),
+    load: suspend () -> T,
+): Flow<T> =
     callbackFlow {
-        val listener = DatabaseHelper.LogChangedListener {
-            trySend(Unit)
-        }
-        DatabaseHelper.getInstance(context()).addLogChangedListener(listener)
+        val listener: () -> Unit = { trySend(Unit) }
+        val unregister = register(listener)
         trySend(Unit)
         awaitClose {
-            DatabaseHelper.getInstance(context()).removeLogChangedListener(listener)
+            unregister()
         }
     }.mapLatest { load() }
 
@@ -268,16 +269,49 @@ actual fun observeLogs(
     blocked: Boolean,
     limit: Int,
 ): Flow<List<LogEntry>> =
-    observeOnLogChanges {
-        loadLogs(udp, tcp, other, allowed, blocked, limit)
-    }
+    observeOnChanges(
+        register = { callback ->
+            val listener = DatabaseHelper.LogChangedListener { callback() }
+            DatabaseHelper.getInstance(context()).addLogChangedListener(listener)
+            val unregister: () -> Unit = {
+                DatabaseHelper.getInstance(context()).removeLogChangedListener(listener)
+            }
+            unregister
+        },
+    ) { loadLogs(udp, tcp, other, allowed, blocked, limit) }
 
 actual fun observeDnsEntries(): Flow<List<DnsEntry>> =
-    observeOnLogChanges { loadDnsEntries() }
+    observeOnChanges(
+        register = { callback ->
+            val listener = DatabaseHelper.DnsChangedListener { callback() }
+            DatabaseHelper.getInstance(context()).addDnsChangedListener(listener)
+            val unregister: () -> Unit = {
+                DatabaseHelper.getInstance(context()).removeDnsChangedListener(listener)
+            }
+            unregister
+        },
+    ) { loadDnsEntries() }
 
 actual fun observeForwardingEntries(): Flow<List<ForwardingEntry>> =
-    observeOnLogChanges { loadForwardingEntries() }
+    observeOnChanges(
+        register = { callback ->
+            val listener = DatabaseHelper.ForwardChangedListener { callback() }
+            DatabaseHelper.getInstance(context()).addForwardChangedListener(listener)
+            val unregister: () -> Unit = {
+                DatabaseHelper.getInstance(context()).removeForwardChangedListener(listener)
+            }
+            unregister
+        },
+    ) { loadForwardingEntries() }
 
 actual fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>> =
-    observeOnLogChanges { loadAccessEntries(uid) }
-
+    observeOnChanges(
+        register = { callback ->
+            val listener = DatabaseHelper.AccessChangedListener { callback() }
+            DatabaseHelper.getInstance(context()).addAccessChangedListener(listener)
+            val unregister: () -> Unit = {
+                DatabaseHelper.getInstance(context()).removeAccessChangedListener(listener)
+            }
+            unregister
+        },
+    ) { loadAccessEntries(uid) }

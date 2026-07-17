@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">ନେଟଗାର୍ଡ (NetGuard) ଇଣ୍ଟରନେଟ୍ ଆକ୍ସେସକୁ ବନ୍ଦ କରିବା ପାଇଁ ସରଳ ଏବଂ ଉନ୍ନତ ଉପାୟ ପ୍ରଦାନ କରେ - କୌଣସି ରୁଟ୍ (root) ଆବଶ୍ୟକ ନାହିଁ | ଆପଣଙ୍କର ୱାଇ-ଫାଇ (Wi-Fi) କିମ୍ବା ମୋବାଇଲ୍ ସଂଯୋଗକୁ ଆପ୍ ଏବଂ ଠିକଣାଗୁଡ଼ିକୁ ବ୍ୟକ୍ତିଗତ ଭାବରେ ଅନୁମତି ଦିଆଯାଇପାରିବ କିମ୍ବା ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଯାଇପାରିବ |</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">ନେଟଗାର୍ଡ (QuietGuard) ଇଣ୍ଟରନେଟ୍ ଆକ୍ସେସକୁ ବନ୍ଦ କରିବା ପାଇଁ ସରଳ ଏବଂ ଉନ୍ନତ ଉପାୟ ପ୍ରଦାନ କରେ - କୌଣସି ରୁଟ୍ (root) ଆବଶ୍ୟକ ନାହିଁ | ଆପଣଙ୍କର ୱାଇ-ଫାଇ (Wi-Fi) କିମ୍ବା ମୋବାଇଲ୍ ସଂଯୋଗକୁ ଆପ୍ ଏବଂ ଠିକଣାଗୁଡ଼ିକୁ ବ୍ୟକ୍ତିଗତ ଭାବରେ ଅନୁମତି ଦିଆଯାଇପାରିବ କିମ୍ବା ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଯାଇପାରିବ |</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">ନେଟଗାର୍ଡ ପାଇଁ ଆଣ୍ଡ୍ରଏଡ୍ ୫.୧ କିମ୍ବା ତା’ଠାରୁ ଅଧିକ ଆବଶ୍ୟକ</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>

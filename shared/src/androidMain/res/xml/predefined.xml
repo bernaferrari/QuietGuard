@@ -10,10 +10,10 @@
 
     <wifi
         blocked="false"
-        package="com.bernaferari.renetguard" />
+        package="com.bernaferrari.quietguard" />
     <other
         blocked="false"
-        package="com.bernaferari.renetguard"
+        package="com.bernaferrari.quietguard"
         roaming="false" />
 
     <wifi

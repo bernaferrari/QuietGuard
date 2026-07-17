@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard menyediakan cara sederhana dan canggih untuk memblokir akses internet — root tidak dibutuhkan. Izinkan atau tolak koneksi Wi-Fi dan/atau seluler untuk setiap apl dan alamat situs.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard menyediakan cara sederhana dan canggih untuk memblokir akses internet — root tidak dibutuhkan. Izinkan atau tolak koneksi Wi-Fi dan/atau seluler untuk setiap apl dan alamat situs.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard membutuhkan Android 5.1 atau lebih baru</string>
+    <string name="app_android">QuietGuard membutuhkan Android 5.1 atau lebih baru</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Kebijakan privasi</a></string>
-    <string name="app_first">NetGuard dikembangkan dan diuji coba dengan sangat hati-hati, meskipun demikian, tidak mungkin menjamin NetGuard akan bekerja dengan benar pada setiap perangkat.</string>
+    <string name="app_first">QuietGuard dikembangkan dan diuji coba dengan sangat hati-hati, meskipun demikian, tidak mungkin menjamin QuietGuard akan bekerja dengan benar pada setiap perangkat.</string>
     <string name="app_agree">Setuju</string>
     <string name="app_disagree">Tolak</string>
-    <string name="app_support">NetGuard butuh bantuan anda. Sentuh untuk membeli fitur pro agar proyek bisa terus dikembangkan.</string>
+    <string name="app_support">QuietGuard butuh bantuan anda. Sentuh untuk membeli fitur pro agar proyek bisa terus dikembangkan.</string>
     <string name="app_qap">
         Google akan menghapus aplikasi dari Play Store karena meminta izin untuk menanyakan semua aplikasi.
         Lima banding dan memberikan pembenaran yang baik tentang mengapa izin ini diperlukan ditolak.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Dukungan</string>
 
     <string name="summary_install">Tampilkan notifikasi bilah status untuk langsung mengonfigurasi apl yang baru dipasang (fitur pro)</string>
-    <string name="summary_auto">Setelah menonaktifkan menggunakan widget, otomatis aktifkan NetGuard lagi setelah jumlah menit yang dipilih (masukkan nol untuk menonaktifkan opsi ini)</string>
+    <string name="summary_auto">Setelah menonaktifkan menggunakan widget, otomatis aktifkan QuietGuard lagi setelah jumlah menit yang dipilih (masukkan nol untuk menonaktifkan opsi ini)</string>
     <string name="summary_delay">Setelah mematikan layar, jaga aturan layar nyala aktif selama jumlah menit yang dipilih (masukkan nol untuk menonaktifkan opsi ini)</string>
     <string name="summary_update">Check for new releases on GitHub twice daily</string>
 
     <string name="summary_tethering">Tergantung pada versi Android, penambatan mungkin berfungsi atau tidak. Lalu lintas penambatan tidak dapat disaring.</string>
     <string name="summary_subnet">Aktifkan routing subnet; mungkin mengaktifkan panggilan Wi-Fi, tetapi mungkin juga memicu bug di Android dan meningkatkan penggunaan baterai</string>
     <string name="summary_lan">Izinkan apl terhubung ke alamat jaringan area lokal, seperti 10.0.0.0/8, 172.16.0.0/12 dan 192.168.0.0/16</string>
-    <string name="summary_ip6">Arahkan lalu lintas IP versi 6 ke NetGuard sehingga dapat diizinkan atau diblokir secara selektif</string>
+    <string name="summary_ip6">Arahkan lalu lintas IP versi 6 ke QuietGuard sehingga dapat diizinkan atau diblokir secara selektif</string>
     <string name="summary_wifi_home">Terapkan aturan jaringan Wi-Fi untuk jaringan yang dipilih saja (terapkan aturan jaringan seluler untuk jaringan Wi-Fi lainnya)</string>
     <string name="summary_metered">Terapkan aturan jaringan seluler ke jaringan Wi-Fi terbatas (berbayar, tertambat)</string>
     <string name="summary_metered_2g">Terapkan aturan jaringan Wi-Fi untuk koneksi data 2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Terapkan aturan jaringan Wi-Fi untuk koneksi data LTE</string>
     <string name="summary_national_roaming">Jangan terapkan aturan roaming saat negara kartu SIM dan jaringan seluler sama</string>
     <string name="summary_eu_roaming">Jangan terapkan aturan roaming saat negara kartu SIM dan jaringan seluler berada di dalam UE (roaming seperti di rumah)</string>
-    <string name="summary_call">Nonaktifkan NetGuard pada panggilan telepon masuk atau keluar untuk menghindari masalah panggilan IP/Wi-Fi.</string>
+    <string name="summary_call">Nonaktifkan QuietGuard pada panggilan telepon masuk atau keluar untuk menghindari masalah panggilan IP/Wi-Fi.</string>
 
     <string name="summary_system">Tentukan aturan untuk apl sistem (untuk ahli)</string>
     <string name="summary_log_app">Catat upaya akses internet untuk apl. Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Nilai bawaannya adalah 3 (NXDOMAIN), yang berarti \'domain tidak ada\'.</string>
     <string name="summary_validate">Nama domain yang digunakan untuk memvalidasi koneksi internet pada port 443 (https).</string>
     <string name="summary_socks5_enabled">Hanya lalu lintas TCP yang akan dikirim ke server proksi</string>
-    <string name="summary_watchdog">Periksa secara berkala apakah NetGuard masih berjalan (masukkan nol untuk menonaktifkan opsi ini). Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
+    <string name="summary_watchdog">Periksa secara berkala apakah QuietGuard masih berjalan (masukkan nol untuk menonaktifkan opsi ini). Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
 
     <string name="summary_stats">Tampilkan grafik kecepatan jaringan di notifikasi bilah status</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d diizinkan, %2$d diblokir</string>
     <string name="msg_hosts">%1$d diizinkan, %2$d diblokir, %3$d host</string>
     <string name="msg_waiting">Menunggu kejadian</string>
-    <string name="msg_disabled">NetGuard dinonaktifkan, gunakan sakelar di atas untuk mengaktifkan NetGuard</string>
+    <string name="msg_disabled">QuietGuard dinonaktifkan, gunakan sakelar di atas untuk mengaktifkan QuietGuard</string>
     <string name="msg_notifications">Ketuk untuk memberikan izin notifikasi (untuk notifikasi upaya akses, pesan kesalahan, dll.)</string>
-    <string name="msg_revoked">NetGuard telah dinonaktifkan, kemungkinan karena menggunakan apl berbasis VPN lainnya</string>
+    <string name="msg_revoked">QuietGuard telah dinonaktifkan, kemungkinan karena menggunakan apl berbasis VPN lainnya</string>
     <string name="msg_installed">\'%1$s\' terpasang</string>
     <string name="msg_installed_n">Telah terpasang</string>
     <string name="msg_malware">Kemungkinan malware: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Tindakan selesai</string>
     <string name="msg_invalid">Harap periksa nilai dan coba lagi.</string>
     <string name="msg_export_failed">Ekspor gagal: %1$s</string>
-    <string name="msg_vpn">NetGuard menggunakan VPN lokal untuk menyaring lalu lintas internet.
+    <string name="msg_vpn">QuietGuard menggunakan VPN lokal untuk menyaring lalu lintas internet.
 Oleh karena itu, harap izinkan koneksi VPN di dialog berikutnya.
 Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
-    <string name="msg_autostart">NetGuard tidak dapat memulai secara otomatis. Hal ini mungkin karena bug di versi Android Anda.</string>
+    <string name="msg_autostart">QuietGuard tidak dapat memulai secara otomatis. Hal ini mungkin karena bug di versi Android Anda.</string>
     <string name="msg_error">Terjadi kesalahan tak terduga: \'%s\'</string>
     <string name="msg_start_failed">Android menolak untuk memulai layanan VPN saat ini. Hal ini mungkin karena bug di versi Android Anda.</string>
-    <string name="msg_try">Coba NetGuard</string>
+    <string name="msg_try">Coba QuietGuard</string>
     <string name="msg_terms">Dengan menyumbang Anda setuju dengan <a href="http://www.netguard.me/#terms">syarat &amp; ketentuan</a></string>
     <string name="msg_dimming">Jika Anda tidak dapat menekan OKE di dialog berikutnya, apl lain (peredup layar) mungkin memanipulasi layar.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/hari</string>
@@ -325,11 +325,11 @@ Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Agar hasil konsisten, pengoptimalan baterai Android harus dinonaktifkan untuk NetGuard.
-\n\nPada dialog berikutnya, pilih \"Semua aplikasi\" di bagian atas, ketuk NetGuard dalam daftar dan pilih serta konfirmasi \"Jangan optimalkan\".</string>
-    <string name="msg_datasaving">Agar hasil konsisten, opsi penghemat data Android harus dinonaktifkan untuk NetGuard.
+    <string name="msg_doze">Agar hasil konsisten, pengoptimalan baterai Android harus dinonaktifkan untuk QuietGuard.
+\n\nPada dialog berikutnya, pilih \"Semua aplikasi\" di bagian atas, ketuk QuietGuard dalam daftar dan pilih serta konfirmasi \"Jangan optimalkan\".</string>
+    <string name="msg_datasaving">Agar hasil konsisten, opsi penghemat data Android harus dinonaktifkan untuk QuietGuard.
 \n\nPada dialog berikutnya, aktifkan opsi \"Data latar belakang\" dan \"Penggunaan data tidak dibatasi\".</string>
-    <string name="msg_filter">Penyaringan akan menyebabkan Android mengaitkan penggunaan data dan daya ke NetGuard alih-alih apl asli.</string>
+    <string name="msg_filter">Penyaringan akan menyebabkan Android mengaitkan penggunaan data dan daya ke QuietGuard alih-alih apl asli.</string>
     <string name="msg_filter4">Android 4 memerlukan penyaringan untuk diaktifkan</string>
     <string name="msg_log_disabled">Pencatatan lalu lintas dinonaktifkan, gunakan sakelar di atas untuk mengaktifkan pencatatan. Hal ini dapat meningkatkan penggunaan baterai.</string>
     <string name="msg_clear_rules">Ini akan mengatur ulang aturan dan kondisi ke nilai bawaannya</string>
@@ -342,20 +342,20 @@ Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
     <string name="msg_stop_forward">Hentikan penerusan %1$s port %2$d?</string>
     <string name="msg_metered">Jaringan dibatasi</string>
     <string name="msg_inactive">Tidak ada koneksi internet aktif</string>
-    <string name="msg_queue">NetGuard sedang sibuk</string>
+    <string name="msg_queue">QuietGuard sedang sibuk</string>
     <string name="msg_update">Pembaruan tersedia, ketuk untuk mengunduh</string>
     <string name="msg_usage">Anda dapat mengizinkan (hijau) atau menolak (merah) akses internet Wi-Fi atau seluler dengan mengetuk ikon di sebelah apl</string>
-    <string name="msg_fairemail">Jika Anda memasang NetGuard untuk melindungi privasi, Anda mungkin juga tertarik dengan <a href="https://email.faircode.eu/">FairEmail</a>, apl surel sumber terbuka yang ramah privasi.</string>
+    <string name="msg_fairemail">Jika Anda memasang QuietGuard untuk melindungi privasi, Anda mungkin juga tertarik dengan <a href="https://email.faircode.eu/">FairEmail</a>, apl surel sumber terbuka yang ramah privasi.</string>
     <string name="msg_whitelist">Akses internet diizinkan secara bawaan (mode daftar hitam), ini dapat diubah di pengaturan</string>
     <string name="msg_push">Pesan masuk (push) sebagian besar ditangani oleh layanan Play, yang diizinkan akses internetnya secara bawaan</string>
     <string name="msg_system">Mengelola semua apl (sistem) dapat diaktifkan di pengaturan</string>
     <string name="msg_issue">Harap jelaskan masalahnya dan tunjukkan waktu terjadinya masalah:</string>
     <string name="msg_vpn_cancelled">Koneksi VPN dibatalkan. Apakah Anda mengonfigurasi VPN lain untuk selalu aktif?</string>
-    <string name="msg_on">Mematikan perangkat dengan NetGuard aktif, akan otomatis memulai NetGuard saat menyalakan perangkat</string>
+    <string name="msg_on">Mematikan perangkat dengan QuietGuard aktif, akan otomatis memulai QuietGuard saat menyalakan perangkat</string>
     <string name="msg_unavailable">Fitur ini tidak tersedia pada versi Android ini</string>
     <string name="msg_always_on">VPN lain diatur sebagai VPN yang selalu aktif</string>
-    <string name="msg_always_on_lockdown">Matikan \"Blokir koneksi tanpa VPN\" di pengaturan VPN Android untuk menggunakan penyaringan NetGuard</string>
-    <string name="msg_private_dns">Matikan \"DNS Pribadi\" di pengaturan jaringan Android untuk menggunakan penyaringan NetGuard</string>
+    <string name="msg_always_on_lockdown">Matikan \"Blokir koneksi tanpa VPN\" di pengaturan VPN Android untuk menggunakan penyaringan QuietGuard</string>
+    <string name="msg_private_dns">Matikan \"DNS Pribadi\" di pengaturan jaringan Android untuk menggunakan penyaringan QuietGuard</string>
 
     <string name="title_lockdown_enabled">Lalu lintas dikunci</string>
     <string name="title_unmetered_allowed">Lalu lintas tak terbatas diizinkan</string>

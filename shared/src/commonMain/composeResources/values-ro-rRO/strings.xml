@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard oferă modalități simple și avansate de a bloca accesul la internet - nu este necesar root. Aplicațiilor și adreselor li se poate permite sau refuza accesul la conexiunea Wi-Fi și/atau mobilă în mod individual.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard oferă modalități simple și avansate de a bloca accesul la internet - nu este necesar root. Aplicațiilor și adreselor li se poate permite sau refuza accesul la conexiunea Wi-Fi și/atau mobilă în mod individual.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard necesită Android 5.1 sau o versiune ulterioară</string>
+    <string name="app_android">QuietGuard necesită Android 5.1 sau o versiune ulterioară</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Politica de confidențialitate</a></string>
-    <string name="app_first">S-au depus eforturi mari pentru a dezvolta și testa NetGuard, totuși este imposibil să garantăm că NetGuard va funcționa corect pe fiecare dispozitiv.</string>
+    <string name="app_first">S-au depus eforturi mari pentru a dezvolta și testa QuietGuard, totuși este imposibil să garantăm că QuietGuard va funcționa corect pe fiecare dispozitiv.</string>
     <string name="app_agree">Sunt de acord</string>
     <string name="app_disagree">Nu sunt de acord</string>
-    <string name="app_support">NetGuard are nevoie de ajutorul tău. Atinge pentru a cumpăra funcții pro pentru a menține proiectul în funcțiune.</string>
+    <string name="app_support">QuietGuard are nevoie de ajutorul tău. Atinge pentru a cumpăra funcții pro pentru a menține proiectul în funcțiune.</string>
     <string name="app_qap">
         Google urma să elimine aplicația din Play Store deoarece a solicitat permisiunea de a interoga toate aplicațiile.
         Cinci apeluri și furnizarea unei bune justificări despre motivul pentru care această permisiune este necesară au fost respinse.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Suport</string>
 
     <string name="summary_install">Afișează notificarea în bara de stare pentru a configura direct aplicațiile nou instalate (funcție pro)</string>
-    <string name="summary_auto">După dezactivarea utilizând widget-ul, reactivați NetGuard automat după numărul de minute selectat (introduceți zero pentru a dezactiva această opțiune)</string>
+    <string name="summary_auto">După dezactivarea utilizând widget-ul, reactivați QuietGuard automat după numărul de minute selectat (introduceți zero pentru a dezactiva această opțiune)</string>
     <string name="summary_delay">După oprirea ecranului, păstrați regulile pentru ecran pornit active pentru numărul de minute selectat (introduceți zero pentru a dezactiva această opțiune)</string>
     <string name="summary_update">Verifică pentru noi versiuni pe GitHub de două ori pe zi</string>
 
     <string name="summary_tethering">În funcție de versiunea de Android, tethering-ul poate funcționa sau nu. Traficul prin tethering nu poate fi filtrat.</string>
     <string name="summary_subnet">Activează rutarea subrețelei; ar putea activa apelurile Wi-Fi, dar ar putea declanșa, de asemenea, erori în Android și crește consumul bateriei</string>
     <string name="summary_lan">Permite aplicațiilor să se conecteze la adresele rețelei locale, cum ar fi 10.0.0.0/8, 172.16.0.0/12 și 192.168.0.0/16</string>
-    <string name="summary_ip6">Rutează traficul IP versiunea 6 către NetGuard, astfel încât acesta să poată fi permis sau blocat selectiv</string>
+    <string name="summary_ip6">Rutează traficul IP versiunea 6 către QuietGuard, astfel încât acesta să poată fi permis sau blocat selectiv</string>
     <string name="summary_wifi_home">Aplică regulile rețelei Wi-Fi numai pentru rețeaua selectată (aplică regulile rețelei mobile pentru alte rețele Wi-Fi)</string>
     <string name="summary_metered">Aplică regulile rețelei mobile rețelelor Wi-Fi cu tarifare după consum (plătite, tethered)</string>
     <string name="summary_metered_2g">Aplică regulile rețelei Wi-Fi pentru conexiunile de date 2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Aplică regulile rețelei Wi-Fi pentru conexiunile de date LTE</string>
     <string name="summary_national_roaming">Nu aplica regulile de roaming când SIM-ul și țara rețelei mobile sunt aceleași</string>
     <string name="summary_eu_roaming">Nu aplica regulile de roaming când SIM-ul și țara rețelei mobile sunt în interiorul UE (roaming ca acasă)</string>
-    <string name="summary_call">Dezactivează NetGuard la apelul telefonic primit sau efectuat. Aceasta poate fi utilizată pentru a evita problemele de apelare IP / Wi-Fi.</string>
+    <string name="summary_call">Dezactivează QuietGuard la apelul telefonic primit sau efectuat. Aceasta poate fi utilizată pentru a evita problemele de apelare IP / Wi-Fi.</string>
 
     <string name="summary_system">Definește reguli pentru aplicațiile de sistem (pentru experți)</string>
     <string name="summary_log_app">Jurnalizează încercările de acces la internet pentru aplicații. Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Valoarea implicită este 3 (NXDOMAIN), ceea ce înseamnă \'domeniu inexistent\'.</string>
     <string name="summary_validate">Numele de domeniu utilizat pentru a valida conexiunea la internet la portul 443 (https).</string>
     <string name="summary_socks5_enabled">Numai traficul TCP va fi trimis către serverul proxy</string>
-    <string name="summary_watchdog">Verifică periodic dacă NetGuard încă rulează (introduceți zero pentru a dezactiva această opțiune). Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
+    <string name="summary_watchdog">Verifică periodic dacă QuietGuard încă rulează (introduceți zero pentru a dezactiva această opțiune). Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
 
     <string name="summary_stats">Afișează graficul vitezei rețelei în notificarea din bara de stare</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d permise, %2$d blocate</string>
     <string name="msg_hosts">%1$d permise, %2$d blocate, %3$d host-uri</string>
     <string name="msg_waiting">Se așteaptă evenimentul</string>
-    <string name="msg_disabled">NetGuard este dezactivat, utilizează comutatorul de mai sus pentru a activa NetGuard</string>
+    <string name="msg_disabled">QuietGuard este dezactivat, utilizează comutatorul de mai sus pentru a activa QuietGuard</string>
     <string name="msg_notifications">Atinge pentru a acorda permisiuni de notificare (pentru notificări de încercare de acces, mesaje de eroare etc.)</string>
-    <string name="msg_revoked">NetGuard a fost dezactivat, probabil prin utilizarea unei alte aplicații bazate pe VPN</string>
+    <string name="msg_revoked">QuietGuard a fost dezactivat, probabil prin utilizarea unei alte aplicații bazate pe VPN</string>
     <string name="msg_installed">\'%1$s\' instalat</string>
     <string name="msg_installed_n">A fost instalat</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Acțiune finalizată</string>
     <string name="msg_invalid">Vă rugăm să verificați valorile și să încercați din nou.</string>
     <string name="msg_export_failed">Export eșuat: %1$s</string>
-    <string name="msg_vpn">NetGuard utilizează un VPN local pentru a filtra traficul de internet.
+    <string name="msg_vpn">QuietGuard utilizează un VPN local pentru a filtra traficul de internet.
 Din acest motiv, vă rugăm să permiteți o conexiune VPN în următorul dialog.
 Traficul dvs. de internet nu este trimis către un server VPN la distanță.</string>
-    <string name="msg_autostart">NetGuard nu a putut porni automat. Acest lucru este probabil din cauza unei erori în versiunea de Android.</string>
+    <string name="msg_autostart">QuietGuard nu a putut porni automat. Acest lucru este probabil din cauza unei erori în versiunea de Android.</string>
     <string name="msg_error">A apărut o eroare neașteptată: \'%s\'</string>
     <string name="msg_start_failed">Android a refuzat să pornească serviciul VPN în acest moment. Acest lucru este probabil din cauza unei erori în versiunea de Android.</string>
-    <string name="msg_try">Încearcă NetGuard</string>
+    <string name="msg_try">Încearcă QuietGuard</string>
     <string name="msg_terms">Prin donație sunteți de acord cu <a href="http://www.netguard.me/#terms">termenii și condițiile</a></string>
     <string name="msg_dimming">Dacă nu puteți apăsa OK în dialogul următor, o altă aplicație (de diminuare a luminozității ecranului) probabil manipulează ecranul.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/zi</string>
@@ -325,11 +325,11 @@ Traficul dvs. de internet nu este trimis către un server VPN la distanță.</st
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Pentru rezultate consistente, optimizările bateriei Android ar trebui dezactivate pentru NetGuard.
-\n\nÎn următorul dialog, selectați \"Toate aplicațiile\" în partea de sus, atingeți NetGuard în listă și selectați și confirmați \"Nu optimizați\".</string>
-    <string name="msg_datasaving">Pentru rezultate consistente, opțiunile de economisire a datelor Android ar trebui dezactivate pentru NetGuard
+    <string name="msg_doze">Pentru rezultate consistente, optimizările bateriei Android ar trebui dezactivate pentru QuietGuard.
+\n\nÎn următorul dialog, selectați \"Toate aplicațiile\" în partea de sus, atingeți QuietGuard în listă și selectați și confirmați \"Nu optimizați\".</string>
+    <string name="msg_datasaving">Pentru rezultate consistente, opțiunile de economisire a datelor Android ar trebui dezactivate pentru QuietGuard
 \n\nÎn următorul dialog, activați opțiunile \"Date de fundal\" și \"Utilizare nelimitată a datelor\"</string>
-    <string name="msg_filter">Utilizarea filtrării va face ca Android să atribuie utilizarea datelor și a energiei către NetGuard - Android presupune că datele și energia sunt utilizate de NetGuard, mai degrabă decât de aplicațiile originale</string>
+    <string name="msg_filter">Utilizarea filtrării va face ca Android să atribuie utilizarea datelor și a energiei către QuietGuard - Android presupune că datele și energia sunt utilizate de QuietGuard, mai degrabă decât de aplicațiile originale</string>
     <string name="msg_filter4">Android 4 necesită activarea filtrării</string>
     <string name="msg_log_disabled">Jurnalizarea traficului este dezactivată, utilizați comutatorul de mai sus pentru a activa jurnalizarea. Jurnalizarea traficului ar putea duce la un consum suplimentar de baterie.</string>
     <string name="msg_clear_rules">Aceasta va reseta regulile și condițiile la valorile lor implicite</string>
@@ -342,20 +342,20 @@ Traficul dvs. de internet nu este trimis către un server VPN la distanță.</st
     <string name="msg_stop_forward">Oprește redirecționarea pentru %1$s port %2$d?</string>
     <string name="msg_metered">Rețeaua este cu tarifare după consum</string>
     <string name="msg_inactive">Nicio conexiune la internet activă</string>
-    <string name="msg_queue">NetGuard este ocupat</string>
+    <string name="msg_queue">QuietGuard este ocupat</string>
     <string name="msg_update">Actualizare disponibilă, atingeți pentru a descărca</string>
     <string name="msg_usage">Puteți permite (verzui) sau refuza (roșiatic) accesul la internet Wi-Fi sau mobil prin atingerea pictogramelor de lângă o aplicație</string>
-    <string name="msg_fairemail">Dacă ați instalat NetGuard pentru a vă proteja confidențialitatea, s-ar putea să fiți interesat și de <a href="https://email.faircode.eu/">FairEmail</a>, o aplicație de e-mail open source, care respectă confidențialitatea.</string>
+    <string name="msg_fairemail">Dacă ați instalat QuietGuard pentru a vă proteja confidențialitatea, s-ar putea să fiți interesat și de <a href="https://email.faircode.eu/">FairEmail</a>, o aplicație de e-mail open source, care respectă confidențialitatea.</string>
     <string name="msg_whitelist">Accesul la internet este permis în mod implicit (modul listă neagră), acest lucru poate fi schimbat în setări</string>
     <string name="msg_push">Mesajele primite (push) sunt gestionate în principal de componenta de sistem Play services, căreia îi este permis accesul la internet în mod implicit</string>
     <string name="msg_system">Gestionarea tuturor aplicațiilor (de sistem) poate fi activată în setări</string>
     <string name="msg_issue">Vă rugăm să descrieți problema și să indicați ora problemei:</string>
     <string name="msg_vpn_cancelled">Conexiune VPN anulată\nȚi-ai configurat un alt VPN să fie un VPN mereu activat?</string>
-    <string name="msg_on">Oprirea dispozitivului cu NetGuard activat va porni automat NetGuard la pornirea dispozitivului</string>
+    <string name="msg_on">Oprirea dispozitivului cu QuietGuard activat va porni automat QuietGuard la pornirea dispozitivului</string>
     <string name="msg_unavailable">Această caracteristică nu este disponibilă pe această versiune de Android</string>
     <string name="msg_always_on">Un alt VPN este setat ca Always-on VPN</string>
-    <string name="msg_always_on_lockdown">Opriți \"Blocați conexiunile fără VPN\" în setările Android VPN pentru a utiliza NetGuard în modul de filtrare</string>
-    <string name="msg_private_dns">Opriți \"DNS privat\" în setările rețelei Android pentru a utiliza NetGuard în modul de filtrare</string>
+    <string name="msg_always_on_lockdown">Opriți \"Blocați conexiunile fără VPN\" în setările Android VPN pentru a utiliza QuietGuard în modul de filtrare</string>
+    <string name="msg_private_dns">Opriți \"DNS privat\" în setările rețelei Android pentru a utiliza QuietGuard în modul de filtrare</string>
 
     <string name="title_lockdown_enabled">Traficul este blocat</string>
     <string name="title_unmetered_allowed">Traficul fără tarifare este permis</string>

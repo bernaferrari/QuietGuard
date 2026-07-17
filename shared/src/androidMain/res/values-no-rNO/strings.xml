@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard gir enkle og avanserte måter å blokkere tilgang til internett - ingen root er nødvendig. Apper og adresser kan enkelt tillates eller nektes tilgang til Wi-Fi- og/eller mobilforbindelsen din.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard gir enkle og avanserte måter å blokkere tilgang til internett - ingen root er nødvendig. Apper og adresser kan enkelt tillates eller nektes tilgang til Wi-Fi- og/eller mobilforbindelsen din.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard krever Android 5.1 eller nyere</string>
+    <string name="app_android">QuietGuard krever Android 5.1 eller nyere</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privatlivsretningslinjer</a></string>
-    <string name="app_first">Stort omhu er brukt i utvikling og testing av NetGuard, men det umulig å garantere at NetGuard vil fungere korrekt på alle enheter.</string>
+    <string name="app_first">Stort omhu er brukt i utvikling og testing av QuietGuard, men det umulig å garantere at QuietGuard vil fungere korrekt på alle enheter.</string>
     <string name="app_agree">Jeg aksepterer</string>
     <string name="app_disagree">Jeg aksepterer ikke</string>
-    <string name="app_support">NetGuard trenger din hjelp. Trykk for å kjøpe Pro-funksjoner for å holde prosjektet gående.</string>
+    <string name="app_support">QuietGuard trenger din hjelp. Trykk for å kjøpe Pro-funksjoner for å holde prosjektet gående.</string>
     <string name="app_qap">
         Google skulle fjerne appen fra Play Store fordi den ba om tillatelse til å søke i alle apper.
         Fem anker og en god begrunnelse for hvorfor denne tillatelsen trengs ble avvist.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Brukerstøtte</string>
 
     <string name="summary_install">Vis statuslinjevarsling for å konfigurere nyinstallerte apper direkte (pro-funksjon)</string>
-    <string name="summary_auto">Etter deaktivering via widgeten, reaktiver NetGuard automatisk etter valgt antall minutter (sett til 0 for å deaktivere)</string>
+    <string name="summary_auto">Etter deaktivering via widgeten, reaktiver QuietGuard automatisk etter valgt antall minutter (sett til 0 for å deaktivere)</string>
     <string name="summary_delay">Etter at skjermen slås av, hold regler for skjerm på aktive i valgt antall minutter (sett til 0 for å deaktivere)</string>
     <string name="summary_update">Se etter nye versjoner på GitHub to ganger daglig</string>
 
     <string name="summary_tethering">Avhengig av Android-versjonen kan internettdeling fungere eller ikke. Delt trafikk kan ikke filtreres.</string>
     <string name="summary_subnet">Aktiver subnet-ruting; kan muliggjøre Wi-Fi-anrop, men kan også utløse feil i Android og øke batteribruken</string>
     <string name="summary_lan">Tillat apper å koble til lokale nettverksadresser (f.eks. 10.0.0.0/8, 172.16.0.0/12 og 192.168.0.0/16)</string>
-    <string name="summary_ip6">Ruter IPv6-trafikk til NetGuard slik at den selektivt kan tillates eller blokkeres</string>
+    <string name="summary_ip6">Ruter IPv6-trafikk til QuietGuard slik at den selektivt kan tillates eller blokkeres</string>
     <string name="summary_wifi_home">Bruk Wi-Fi-regler kun for valgte nettverk (bruk mobilregler for andre Wi-Fi-nettverk)</string>
     <string name="summary_metered">Bruk mobilnettregler for forbruksmålte Wi-Fi-nettverk (betalt, delt)</string>
     <string name="summary_metered_2g">Bruk Wi-Fi-regler for 2G-datakoblinger</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Bruk Wi-Fi-regler for LTE-datakoblinger</string>
     <string name="summary_national_roaming">Ikke bruk roaming-regler når SIM og mobilnettet er fra samme land</string>
     <string name="summary_eu_roaming">Ikke bruk roaming-regler når SIM og mobilnettet er i EU (roaming som hjemme)</string>
-    <string name="summary_call">Deaktiver NetGuard under telefonanrop for å unngå problemer med IP/Wi-Fi-anrop.</string>
+    <string name="summary_call">Deaktiver QuietGuard under telefonanrop for å unngå problemer med IP/Wi-Fi-anrop.</string>
 
     <string name="summary_system">Definer regler for systemapper (for eksperter)</string>
     <string name="summary_log_app">Loggfør forsøk på internettilgang for apper. Dette kan øke batteribruken.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Standardverdien er 3 (NXDOMAIN), som betyr \'ikke-eksisterende domene\'.</string>
     <string name="summary_validate">Domenenavn som brukes til å validere internettilkoblingen på port 443 (https).</string>
     <string name="summary_socks5_enabled">Bare TCP-trafikk vil bli sendt til proxy-serveren</string>
-    <string name="summary_watchdog">Sjekk jevnlig om NetGuard fortsatt kjører (sett til 0 for å deaktivere). Dette kan øke batteribruken.</string>
+    <string name="summary_watchdog">Sjekk jevnlig om QuietGuard fortsatt kjører (sett til 0 for å deaktivere). Dette kan øke batteribruken.</string>
 
     <string name="summary_stats">Vis graf over nettverkshastighet i statuslinjevarslingen</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d tillatt, %2$d blokkert</string>
     <string name="msg_hosts">%1$d tillatt, %2$d blokkert, %3$d verter</string>
     <string name="msg_waiting">Venter på hendelse</string>
-    <string name="msg_disabled">NetGuard er deaktivert, bruk bryteren ovenfor for å aktivere NetGuard</string>
+    <string name="msg_disabled">QuietGuard er deaktivert, bruk bryteren ovenfor for å aktivere QuietGuard</string>
     <string name="msg_notifications">Trykk for å gi varslingstillatelse (for varsling om tilgangsforsøk, feilmeldinger osv.)</string>
-    <string name="msg_revoked">NetGuard har blitt deaktivert, sannsynligvis av en annen VPN-basert app</string>
+    <string name="msg_revoked">QuietGuard har blitt deaktivert, sannsynligvis av en annen VPN-basert app</string>
     <string name="msg_installed">\'%1$s\' installert</string>
     <string name="msg_installed_n">Er installert</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Handlingen er fullført</string>
     <string name="msg_invalid">Vennligst sjekk verdiene og prøv på nytt.</string>
     <string name="msg_export_failed">Eksport feilet: %1$s</string>
-    <string name="msg_vpn">NetGuard bruker en lokal VPN for å filtrere internettrafikk.
+    <string name="msg_vpn">QuietGuard bruker en lokal VPN for å filtrere internettrafikk.
 Tillat derfor en VPN-tilkobling i neste dialog.
 Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
-    <string name="msg_autostart">NetGuard kunne ikke starte automatisk. Dette skyldes sannsynligvis en feil i din Android-versjon.</string>
+    <string name="msg_autostart">QuietGuard kunne ikke starte automatisk. Dette skyldes sannsynligvis en feil i din Android-versjon.</string>
     <string name="msg_error">En uventet feil har oppstått: \'%s\'</string>
     <string name="msg_start_failed">Android nektet å starte VPN-tjenesten for øyeblikket. Dette skyldes sannsynligvis en feil i din Android-versjon.</string>
-    <string name="msg_try">Prøv NetGuard</string>
+    <string name="msg_try">Prøv QuietGuard</string>
     <string name="msg_terms">Ved å donere godtar du <a href="http://www.netguard.me/#terms">vilkår og betingelser</a></string>
     <string name="msg_dimming">Hvis du ikke kan trykke OK i neste dialog, manipuleres sannsynligvis skjermen av en annen app (f.eks. for skjermdimming).</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/dag</string>
@@ -325,11 +325,11 @@ Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">For konsekvente resultater bør Android-batterioptimalisering deaktiveres for NetGuard.
-\n\nI neste dialog velger du \"Alle apper\" øverst, trykker på NetGuard i listen og velger og bekrefter \"Ikke optimaliser\".</string>
-    <string name="msg_datasaving">For konsekvente resultater bør Android-dataspringsalternativer deaktiveres for NetGuard.
+    <string name="msg_doze">For konsekvente resultater bør Android-batterioptimalisering deaktiveres for QuietGuard.
+\n\nI neste dialog velger du \"Alle apper\" øverst, trykker på QuietGuard i listen og velger og bekrefter \"Ikke optimaliser\".</string>
+    <string name="msg_datasaving">For konsekvente resultater bør Android-dataspringsalternativer deaktiveres for QuietGuard.
 \n\nI neste dialog aktiverer du alternativene \"Bakgrunnsdata\" og \"Ubegrenset databruk\".</string>
-    <string name="msg_filter">Bruk av filtrering vil føre til at Android tilskriver data- og strømbruk til NetGuard i stedet for de originale appene.</string>
+    <string name="msg_filter">Bruk av filtrering vil føre til at Android tilskriver data- og strømbruk til QuietGuard i stedet for de originale appene.</string>
     <string name="msg_filter4">Android 4 krever at filtrering er aktivert</string>
     <string name="msg_log_disabled">Trafikklogging er deaktivert. Bruk bryteren ovenfor for å aktivere logging. Dette kan øke batteribruken.</string>
     <string name="msg_clear_rules">Dette vil tilbakestille regler og betingelser til standardverdiene</string>
@@ -342,20 +342,20 @@ Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
     <string name="msg_stop_forward">Stopp videresending av %1$s port %2$d?</string>
     <string name="msg_metered">Nettverket er forbruksmålt</string>
     <string name="msg_inactive">Ingen aktiv internettilkobling</string>
-    <string name="msg_queue">NetGuard er opptatt</string>
+    <string name="msg_queue">QuietGuard er opptatt</string>
     <string name="msg_update">Oppdatering tilgjengelig, trykk for å laste ned</string>
     <string name="msg_usage">Du kan tillate (grønnlig) eller nekte (rødlig) Wi-Fi eller mobil internettilgang ved å trykke på ikonene ved siden av en app</string>
-    <string name="msg_fairemail">Hvis du installerte NetGuard for å beskytte privatlivet ditt, er du kanskje også interessert i <a href="https://email.faircode.eu/">FairEmail</a>, en e-postapp med åpen kildekode og fokus på personvern.</string>
+    <string name="msg_fairemail">Hvis du installerte QuietGuard for å beskytte privatlivet ditt, er du kanskje også interessert i <a href="https://email.faircode.eu/">FairEmail</a>, en e-postapp med åpen kildekode og fokus på personvern.</string>
     <string name="msg_whitelist">Internettilgang er tillatt som standard (svartelistet modus), dette kan endres i innstillingene</string>
     <string name="msg_push">Innkommende (push) meldinger håndteres stort sett av Play-tjenester, som har internettilgang som standard</string>
     <string name="msg_system">Administrasjon av alle (system) apper kan aktiveres i innstillingene</string>
     <string name="msg_issue">Vennligst beskriv problemet og oppgi tidspunktet det oppstod:</string>
     <string name="msg_vpn_cancelled">VPN-tilkobling avbrutt. Har du konfigurert en annen VPN til å være alltid på?</string>
-    <string name="msg_on">Hvis du slår av enheten med NetGuard aktivert, vil NetGuard starte automatisk når du slår den på igjen</string>
+    <string name="msg_on">Hvis du slår av enheten med QuietGuard aktivert, vil QuietGuard starte automatisk når du slår den på igjen</string>
     <string name="msg_unavailable">Denne funksjonen er ikke tilgjengelig på denne Android-versjonen</string>
     <string name="msg_always_on">En annen VPN er satt som Alltid på-VPN</string>
-    <string name="msg_always_on_lockdown">Slå av \"Blokker tilkoblinger uten VPN\" i Android VPN-innstillinger for å bruke NetGuard i filtreringsmodus</string>
-    <string name="msg_private_dns">Slå av \"Privat DNS\" i Android-nettverksinnstillinger for å bruke NetGuard i filtreringsmodus</string>
+    <string name="msg_always_on_lockdown">Slå av \"Blokker tilkoblinger uten VPN\" i Android VPN-innstillinger for å bruke QuietGuard i filtreringsmodus</string>
+    <string name="msg_private_dns">Slå av \"Privat DNS\" i Android-nettverksinnstillinger for å bruke QuietGuard i filtreringsmodus</string>
 
     <string name="title_lockdown_enabled">Trafikken er stengt ned</string>
     <string name="title_unmetered_allowed">Ikke-målt trafikk er tillatt</string>

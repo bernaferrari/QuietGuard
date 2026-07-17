@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">Το NetGuard Next παρέχει απλούς και σύνθετους τρόπους αποκλεισμού της πρόσβασης στο διαδίκτυο - δεν απαιτείται root. Η πρόσβαση εφαρμογών και διευθύνσεων στο Wi-Fi ή/και στη σύνδεση κινητής τηλεφωνίας μπορεί να επιτρέπεται ή να απαγορεύεται μεμονωμένα.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">Το QuietGuard παρέχει απλούς και σύνθετους τρόπους αποκλεισμού της πρόσβασης στο διαδίκτυο - δεν απαιτείται root. Η πρόσβαση εφαρμογών και διευθύνσεων στο Wi-Fi ή/και στη σύνδεση κινητής τηλεφωνίας μπορεί να επιτρέπεται ή να απαγορεύεται μεμονωμένα.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">Το NetGuard απαιτεί Android 5.1 ή μεταγενέστερη έκδοση</string>
+    <string name="app_android">Το QuietGuard απαιτεί Android 5.1 ή μεταγενέστερη έκδοση</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Πολιτική απορρήτου</a></string>
-    <string name="app_first">Έχει δοθεί μεγάλη προσοχή στην ανάπτυξη και τη δοκιμή του NetGuard, ωστόσο είναι αδύνατο να εγγυηθεί κανείς ότι το NetGuard θα λειτουργεί σωστά σε κάθε συσκευή.</string>
+    <string name="app_first">Έχει δοθεί μεγάλη προσοχή στην ανάπτυξη και τη δοκιμή του QuietGuard, ωστόσο είναι αδύνατο να εγγυηθεί κανείς ότι το QuietGuard θα λειτουργεί σωστά σε κάθε συσκευή.</string>
     <string name="app_agree">Συμφωνώ</string>
     <string name="app_disagree">Διαφωνώ</string>
-    <string name="app_support">Το NetGuard χρειάζεται τη βοήθειά σας. Πατήστε για να αγοράσετε λειτουργίες pro για να συνεχιστεί το έργο.</string>
+    <string name="app_support">Το QuietGuard χρειάζεται τη βοήθειά σας. Πατήστε για να αγοράσετε λειτουργίες pro για να συνεχιστεί το έργο.</string>
     <string name="app_qap">
         Η Google σκόπευε να αφαιρέσει την εφαρμογή από το Play Store επειδή ζήτησε άδεια για να ερωτά όλες τις εφαρμογές.
         Πέντε εφέσεις και η παροχή μιας καλής αιτιολόγησης για το γιατί χρειάζεται αυτή η άδεια απορρίφθηκαν.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Υποστήριξη</string>
 
     <string name="summary_install">Εμφάνιση ειδοποίησης στη γραμμή κατάστασης για απευθείας διαμόρφωση των πρόσφατα εγκατεστημένων εφαρμογών (λειτουργία pro)</string>
-    <string name="summary_auto">Μετά την απενεργοποίηση χρησιμοποιώντας το γραφικό στοιχείο, ενεργοποιήστε ξανά αυτόματα το NetGuard μετά τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
+    <string name="summary_auto">Μετά την απενεργοποίηση χρησιμοποιώντας το γραφικό στοιχείο, ενεργοποιήστε ξανά αυτόματα το QuietGuard μετά τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
     <string name="summary_delay">Μετά την απενεργοποίηση της οθόνης, διατηρήστε τους κανόνες \'όταν η οθόνη είναι ανοιχτή\' ενεργούς για τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
     <string name="summary_update">Έλεγχος για νέες εκδόσεις στο GitHub δύο φορές την ημέρα</string>
 
     <string name="summary_tethering">Ανάλογα με την έκδοση του Android, το tethering μπορεί να λειτουργήσει ή να μην λειτουργήσει. Η κίνηση μέσω tethering δεν μπορεί να φιλτραριστεί.</string>
     <string name="summary_subnet">Ενεργοποίηση δρομολόγησης υποδικτύου. μπορεί να επιτρέψει την κλήση μέσω Wi-Fi, αλλά μπορεί επίσης να προκαλέσει σφάλματα στο Android και να αυξήσει τη χρήση της μπαταρίας</string>
     <string name="summary_lan">Επιτρέψτε στις εφαρμογές να συνδέονται σε διευθύνσεις τοπικού δικτύου, όπως 10.0.0.0/8, 172.16.0.0/12 και 192.168.0.0/16</string>
-    <string name="summary_ip6">Δρομολόγηση της κίνησης IP έκδοσης 6 στο NetGuard, ώστε να μπορεί να επιτρέπεται ή να αποκλείεται επιλεκτικά</string>
+    <string name="summary_ip6">Δρομολόγηση της κίνησης IP έκδοσης 6 στο QuietGuard, ώστε να μπορεί να επιτρέπεται ή να αποκλείεται επιλεκτικά</string>
     <string name="summary_wifi_home">Εφαρμογή κανόνων δικτύου Wi-Fi μόνο για το επιλεγμένο δίκτυο (εφαρμογή κανόνων δικτύου κινητής τηλεφωνίας για άλλα δίκτυα Wi-Fi)</string>
     <string name="summary_metered">Εφαρμογή κανόνων δικτύου κινητής τηλεφωνίας σε δίκτυα Wi-Fi με χρέωση (επί πληρωμή, tethering)</string>
     <string name="summary_metered_2g">Εφαρμογή κανόνων δικτύου Wi-Fi για συνδέσεις δεδομένων 2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Εφαρμογή κανόνων δικτύου Wi-Fi για συνδέσεις δεδομένων LTE</string>
     <string name="summary_national_roaming">Να μην εφαρμόζονται κανόνες περιαγωγής όταν η χώρα της κάρτας SIM και του δικτύου κινητής τηλεφωνίας είναι η ίδια</string>
     <string name="summary_eu_roaming">Να μην εφαρμόζονται κανόνες περιαγωγής όταν η κάρτα SIM και η χώρα του δικτύου κινητής τηλεφωνίας βρίσκονται εντός της ΕΕ (περιαγωγή όπως στο σπίτι)</string>
-    <string name="summary_call">Απενεργοποίηση του NetGuard σε εισερχόμενη ή εξερχόμενη τηλεφωνική κλήση. Αυτό μπορεί να χρησιμοποιηθεί για την αντιμετώπιση προβλημάτων κλήσεων IP/Wi-Fi.</string>
+    <string name="summary_call">Απενεργοποίηση του QuietGuard σε εισερχόμενη ή εξερχόμενη τηλεφωνική κλήση. Αυτό μπορεί να χρησιμοποιηθεί για την αντιμετώπιση προβλημάτων κλήσεων IP/Wi-Fi.</string>
 
     <string name="summary_system">Καθορισμός κανόνων για εφαρμογές συστήματος (για ειδικούς)</string>
     <string name="summary_log_app">Καταγραφή προσπαθειών πρόσβασης στο διαδίκτυο για εφαρμογές. Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Η προεπιλεγμένη τιμή είναι 3 (NXDOMAIN), που σημαίνει \'ανύπαρκτος τομέας\'.</string>
     <string name="summary_validate">Όνομα τομέα που χρησιμοποιείται για την επικύρωση της σύνδεσης στο διαδίκτυο στη θύρα 443 (https).</string>
     <string name="summary_socks5_enabled">Μόνο η κίνηση TCP θα αποστέλλεται στον διακομιστή μεσολάβησης</string>
-    <string name="summary_watchdog">Περιοδικός έλεγχος εάν το NetGuard εξακολουθεί να εκτελείται (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή). Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
+    <string name="summary_watchdog">Περιοδικός έλεγχος εάν το QuietGuard εξακολουθεί να εκτελείται (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή). Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
 
     <string name="summary_stats">Εμφάνιση γραφήματος ταχύτητας δικτύου στην ειδοποίηση της γραμμής κατάστασης</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d επιτρέπονται, %2$d αποκλείονται</string>
     <string name="msg_hosts">%1$d επιτρέπονται, %2$d αποκλείονται, %3$d hosts</string>
     <string name="msg_waiting">Αναμονή για συμβάν</string>
-    <string name="msg_disabled">Το NetGuard είναι απενεργοποιημένο, χρησιμοποιήστε τον παραπάνω διακόπτη για να ενεργοποιήσετε το NetGuard</string>
+    <string name="msg_disabled">Το QuietGuard είναι απενεργοποιημένο, χρησιμοποιήστε τον παραπάνω διακόπτη για να ενεργοποιήσετε το QuietGuard</string>
     <string name="msg_notifications">Πατήστε για να παραχωρήσετε άδειες ειδοποιήσεων (για ειδοποιήσεις προσπάθειας πρόσβασης, μηνύματα σφάλματος κ.λπ.)</string>
-    <string name="msg_revoked">Το NetGuard έχει απενεργοποιηθεί, πιθανότατα από τη χρήση άλλης εφαρμογής που βασίζεται σε VPN</string>
+    <string name="msg_revoked">Το QuietGuard έχει απενεργοποιηθεί, πιθανότατα από τη χρήση άλλης εφαρμογής που βασίζεται σε VPN</string>
     <string name="msg_installed">Το \'%1$s\' εγκαταστάθηκε</string>
     <string name="msg_installed_n">Έχει εγκατασταθεί</string>
     <string name="msg_malware">Πιθανό κακόβουλο λογισμικό: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Η ενέργεια ολοκληρώθηκε</string>
     <string name="msg_invalid">Ελέγξτε τις τιμές και προσπαθήστε ξανά.</string>
     <string name="msg_export_failed">Η εξαγωγή απέτυχε: %1$s</string>
-    <string name="msg_vpn">Το NetGuard χρησιμοποιεί ένα τοπικό VPN για να φιλτράρει την κίνηση στο διαδίκτυο.
+    <string name="msg_vpn">Το QuietGuard χρησιμοποιεί ένα τοπικό VPN για να φιλτράρει την κίνηση στο διαδίκτυο.
 Για το λόγο αυτό, επιτρέψτε μια σύνδεση VPN στον επόμενο διάλογο.
 Η κίνησή σας στο διαδίκτυο δεν αποστέλλεται σε απομακρυσμένο διακομιστή VPN.</string>
-    <string name="msg_autostart">Το NetGuard δεν μπόρεσε να ξεκινήσει αυτόματα. Αυτό πιθανότατα οφείλεται σε σφάλμα στην έκδοση Android σας.</string>
+    <string name="msg_autostart">Το QuietGuard δεν μπόρεσε να ξεκινήσει αυτόματα. Αυτό πιθανότατα οφείλεται σε σφάλμα στην έκδοση Android σας.</string>
     <string name="msg_error">Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα: \'%s\'</string>
     <string name="msg_start_failed">Το Android αρνήθηκε να ξεκινήσει την υπηρεσία VPN αυτή τη στιγμή. Αυτό πιθανότατα οφείλεται σε σφάλμα στην έκδοση Android σας.</string>
-    <string name="msg_try">Δοκιμάστε το NetGuard</string>
+    <string name="msg_try">Δοκιμάστε το QuietGuard</string>
     <string name="msg_terms">Κάνοντας δωρεά συμφωνείτε με τους <a href="http://www.netguard.me/#terms">όρους &amp; προϋποθέσεις</a></string>
     <string name="msg_dimming">Εάν δεν μπορείτε να πατήσετε OK στον επόμενο διάλογο, μια άλλη εφαρμογή (εξασθένισης οθόνης) πιθανότατα ελέγχει την οθόνη.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/ημέρα</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Για συνεπή αποτελέσματα, οι βελτιστοποιήσεις μπαταρίας Android θα πρέπει να απενεργοποιηθούν για το NetGuard.
-\n\nΣτον επόμενο διάλογο, επιλέξτε \"Όλες οι εφαρμογές\" στο επάνω μέρος, πατήστε στο NetGuard στη λίστα και επιλέξτε και επιβεβαιώστε \"Να μην γίνεται βελτιστοποίηση\".</string>
-    <string name="msg_datasaving">Για συνεπή αποτελέσματα, οι επιλογές εξοικονόμησης δεδομένων Android θα πρέπει να απενεργοποιηθούν για το NetGuard
+    <string name="msg_doze">Για συνεπή αποτελέσματα, οι βελτιστοποιήσεις μπαταρίας Android θα πρέπει να απενεργοποιηθούν για το QuietGuard.
+\n\nΣτον επόμενο διάλογο, επιλέξτε \"Όλες οι εφαρμογές\" στο επάνω μέρος, πατήστε στο QuietGuard στη λίστα και επιλέξτε και επιβεβαιώστε \"Να μην γίνεται βελτιστοποίηση\".</string>
+    <string name="msg_datasaving">Για συνεπή αποτελέσματα, οι επιλογές εξοικονόμησης δεδομένων Android θα πρέπει να απενεργοποιηθούν για το QuietGuard
 \n\nΣτον επόμενο διάλογο, ενεργοποιήστε τις επιλογές \"Δεδομένα παρασκηνίου\" και \"Απεριόριστη χρήση δεδομένων\"</string>
-    <string name="msg_filter">Η χρήση φιλτραρίσματος θα κάνει το Android να αποδώσει τη χρήση δεδομένων και ενέργειας στο NetGuard - το Android υποθέτει ότι τα δεδομένα και η ενέργεια χρησιμοποιούνται από το NetGuard, αντί για τις αρχικές εφαρμογές</string>
+    <string name="msg_filter">Η χρήση φιλτραρίσματος θα κάνει το Android να αποδώσει τη χρήση δεδομένων και ενέργειας στο QuietGuard - το Android υποθέτει ότι τα δεδομένα και η ενέργεια χρησιμοποιούνται από το QuietGuard, αντί για τις αρχικές εφαρμογές</string>
     <string name="msg_filter4">Το Android 4 απαιτεί την ενεργοποίηση του φιλτραρίσματος</string>
     <string name="msg_log_disabled">Η καταγραφή κίνησης είναι απενεργοποιημένη, χρησιμοποιήστε τον παραπάνω διακόπτη για να ενεργοποιήσετε την καταγραφή. Η καταγραφή κίνησης μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
     <string name="msg_clear_rules">Αυτό θα επαναφέρει τους κανόνες και τις προϋποθέσεις στις προεπιλεγμένες τιμές τους</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">Διακοπή προώθησης της θύρας %2$d του %1$s;</string>
     <string name="msg_metered">Το δίκτυο έχει χρέωση</string>
     <string name="msg_inactive">Δεν υπάρχει ενεργή σύνδεση στο διαδίκτυο</string>
-    <string name="msg_queue">Το NetGuard είναι απασχολημένο</string>
+    <string name="msg_queue">Το QuietGuard είναι απασχολημένο</string>
     <string name="msg_update">Διαθέσιμη ενημέρωση, πατήστε για λήψη</string>
     <string name="msg_usage">Μπορείτε να επιτρέψετε (πρασινωπό) ή να αρνηθείτε (κοκκινωπό) την πρόσβαση στο Wi-Fi ή στο κινητό διαδίκτυο πατώντας στα εικονίδια δίαπλα σε μια εφαρμογή</string>
-    <string name="msg_fairemail">Εάν εγκαταστήσατε το NetGuard για να προστατεύσετε το απόρρητό σας, ίσως σας ενδιαφέρει επίσης το <a href="https://email.faircode.eu/">FairEmail</a>, μια εφαρμογή ηλεκτρονικού ταχυδρομείου ανοιχτού κώδικα, φιλική προς το απόρρητο</string>
+    <string name="msg_fairemail">Εάν εγκαταστήσατε το QuietGuard για να προστατεύσετε το απόρρητό σας, ίσως σας ενδιαφέρει επίσης το <a href="https://email.faircode.eu/">FairEmail</a>, μια εφαρμογή ηλεκτρονικού ταχυδρομείου ανοιχτού κώδικα, φιλική προς το απόρρητο</string>
     <string name="msg_whitelist">Η πρόσβαση στο διαδίκτυο επιτρέπεται από προεπιλογή (λειτουργία μαύρης λίστας), αυτό μπορεί να αλλάξει στις ρυθμίσεις</string>
     <string name="msg_push">Τα εισερχόμενα μηνύματα (push) χειρίζονται κυρίως από το στοιχείο συστήματος υπηρεσίες Play, στο οποίο επιτρέπεται η πρόσβαση στο διαδίκτυο από προεπιλογή</string>
     <string name="msg_system">Η διαχείριση όλων των εφαρμογών (συστήματος) μπορεί να ενεργοποιηθεί στις ρυθμίσεις</string>
     <string name="msg_issue">Περιγράψτε το πρόβλημα και υποδείξτε την ώρα του προβλήματος:</string>
     <string name="msg_vpn_cancelled">Η σύνδεση VPN ακυρώθηκε\nΡυθμίσατε ένα άλλο VPN ως πάντα ενεργό VPN;</string>
-    <string name="msg_on">Η απενεργοποίηση της συσκευής σας με ενεργοποιημένο το NetGuard, θα ξεκινήσει αυτόματα το NetGuard κατά την ενεργοποίηση της συσκευής σας</string>
+    <string name="msg_on">Η απενεργοποίηση της συσκευής σας με ενεργοποιημένο το QuietGuard, θα ξεκινήσει αυτόματα το QuietGuard κατά την ενεργοποίηση της συσκευής σας</string>
     <string name="msg_unavailable">Αυτή η δυνατότητα δεν είναι διαθέσιμη σε αυτήν την έκδοση Android</string>
     <string name="msg_always_on">Ένα άλλο VPN έχει οριστεί ως Πάντα ενεργό VPN</string>
-    <string name="msg_always_on_lockdown">Απενεργοποιήστε το \"Αποκλεισμός συνδέσεων χωρίς VPN\" στις ρυθμίσεις VPN Android για να χρησιμοποιήσετε το NetGuard σε λειτουργία φιλτραρίσματος</string>
-    <string name="msg_private_dns">Απενεργοποιήστε το \"Ιδιωτικό DNS\" στις ρυθμίσεις δικτύου Android για να χρησιμοποιήσετε το NetGuard σε λειτουργία φιλτραρίσματος</string>
+    <string name="msg_always_on_lockdown">Απενεργοποιήστε το \"Αποκλεισμός συνδέσεων χωρίς VPN\" στις ρυθμίσεις VPN Android για να χρησιμοποιήσετε το QuietGuard σε λειτουργία φιλτραρίσματος</string>
+    <string name="msg_private_dns">Απενεργοποιήστε το \"Ιδιωτικό DNS\" στις ρυθμίσεις δικτύου Android για να χρησιμοποιήσετε το QuietGuard σε λειτουργία φιλτραρίσματος</string>
 
     <string name="title_lockdown_enabled">Η κίνηση είναι κλειδωμένη</string>
     <string name="title_unmetered_allowed">Επιτρέπεται η κίνηση χωρίς χρέωση</string>

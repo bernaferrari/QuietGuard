@@ -3,7 +3,7 @@ Play store
 
 Title
 -----
-NetGuard - firewall fara root
+QuietGuard - firewall fara root
 
 
 Short description
@@ -13,7 +13,7 @@ Un mod simplu de a bloca accesul aplicatiilor la internet
 
 Long description
 ----------------
-NetGuard ofera modalitati simple si avansate de a bloca accesul la internet, ce nu necesita acces root.
+QuietGuard ofera modalitati simple si avansate de a bloca accesul la internet, ce nu necesita acces root.
 
 Accesul aplicatiilor la conexiunile Wi-Fi si/sau mobile poate fi permis sau blocat atat la nivel individual cat si la nivel de adresa.
 
@@ -46,7 +46,7 @@ Caracteristici PRO:
 
 &bull; Jurnal de trafic; cauta si filtreaza lista de accesari; exporta fisiere PCAP pentru analiza traficului
 &bull; Permite/blocheaza accesul per aplicatie si per domeniu
-&bull; Notificare aplicatie noua instalata; configureaza NetGuard direct din notificare
+&bull; Notificare aplicatie noua instalata; configureaza QuietGuard direct din notificare
 &bull; Grafic viteza conexiune intr-o notificare
 &bull; Alege din cele 5 teme aditionale atat in versiune deschisa cat si inchisa
 
@@ -54,9 +54,9 @@ Nu există nici un alt firewall, ce nu necesita root, care sa ofere toate aceste
 
 Pentru intrebari sau probleme puteti trimite un email la marcel+netguard@faircode.eu
 
-Daca vrei sa ii ajuti pe cei ce nu vorbesc limba engleza, poti ajuta la traducerea NetGuard in limba ta materna: https://crowdin.com/project/netguard/
+Daca vrei sa ii ajuti pe cei ce nu vorbesc limba engleza, poti ajuta la traducerea QuietGuard in limba ta materna: https://crowdin.com/project/netguard/
 
-Daca doriti sa testati caracteristile in dezvoltare ale aplicatiei, va puteti alatura programului de testare: https://play.google.com/apps/testing/com.bernaferari.renetguard
+Daca doriti sa testati caracteristile in dezvoltare ale aplicatiei, va puteti alatura programului de testare: https://play.google.com/apps/testing/com.bernaferrari.quietguard
 
 Toate permisiunile necesare sunt detaliate aici: https://github.com/M66B/NetGuard/blob/master/FAQ.md#FAQ42
 

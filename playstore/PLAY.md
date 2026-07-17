@@ -3,7 +3,7 @@ Play store
 
 Title
 -----
-NetGuard - no-root firewall
+QuietGuard - no-root firewall
 
 
 Short description
@@ -13,7 +13,7 @@ A simple way to block access to the internet per application
 
 Long description
 ----------------
-NetGuard provides simple and advanced ways to block access to the internet - no root required.
+QuietGuard provides simple and advanced ways to block access to the internet - no root required.
 
 Applications and addresses can individually be allowed or denied access to your Wi-Fi and/or mobile connection.
 
@@ -46,7 +46,7 @@ PRO features:
 
 &bull; Log all outgoing traffic; search and filter access attempts; export PCAP files to analyze traffic
 &bull; Allow/block individual addresses per application
-&bull; New application notifications; configure NetGuard directly from the notification
+&bull; New application notifications; configure QuietGuard directly from the notification
 &bull; Display network speed graph in a status bar notification
 &bull; Select from five additional themes in both light and dark version
 
@@ -54,9 +54,9 @@ There is no other no-root firewall offering all these features.
 
 If you have a question or problem, you can send an e-mail to marcel+netguard@faircode.eu
 
-If you like to help people less fluent in English, you can help translate NetGuard in your language: https://crowdin.com/project/netguard/
+If you like to help people less fluent in English, you can help translate QuietGuard in your language: https://crowdin.com/project/netguard/
 
-If you like to test new features, you can participate in the test program: https://play.google.com/apps/testing/com.bernaferari.renetguard
+If you like to test new features, you can participate in the test program: https://play.google.com/apps/testing/com.bernaferrari.quietguard
 
 All required permissions are described here: https://github.com/M66B/NetGuard/blob/master/FAQ.md#FAQ42
 

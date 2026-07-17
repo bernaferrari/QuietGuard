@@ -1,0 +1,72 @@
+package com.bernaferrari.quietguard
+
+import com.bernaferrari.quietguard.shared.R
+
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import androidx.glance.GlanceId
+import androidx.glance.GlanceModifier
+import androidx.glance.LocalContext
+import androidx.glance.action.ActionParameters
+import androidx.glance.action.clickable
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.action.ActionCallback
+import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.provideContent
+import androidx.glance.layout.Box
+import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.padding
+import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
+import com.bernaferrari.quietguard.data.PreferencesRepository
+import com.bernaferrari.quietguard.data.preferences
+
+class LockdownWidget : GlanceAppWidget() {
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        provideContent {
+            LockdownWidgetContent()
+        }
+    }
+}
+
+@Composable
+private fun LockdownWidgetContent() {
+    val context = LocalContext.current
+    val lockdown = context.preferences().getBoolean("lockdown", false)
+    val label =
+        if (lockdown) {
+            context.getString(R.string.widget_lockdown_enabled)
+        } else {
+            context.getString(R.string.widget_lockdown_disabled)
+        }
+    Box(
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .padding(12.dp)
+            .clickable(actionRunCallback<ToggleLockdownAction>()),
+    ) {
+        Text(
+            text = label,
+            style = TextStyle(),
+        )
+    }
+}
+
+class LockdownWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = LockdownWidget()
+}
+
+class ToggleLockdownAction : ActionCallback {
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
+        val lockdown = context.preferences().getBoolean("lockdown", false)
+        context.preferences().putBoolean("lockdown", !lockdown)
+        ServiceSinkhole.reload("widget", context, false)
+        Widgets.updateLockdown(context)
+    }
+}

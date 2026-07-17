@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard इंटरनेट तक पहुंच को अवरुद्ध करने के लिए सरल और उन्नत तरीके प्रदान करता है - कोई रूट आवश्यक नहीं है। ऐप्स और पते व्यक्तिगत रूप से आपके वाई-फाई और/या mobile कनेक्शन तक पहुंच की अनुमति या अस्वीकार किए जा सकते हैं।</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard इंटरनेट तक पहुंच को अवरुद्ध करने के लिए सरल और उन्नत तरीके प्रदान करता है - कोई रूट आवश्यक नहीं है। ऐप्स और पते व्यक्तिगत रूप से आपके वाई-फाई और/या mobile कनेक्शन तक पहुंच की अनुमति या अस्वीकार किए जा सकते हैं।</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard को Android 5.1 या बाद के संस्करण की आवश्यकता है</string>
+    <string name="app_android">QuietGuard को Android 5.1 या बाद के संस्करण की आवश्यकता है</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">गोपनीयता नीति</a></string>
     <string name="app_first">नेटगार्ड को विकसित करने और परीक्षण करने के लिए बहुत सावधानी बरती गई है, हालांकि यह गारंटी देना असंभव है कि नेटगार्ड हर डिवाइस पर सही ढंग से काम करेगा।</string>

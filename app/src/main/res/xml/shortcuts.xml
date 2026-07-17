@@ -8,8 +8,8 @@
         android:shortcutShortLabel="@string/menu_settings">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.bernaferari.renetguard.ActivitySettings"
-            android:targetPackage="com.bernaferari.renetguard" />
+            android:targetClass="com.bernaferrari.quietguard.ActivitySettings"
+            android:targetPackage="com.bernaferrari.quietguard" />
         <categories android:name="android.shortcut.settings" />
     </shortcut>
     <shortcut
@@ -21,8 +21,8 @@
         android:shortcutShortLabel="@string/menu_log">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.bernaferari.renetguard.ActivityLog"
-            android:targetPackage="com.bernaferari.renetguard" />
+            android:targetClass="com.bernaferrari.quietguard.ActivityLog"
+            android:targetPackage="com.bernaferrari.quietguard" />
         <categories android:name="android.shortcut.log" />
     </shortcut>
 </shortcuts>

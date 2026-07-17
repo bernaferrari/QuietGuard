@@ -87,8 +87,8 @@ room_markers=(
   "sqlite-wasm-worker"
   "WebWorkerSQLiteDriver"
   "createSQLiteWasmWorker"
-  "bernaferari.renetguard.data.db"
-  "bernaferari.renetguard.worker"
+  "bernaferrari.quietguard.data.db"
+  "bernaferrari.quietguard.worker"
 )
 room_hits=0
 for marker in "${room_markers[@]}"; do

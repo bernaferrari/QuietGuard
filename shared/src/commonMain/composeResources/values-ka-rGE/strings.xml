@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next გთავაზობთ ინტერნეტთან წვდომის დაბლოკვის მარტივ და მოწინავე გზებს - რუთი არ არის საჭირო. აპებსა და მისამართებს ინდივიდუალურად შეიძლება მიეცეთ ან აეკრძალოთ წვდომა თქვენს Wi-Fi და/ან მობილურ კავშირზე.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard გთავაზობთ ინტერნეტთან წვდომის დაბლოკვის მარტივ და მოწინავე გზებს - რუთი არ არის საჭირო. აპებსა და მისამართებს ინდივიდუალურად შეიძლება მიეცეთ ან აეკრძალოთ წვდომა თქვენს Wi-Fi და/ან მობილურ კავშირზე.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard-ს ესაჭიროება Android 5.1 ან უფრო ახალი</string>
+    <string name="app_android">QuietGuard-ს ესაჭიროება Android 5.1 ან უფრო ახალი</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">კონფიდენციალურობის პოლიტიკა</a></string>
-    <string name="app_first">დიდი ყურადღება დაეთმო NetGuard-ის შემუშავებას და ტესტირებას, თუმცა შეუძლებელია იმის გარანტია, რომ NetGuard გამართულად იმუშავებს ყველა მოწყობილობაზე.</string>
+    <string name="app_first">დიდი ყურადღება დაეთმო QuietGuard-ის შემუშავებას და ტესტირებას, თუმცა შეუძლებელია იმის გარანტია, რომ QuietGuard გამართულად იმუშავებს ყველა მოწყობილობაზე.</string>
     <string name="app_agree">ვეთანხმები</string>
     <string name="app_disagree">არ ვეთანხმები</string>
-    <string name="app_support">NetGuard-ს სჭირდება თქვენი დახმარება. შეეხეთ პრო ფუნქციების შესაძენად პროექტის გასაგრძელებლად.</string>
+    <string name="app_support">QuietGuard-ს სჭირდება თქვენი დახმარება. შეეხეთ პრო ფუნქციების შესაძენად პროექტის გასაგრძელებლად.</string>
     <string name="app_qap">
         Google აპირებდა აპლიკაციის ამოღებას Play Store-დან, რადგან ის ითხოვდა ნებართვას ყველა აპლიკაციის გამოსაკითხად.
         ხუთი საჩივარი და კარგი დასაბუთება იმის შესახებ, თუ რატომ არის საჭირო ეს ნებართვა, უარყოფილი იქნა.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">მხარდაჭერა</string>
 
     <string name="summary_install">სტატუსის ზოლზე შეტყობინების ჩვენება ახლად დაინსტალირებული აპების პირდაპირ კონფიგურირებისთვის (პრო ფუნქცია)</string>
-    <string name="summary_auto">ვიჯეტის გამოყენებით გათიშვის შემდეგ, ავტომატურად ჩართეთ NetGuard არჩეული წუთების შემდეგ (შეიყვანეთ ნული ამ ოფციის გასათიშად)</string>
+    <string name="summary_auto">ვიჯეტის გამოყენებით გათიშვის შემდეგ, ავტომატურად ჩართეთ QuietGuard არჩეული წუთების შემდეგ (შეიყვანეთ ნული ამ ოფციის გასათიშად)</string>
     <string name="summary_delay">ეკრანის გამორთვის შემდეგ, დატოვეთ ეკრანის ჩართვის წესები აქტიური არჩეული წუთების განმავლობაში (შეიყვანეთ ნული ამ ოფციის გასათიშად)</string>
     <string name="summary_update">შეამოწმეთ ახალი ვერსიები GitHub-ზე დღეში ორჯერ</string>
 
     <string name="summary_tethering">Android ვერსიიდან გამომდინარე, ინტერნეტის გაზიარება შეიძლება მუშაობდეს ან არა. გაზიარებული ტრაფიკის გაფილტვრა შეუძლებელია.</string>
     <string name="summary_subnet">ქვექსელის მარშრუტიზაციის ჩართვა; შეიძლება ჩართოს Wi-Fi ზარები, მაგრამ ასევე შეიძლება გამოიწვიოს ხარვეზები Android-ში და გაზარდოს ბატარეის მოხმარება</string>
     <string name="summary_lan">აპებისთვის ლოკალურ ქსელში არსებულ მისამართებთან დაკავშირების უფლების მიცემა (მაგ. 10.0.0.0/8, 172.16.0.0/12 და 192.168.0.0/16)</string>
-    <string name="summary_ip6">IPv6 ტრაფიკის NetGuard-ზე გადამისამართება, რათა შესაძლებელი იყოს მისი შერჩევითი დაშვება ან დაბლოკვა</string>
+    <string name="summary_ip6">IPv6 ტრაფიკის QuietGuard-ზე გადამისამართება, რათა შესაძლებელი იყოს მისი შერჩევითი დაშვება ან დაბლოკვა</string>
     <string name="summary_wifi_home">გამოიყენეთ Wi-Fi ქსელის წესები მხოლოდ არჩეული ქსელისთვის (გამოიყენეთ მობილური ქსელის წესები სხვა Wi-Fi ქსელებისთვის)</string>
     <string name="summary_metered">მობილური ქსელის წესების გამოყენება ლიმიტირებულ Wi-Fi ქსელებზე (ფასიანი, გაზიარებული)</string>
     <string name="summary_metered_2g">Wi-Fi ქსელის წესების გამოყენება 2G მონაცემთა კავშირებისთვის</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Wi-Fi ქსელის წესების გამოყენება LTE მონაცემთა კავშირებისთვის</string>
     <string name="summary_national_roaming">არ გამოიყენოთ როუმინგის წესები, როდესაც SIM და მობილური ქსელის ქვეყანა ერთია</string>
     <string name="summary_eu_roaming">არ გამოიყენოთ როუმინგის წესები, როდესაც SIM და მობილური ქსელის ქვეყანა ევროკავშირშია (როუმინგი როგორც სახლში)</string>
-    <string name="summary_call">NetGuard-ის გათიშვა შემომავალი ან გამავალი სატელეფონო ზარის დროს. ეს შეიძლება გამოყენებულ იქნას IP/Wi-Fi ზარების პრობლემების მოსაგვარებლად.</string>
+    <string name="summary_call">QuietGuard-ის გათიშვა შემომავალი ან გამავალი სატელეფონო ზარის დროს. ეს შეიძლება გამოყენებულ იქნას IP/Wi-Fi ზარების პრობლემების მოსაგვარებლად.</string>
 
     <string name="summary_system">სისტემური აპებისთვის წესების განსაზღვრა (ექსპერტებისთვის)</string>
     <string name="summary_log_app">აპების ინტერნეტთან წვდომის მცდელობების აღრიცხვა. ამან შეიძლება გამოიწვიოს ბატარეის დამატებითი მოხმარება.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">ნაგულისხმევი მნიშვნელობა არის 3 (NXDOMAIN), რაც ნიშნავს \'არარსებულ დომენს\'.</string>
     <string name="summary_validate">დომენის სახელი, რომელიც გამოიყენება ინტერნეტ კავშირის დასადასტურებლად 443 პორტზე (https).</string>
     <string name="summary_socks5_enabled">მხოლოდ TCP ტრაფიკი გაიგზავნება პროქსი სერვერზე</string>
-    <string name="summary_watchdog">პერიოდულად შეამოწმეთ NetGuard კვლავ მუშაობს თუ არა (შეიყვანეთ ნული ამ ოფციის გასათიშად). ამან შეიძლება გამოიწვიოს ბატარეის დამატებითი მოხმარება.</string>
+    <string name="summary_watchdog">პერიოდულად შეამოწმეთ QuietGuard კვლავ მუშაობს თუ არა (შეიყვანეთ ნული ამ ოფციის გასათიშად). ამან შეიძლება გამოიწვიოს ბატარეის დამატებითი მოხმარება.</string>
 
     <string name="summary_stats">ქსელის სიჩქარის გრაფიკის ჩვენება სტატუსის ზოლის შეტყობინებაში</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d დაშვებული, %2$d დაბლოკილი</string>
     <string name="msg_hosts">%1$d დაშვებული, %2$d დაბლოკილი, %3$d ჰოსტი</string>
     <string name="msg_waiting">მოვლენის მოლოდინი</string>
-    <string name="msg_disabled">NetGuard გათიშულია, გამოიყენეთ ზედა გადამრთველი მის ჩასართავად</string>
+    <string name="msg_disabled">QuietGuard გათიშულია, გამოიყენეთ ზედა გადამრთველი მის ჩასართავად</string>
     <string name="msg_notifications">შეეხეთ შეტყობინებების ნებართვის მისაცემად (წვდომის მცდელობის შეტყობინებებისთვის, შეცდომის შეტყობინებებისთვის და ა.შ.)</string>
-    <string name="msg_revoked">NetGuard გაითიშა, სავარაუდოდ სხვა VPN აპლიკაციის გამოყენების გამო</string>
+    <string name="msg_revoked">QuietGuard გაითიშა, სავარაუდოდ სხვა VPN აპლიკაციის გამოყენების გამო</string>
     <string name="msg_installed">\'%1$s\' დაინსტალირდა</string>
     <string name="msg_installed_n">დაინსტალირდა</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">მოქმედება დასრულდა</string>
     <string name="msg_invalid">გთხოვთ, შეამოწმოთ მნიშვნელობები და სცადოთ ხელახლა.</string>
     <string name="msg_export_failed">ექსპორტი ვერ მოხერხდა: %1$s</string>
-    <string name="msg_vpn">NetGuard იყენებს ლოკალურ VPN-ს ინტერნეტ ტრაფიკის გასაფილტრად.
+    <string name="msg_vpn">QuietGuard იყენებს ლოკალურ VPN-ს ინტერნეტ ტრაფიკის გასაფილტრად.
 ამ მიზეზით, გთხოვთ, დაუშვათ VPN კავშირი შემდეგ დიალოგში.
 თქვენი ინტერნეტ ტრაფიკი არ იგზავნება დისტანციურ VPN სერვერზე.</string>
-    <string name="msg_autostart">NetGuard ავტომატურად ვერ ჩაირთო. ეს სავარაუდოდ თქვენი Android ვერსიის ხარვეზის გამოა.</string>
+    <string name="msg_autostart">QuietGuard ავტომატურად ვერ ჩაირთო. ეს სავარაუდოდ თქვენი Android ვერსიის ხარვეზის გამოა.</string>
     <string name="msg_error">მოხდა მოულოდნელი შეცდომა: \'%s\'</string>
     <string name="msg_start_failed">Android-მა უარი თქვა VPN სერვისის გაშვებაზე ამ მომენტში. ეს სავარაუდოდ თქვენი Android ვერსიის ხარვეზის გამოა.</string>
-    <string name="msg_try">სცადეთ NetGuard</string>
+    <string name="msg_try">სცადეთ QuietGuard</string>
     <string name="msg_terms">შემოწირულობით თქვენ ეთანხმებით <a href="http://www.netguard.me/#terms">წესებს და პირობებს</a></string>
     <string name="msg_dimming">თუ შემდეგ დიალოგში ვერ აჭერთ OK-ს, სავარაუდოდ სხვა (ეკრანის დამბნელებელი) აპი მართავს ეკრანს.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; მბ/დღეში</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; მბ</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; გბ</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">სტაბილური შედეგებისთვის, NetGuard-ისთვის Android ბატარეის ოპტიმიზაცია უნდა გაითიშოს.
-\n\nშემდეგ დიალოგში აირჩიეთ \"ყველა აპი\" ზევით, დააჭირეთ NetGuard-ს სიაში და აირჩიეთ და დაადასტურეთ \"არ მოხდეს ოპტიმიზაცია\".</string>
-    <string name="msg_datasaving">სტაბილური შედეგებისთვის, NetGuard-ისთვის Android მონაცემთა დაზოგვის პარამეტრები უნდა გაითიშოს.
+    <string name="msg_doze">სტაბილური შედეგებისთვის, QuietGuard-ისთვის Android ბატარეის ოპტიმიზაცია უნდა გაითიშოს.
+\n\nშემდეგ დიალოგში აირჩიეთ \"ყველა აპი\" ზევით, დააჭირეთ QuietGuard-ს სიაში და აირჩიეთ და დაადასტურეთ \"არ მოხდეს ოპტიმიზაცია\".</string>
+    <string name="msg_datasaving">სტაბილური შედეგებისთვის, QuietGuard-ისთვის Android მონაცემთა დაზოგვის პარამეტრები უნდა გაითიშოს.
 \n\nშემდეგ დიალოგში ჩართეთ ოფციები \"ფონური მონაცემები\" და \"მონაცემთა შეუზღუდავი გამოყენება\".</string>
-    <string name="msg_filter">ფილტრაციის გამოყენება გამოიწვევს Android-ის მიერ მონაცემთა და ენერგიის მოხმარების NetGuard-ზე მიწერას - Android თვლის, რომ მონაცემებს და ენერგიას იყენებს NetGuard და არა ორიგინალი აპები.</string>
+    <string name="msg_filter">ფილტრაციის გამოყენება გამოიწვევს Android-ის მიერ მონაცემთა და ენერგიის მოხმარების QuietGuard-ზე მიწერას - Android თვლის, რომ მონაცემებს და ენერგიას იყენებს QuietGuard და არა ორიგინალი აპები.</string>
     <string name="msg_filter4">Android 4 მოითხოვს ფილტრაციის ჩართვას</string>
     <string name="msg_log_disabled">ტრაფიკის აღრიცხვა გათიშულია, გამოიყენეთ ზედა გადამრთველი ჩასართავად. აღრიცხვამ შეიძლება გაზარდოს ბატარეის მოხმარება.</string>
     <string name="msg_clear_rules">ეს ჩამოყრის წესებს და პირობებს მათ ნაგულისხმევ მნიშვნელობებზე</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">შევწყვიტოთ %1$s პორტი %2$d-ის გადამისამართება?</string>
     <string name="msg_metered">ქსელი ლიმიტირებულია</string>
     <string name="msg_inactive">აქტიური ინტერნეტ კავშირი არ არის</string>
-    <string name="msg_queue">NetGuard დაკავებულია</string>
+    <string name="msg_queue">QuietGuard დაკავებულია</string>
     <string name="msg_update">ხელმისაწვდომია განახლება, შეეხეთ გადმოსაწერად</string>
     <string name="msg_usage">შეგიძლიათ დაუშვათ (მწვანე) ან აკრძალოთ (წითელი) Wi-Fi ან მობილური ინტერნეტით წვდომა აპის გვერდით არსებულ ხატულებზე დაჭერით</string>
-    <string name="msg_fairemail">თუ დააინსტალირეთ NetGuard თქვენი კონფიდენციალურობის დასაცავად, შეიძლება დაგაინტერესოთ <a href="https://email.faircode.eu/">FairEmail</a>, ღია კოდის მქონე, კონფიდენციალურობაზე ორიენტირებული ელფოსტის აპლიკაცია.</string>
+    <string name="msg_fairemail">თუ დააინსტალირეთ QuietGuard თქვენი კონფიდენციალურობის დასაცავად, შეიძლება დაგაინტერესოთ <a href="https://email.faircode.eu/">FairEmail</a>, ღია კოდის მქონე, კონფიდენციალურობაზე ორიენტირებული ელფოსტის აპლიკაცია.</string>
     <string name="msg_whitelist">ინტერნეტთან წვდომა ნაგულისხმევად დაშვებულია (შავი სიის რეჟიმი), ამის შეცვლა შესაძლებელია პარამეტრებში</string>
     <string name="msg_push">შემომავალი (push) შეტყობინებები ძირითადად იმართება Play services-ის მიერ, რომელსაც ნაგულისხმევად აქვს ინტერნეტთან წვდომის უფლება</string>
     <string name="msg_system">ყველა (სისტემური) აპის მართვის ჩართვა შესაძლებელია პარამეტრებში</string>
     <string name="msg_issue">გთხოვთ, აღწეროთ პრობლემა და მიუთითოთ მისი დრო:</string>
     <string name="msg_vpn_cancelled">VPN კავშირი გაუქმდა\nხომ არ გაქვთ სხვა VPN დაყენებული მუდმივად ჩართულ რეჟიმში?</string>
-    <string name="msg_on">NetGuard-ის ჩართულ მდგომარეობაში მოწყობილობის გამორთვა, ავტომატურად ჩართავს NetGuard-ს მოწყობილობის ჩართვისას</string>
+    <string name="msg_on">QuietGuard-ის ჩართულ მდგომარეობაში მოწყობილობის გამორთვა, ავტომატურად ჩართავს QuietGuard-ს მოწყობილობის ჩართვისას</string>
     <string name="msg_unavailable">ეს ფუნქცია მიუწვდომელია Android-ის ამ ვერსიაზე</string>
     <string name="msg_always_on">სხვა VPN დაყენებულია როგორც მუდმივად ჩართული VPN</string>
-    <string name="msg_always_on_lockdown">გამორთეთ \"კავშირების დაბლოკვა VPN-ის გარეშე\" Android-ის VPN პარამეტრებში, რათა გამოიყენოთ NetGuard ფილტრაციის რეჟიმში</string>
-    <string name="msg_private_dns">გამორთეთ \"პირადი DNS\" Android-ის ქსელის პარამეტრებში, რათა გამოიყენოთ NetGuard ფილტრაციის რეჟიმში</string>
+    <string name="msg_always_on_lockdown">გამორთეთ \"კავშირების დაბლოკვა VPN-ის გარეშე\" Android-ის VPN პარამეტრებში, რათა გამოიყენოთ QuietGuard ფილტრაციის რეჟიმში</string>
+    <string name="msg_private_dns">გამორთეთ \"პირადი DNS\" Android-ის ქსელის პარამეტრებში, რათა გამოიყენოთ QuietGuard ფილტრაციის რეჟიმში</string>
 
     <string name="title_lockdown_enabled">ტრაფიკი დაბლოკილია</string>
     <string name="title_unmetered_allowed">ულიმიტო ტრაფიკი დაშვებულია</string>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next מספקת דרכים פשוטות ומתקדמות לחסימת גישה לאינטרנט - ללא צורך ברוט (root). ניתן לאפשר או למנוע גישה לחיבור ה-Wi-Fi ו/או הנתונים הניידים שלך באופן פרטני עבור כל אפליקציה וכתובת.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard מספקת דרכים פשוטות ומתקדמות לחסימת גישה לאינטרנט - ללא צורך ברוט (root). ניתן לאפשר או למנוע גישה לחיבור ה-Wi-Fi ו/או הנתונים הניידים שלך באופן פרטני עבור כל אפליקציה וכתובת.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard זקוק לגירסת אנדרואיד 5.1 ומעלה</string>
+    <string name="app_android">QuietGuard זקוק לגירסת אנדרואיד 5.1 ומעלה</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">מדיניות פרטיות</a></string>
-    <string name="app_first">תשומת לב רבה הושקעה בפיתוח ובדיקת NetGuard, אך לא ניתן לערוב ש-NetGuard תעבוד בצורה תקינה על כל המכשירים.</string>
+    <string name="app_first">תשומת לב רבה הושקעה בפיתוח ובדיקת QuietGuard, אך לא ניתן לערוב ש-QuietGuard תעבוד בצורה תקינה על כל המכשירים.</string>
     <string name="app_agree">אני מסכים</string>
     <string name="app_disagree">אני לא מסכים</string>
-    <string name="app_support">NetGuard זקוקה לעזרתך. לחץ כאן לרכישת תכונות Pro על מנת לשמור על הפרויקט פעיל.</string>
+    <string name="app_support">QuietGuard זקוקה לעזרתך. לחץ כאן לרכישת תכונות Pro על מנת לשמור על הפרויקט פעיל.</string>
     <string name="app_qap">
         גוגל עמדה להסיר את האפליקציה מחנות Play מכיוון שהיא ביקשה הרשאה לשאילתת כל האפליקציות.
         חמישה ערעורים ומתן הצדקה טובה מדוע הרשאה זו נחוצה נדחו.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">תמיכה</string>
 
     <string name="summary_install">הצג התראה בשורת המצב כדי להגדיר ישירות אפליקציות שהותקנו לאחרונה (תכונת Pro)</string>
-    <string name="summary_auto">לאחר השבתה באמצעות הווידג\'ט, הפעל מחדש את NetGuard אוטומטית לאחר מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
+    <string name="summary_auto">לאחר השבתה באמצעות הווידג\'ט, הפעל מחדש את QuietGuard אוטומטית לאחר מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
     <string name="summary_delay">לאחר כיבוי המסך, השאר את כללי \'מסך דולק\' פעילים למשך מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
     <string name="summary_update">בדוק גרסאות חדשות ב-GitHub פעמיים ביום</string>
 
     <string name="summary_tethering">בהתאם לגרסת האנדרואיד, שיתוף אינטרנט עשוי לעבוד או לא לעבוד. לא ניתן לסנן תעבורה משותפת.</string>
     <string name="summary_subnet">אפשר ניתוב רשת משנה; עשוי לאפשר שיחות Wi-Fi, אך עשוי גם לעורר באגים באנדרואיד ולהגדיל את השימוש בסוללה</string>
     <string name="summary_lan">אפשר לאפליקציות להתחבר לכתובות רשת מקומית, כמו 10.0.0.0/8, 172.16.0.0/12 ו-192.168.0.0/16</string>
-    <string name="summary_ip6">נתב תעבורת IP גרסה 6 אל NetGuard כדי שניתן יהיה לאפשר או לחסום אותה באופן סלקטיבי</string>
+    <string name="summary_ip6">נתב תעבורת IP גרסה 6 אל QuietGuard כדי שניתן יהיה לאפשר או לחסום אותה באופן סלקטיבי</string>
     <string name="summary_wifi_home">החל כללי רשת Wi-Fi עבור הרשת הנבחרת בלבד (החל כללי רשת סלולרית עבור רשתות Wi-Fi אחרות)</string>
     <string name="summary_metered">החל כללי רשת סלולרית על רשתות Wi-Fi מדודות (בתשלום, משותפות)</string>
     <string name="summary_metered_2g">החל כללי רשת Wi-Fi עבור חיבורי נתונים ב-2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">החל כללי רשת Wi-Fi עבור חיבורי נתונים ב-LTE</string>
     <string name="summary_national_roaming">אל תחול כללי נדידה כאשר המדינה של ה-SIM ושל הרשת הסלולרית זהה</string>
     <string name="summary_eu_roaming">אל תחול כללי נדידה כאשר המדינה של ה-SIM ושל הרשת הסלולרית היא בתוך האיחוד האירופי (נדידה כמו בבית)</string>
-    <string name="summary_call">השבת את NetGuard בשיחת טלפון נכנסת או יוצאת. ניתן להשתמש בזה כדי לעקוף בעיות שיחות IP/Wi-Fi.</string>
+    <string name="summary_call">השבת את QuietGuard בשיחת טלפון נכנסת או יוצאת. ניתן להשתמש בזה כדי לעקוף בעיות שיחות IP/Wi-Fi.</string>
 
     <string name="summary_system">הגדר כללים לאפליקציות מערכת (למומחים)</string>
     <string name="summary_log_app">תעד ניסיונות גישה לאינטרנט עבור אפליקציות. זה עשוי לגרום לשימוש נוסף בסוללה.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">ערך ברירת המחדל הוא 3 (NXDOMAIN), שפירושו \'דומיין לא קיים\'.</string>
     <string name="summary_validate">שם דומיין המשמש לאימות חיבור האינטרנט בפורט 443 (https).</string>
     <string name="summary_socks5_enabled">רק תעבורת TCP תישלח לשרת הפרוקסי</string>
-    <string name="summary_watchdog">בדוק מעת לעת אם NetGuard עדיין פועל (הזן אפס כדי להשבית אפשרות זו). זה עשוי לגרום לשימוש נוסף בסוללה.</string>
+    <string name="summary_watchdog">בדוק מעת לעת אם QuietGuard עדיין פועל (הזן אפס כדי להשבית אפשרות זו). זה עשוי לגרום לשימוש נוסף בסוללה.</string>
 
     <string name="summary_stats">הצג גרף מהירות רשת בהתראה בשורת המצב</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d מורשים, %2$d חסומים</string>
     <string name="msg_hosts">%1$d מורשים, %2$d חסומים, %3$d מארחים</string>
     <string name="msg_waiting">ממתין לאירוע</string>
-    <string name="msg_disabled">NetGuard מושבת, השתמש במתג למעלה כדי להפעיל את NetGuard</string>
+    <string name="msg_disabled">QuietGuard מושבת, השתמש במתג למעלה כדי להפעיל את QuietGuard</string>
     <string name="msg_notifications">הקש כדי להעניק הרשאות התראה (עבור התראות על ניסיונות גישה, הודעות שגיאה וכו\')</string>
-    <string name="msg_revoked">NetGuard הושבת, כנראה על ידי שימוש באפליקציה אחרת המבוססת על VPN</string>
+    <string name="msg_revoked">QuietGuard הושבת, כנראה על ידי שימוש באפליקציה אחרת המבוססת על VPN</string>
     <string name="msg_installed">\'%1$s\' הותקן</string>
     <string name="msg_installed_n">הותקן</string>
     <string name="msg_malware">ייתכן שמדובר בתוכנה זדונית: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">פעולה הושלמה</string>
     <string name="msg_invalid">אנא בדוק את הערכים ונסה שוב.</string>
     <string name="msg_export_failed">הייצוא נכשל: %1$s</string>
-    <string name="msg_vpn">NetGuard משתמש ב-VPN מקומי כדי לסנן תעבורת אינטרנט.
+    <string name="msg_vpn">QuietGuard משתמש ב-VPN מקומי כדי לסנן תעבורת אינטרנט.
 מסיבה זו, אנא אשר חיבור VPN בדיאלוג הבא.
 תעבורת האינטרנט שלך אינה נשלחת לשרת VPN מרוחק.</string>
-    <string name="msg_autostart">NetGuard לא הצליח להתחיל אוטומטית. זה כנראה בגלל באג בגרסת האנדרואיד שלך.</string>
+    <string name="msg_autostart">QuietGuard לא הצליח להתחיל אוטומטית. זה כנראה בגלל באג בגרסת האנדרואיד שלך.</string>
     <string name="msg_error">אירעה שגיאה בלתי צפויה: \'%s\'</string>
     <string name="msg_start_failed">אנדרואיד סירב להפעיל את שירות ה-VPN כרגע. זה כנראה בגלל באג בגרסת האנדרואיד שלך.</string>
-    <string name="msg_try">נסה את NetGuard</string>
+    <string name="msg_try">נסה את QuietGuard</string>
     <string name="msg_terms">על ידי תרומה אתה מסכים ל <a href="http://www.netguard.me/#terms">תנאים והגבלות</a></string>
     <string name="msg_dimming">אם אינך יכול ללחוץ על אישור בדיאלוג הבא, אפליקציה אחרת (עמעום מסך) כנראה מבצעת מניפולציה על המסך.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; מ\"ב/יום</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; מ\"ב</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; ג\"ב</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">לקבלת תוצאות עקביות, יש להשבית את אופטימיזציית הסוללה של אנדרואיד עבור NetGuard.
-\n\nבדיאלוג הבא, בחר \"כל האפליקציות\" למעלה, הקש על NetGuard ברשימה ובחר ואשר \"אל תבצע אופטימיזציה\".</string>
-    <string name="msg_datasaving">לקבלת תוצאות עקביות, יש להשבית את אפשרויות חיסכון בנתונים של אנדרואיד עבור NetGuard
+    <string name="msg_doze">לקבלת תוצאות עקביות, יש להשבית את אופטימיזציית הסוללה של אנדרואיד עבור QuietGuard.
+\n\nבדיאלוג הבא, בחר \"כל האפליקציות\" למעלה, הקש על QuietGuard ברשימה ובחר ואשר \"אל תבצע אופטימיזציה\".</string>
+    <string name="msg_datasaving">לקבלת תוצאות עקביות, יש להשבית את אפשרויות חיסכון בנתונים של אנדרואיד עבור QuietGuard
 \n\nבדיאלוג הבא, הפעל את האפשרויות \"נתוני רקע\" ו-\"שימוש בנתונים ללא הגבלה\"</string>
-    <string name="msg_filter">שימוש בסינון יגרום לאנדרואיד לייחס שימוש בנתונים ובחשמל ל-NetGuard - אנדרואיד מניח שהנתונים והחשמל נמצאים בשימוש על ידי NetGuard, במקום האפליקציות המקוריות</string>
+    <string name="msg_filter">שימוש בסינון יגרום לאנדרואיד לייחס שימוש בנתונים ובחשמל ל-QuietGuard - אנדרואיד מניח שהנתונים והחשמל נמצאים בשימוש על ידי QuietGuard, במקום האפליקציות המקוריות</string>
     <string name="msg_filter4">אנדרואיד 4 דורש הפעלת סינון</string>
     <string name="msg_log_disabled">תיעוד תעבורה מושבת, השתמש במתג למעלה כדי להפעיל תיעוד. תיעוד תעבורה עשוי לגרום לשימוש נוסף בסוללה.</string>
     <string name="msg_clear_rules">זה יאפס את הכללים והתנאים לערכי ברירת המחדל שלהם</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">להפסיק הפניה של %1$s פורט %2$d?</string>
     <string name="msg_metered">הרשת מדודה</string>
     <string name="msg_inactive">אין חיבור אינטרנט פעיל</string>
-    <string name="msg_queue">NetGuard עמוס</string>
+    <string name="msg_queue">QuietGuard עמוס</string>
     <string name="msg_update">עדכון זמין, הקש להורדה</string>
     <string name="msg_usage">תוכל לאפשר (ירקרק) או למנוע (אדמדם) גישה לאינטרנט ב-Wi-Fi או סלולרי על ידי הקשה על האייקונים ליד אפליקציה</string>
-    <string name="msg_fairemail">אם התקנת את NetGuard כדי להגן על פרטיותך, ייתכן שתתעניין גם ב-<a href="https://email.faircode.eu/">FairEmail</a>, אפליקציית אימייל בקוד פתוח, ידידותית לפרטיות</string>
+    <string name="msg_fairemail">אם התקנת את QuietGuard כדי להגן על פרטיותך, ייתכן שתתעניין גם ב-<a href="https://email.faircode.eu/">FairEmail</a>, אפליקציית אימייל בקוד פתוח, ידידותית לפרטיות</string>
     <string name="msg_whitelist">הגישה לאינטרנט מותרת כברירת מחדל (מצב רשימה שחורה), ניתן לשנות זאת בהגדרות</string>
     <string name="msg_push">הודעות נכנסות (push) מטופלות ברובן על ידי רכיב המערכת Play services, שמורשה לגישה לאינטרנט כברירת מחדל</string>
     <string name="msg_system">ניתן להפעיל ניהול של כל אפליקציות (המערכת) בהגדרות</string>
     <string name="msg_issue">אנא תאר את הבעיה וציין את זמן הבעיה:</string>
     <string name="msg_vpn_cancelled">חיבור VPN בוטל\nהאם הגדרת VPN אחר להיות VPN תמידי?</string>
-    <string name="msg_on">כיבוי המכשיר שלך עם NetGuard מופעל, יפעיל אוטומטית את NetGuard עם הפעלת המכשיר שלך</string>
+    <string name="msg_on">כיבוי המכשיר שלך עם QuietGuard מופעל, יפעיל אוטומטית את QuietGuard עם הפעלת המכשיר שלך</string>
     <string name="msg_unavailable">תכונה זו אינה זמינה בגרסת אנדרואיד זו</string>
     <string name="msg_always_on">VPN אחר מוגדר כ-Always-on VPN</string>
-    <string name="msg_always_on_lockdown">כבה את \"חסום חיבורים ללא VPN\" בהגדרות ה-VPN של אנדרואיד כדי להשתמש ב-NetGuard במצב סינון</string>
-    <string name="msg_private_dns">כבה את \"DNS פרטי\" בהגדרות הרשת של אנדרואיד כדי להשתמש ב-NetGuard במצב סינון</string>
+    <string name="msg_always_on_lockdown">כבה את \"חסום חיבורים ללא VPN\" בהגדרות ה-VPN של אנדרואיד כדי להשתמש ב-QuietGuard במצב סינון</string>
+    <string name="msg_private_dns">כבה את \"DNS פרטי\" בהגדרות הרשת של אנדרואיד כדי להשתמש ב-QuietGuard במצב סינון</string>
 
     <string name="title_lockdown_enabled">התעבורה נעולה</string>
     <string name="title_unmetered_allowed">תעבורה לא מדודה מותרת</string>

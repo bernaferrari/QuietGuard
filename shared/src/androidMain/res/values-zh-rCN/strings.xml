@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next 提供了简单和高级的方法来阻止应用连接互联网 - 无需 root 权限。您可以针对 Wi-Fi 和/或移动网络连接，单独允许或拒绝应用和地址的访问。</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard 提供了简单和高级的方法来阻止应用连接互联网 - 无需 root 权限。您可以针对 Wi-Fi 和/或移动网络连接，单独允许或拒绝应用和地址的访问。</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard 需要 Android 5.1 或更高版本</string>
+    <string name="app_android">QuietGuard 需要 Android 5.1 或更高版本</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">隐私政策</a></string>
-    <string name="app_first">我们在开发和测试 NetGuard 时非常用心，但无法保证 NetGuard 在每台设备上都能正常运行。</string>
+    <string name="app_first">我们在开发和测试 QuietGuard 时非常用心，但无法保证 QuietGuard 在每台设备上都能正常运行。</string>
     <string name="app_agree">我同意</string>
     <string name="app_disagree">我不同意</string>
-    <string name="app_support">NetGuard 需要您的帮助。点击购买专业功能以支持该项目继续运行。</string>
+    <string name="app_support">QuietGuard 需要您的帮助。点击购买专业功能以支持该项目继续运行。</string>
     <string name="app_qap">
         Google 曾打算从 Play 商店移除该应用，因为它请求了查询所有应用的权限。
         五次申诉及关于为何需要该权限的正当理由均被拒绝。
@@ -260,14 +260,14 @@
     <string name="setting_section_support">支持</string>
 
     <string name="summary_install">在状态栏显示通知，直接配置新安装的应用（专业版功能）</string>
-    <string name="summary_auto">在使用微件禁用后，根据选择的分钟数自动重新启用 NetGuard（输入零以禁用该选项）</string>
+    <string name="summary_auto">在使用微件禁用后，根据选择的分钟数自动重新启用 QuietGuard（输入零以禁用该选项）</string>
     <string name="summary_delay">关闭屏幕后，在选择的分钟数内保持 “屏幕开启时” 规则处于活动状态（输入零以禁用该选项）</string>
     <string name="summary_update">每天两次在 GitHub 上检查新版本</string>
 
     <string name="summary_tethering">取决于 Android 版本，网络共享（热点）可能正常工作，也可能无法工作。共享流量无法被过滤。</string>
     <string name="summary_subnet">启用子网路由；可能允许 Wi-Fi 通话，但也可能触发 Android 的 bug 并增加电池用量</string>
     <string name="summary_lan">允许应用连接到局域网地址，如 10.0.0.0/8、172.16.0.0/12 和 192.168.0.0/16</string>
-    <string name="summary_ip6">将 IPv6 流量路由到 NetGuard，以便有选择地允许或拦截</string>
+    <string name="summary_ip6">将 IPv6 流量路由到 QuietGuard，以便有选择地允许或拦截</string>
     <string name="summary_wifi_home">仅对所选网络应用 Wi-Fi 网络规则（对其他 Wi-Fi 网络应用移动网络规则）</string>
     <string name="summary_metered">对按流量计费（付费、网络共享）的 Wi-Fi 网络应用移动网络规则</string>
     <string name="summary_metered_2g">对 2G 数据连接应用 Wi-Fi 网络规则</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">对 LTE 数据连接应用 Wi-Fi 网络规则</string>
     <string name="summary_national_roaming">当 SIM 卡和移动网络国家相同时，不应用漫游规则</string>
     <string name="summary_eu_roaming">当 SIM 卡和移动网络国家都在欧盟境内时，不应用漫游规则（欧盟区内免漫游费）</string>
-    <string name="summary_call">在呼入或呼出电话时禁用 NetGuard。这可用于解决 IP/Wi-Fi 通话问题。</string>
+    <string name="summary_call">在呼入或呼出电话时禁用 QuietGuard。这可用于解决 IP/Wi-Fi 通话问题。</string>
 
     <string name="summary_system">定义系统应用的规则（供专家使用）</string>
     <string name="summary_log_app">记录应用的互联网访问尝试。这可能会导致额外的电池消耗。</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">默认值为 3 (NXDOMAIN)，意为 “域名不存在”。</string>
     <string name="summary_validate">用于在 443 (HTTPS) 端口验证互联网连接的域名。</string>
     <string name="summary_socks5_enabled">仅 TCP 流量会被发送到代理服务器</string>
-    <string name="summary_watchdog">定期检查 NetGuard 是否仍在运行（输入零以禁用该选项）。这可能会导致额外的电池消耗。</string>
+    <string name="summary_watchdog">定期检查 QuietGuard 是否仍在运行（输入零以禁用该选项）。这可能会导致额外的电池消耗。</string>
 
     <string name="summary_stats">在状态栏通知中显示网络速度图表</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d 个允许，%2$d 个拦截</string>
     <string name="msg_hosts">%1$d 个允许，%2$d 个拦截，%3$d 个 host</string>
     <string name="msg_waiting">正在等待事件</string>
-    <string name="msg_disabled">NetGuard 已禁用，请使用上方开关启用 NetGuard</string>
+    <string name="msg_disabled">QuietGuard 已禁用，请使用上方开关启用 QuietGuard</string>
     <string name="msg_notifications">点击以授予通知权限（用于访问尝试通知、错误信息等）</string>
-    <string name="msg_revoked">NetGuard 已被禁用，可能是因为开启了另一个基于 VPN 的应用</string>
+    <string name="msg_revoked">QuietGuard 已被禁用，可能是因为开启了另一个基于 VPN 的应用</string>
     <string name="msg_installed">“%1$s” 已安装</string>
     <string name="msg_installed_n">已安装</string>
     <string name="msg_malware">可能存在恶意软件：\'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">操作已完成</string>
     <string name="msg_invalid">请检查数值并重试。</string>
     <string name="msg_export_failed">导出失败：%1$s</string>
-    <string name="msg_vpn">NetGuard 使用本地 VPN 过滤互联网流量。
+    <string name="msg_vpn">QuietGuard 使用本地 VPN 过滤互联网流量。
 因此，请在接下来的对话框中允许 VPN 连接。
 您的流量不会被发送到远程 VPN 服务器。</string>
-    <string name="msg_autostart">NetGuard 无法自动启动。这很可能是您的 Android 版本中的一个 bug。</string>
+    <string name="msg_autostart">QuietGuard 无法自动启动。这很可能是您的 Android 版本中的一个 bug。</string>
     <string name="msg_error">发生了意外错误：“%s”</string>
     <string name="msg_start_failed">Android 此时拒绝启动 VPN 服务。这很可能是您的 Android 版本中的一个 bug。</string>
-    <string name="msg_try">试用 NetGuard</string>
+    <string name="msg_try">试用 QuietGuard</string>
     <string name="msg_terms">通过捐赠，您同意 <a href="http://www.netguard.me/#terms">条款和条件</a></string>
     <string name="msg_dimming">如果您无法在接下来的对话框中按下确定，很可能是另一个（屏幕调光）应用在操控屏幕。</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/天</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">为了获得一致的结果，应为 NetGuard 禁用 Android 电池优化。
-\n\n在接下来的对话框中，在顶部选择 “所有应用”，在列表中点击 NetGuard 并选择并确认 “不优化”。</string>
-    <string name="msg_datasaving">为了获得一致的结果，应为 NetGuard 禁用 Android 流量节省选项。
+    <string name="msg_doze">为了获得一致的结果，应为 QuietGuard 禁用 Android 电池优化。
+\n\n在接下来的对话框中，在顶部选择 “所有应用”，在列表中点击 QuietGuard 并选择并确认 “不优化”。</string>
+    <string name="msg_datasaving">为了获得一致的结果，应为 QuietGuard 禁用 Android 流量节省选项。
 \n\n在接下来的对话框中，开启 “背景数据” 和 “无限制流量使用” 选项。</string>
-    <string name="msg_filter">使用过滤会导致 Android 将数据和功耗归于 NetGuard - Android 认为数据和电量是由 NetGuard 消耗的，而不是原始应用。</string>
+    <string name="msg_filter">使用过滤会导致 Android 将数据和功耗归于 QuietGuard - Android 认为数据和电量是由 QuietGuard 消耗的，而不是原始应用。</string>
     <string name="msg_filter4">Android 4 需要启用过滤</string>
     <string name="msg_log_disabled">流量日志已禁用，请使用上方开关启用。日志记录可能会导致额外的电池消耗。</string>
     <string name="msg_clear_rules">这将把规则和条件重置为默认值</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">停止从 %1$s 端口 %2$d 的转发吗？</string>
     <string name="msg_metered">网络按流量计费</string>
     <string name="msg_inactive">无活跃互联网连接</string>
-    <string name="msg_queue">NetGuard 繁忙</string>
+    <string name="msg_queue">QuietGuard 繁忙</string>
     <string name="msg_update">有可用更新，点击下载</string>
     <string name="msg_usage">您可以通过点击应用旁的图标来允许（绿色）或拒绝（红色）Wi-Fi 或移动互联网访问</string>
-    <string name="msg_fairemail">如果您安装 NetGuard 是为了保护隐私，您可能也会对 <a href="https://email.faircode.eu/">FairEmail</a> 感兴趣，这是一个开源、隐私友好的电子邮件应用。</string>
+    <string name="msg_fairemail">如果您安装 QuietGuard 是为了保护隐私，您可能也会对 <a href="https://email.faircode.eu/">FairEmail</a> 感兴趣，这是一个开源、隐私友好的电子邮件应用。</string>
     <string name="msg_whitelist">默认允许互联网访问（黑名单模式），可在设置中更改</string>
     <string name="msg_push">传入（推送）消息主要由系统组件 Play 服务处理，该服务默认允许互联网访问</string>
     <string name="msg_system">可以在设置中开启管理所有（系统）应用</string>
     <string name="msg_issue">请描述问题并注明发生时间：</string>
     <string name="msg_vpn_cancelled">VPN 连接已取消\n您是否将另一个 VPN 配置为 “始终开启”？</string>
-    <string name="msg_on">在 NetGuard 启用的情况下关机，将在开机时自动启动 NetGuard</string>
+    <string name="msg_on">在 QuietGuard 启用的情况下关机，将在开机时自动启动 QuietGuard</string>
     <string name="msg_unavailable">该功能在此 Android 版本上不可用</string>
     <string name="msg_always_on">另一个 VPN 被设置为 “始终开启”</string>
-    <string name="msg_always_on_lockdown">在 Android VPN 设置中关闭 “在没有 VPN 时拦截连接”，以便在过滤模式下使用 NetGuard</string>
-    <string name="msg_private_dns">在 Android 网络设置中关闭 “私人 DNS”，以便在过滤模式下使用 NetGuard</string>
+    <string name="msg_always_on_lockdown">在 Android VPN 设置中关闭 “在没有 VPN 时拦截连接”，以便在过滤模式下使用 QuietGuard</string>
+    <string name="msg_private_dns">在 Android 网络设置中关闭 “私人 DNS”，以便在过滤模式下使用 QuietGuard</string>
 
     <string name="title_lockdown_enabled">流量已锁定</string>
     <string name="title_unmetered_allowed">允许非计费流量</string>

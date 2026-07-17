@@ -55,19 +55,19 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         return -1;
     }
 
-    const char *packet = "com/bernaferari/renetguard/Packet";
+    const char *packet = "com/bernaferrari/quietguard/Packet";
     clsPacket = jniGlobalRef(env, jniFindClass(env, packet));
     ng_add_alloc(clsPacket, "clsPacket");
 
-    const char *allowed = "com/bernaferari/renetguard/Allowed";
+    const char *allowed = "com/bernaferrari/quietguard/Allowed";
     clsAllowed = jniGlobalRef(env, jniFindClass(env, allowed));
     ng_add_alloc(clsAllowed, "clsAllowed");
 
-    const char *rr = "com/bernaferari/renetguard/ResourceRecord";
+    const char *rr = "com/bernaferrari/quietguard/ResourceRecord";
     clsRR = jniGlobalRef(env, jniFindClass(env, rr));
     ng_add_alloc(clsRR, "clsRR");
 
-    const char *usage = "com/bernaferari/renetguard/Usage";
+    const char *usage = "com/bernaferrari/quietguard/Usage";
     clsUsage = jniGlobalRef(env, jniFindClass(env, usage));
     ng_add_alloc(clsUsage, "clsUsage");
 
@@ -558,7 +558,7 @@ void log_packet(const struct arguments *args, jobject jpacket) {
     jclass clsService = (*args->env)->GetObjectClass(args->env, args->instance);
     ng_add_alloc(clsService, "clsService");
 
-    const char *signature = "(Lcom/bernaferari/renetguard/Packet;)V";
+    const char *signature = "(Lcom/bernaferrari/quietguard/Packet;)V";
     if (midLogPacket == NULL)
         midLogPacket = jniGetMethodID(args->env, clsService, "logPacket", signature);
 
@@ -599,11 +599,11 @@ void dns_resolved(const struct arguments *args,
     jclass clsService = (*args->env)->GetObjectClass(args->env, args->instance);
     ng_add_alloc(clsService, "clsService");
 
-    const char *signature = "(Lcom/bernaferari/renetguard/ResourceRecord;)V";
+    const char *signature = "(Lcom/bernaferrari/quietguard/ResourceRecord;)V";
     if (midDnsResolved == NULL)
         midDnsResolved = jniGetMethodID(args->env, clsService, "dnsResolved", signature);
 
-    const char *rr = "com/bernaferari/renetguard/ResourceRecord";
+    const char *rr = "com/bernaferrari/quietguard/ResourceRecord";
     if (midInitRR == NULL)
         midInitRR = jniGetMethodID(args->env, clsRR, "<init>", "()V");
 
@@ -759,7 +759,7 @@ struct allowed *is_address_allowed(const struct arguments *args, jobject jpacket
     jclass clsService = (*args->env)->GetObjectClass(args->env, args->instance);
     ng_add_alloc(clsService, "clsService");
 
-    const char *signature = "(Lcom/bernaferari/renetguard/Packet;)Lcom/bernaferari/renetguard/Allowed;";
+    const char *signature = "(Lcom/bernaferrari/quietguard/Packet;)Lcom/bernaferrari/quietguard/Allowed;";
     if (midIsAddressAllowed == NULL)
         midIsAddressAllowed = jniGetMethodID(args->env, clsService, "isAddressAllowed", signature);
 
@@ -850,7 +850,7 @@ jobject create_packet(const struct arguments *args,
         env->SetByteArrayRegion (ret, 0, 3, b);
      */
 
-    const char *packet = "com/bernaferari/renetguard/Packet";
+    const char *packet = "com/bernaferrari/quietguard/Packet";
     if (midInitPacket == NULL)
         midInitPacket = jniGetMethodID(env, clsPacket, "<init>", "()V");
     jobject jpacket = jniNewObject(env, clsPacket, midInitPacket, packet);
@@ -938,11 +938,11 @@ void account_usage(const struct arguments *args, jint version, jint protocol,
     jclass clsService = (*args->env)->GetObjectClass(args->env, args->instance);
     ng_add_alloc(clsService, "clsService");
 
-    const char *signature = "(Lcom/bernaferari/renetguard/Usage;)V";
+    const char *signature = "(Lcom/bernaferrari/quietguard/Usage;)V";
     if (midAccountUsage == NULL)
         midAccountUsage = jniGetMethodID(args->env, clsService, "accountUsage", signature);
 
-    const char *usage = "com/bernaferari/renetguard/Usage";
+    const char *usage = "com/bernaferrari/quietguard/Usage";
     if (midInitUsage == NULL)
         midInitUsage = jniGetMethodID(args->env, clsUsage, "<init>", "()V");
 

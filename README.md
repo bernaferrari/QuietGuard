@@ -1,7 +1,7 @@
-# Re-NetGuard (Compose + M3)
+# QuietGuard (Compose + M3)
 
 <p align="center">
-  <img src="assets/more-light.png" alt="Re-NetGuard overview" width="980">
+  <img src="assets/more-light.png" alt="QuietGuard overview" width="980">
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 
 ---
 
-Re-NetGuard is a modernized fork of the original [NetGuard](https://github.com/M66B/NetGuard) project by Marcel Bokhorst. It preserves NetGuard’s core philosophy—no-root, VPN-based filtering, local-first processing, and no account lock-in—while adding a refreshed Material 3 Expressive Android UX with improved workflows for logs, rules, and settings.
+QuietGuard is a modernized fork of the original [NetGuard](https://github.com/M66B/NetGuard) project by Marcel Bokhorst. It preserves NetGuard’s core philosophy—no-root, VPN-based filtering, local-first processing, and no account lock-in—while adding a refreshed Material 3 Expressive Android UX with improved workflows for logs, rules, and settings.
 
 ## 🚀 Key Features
 
@@ -30,7 +30,7 @@ Re-NetGuard is a modernized fork of the original [NetGuard](https://github.com/M
 
 ![Comparison](assets/comparison.png)
 
-## ✨ What's New in Re-NetGuard
+## ✨ What's New in QuietGuard
 
 If you're coming from the original NetGuard, here are the major differences you'll notice:
 
@@ -43,13 +43,13 @@ If you're coming from the original NetGuard, here are the major differences you'
 
 ## ⚙️ How It Works
 
-Re-NetGuard operates as a local-only application. It uses Android's built-in `VpnService` to route your device's traffic through a local sinkhole. 
+QuietGuard operates as a local-only application. It uses Android's built-in `VpnService` to route your device's traffic through a local sinkhole.
 
 Because the app routes the traffic *internally on your device*, **it never sends your data to an external proxy or remote server**. The application can inspect the outbound connection attempts and selectively drop or allow packets based on the rules you set for each app, providing a true on-device firewall without requiring root access.
 
 ## 📱 Adaptive Layouts
 
-Re-NetGuard dynamically scales to take advantage of larger screens, offering a dedicated two-pane layout for comfortable viewing on tablets and foldables.
+QuietGuard dynamically scales to take advantage of larger screens, offering a dedicated two-pane layout for comfortable viewing on tablets and foldables.
 
 <p align="center">
   <img src="assets/foldable.png" alt="Foldable experience" width="980">
@@ -119,5 +119,5 @@ Pushes to `main` run `.github/workflows/deploy-web-vercel.yml`, which builds the
 - **License:** GNU GPLv3. See [LICENSE](LICENSE) for details.
 
 <p align="center">
-  <img src="assets/more-dark.png" alt="Re-NetGuard Dark Mode variant" width="980">
+  <img src="assets/more-dark.png" alt="QuietGuard Dark Mode variant" width="980">
 </p>

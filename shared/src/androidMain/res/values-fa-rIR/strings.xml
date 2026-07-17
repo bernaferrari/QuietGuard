@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard راهکارهای ساده و پیشرفته‌ای برای مسدود کردن دسترسی به اینترنت فراهم می‌کند - بدون نیاز به روت بودن گوشی. هرکدام از برنامه‌ها و سایتها می‌توانند جداگانه به وای‌فای/داده موبایل دسترسی مجاز یا غیر مجاز داشته باشند.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard راهکارهای ساده و پیشرفته‌ای برای مسدود کردن دسترسی به اینترنت فراهم می‌کند - بدون نیاز به روت بودن گوشی. هرکدام از برنامه‌ها و سایتها می‌توانند جداگانه به وای‌فای/داده موبایل دسترسی مجاز یا غیر مجاز داشته باشند.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard نیاز به اندروید 5.1 یا بالاتر دارد</string>
+    <string name="app_android">QuietGuard نیاز به اندروید 5.1 یا بالاتر دارد</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">سیاست حفظ حریم خصوصی</a></string>
-    <string name="app_first">مراقبتی عالی برای توسعه و آزمایش NetGuard بکار برده شده است، با این حال تضمین اینکه NetGuard بر روی هر دستگاهی به درستی کار خواد کرد غیرممکن است.</string>
+    <string name="app_first">مراقبتی عالی برای توسعه و آزمایش QuietGuard بکار برده شده است، با این حال تضمین اینکه QuietGuard بر روی هر دستگاهی به درستی کار خواد کرد غیرممکن است.</string>
     <string name="app_agree">می‌پذیرم</string>
     <string name="app_disagree">نمی‌پذیرم</string>
-    <string name="app_support">NetGuard به کمک شما نیاز دارد. برای خرید ویژگی‌های حرفه‌ای به‌خاطر یاری پروژه ضربه بزنید.</string>
+    <string name="app_support">QuietGuard به کمک شما نیاز دارد. برای خرید ویژگی‌های حرفه‌ای به‌خاطر یاری پروژه ضربه بزنید.</string>
     <string name="app_qap">
         گوگل قصد داشت این برنامه را از فروشگاه Play حذف کند زیرا درخواست مجوزی برای جستجوی تمام برنامه‌ها داشت.
         پنج درخواست تجدیدنظر و ارائه توجیه مناسب در مورد علت نیاز به این مجوز رد شد.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">پشتیبانی</string>
 
     <string name="summary_install">نمایش اعلان نوار وضعیت برای پیکربندی مستقیم برنامه‌های جدیداً نصب شده (ویژگی حرفه‌ای)</string>
-    <string name="summary_auto">پس از غیرفعال کردن با ویجت، فعال‌سازی خودکار NetGuard پس از زمان مشخص شده (0 برای غیرفعال کردن)</string>
+    <string name="summary_auto">پس از غیرفعال کردن با ویجت، فعال‌سازی خودکار QuietGuard پس از زمان مشخص شده (0 برای غیرفعال کردن)</string>
     <string name="summary_delay">پس از خاموش شدن صفحه، قوانین روشن بودن صفحه را برای زمان مشخص شده فعال نگه دار (0 برای غیرفعال کردن)</string>
     <string name="summary_update">بررسی برای نسخه‌های جدید در GitHub دو بار در روز</string>
 
     <string name="summary_tethering">بسته به نسخه اندروید، اشتراک‌گذاری اینترنت ممکن است کار کند یا نکند. ترافیک اشتراک‌گذاری شده قابل فیلتر شدن نیست.</string>
     <string name="summary_subnet">فعال کردن مسیریابی زیرشبکه؛ ممکن است تماس وای‌فای را فعال کند، اما ممکن است باعث ایجاد باگ در اندروید و افزایش مصرف باتری شود</string>
     <string name="summary_lan">اجازه به برنامه‌ها برای اتصال به آدرس‌های شبکه محلی (مانند 10.0.0.0/8، 172.16.0.0/12 و 192.168.0.0/16)</string>
-    <string name="summary_ip6">هدایت ترافیک IPv6 به NetGuard برای اجازه یا مسدود کردن انتخابی</string>
+    <string name="summary_ip6">هدایت ترافیک IPv6 به QuietGuard برای اجازه یا مسدود کردن انتخابی</string>
     <string name="summary_wifi_home">اعمال قوانین وای‌فای فقط برای شبکه‌های انتخابی (اعمال قوانین داده موبایل برای سایر شبکه‌ها)</string>
     <string name="summary_metered">اعمال قوانین داده موبایل برای شبکه‌های وای‌فای محدود (پولی، اشتراک‌گذاری شده)</string>
     <string name="summary_metered_2g">اعمال قوانین شبکه وای‌فای برای اتصالات داده 2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">اعمال قوانین شبکه وای‌فای برای اتصالات داده LTE</string>
     <string name="summary_national_roaming">عدم اعمال قوانین رومینگ وقتی کشور سیم‌کارت و شبکه موبایل یکی است</string>
     <string name="summary_eu_roaming">عدم اعمال قوانین رومینگ وقتی کشور سیم‌کارت و شبکه موبایل در اتحادیه اروپا هستند (رومینگ مثل خانه)</string>
-    <string name="summary_call">غیرفعال کردن NetGuard هنگام تماس‌های تلفنی برای جلوگیری از مشکلات تماس IP/Wi-Fi.</string>
+    <string name="summary_call">غیرفعال کردن QuietGuard هنگام تماس‌های تلفنی برای جلوگیری از مشکلات تماس IP/Wi-Fi.</string>
 
     <string name="summary_system">تعیین قوانین برای برنامه‌های سیستمی (برای کارشناسان)</string>
     <string name="summary_log_app">ثبت تلاش‌های برنامه‌ها برای دسترسی به اینترنت. ممکن است باعث مصرف اضافی باتری شود.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">مقدار پیش‌فرض 3 (NXDOMAIN) است که به معنای \'دامنه وجود ندارد\' است.</string>
     <string name="summary_validate">نام دامنه مورد استفاده برای تایید اتصال اینترنت در درگاه 443 (https).</string>
     <string name="summary_socks5_enabled">فقط ترافیک TCP به سرور پروکسی فرستاده خواهد شد</string>
-    <string name="summary_watchdog">بررسی دوره‌ای برای اطمینان از در حال اجرا بودن NetGuard (0 برای غیرفعال کردن). ممکن است باعث مصرف اضافی باتری شود.</string>
+    <string name="summary_watchdog">بررسی دوره‌ای برای اطمینان از در حال اجرا بودن QuietGuard (0 برای غیرفعال کردن). ممکن است باعث مصرف اضافی باتری شود.</string>
 
     <string name="summary_stats">نمایش نمودار سرعت شبکه در اعلان نوار وضعیت</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d مجاز، %2$d مسدود</string>
     <string name="msg_hosts">%1$d مجاز، %2$d مسدود، %3$d میزبان</string>
     <string name="msg_waiting">در انتظار رویداد</string>
-    <string name="msg_disabled">NetGuard غیرفعال است، از کلید بالا برای فعال‌سازی استفاده کنید</string>
+    <string name="msg_disabled">QuietGuard غیرفعال است، از کلید بالا برای فعال‌سازی استفاده کنید</string>
     <string name="msg_notifications">برای اعطای مجوزهای اعلان ضربه بزنید (برای اعلان تلاش‌های دسترسی، پیام‌های خطا و غیره)</string>
-    <string name="msg_revoked">NetGuard غیرفعال شده است، احتمالاً توسط یک برنامه VPN دیگر</string>
+    <string name="msg_revoked">QuietGuard غیرفعال شده است، احتمالاً توسط یک برنامه VPN دیگر</string>
     <string name="msg_installed">\'%1$s\' نصب شد</string>
     <string name="msg_installed_n">نصب شده است</string>
     <string name="msg_malware">بدافزار احتمالی: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">عملیات انجام شد</string>
     <string name="msg_invalid">لطفاً مقادیر را بررسی کرده و دوباره تلاش کنید.</string>
     <string name="msg_export_failed">خروجی ناموفق: %1$s</string>
-    <string name="msg_vpn">NetGuard از یک VPN محلی برای فیلتر ترافیک استفاده می‌کند.
+    <string name="msg_vpn">QuietGuard از یک VPN محلی برای فیلتر ترافیک استفاده می‌کند.
 لطفاً در دیالوگ بعدی اجازه اتصال VPN را بدهید.
 ترافیک شما به سرور VPN راه دور فرستاده نمی‌شود.</string>
-    <string name="msg_autostart">NetGuard نتوانست خودکار اجرا شود. احتمالاً به دلیل باگی در نسخه اندروید شماست.</string>
+    <string name="msg_autostart">QuietGuard نتوانست خودکار اجرا شود. احتمالاً به دلیل باگی در نسخه اندروید شماست.</string>
     <string name="msg_error">خطای غیرمنتظره: \'%s\'</string>
     <string name="msg_start_failed">اندروید اجازه شروع سرویس VPN را نداد. احتمالاً به دلیل باگی در نسخه اندروید شماست.</string>
-    <string name="msg_try">امتحان NetGuard</string>
+    <string name="msg_try">امتحان QuietGuard</string>
     <string name="msg_terms">با اهدا کردن شما با <a href="http://www.netguard.me/#terms">شرایط و ضوابط</a> موافقت می‌کنید</string>
     <string name="msg_dimming">اگر نمی‌توانید دکمه تأیید را بزنید، احتمالاً برنامه‌ای برای تغییر نور یا رنگ صفحه در حال اجراست.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; مگابایت/روز</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; مگابایت</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; گیگابایت</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">برای عملکرد پایدار، بهینه‌سازی باتری باید برای NetGuard غیرفعال شود.
-\n\nدر دیالوگ بعدی، \"همه برنامه‌ها\" را انتخاب کرده، روی NetGuard بزنید و \"بهینه نشود\" را تایید کنید.</string>
-    <string name="msg_datasaving">برای عملکرد پایدار، گزینه‌های صرفه‌جویی داده اندروید باید برای NetGuard غیرفعال شوند.
+    <string name="msg_doze">برای عملکرد پایدار، بهینه‌سازی باتری باید برای QuietGuard غیرفعال شود.
+\n\nدر دیالوگ بعدی، \"همه برنامه‌ها\" را انتخاب کرده، روی QuietGuard بزنید و \"بهینه نشود\" را تایید کنید.</string>
+    <string name="msg_datasaving">برای عملکرد پایدار، گزینه‌های صرفه‌جویی داده اندروید باید برای QuietGuard غیرفعال شوند.
 \n\nدر دیالوگ بعدی، \"داده‌های پس‌زمینه\" و \"استفاده نامحدود از داده\" را فعال کنید.</string>
-    <string name="msg_filter">استفاده از فیلتر باعث می‌شود اندروید مصرف داده و باتری را به NetGuard نسبت دهد، نه برنامه‌های اصلی.</string>
+    <string name="msg_filter">استفاده از فیلتر باعث می‌شود اندروید مصرف داده و باتری را به QuietGuard نسبت دهد، نه برنامه‌های اصلی.</string>
     <string name="msg_filter4">اندروید 4 نیاز به فعال بودن فیلتر دارد</string>
     <string name="msg_log_disabled">گزارش ترافیک غیرفعال است، برای فعال‌سازی از کلید بالا استفاده کنید. ممکن است باعث مصرف اضافی باتری شود.</string>
     <string name="msg_clear_rules">این کار قوانین و شرایط را به مقادیر پیش‌فرض باز می‌گرداند</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">توقف هدایت %1$s پورت %2$d؟</string>
     <string name="msg_metered">شبکه دارای محدودیت مصرف است</string>
     <string name="msg_inactive">اتصال اینترنت فعالی وجود ندارد</string>
-    <string name="msg_queue">NetGuard مشغول است</string>
+    <string name="msg_queue">QuietGuard مشغول است</string>
     <string name="msg_update">به‌روزرسانی موجود است، برای دانلود ضربه بزنید</string>
     <string name="msg_usage">می‌توانید با زدن روی آیکون‌های کنار هر برنامه، دسترسی وای‌فای یا داده موبایل را مجاز (سبز) یا ممنوع (قرمز) کنید</string>
-    <string name="msg_fairemail">اگر برای حریم خصوصی از NetGuard استفاده می‌کنید، شاید به <a href="https://email.faircode.eu/">FairEmail</a> (متن‌باز و حامی حریم خصوصی) هم علاقه‌مند باشید.</string>
+    <string name="msg_fairemail">اگر برای حریم خصوصی از QuietGuard استفاده می‌کنید، شاید به <a href="https://email.faircode.eu/">FairEmail</a> (متن‌باز و حامی حریم خصوصی) هم علاقه‌مند باشید.</string>
     <string name="msg_whitelist">دسترسی به اینترنت به طور پیش‌فرض مجاز است (حالت لیست سیاه)، قابل تغییر در تنظیمات</string>
     <string name="msg_push">پیام‌های Push توسط سرویس‌های Play مدیریت می‌شوند که به طور پیش‌فرض اجازه دسترسی دارند</string>
     <string name="msg_system">مدیریت برنامه‌های سیستمی را می‌توان در تنظیمات فعال کرد</string>
     <string name="msg_issue">لطفاً مشکل و زمان وقوع آن را توضیح دهید:</string>
     <string name="msg_vpn_cancelled">اتصال VPN لغو شد. آیا برنامه VPN دیگری را در حالت همیشه روشن تنظیم کرده‌اید؟</string>
-    <string name="msg_on">خاموش کردن دستگاه در حالی که NetGuard فعال است، باعث می‌شود هنگام روشن شدن دستگاه به طور خودکار اجرا شود</string>
+    <string name="msg_on">خاموش کردن دستگاه در حالی که QuietGuard فعال است، باعث می‌شود هنگام روشن شدن دستگاه به طور خودکار اجرا شود</string>
     <string name="msg_unavailable">این ویژگی در این نسخه اندروید در دسترس نیست</string>
     <string name="msg_always_on">VPN دیگری در حالت همیشه روشن تنظیم شده است</string>
-    <string name="msg_always_on_lockdown">برای استفاده از حالت فیلتر NetGuard، گزینه \"مسدود کردن اتصالات بدون VPN\" را در تنظیمات اندروید خاموش کنید</string>
-    <string name="msg_private_dns">برای استفاده از حالت فیلتر NetGuard، گزینه \"DNS خصوصی\" را در تنظیمات شبکه اندروید خاموش کنید</string>
+    <string name="msg_always_on_lockdown">برای استفاده از حالت فیلتر QuietGuard، گزینه \"مسدود کردن اتصالات بدون VPN\" را در تنظیمات اندروید خاموش کنید</string>
+    <string name="msg_private_dns">برای استفاده از حالت فیلتر QuietGuard، گزینه \"DNS خصوصی\" را در تنظیمات شبکه اندروید خاموش کنید</string>
 
     <string name="title_lockdown_enabled">ترافیک قفل شده است</string>
     <string name="title_unmetered_allowed">ترافیک نامحدود مجاز است</string>

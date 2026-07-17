@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next nabízí jednoduché i pokročilé způsoby pro blokování přístupu k Internetu - vše bez potřeby rootu. Aplikacím a adresám lze individuálně povolit či zakázat přístup k Vašemu Wi-Fi a/nebo datovému připojení.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard nabízí jednoduché i pokročilé způsoby pro blokování přístupu k Internetu - vše bez potřeby rootu. Aplikacím a adresám lze individuálně povolit či zakázat přístup k Vašemu Wi-Fi a/nebo datovému připojení.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard vyžaduje Android 5.1 nebo novější</string>
+    <string name="app_android">QuietGuard vyžaduje Android 5.1 nebo novější</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Zásady soukromí</a></string>
-    <string name="app_first">Vývoji a testování NetGuardu byla věnována velká péče. Není však možné garantovat bezchybné fungování na všech zařízeních.</string>
+    <string name="app_first">Vývoji a testování QuietGuardu byla věnována velká péče. Není však možné garantovat bezchybné fungování na všech zařízeních.</string>
     <string name="app_agree">Souhlasím</string>
     <string name="app_disagree">Nesouhlasím</string>
-    <string name="app_support">NetGuard potřebuje vaši pomoc. Stiskněte pro zakoupení Pro-funkcí a zajistěte tak pokračování projektu.</string>
+    <string name="app_support">QuietGuard potřebuje vaši pomoc. Stiskněte pro zakoupení Pro-funkcí a zajistěte tak pokračování projektu.</string>
     <string name="app_qap">
         Google chtěl aplikaci odstranit z Obchodu Play, protože vyžadovala oprávnění ke zjišťování všech aplikací.
         Pět odvolání a poskytnutí dobrého odůvodnění, proč je toto oprávnění potřeba, bylo zamítnuto.
@@ -264,14 +264,14 @@
     <string name="setting_section_support">Podpora</string>
 
     <string name="summary_install">Zobrazit upozornění v notifikační liště pro přímé nastavení nově nainstalovaných aplikací (funkce pro)</string>
-    <string name="summary_auto">Po vypnutí pomocí widgetu automaticky znovu zapnout NetGuard po zvoleném počtu minut (pro vypnutí této možnosti zadejte nulu)</string>
+    <string name="summary_auto">Po vypnutí pomocí widgetu automaticky znovu zapnout QuietGuard po zvoleném počtu minut (pro vypnutí této možnosti zadejte nulu)</string>
     <string name="summary_delay">Po vypnutí obrazovky ponechat pravidla pro zapnutou obrazovku aktivní po zvolený počet minut (pro vypnutí této možnosti zadejte nulu)</string>
     <string name="summary_update">Dvakrát denně kontrolovat nové verze na GitHubu</string>
 
     <string name="summary_tethering">V závislosti na verzi Androidu může nebo nemusí sdílení internetu (tethering) fungovat. Komunikaci přes tethering nelze filtrovat.</string>
     <string name="summary_subnet">Povolit směrování podsítě; může umožnit volání přes Wi-Fi, ale může také způsobit chyby v Androidu a zvýšit spotřebu baterie</string>
     <string name="summary_lan">Umožnit aplikacím připojit se k adresám místní sítě, jako jsou 10.0.0.0/8, 172.16.0.0/12 a 192.168.0.0/16</string>
-    <string name="summary_ip6">Směrovat provoz protokolu IP verze 6 do NetGuardu, aby mohl být selektivně povolen nebo zablokován</string>
+    <string name="summary_ip6">Směrovat provoz protokolu IP verze 6 do QuietGuardu, aby mohl být selektivně povolen nebo zablokován</string>
     <string name="summary_wifi_home">Použít pravidla Wi-Fi sítě pouze pro vybranou síť (pro ostatní Wi-Fi sítě použít pravidla mobilní sítě)</string>
     <string name="summary_metered">Použít pravidla mobilní sítě pro sítě Wi-Fi s měřeným přenosem dat (placené, sdílené)</string>
     <string name="summary_metered_2g">Použít pravidla sítě Wi-Fi pro datová připojení 2G</string>
@@ -279,7 +279,7 @@
     <string name="summary_metered_4g">Použít pravidla sítě Wi-Fi pro datová připojení LTE</string>
     <string name="summary_national_roaming">Nepoužívat pravidla pro roaming, pokud je země SIM karty a mobilní sítě stejná</string>
     <string name="summary_eu_roaming">Nepoužívat pravidla pro roaming, pokud jsou země SIM karty a mobilní sítě v rámci EU (roaming za domácí ceny)</string>
-    <string name="summary_call">Vypnout NetGuard při příchozím nebo odchozím telefonním hovoru. Lze použít k vyřešení problémů s voláním přes IP/Wi-Fi.</string>
+    <string name="summary_call">Vypnout QuietGuard při příchozím nebo odchozím telefonním hovoru. Lze použít k vyřešení problémů s voláním přes IP/Wi-Fi.</string>
 
     <string name="summary_system">Definovat pravidla pro systémové aplikace (pro odborníky)</string>
     <string name="summary_log_app">Protokolovat pokusy aplikací o přístup k internetu. Může to způsobit vyšší spotřebu baterie.</string>
@@ -291,7 +291,7 @@
     <string name="summary_rcode">Výchozí hodnota je 3 (NXDOMAIN), což znamená „neexistující doména“.</string>
     <string name="summary_validate">Název domény použitý k ověření internetového připojení na portu 443 (https).</string>
     <string name="summary_socks5_enabled">Na proxy server bude odesílán pouze provoz TCP</string>
-    <string name="summary_watchdog">Pravidelně kontrolovat, zda NetGuard stále běží (zadejte nulu pro vypnutí této možnosti). Může to způsobit vyšší spotřebu baterie.</string>
+    <string name="summary_watchdog">Pravidelně kontrolovat, zda QuietGuard stále běží (zadejte nulu pro vypnutí této možnosti). Může to způsobit vyšší spotřebu baterie.</string>
 
     <string name="summary_stats">Zobrazit graf rychlosti sítě v oznámení v notifikační liště</string>
 
@@ -302,9 +302,9 @@
     <string name="msg_packages">%1$d povoleno, %2$d zablokováno</string>
     <string name="msg_hosts">%1$d povoleno, %2$d zablokováno, %3$d hostitelů</string>
     <string name="msg_waiting">Čekání na událost</string>
-    <string name="msg_disabled">NetGuard je vypnutý, pro zapnutí použijte přepínač výše</string>
+    <string name="msg_disabled">QuietGuard je vypnutý, pro zapnutí použijte přepínač výše</string>
     <string name="msg_notifications">Klepnutím udělte oprávnění k zasílání oznámení (pro upozornění na pokusy o přístup, chybové zprávy atd.)</string>
-    <string name="msg_revoked">NetGuard byl vypnut, pravděpodobně použitím jiné aplikace založené na VPN</string>
+    <string name="msg_revoked">QuietGuard byl vypnut, pravděpodobně použitím jiné aplikace založené na VPN</string>
     <string name="msg_installed">\'%1$s\' nainstalováno</string>
     <string name="msg_installed_n">Bylo nainstalováno</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -313,13 +313,13 @@
     <string name="msg_completed">Akce dokončena</string>
     <string name="msg_invalid">Zkontrolujte prosím hodnoty a zkuste to znovu.</string>
     <string name="msg_export_failed">Export selhal: %1$s</string>
-    <string name="msg_vpn">NetGuard používá lokální VPN k filtrování internetového provozu.
+    <string name="msg_vpn">QuietGuard používá lokální VPN k filtrování internetového provozu.
 Z tohoto důvodu prosím v následujícím dialogu povolte připojení VPN.
 Váš internetový provoz není odesílán na vzdálený server VPN.</string>
-    <string name="msg_autostart">NetGuard se nemohl spustit automaticky. Pravděpodobně je to způsobeno chybou ve vaší verzi Androidu.</string>
+    <string name="msg_autostart">QuietGuard se nemohl spustit automaticky. Pravděpodobně je to způsobeno chybou ve vaší verzi Androidu.</string>
     <string name="msg_error">Došlo k neočekávané chybě: \'%s\'</string>
     <string name="msg_start_failed">Android v tuto chvíli odmítl spustit službu VPN. Pravděpodobně je to způsobeno chybou ve vaší verzi Androidu.</string>
-    <string name="msg_try">Vyzkoušet NetGuard</string>
+    <string name="msg_try">Vyzkoušet QuietGuard</string>
     <string name="msg_terms">Darováním souhlasíte s <a href="http://www.netguard.me/#terms">obchodními podmínkami</a></string>
     <string name="msg_dimming">Pokud nemůžete v dalším dialogu stisknout OK, pravděpodobně obrazovku ovládá jiná aplikace (pro stmívání obrazovky).</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/den</string>
@@ -329,11 +329,11 @@ Váš internetový provoz není odesílán na vzdálený server VPN.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Pro konzistentní výsledky by měly být pro NetGuard vypnuty optimalizace baterie Androidu.
-\n\nV následujícím dialogu vyberte nahoře „Všechny aplikace“, klepněte v seznamu na NetGuard a vyberte a potvrďte „Neoptimalizovat“.</string>
-    <string name="msg_datasaving">Pro konzistentní výsledky by měly být pro NetGuard vypnuty možnosti úspory dat Androidu.
+    <string name="msg_doze">Pro konzistentní výsledky by měly být pro QuietGuard vypnuty optimalizace baterie Androidu.
+\n\nV následujícím dialogu vyberte nahoře „Všechny aplikace“, klepněte v seznamu na QuietGuard a vyberte a potvrďte „Neoptimalizovat“.</string>
+    <string name="msg_datasaving">Pro konzistentní výsledky by měly být pro QuietGuard vypnuty možnosti úspory dat Androidu.
 \n\nV následujícím dialogu povolte možnosti „Data na pozadí“ a „Neomezené využití dat“.</string>
-    <string name="msg_filter">Použití filtrování způsobí, že Android připíše využití dat a energie aplikaci NetGuard – Android předpokládá, že data a energii spotřebovává NetGuard, nikoli původní aplikace.</string>
+    <string name="msg_filter">Použití filtrování způsobí, že Android připíše využití dat a energie aplikaci QuietGuard – Android předpokládá, že data a energii spotřebovává QuietGuard, nikoli původní aplikace.</string>
     <string name="msg_filter4">Android 4 vyžaduje, aby bylo povoleno filtrování</string>
     <string name="msg_log_disabled">Protokolování provozu je vypnuto, pro zapnutí použijte přepínač výše. Protokolování provozu může zvýšit spotřebu baterie.</string>
     <string name="msg_clear_rules">Tímto se resetují pravidla a podmínky na výchozí hodnoty</string>
@@ -346,20 +346,20 @@ Váš internetový provoz není odesílán na vzdálený server VPN.</string>
     <string name="msg_stop_forward">Zastavit přesměrování %1$s portu %2$d?</string>
     <string name="msg_metered">Síť je měřená</string>
     <string name="msg_inactive">Žádné aktivní internetové připojení</string>
-    <string name="msg_queue">NetGuard je zaneprázdněn</string>
+    <string name="msg_queue">QuietGuard je zaneprázdněn</string>
     <string name="msg_update">Dostupná aktualizace, klepnutím stáhnete</string>
     <string name="msg_usage">Přístup k Wi-Fi nebo mobilnímu internetu můžete povolit (zeleně) nebo zakázat (červeně) klepnutím na ikony vedle aplikace</string>
-    <string name="msg_fairemail">Pokud jste si nainstalovali NetGuard, abyste chránili své soukromí, mohl by vás zajímat také <a href="https://email.faircode.eu/">FairEmail</a>, open source e-mailová aplikace chránící soukromí.</string>
+    <string name="msg_fairemail">Pokud jste si nainstalovali QuietGuard, abyste chránili své soukromí, mohl by vás zajímat také <a href="https://email.faircode.eu/">FairEmail</a>, open source e-mailová aplikace chránící soukromí.</string>
     <string name="msg_whitelist">Přístup k internetu je ve výchozím nastavení povolen (režim černé listiny), toto lze změnit v nastavení</string>
     <string name="msg_push">Inkomingové (push) zprávy jsou většinou zpracovávány systémovou komponentou Služby Play, která má přístup k internetu ve výchozím nastavení povolen</string>
     <string name="msg_system">Správu všech (systémových) aplikací lze povolit v nastavení</string>
     <string name="msg_issue">Popište prosím problém a uveďte čas, kdy k němu došlo:</string>
     <string name="msg_vpn_cancelled">VPN připojení zrušeno\nNenastavili jste jinou VPN jako Vždy zapnutou VPN?</string>
-    <string name="msg_on">Vypnutím zařízení s povoleným NetGuardem se NetGuard při zapnutí zařízení automaticky spustí</string>
+    <string name="msg_on">Vypnutím zařízení s povoleným QuietGuardem se QuietGuard při zapnutí zařízení automaticky spustí</string>
     <string name="msg_unavailable">Tato funkce není v této verzi Androidu k dispozici</string>
     <string name="msg_always_on">Jako Vždy zapnutá VPN je nastaven jiný server VPN</string>
-    <string name="msg_always_on_lockdown">Vypněte v nastavení Android VPN možnost „Blokovat připojení bez VPN“, abyste mohli používat NetGuard v režimu filtrování</string>
-    <string name="msg_private_dns">Vypněte v nastavení sítě Android možnost „Soukromé DNS“, abyste mohli používat NetGuard v režimu filtrování</string>
+    <string name="msg_always_on_lockdown">Vypněte v nastavení Android VPN možnost „Blokovat připojení bez VPN“, abyste mohli používat QuietGuard v režimu filtrování</string>
+    <string name="msg_private_dns">Vypněte v nastavení sítě Android možnost „Soukromé DNS“, abyste mohli používat QuietGuard v režimu filtrování</string>
 
     <string name="title_lockdown_enabled">Provoz je zablokován</string>
     <string name="title_unmetered_allowed">Neměřený provoz je povolen</string>

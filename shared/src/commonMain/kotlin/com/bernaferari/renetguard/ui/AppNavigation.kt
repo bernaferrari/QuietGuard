@@ -307,7 +307,6 @@ fun AppNavigation(
                                 SettingsScreen(
                                     onOpenDns = { navigateTo(Dns) },
                                     onOpenForwarding = { navigateTo(Forwarding) },
-                                    onOpenPro = { navigateTo(Pro) },
                                 )
                             }
                         }

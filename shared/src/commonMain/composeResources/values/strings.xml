@@ -72,7 +72,7 @@
     <string name="ui_forwarding_filter_empty">No forwarding rules match this filter.</string>
     <string name="ui_empty_pro_body">Support unlocks extra features and keeps the project alive.</string>
     <string name="ui_empty_pro_details">Pro unlocks: filtering, logging, notifications, themes, and speed limits.</string>
-    <string name="ui_home_hint">Control internet access for every app.</string>
+    <string name="ui_home_hint">Control internet access for every app</string>
     <string name="ui_home_quick_actions">Quick actions</string>
     <string name="ui_apps_title">Firewall</string>
     <string name="ui_logs_title">Traffic log</string>

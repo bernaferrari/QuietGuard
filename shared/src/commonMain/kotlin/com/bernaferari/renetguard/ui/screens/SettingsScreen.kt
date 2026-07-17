@@ -2,7 +2,10 @@ package com.bernaferari.renetguard.ui.screens
 
 import org.jetbrains.compose.resources.stringResource
 import netguard.shared.generated.resources.Res
+import netguard.shared.generated.resources.app_description
+import netguard.shared.generated.resources.app_name
 import netguard.shared.generated.resources.content_desc_show_info
+import netguard.shared.generated.resources.menu_about
 import netguard.shared.generated.resources.menu_ok
 import netguard.shared.generated.resources.setting_default_value
 import netguard.shared.generated.resources.setting_reset_accessibility
@@ -70,7 +73,6 @@ import netguard.shared.generated.resources.setting_section_firewall
 import netguard.shared.generated.resources.setting_section_hosts
 import netguard.shared.generated.resources.setting_section_network
 import netguard.shared.generated.resources.setting_section_proxy
-import netguard.shared.generated.resources.setting_section_support
 import netguard.shared.generated.resources.setting_section_vpn
 import netguard.shared.generated.resources.setting_show_resolved
 import netguard.shared.generated.resources.setting_socks5_enabled
@@ -94,7 +96,6 @@ import netguard.shared.generated.resources.setting_whitelist_roaming
 import netguard.shared.generated.resources.summary_block_domains
 import netguard.shared.generated.resources.summary_log_retention_days
 import netguard.shared.generated.resources.title_mobile
-import netguard.shared.generated.resources.title_pro
 import netguard.shared.generated.resources.title_block
 import netguard.shared.generated.resources.title_wifi
 import netguard.shared.generated.resources.tooltip_filter
@@ -190,6 +191,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
@@ -226,12 +228,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private const val PROJECT_GITHUB_URL = "https://github.com/bernaferari/NetGuard"
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SettingsScreen(
     onOpenDns: () -> Unit,
     onOpenForwarding: () -> Unit,
-    onOpenPro: () -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
     val viewModel: SettingsViewModel = koinViewModel()
@@ -239,6 +242,7 @@ fun SettingsScreen(
     val prefs by viewModel.preferences.collectAsState()
     val scrollState = rememberScrollState()
     val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val uriHandler = LocalUriHandler.current
 
     fun bool(key: String, default: Boolean) = prefs[booleanPreferencesKey(key)] ?: default
     fun str(key: String, default: String) = prefs[stringPreferencesKey(key)] ?: default
@@ -1144,13 +1148,88 @@ fun SettingsScreen(
                 )
             }
 
-            // Support Section
-            val supportTitle = stringResource(Res.string.setting_section_support)
-            CollapsibleSettingsSection(title = supportTitle) {
-                FilledTonalButton(onClick = onOpenPro) {
-                    Icon(imageVector = Icons.Default.Shield, contentDescription = null)
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    Text(text = stringResource(Res.string.title_pro))
+            CollapsibleSettingsSection(title = stringResource(Res.string.menu_about)) {
+                Surface(
+                    shape = MaterialTheme.shapes.large,
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                ) {
+                    Column(
+                        modifier = Modifier.padding(spacing.default),
+                        verticalArrangement = Arrangement.spacedBy(spacing.medium),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+                        ) {
+                            Surface(
+                                shape = MaterialTheme.shapes.large,
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.size(56.dp),
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(
+                                        imageVector = Icons.Default.Shield,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(28.dp),
+                                    )
+                                }
+                            }
+                            Text(
+                                text = stringResource(Res.string.app_name),
+                                style = MaterialTheme.typography.headlineSmall,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                        }
+                        Text(
+                            text = stringResource(Res.string.app_description),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(MaterialTheme.shapes.medium)
+                                .clickable(
+                                    role = Role.Button,
+                                    onClick = { uriHandler.openUri(PROJECT_GITHUB_URL) },
+                                ),
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(
+                                    horizontal = spacing.medium,
+                                    vertical = spacing.small,
+                                ),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Info,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                )
+                                Spacer(modifier = Modifier.width(spacing.small))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "GitHub",
+                                        style = MaterialTheme.typography.titleSmall,
+                                    )
+                                    Text(
+                                        text = PROJECT_GITHUB_URL.removePrefix("https://"),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.Forward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

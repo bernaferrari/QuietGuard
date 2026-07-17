@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalDensity
 import com.bernaferari.renetguard.ui.theme.LocalMotion
 import android.graphics.Paint as AndroidPaint
 
@@ -45,13 +46,14 @@ internal fun FirewallStateShader(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = motion.durationSlow * 24, easing = LinearEasing),
+            animation = tween(durationMillis = motion.durationSlow * 40, easing = LinearEasing),
             repeatMode = RepeatMode.Restart,
         ),
         label = "firewallShaderPhase",
     )
 
     val paint = remember { AndroidPaint().apply { isAntiAlias = true } }
+    val density = LocalDensity.current.density
     val secondary = MaterialTheme.colorScheme.secondary
     val tertiary = MaterialTheme.colorScheme.tertiary
     val error = MaterialTheme.colorScheme.error
@@ -64,6 +66,7 @@ internal fun FirewallStateShader(
         shader.setFloatUniform("iTime", phase)
         shader.setFloatUniform("uEnabled", enabledProgress.coerceIn(0f, 1f))
         shader.setFloatUniform("uDark", if (isDarkTheme) 1f else 0f)
+        shader.setFloatUniform("uPixelSize", 8f * density)
         shader.setFloatUniform(
             "uSecondary",
             secondary.red,
@@ -93,38 +96,95 @@ internal fun FirewallStateShader(
     }
 }
 
+/**
+ * Adapted from Paper Shaders' Dithering shader (swirl, simplex noise, and 4x4 Bayer thresholding).
+ * Modified for a transparent, low-contrast Compose background and a mathematically closed loop.
+ * Source: https://github.com/paper-design/shaders/tree/4d78ae940db2c73c22b6633fb05a3e4743f22551
+ */
 private const val FIREWALL_AGSL =
     """
 uniform float2 iResolution;
 uniform float iTime;
 uniform float uEnabled;
 uniform float uDark;
+uniform float uPixelSize;
 uniform half4 uSecondary;
 uniform half4 uTertiary;
 uniform half4 uError;
 uniform half4 uOutline;
 uniform half4 uSurfaceVariant;
 
-half hash21(float2 p) {
-    p = fract(p * float2(123.34, 456.21));
-    p += dot(p, p + 45.32);
-    return half(fract(p.x * p.y));
-}
-
 half3 mix3(half3 a, half3 b, float t) {
     return a + (b - a) * half(t);
 }
 
+float3 permute(float3 x) {
+    return mod(((x * 34.0) + 1.0) * x, 289.0);
+}
+
+float snoise(float2 v) {
+    const float4 C = float4(
+        0.211324865405187,
+        0.366025403784439,
+        -0.577350269189626,
+        0.024390243902439
+    );
+    float2 i = floor(v + dot(v, C.yy));
+    float2 x0 = v - i + dot(i, C.xx);
+    float2 i1 = x0.x > x0.y ? float2(1.0, 0.0) : float2(0.0, 1.0);
+    float4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+    i = mod(i, 289.0);
+    float3 p = permute(
+        permute(i.y + float3(0.0, i1.y, 1.0)) +
+            i.x + float3(0.0, i1.x, 1.0)
+    );
+    float3 m = max(
+        0.5 - float3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)),
+        0.0
+    );
+    m = m * m;
+    m = m * m;
+    float3 x = 2.0 * fract(p * C.www) - 1.0;
+    float3 h = abs(x) - 0.5;
+    float3 ox = floor(x + 0.5);
+    float3 a0 = x - ox;
+    m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+    float3 g;
+    g.x = a0.x * x0.x + h.x * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
+}
+
+float bayer2(float x, float y) {
+    return mod(2.0 * x + 3.0 * y, 4.0);
+}
+
+float bayer4(float2 cell) {
+    float low = bayer2(mod(cell.x, 2.0), mod(cell.y, 2.0));
+    float high = bayer2(mod(floor(cell.x / 2.0), 2.0), mod(floor(cell.y / 2.0), 2.0));
+    return (4.0 * low + high) / 16.0;
+}
+
 half4 main(float2 fragCoord) {
-    float2 uv = fragCoord / iResolution;
     float tau = 6.2831853;
     float theta = iTime * tau;
     float en = clamp(uEnabled, 0.0, 1.0);
-
-    // Effect-only shader: no base/background recolor.
-    half3 color = half3(0.0);
-    float alpha = 0.0;
-
+    float pixelSize = max(uPixelSize, 1.0);
+    float2 cell = floor(fragCoord / pixelSize);
+    float2 pixelCoord = (cell + 0.5) * pixelSize;
+    float2 uv = pixelCoord / iResolution;
+    float aspect = iResolution.x / iResolution.y;
+    float2 p = float2((uv.x - 0.5) * aspect * 1.35, (uv.y - 0.53) * 1.35);
+    float noise = snoise(p * 1.9 + float2(cos(theta), sin(theta)) * 0.58);
+    float radius = length(p);
+    float angle = 6.0 * atan(p.y, p.x) + theta + noise * 0.62;
+    float inverseRadius = 1.0 / pow(max(radius, 0.08), 1.2);
+    float swirl = fract(inverseRadius + angle / tau);
+    float middle = smoothstep(0.0, 1.0, pow(radius, 1.2));
+    float noiseShape = 0.5 + 0.5 * noise;
+    float shape = swirl * middle * 0.76 + noiseShape * 0.24;
+    float dithered = step(bayer4(cell), shape);
     half3 sigDisabled = mix3(
         mix3(uSurfaceVariant.rgb, uOutline.rgb, 0.35),
         uError.rgb,
@@ -132,86 +192,11 @@ half4 main(float2 fragCoord) {
     );
     half3 sigEnabled = mix3(uSecondary.rgb, uTertiary.rgb, 0.52);
     half3 signal = mix3(sigDisabled, sigEnabled, en);
-
-    // Broad, slowly drifting atmosphere behind the main control.
-    float2 auraCenter = float2(
-        0.24 + 0.025 * sin(theta),
-        0.30 + 0.020 * cos(theta)
-    );
-    float2 auraP = (uv - auraCenter) / float2(0.58, 0.48);
-    float aura = exp(-dot(auraP, auraP) * 2.2);
-    float2 auraCenter2 = float2(
-        0.82 + 0.020 * cos(theta),
-        0.70 + 0.020 * sin(theta)
-    );
-    float2 auraP2 = (uv - auraCenter2) / float2(0.34, 0.28);
-    float aura2 = exp(-dot(auraP2, auraP2) * 2.6);
-    float auraStrength = mix(0.055, 0.09, uDark) * mix(0.78, 1.0, en);
-    float combinedAura = aura + aura2 * 0.42;
-    color += signal * half(combinedAura * auraStrength);
-    alpha += combinedAura * auraStrength;
-
-    // Keep center content readable without radial masking.
-    float cx = abs(uv.x - 0.5);
-    float cy = abs(uv.y - 0.52);
-    float centerCut = max(
-        smoothstep(0.06, 0.16, cx),
-        smoothstep(0.05, 0.13, cy)
-    );
-
-    const int lanes = 6;
-    for (int i = 0; i < lanes; ++i) {
-        float laneT = float(i) / float(lanes - 1);
-        float centerY = 0.10 + laneT * 0.80;
-        float fi = float(i);
-        float laneOff = fi * 0.85;
-        float freqDis = 1.0 + (fi - 3.0 * floor(fi / 3.0));
-        float freqEn = 2.0 + (fi - 2.0 * floor(fi / 2.0));
-        float focusX1 = 0.24 + 0.018 * sin(theta);
-        float focusY1 = 0.30 + (laneT - 0.5) * 0.045;
-        float focusDistance1 = (uv.x - focusX1) / 0.105;
-        float focusPull1 = exp(-focusDistance1 * focusDistance1)
-            * (0.64 + 0.12 * sin(theta + laneOff));
-        float focusX2 = 0.82 + 0.016 * cos(theta);
-        float focusY2 = 0.70 + (laneT - 0.5) * 0.05;
-        float focusDistance2 = (uv.x - focusX2) / 0.115;
-        float focusPull2 = exp(-focusDistance2 * focusDistance2)
-            * (0.62 + 0.13 * cos(theta * 2.0 + laneOff));
-
-        float organicDis = centerY
-            + (0.030 + laneT * 0.010) * sin(uv.x * tau * freqDis + theta + laneOff)
-            + 0.014 * sin(uv.x * tau * 2.3 - theta + laneOff);
-        float yDis = mix(mix(organicDis, focusY1, focusPull1), focusY2, focusPull2);
-        float disDistance = abs(uv.y - yDis);
-        float disGlow = 1.0 - smoothstep(0.003, 0.042, disDistance);
-        float disCore = 1.0 - smoothstep(0.0, 0.0023, disDistance);
-
-        float organicEn = centerY
-            + (0.045 + laneT * 0.012) * sin(uv.x * tau * (freqEn + 0.7) + theta * 2.0 + laneOff)
-            + 0.021 * sin(uv.x * tau * 3.2 - theta * 3.0 + laneOff * 0.6);
-        float yEn = mix(mix(organicEn, focusY1, focusPull1), focusY2, focusPull2);
-        float enDistance = abs(uv.y - yEn);
-        float enGlow = 1.0 - smoothstep(0.003, 0.046, enDistance);
-        float enCore = 1.0 - smoothstep(0.0, 0.0025, enDistance);
-
-        float disLine = disGlow * 0.020 + disCore * 0.13;
-        float enLine = enGlow * 0.034 + enCore * 0.18;
-        float readability = mix(0.38, 1.0, centerCut);
-        float lineStrength = mix(disLine, enLine, en) * readability;
-        color += signal * half(lineStrength);
-        alpha += lineStrength * 1.05;
-    }
-
-    // Very subtle pixel grain.
-    float2 grainCell = float2(44.0, 44.0);
-    float2 q = floor(uv * grainCell) / grainCell;
-    half grain = hash21(q + float2(sin(theta), cos(theta))) - half(0.5);
-    color += signal * grain * half(mix(0.004, 0.007, uDark) * centerCut);
-
-    // Disabled stays dimmer; enabled pops slightly more.
-    alpha *= mix(0.72, 0.92, en);
-    alpha = clamp(alpha, 0.0, mix(0.12, 0.20, uDark));
-
-    return half4(saturate(color), half(alpha));
+    float centerQuiet = 0.18 + 0.82 * smoothstep(0.16, 0.52, radius);
+    float texture = 0.78 + noiseShape * 0.22;
+    float alpha =
+        dithered * mix(0.70, 1.0, uDark) *
+        (0.030 + 0.032 * en) * centerQuiet * texture;
+    return half4(signal * half(alpha), half(alpha));
 }
 """

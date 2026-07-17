@@ -1,4 +1,4 @@
-# QuietGuard (Compose + M3)
+# QuietGuard
 
 <p align="center">
   <img src="assets/more-light.png" alt="QuietGuard overview" width="980">

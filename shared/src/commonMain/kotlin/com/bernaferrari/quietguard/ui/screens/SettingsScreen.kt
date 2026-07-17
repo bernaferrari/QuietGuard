@@ -142,6 +142,7 @@ import androidx.compose.material.icons.filled.MobileOff
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material.icons.outlined.BrightnessAuto
@@ -210,7 +211,6 @@ import com.bernaferrari.quietguard.ui.screens.vm.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferrari.quietguard.ui.components.ExpandableContent
 import com.bernaferrari.quietguard.ui.components.FirewallTile
-import com.bernaferrari.quietguard.ui.components.QuietGuardMark
 import com.bernaferrari.quietguard.ui.theme.AmberPrimary
 import com.bernaferrari.quietguard.ui.theme.BluePrimary
 import com.bernaferrari.quietguard.ui.theme.CyanPrimary
@@ -1161,7 +1161,7 @@ fun SettingsScreen(
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
-                                    imageVector = QuietGuardMark,
+                                    imageVector = Icons.Default.Shield,
                                     contentDescription = null,
                                     modifier = Modifier.size(34.dp),
                                 )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,7 +41,6 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.bernaferrari.quietguard.ui.main.AppsScreen
-import com.bernaferrari.quietguard.ui.components.QuietGuardMark
 import com.bernaferrari.quietguard.ui.main.HomeScreen
 import com.bernaferrari.quietguard.ui.main.MainViewModel
 import com.bernaferrari.quietguard.ui.screens.AppRuleDetailScreen
@@ -65,7 +65,7 @@ private enum class NavDestination(
     val labelRes: StringResource,
     val icon: androidx.compose.ui.graphics.vector.ImageVector,
 ) {
-    HomeTab(Home, Res.string.menu_home, QuietGuardMark),
+    HomeTab(Home, Res.string.menu_home, Icons.Default.Shield),
     AppsTab(Apps, Res.string.menu_firewall, Icons.Default.Tune),
     LogsTab(Logs, Res.string.menu_log, Icons.AutoMirrored.Filled.List),
     SettingsTab(Settings, Res.string.menu_settings, Icons.Default.Settings),

@@ -21,7 +21,7 @@
 -keepattributes SourceFile,LineNumberTable
 
 #NetGuard
--keepnames class com.bernaferari.renetguard.** { *; }
+-keepnames class com.bernaferrari.quietguard.** { *; }
 
 # AppFunctions platform extensions are provided by the OS on Android 16+.
 -dontwarn com.android.extensions.appfunctions.**
@@ -35,19 +35,19 @@
 }
 
 #JNI callbacks
--keep class com.bernaferari.renetguard.Allowed { *; }
--keep class com.bernaferari.renetguard.Packet { *; }
--keep class com.bernaferari.renetguard.ResourceRecord { *; }
--keep class com.bernaferari.renetguard.Usage { *; }
--keep class com.bernaferari.renetguard.ServiceSinkhole {
+-keep class com.bernaferrari.quietguard.Allowed { *; }
+-keep class com.bernaferrari.quietguard.Packet { *; }
+-keep class com.bernaferrari.quietguard.ResourceRecord { *; }
+-keep class com.bernaferrari.quietguard.Usage { *; }
+-keep class com.bernaferrari.quietguard.ServiceSinkhole {
     void nativeExit(java.lang.String);
     void nativeError(int, java.lang.String);
-    void logPacket(com.bernaferari.renetguard.Packet);
-    void dnsResolved(com.bernaferari.renetguard.ResourceRecord);
+    void logPacket(com.bernaferrari.quietguard.Packet);
+    void dnsResolved(com.bernaferrari.quietguard.ResourceRecord);
     boolean isDomainBlocked(java.lang.String);
     int getUidQ(int, int, java.lang.String, int, java.lang.String, int);
-    com.bernaferari.renetguard.Allowed isAddressAllowed(com.bernaferari.renetguard.Packet);
-    void accountUsage(com.bernaferari.renetguard.Usage);
+    com.bernaferrari.quietguard.Allowed isAddressAllowed(com.bernaferrari.quietguard.Packet);
+    void accountUsage(com.bernaferrari.quietguard.Usage);
 }
 
 #AndroidX

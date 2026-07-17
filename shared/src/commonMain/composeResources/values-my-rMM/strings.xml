@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next သည် အင်တာနက် အသုံးပြုခွင့်ကို ပိတ်ဆို့ရန် ရိုးရှင်းပြီး အဆင့်မြင့်သော နည်းလမ်းများကို ပံ့ပိုးပေးသည် - root လုပ်ရန် မလိုပါ။ သင်၏ Wi-Fi နှင့်/သို့မဟုတ် မိုဘိုင်းချိတ်ဆက်မှုသို့ အက်ပ်များနှင့် လိပ်စာများကို တစ်ခုချင်းစီ အသုံးပြုခွင့် ပေးနိုင်သည် သို့မဟုတ် ငြင်းပယ်နိုင်သည်။</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard သည် အင်တာနက် အသုံးပြုခွင့်ကို ပိတ်ဆို့ရန် ရိုးရှင်းပြီး အဆင့်မြင့်သော နည်းလမ်းများကို ပံ့ပိုးပေးသည် - root လုပ်ရန် မလိုပါ။ သင်၏ Wi-Fi နှင့်/သို့မဟုတ် မိုဘိုင်းချိတ်ဆက်မှုသို့ အက်ပ်များနှင့် လိပ်စာများကို တစ်ခုချင်းစီ အသုံးပြုခွင့် ပေးနိုင်သည် သို့မဟုတ် ငြင်းပယ်နိုင်သည်။</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard သည် Android 5.1 သို့မဟုတ် နောက်ပိုင်း လိုအပ်သည်</string>
+    <string name="app_android">QuietGuard သည် Android 5.1 သို့မဟုတ် နောက်ပိုင်း လိုအပ်သည်</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">ကိုယ်ရေးအချက်အလက် မူဝါဒ</a></string>
-    <string name="app_first">NetGuard ကို ဖော်ဆောင်ရန်နှင့် စမ်းသပ်ရန် အထူးဂရုစိုက်ထားသော်လည်း စက်တိုင်းတွင် NetGuard မှန်ကန်စွာ အလုပ်လုပ်မည်ဟု အာမခံရန် မဖြစ်နိုင်ပါ။</string>
+    <string name="app_first">QuietGuard ကို ဖော်ဆောင်ရန်နှင့် စမ်းသပ်ရန် အထူးဂရုစိုက်ထားသော်လည်း စက်တိုင်းတွင် QuietGuard မှန်ကန်စွာ အလုပ်လုပ်မည်ဟု အာမခံရန် မဖြစ်နိုင်ပါ။</string>
     <string name="app_agree">ကျွန်ုပ်သဘောတူတယ်</string>
     <string name="app_disagree">ကျွန်ုပ်သဘောမတူပါ</string>
-    <string name="app_support">NetGuard သည် သင်၏အကူအညီ လိုအပ်ပါသည်။ ပရောဂျက်ကို ဆက်လက်လုပ်ဆောင်နိုင်ရန် pro အင်္ဂါရပ်များကို ဝယ်ယူရန် နှိပ်ပါ။</string>
+    <string name="app_support">QuietGuard သည် သင်၏အကူအညီ လိုအပ်ပါသည်။ ပရောဂျက်ကို ဆက်လက်လုပ်ဆောင်နိုင်ရန် pro အင်္ဂါရပ်များကို ဝယ်ယူရန် နှိပ်ပါ။</string>
     <string name="app_qap">
         အက်ပ်အားလုံးကို စစ်ဆေးမေးမြန်းခွင့် တောင်းခံထားသောကြောင့် Google သည် Play Store မှ အက်ပ်ကို ဖယ်ရှားတော့မည်ဖြစ်သည်။
         အယူခံငါးကြိမ်နှင့် ဤခွင့်ပြုချက် အဘယ်ကြောင့်လိုအပ်ကြောင်း ကျိုးကြောင်းဆီလျော်စွာ ရှင်းပြချက်ကို ပယ်ချခဲ့သည်။
@@ -259,14 +259,14 @@
     <string name="setting_section_support">ပံ့ပိုးမှု</string>
 
     <string name="summary_install">အက်ပ်အသစ်များကို တိုက်ရိုက်ပြင်ဆင်ရန် အသိပေးချက်ဘားတွင် ပြသပါ (pro အင်္ဂါရပ်)</string>
-    <string name="summary_auto">ဝစ်ဂျက်ဖြင့် ပိတ်ပြီးနောက် သတ်မှတ်ထားသော မိနစ်အကြာတွင် NetGuard ကို အလိုအလျောက် ပြန်ဖွင့်ပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)</string>
+    <string name="summary_auto">ဝစ်ဂျက်ဖြင့် ပိတ်ပြီးနောက် သတ်မှတ်ထားသော မိနစ်အကြာတွင် QuietGuard ကို အလိုအလျောက် ပြန်ဖွင့်ပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)</string>
     <string name="summary_delay">မျက်နှာပြင်ပိတ်ပြီးနောက် သတ်မှတ်ထားသော မိနစ်အထိ မျက်နှာပြင်လင်းနေစဉ် စည်းမျဉ်းများကို ဆက်လက်အသုံးပြုပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)</string>
     <string name="summary_update">GitHub ရှိ ဗားရှင်းအသစ်များကို တစ်နေ့နှစ်ကြိမ် စစ်ဆေးပါ</string>
 
     <string name="summary_tethering">Android ဗားရှင်းပေါ်မူတည်၍ Tethering အလုပ်လုပ်နိုင် သို့မဟုတ် မလုပ်လုပ်နိုင်ပါ။ Tethered လုပ်ထားသော ဒေတာများကို စစ်ထုတ်၍ မရပါ။</string>
     <string name="summary_subnet">Subnet ruting ကို ဖွင့်ပါ၊ Wi-Fi ခေါ်ဆိုမှုကို ရရှိစေနိုင်သော်လည်း Android ရှိ ဘဂ်များကို ဖြစ်ပေါ်စေနိုင်ပြီး ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်သည်</string>
     <string name="summary_lan">အက်ပ်များကို 10.0.0.0/8၊ 172.16.0.0/12 နှင့် 192.168.0.0/16 ကဲ့သို့သော ဧရိယာကွန်ယက် လိပ်စာများသို့ ချိတ်ဆက်ခွင့်ပြုပါ</string>
-    <string name="summary_ip6">IP ဗားရှင်း 6 ဒေတာများကို NetGuard သို့ လမ်းကြောင်းပေးကာ ရွေးချယ်ခွင့်ပြုရန် သို့မဟုတ် ပိတ်ဆို့ရန်</string>
+    <string name="summary_ip6">IP ဗားရှင်း 6 ဒေတာများကို QuietGuard သို့ လမ်းကြောင်းပေးကာ ရွေးချယ်ခွင့်ပြုရန် သို့မဟုတ် ပိတ်ဆို့ရန်</string>
     <string name="summary_wifi_home">ရွေးချယ်ထားသော ကွန်ယက်အတွက်သာ Wi-Fi စည်းမျဉ်းများကို ကျင့်သုံးပါ (အခြား Wi-Fi များအတွက် မိုဘိုင်းဒေတာ စည်းမျဉ်းများကို ကျင့်သုံးမည်)</string>
     <string name="summary_metered">မိုဘိုင်းဒေတာ စည်းမျဉ်းများကို ကန့်သတ်ထားသော (အခပေး၊ မျှဝေသုံး) Wi-Fi များတွင် ကျင့်သုံးပါ</string>
     <string name="summary_metered_2g">2G ဒေတာချိတ်ဆက်မှုများအတွက် Wi-Fi စည်းမျဉ်းများကို ကျင့်သုံးပါ</string>
@@ -274,7 +274,7 @@
     <string name="summary_metered_4g">LTE ဒေတာချิตဆက်မှုများအတွက် Wi-Fi စည်းမျဉ်းများကို ကျင့်သုံးပါ</string>
     <string name="summary_national_roaming">SIM ကတ်နှင့် မိုဘိုင်းကွန်ယက် နိုင်ငံတူပါက Roaming စည်းမျဉ်းများကို မကျင့်သုံးပါနှင့်</string>
     <string name="summary_eu_roaming">SIM ကတ်နှင့် မိုဘိုင်းကွန်ယက် နိုင်ငံသည် EU အတွင်းရှိပါက Roaming စည်းမျဉ်းများကို မကျင့်သုံးပါနှင့် (ပြည်တွင်းကဲ့သို့ Roaming)</string>
-    <string name="summary_call">ဖုန်းခေါ်ဆိုမှုများ ပြုလုပ်နေစဉ် NetGuard ကို ပိတ်ထားပါ။ ၎င်းကို IP/Wi-Fi ခေါ်ဆိုမှု ပြဿနာများအတွက် အသုံးပြုနိုင်ပါသည်။</string>
+    <string name="summary_call">ဖုန်းခေါ်ဆိုမှုများ ပြုလုပ်နေစဉ် QuietGuard ကို ပိတ်ထားပါ။ ၎င်းကို IP/Wi-Fi ခေါ်ဆိုမှု ပြဿနာများအတွက် အသုံးပြုနိုင်ပါသည်။</string>
 
     <string name="summary_system">စနစ်အက်ပ်များအတွက် စည်းမျဉ်းများကို သတ်မှတ်ပါ (ကျွမ်းကျင်သူများအတွက်)</string>
     <string name="summary_log_app">အက်ပ်များ၏ အင်တာနက် အသုံးပြုမှုများကို မှတ်တမ်းတင်ပါ။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
@@ -286,7 +286,7 @@
     <string name="summary_rcode">နဂိုမူလ တန်ဖိုးမှာ 3 (NXDOMAIN) ဖြစ်ပြီး \'ဒိုမိန်းမရှိပါ\' ဟု အဓိပ္ပာယ်ရသည်။</string>
     <string name="summary_validate">Port 443 (https) တွင် အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးရန် အသုံးပြုသော ဒိုမိန်းအမည်။</string>
     <string name="summary_socks5_enabled">TCP ဒေတာများကိုသာ ပရောက်စီ ဆာဗာသို့ ပေးပို့မည်ဖြစ်သည်</string>
-    <string name="summary_watchdog">NetGuard လည်ပတ်နေဆဲဖြစ်မဖြစ် အခါအားလျော်စွာ စစ်ဆေးပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
+    <string name="summary_watchdog">QuietGuard လည်ပတ်နေဆဲဖြစ်မဖြစ် အခါအားလျော်စွာ စစ်ဆေးပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
 
     <string name="summary_stats">အသိပေးချက်ဘားတွင် ကွန်ယက်အမြန်နှုန်း ပြရပ်ကို ပြပါ</string>
 
@@ -297,9 +297,9 @@
     <string name="msg_packages">%1$d ခွင့်ပြုသည်၊ %2$d ပိတ်ဆို့သည်</string>
     <string name="msg_hosts">%1$d ခွင့်ပြုသည်၊ %2$d ပိတ်ဆို့သည်၊ host စုစုပေါင်း %3$d</string>
     <string name="msg_waiting">လုပ်ဆောင်ချက်ကို စောင့်ဆိုင်းနေသည်</string>
-    <string name="msg_disabled">NetGuard ပိတ်ထားသည်၊ ပြန်ဖွင့်ရန် အပေါ်မှခလုတ်ကို သုံးပါ</string>
+    <string name="msg_disabled">QuietGuard ပိတ်ထားသည်၊ ပြန်ဖွင့်ရန် အပေါ်မှခလုတ်ကို သုံးပါ</string>
     <string name="msg_notifications">အသိပေးချက် ခွင့်ပြုချက်များပေးရန် နှိပ်ပါ (အသုံးပြုမှုကြိုးပမ်းချက်များ၊ အမှားသတင်းစကားများ စသည်တို့အတွက်)</string>
-    <string name="msg_revoked">NetGuard ပိတ်သွားပါသည်၊ အခြား VPN အက်ပ်တစ်ခုခု သုံးနေခြင်းကြောင့် ဖြစ်နိုင်ပါသည်</string>
+    <string name="msg_revoked">QuietGuard ပိတ်သွားပါသည်၊ အခြား VPN အက်ပ်တစ်ခုခု သုံးနေခြင်းကြောင့် ဖြစ်နိုင်ပါသည်</string>
     <string name="msg_installed">\'%1$s\' ထည့်သွင်းပြီးပါပြီ</string>
     <string name="msg_installed_n">ထည့်သွင်းပြီးပါပြီ</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -308,13 +308,13 @@
     <string name="msg_completed">လုပ်ဆောင်ချက် ပြီးမြောက်ပါပြီ</string>
     <string name="msg_invalid">ကျေးဇူးပြု၍ တန်ဖိုးများကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။</string>
     <string name="msg_export_failed">ထုတ်ယူမှု မအောင်မြင်ပါ - %1$s</string>
-    <string name="msg_vpn">NetGuard သည် အင်တာနက်အသုံးပြုမှုများကို စစ်ထုတ်ရန် ဒေသတွင်း VPN ကို အသုံးပြုသည်။
+    <string name="msg_vpn">QuietGuard သည် အင်တာနက်အသုံးပြုမှုများကို စစ်ထုတ်ရန် ဒေသတွင်း VPN ကို အသုံးပြုသည်။
 ထို့ကြောင့် နောက်ဒိုင်ယာလော့ဂ်တွင် VPN ချိတ်ဆက်မှုကို ခွင့်ပြုပေးပါ။
 သင်၏ အင်တာနက်ဒေတာများကို အခြား VPN ဆာဗာများဆီသို့ ပေးပို့မည် မဟုတ်ပါ။</string>
-    <string name="msg_autostart">NetGuard အလိုအလျောက် မပွင့်နိုင်ပါ။ ၎င်းသည် သင်၏ Android ဗားရှင်းရှိ ဘဂ်တစ်ခုကြောင့် ဖြစ်နိုင်ပါသည်။</string>
+    <string name="msg_autostart">QuietGuard အလိုအလျောက် မပွင့်နိုင်ပါ။ ၎င်းသည် သင်၏ Android ဗားရှင်းရှိ ဘဂ်တစ်ခုကြောင့် ဖြစ်နိုင်ပါသည်။</string>
     <string name="msg_error">မမျှော်လင့်ထားသော အမှားတစ်ခု ဖြစ်ပွားခဲ့သည် - \'%s\'</string>
     <string name="msg_start_failed">Android မှ ဤအချိန်တွင် VPN ဝန်ဆောင်မှုကို စတင်ရန် ငြင်းဆိုခဲ့သည်။ ၎င်းသည် သင်၏ Android ဗားရှင်းရှိ ဘဂ်တစ်ခုကြောင့် ဖြစ်နိုင်ပါသည်။</string>
-    <string name="msg_try">NetGuard ကို စမ်းသုံးကြည့်ပါ</string>
+    <string name="msg_try">QuietGuard ကို စမ်းသုံးကြည့်ပါ</string>
     <string name="msg_terms">လှူဒါန်းခြင်းဖြင့် သင်သည် <a href="http://www.netguard.me/#terms">စည်းကမ်းသတ်မှတ်ချက်များ</a> ကို သဘောတူပြီး ဖြစ်သည်</string>
     <string name="msg_dimming">နောက်ဒိုင်ယာလော့ဂ်တွင် OK နှိပ်၍မရပါက အခြားအက်ပ်တစ်ခုခုက မျက်နှာပြင်ကို ထိန်းချုပ်ထားခြင်းကြောင့် ဖြစ်နိုင်ပါသည်။</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/ရက်</string>
@@ -324,11 +324,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် NetGuard အတွက် Android ဘက်ထရီ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
-\n\nနောက်ဒိုင်ယာလော့ဂ်တွင် အပေါ်မှ \"All apps\" ကိုရွေးပါ၊ စာရင်းထဲရှိ NetGuard ကိုနှိပ်ပြီး \"Don\'t optimize\" ကိုရွေး၍ အတည်ပြုပါ။</string>
-    <string name="msg_datasaving">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် NetGuard အတွက် Android ဒေတာ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
+    <string name="msg_doze">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် QuietGuard အတွက် Android ဘက်ထရီ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
+\n\nနောက်ဒိုင်ယာလော့ဂ်တွင် အပေါ်မှ \"All apps\" ကိုရွေးပါ၊ စာရင်းထဲရှိ QuietGuard ကိုနှိပ်ပြီး \"Don\'t optimize\" ကိုရွေး၍ အတည်ပြုပါ။</string>
+    <string name="msg_datasaving">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် QuietGuard အတွက် Android ဒေတာ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
 \n\nနောက်ဒိုင်ယာလော့ဂ်တွင် \"Background data\" နှင့် \"Unrestricted data usage\" တို့ကို ဖွင့်ပေးပါ။</string>
-    <string name="msg_filter">စစ်ထုတ်ခြင်းကို အသုံးပြုပါက Android သည် ဒေတာနှင့် ပါဝါအသုံးပြုမှုကို မူလအက်ပ်များအစား NetGuard တွင် ဖော်ပြပေးမည်ဖြစ်သည်။</string>
+    <string name="msg_filter">စစ်ထုတ်ခြင်းကို အသုံးပြုပါက Android သည် ဒေတာနှင့် ပါဝါအသုံးပြုမှုကို မူလအက်ပ်များအစား QuietGuard တွင် ဖော်ပြပေးမည်ဖြစ်သည်။</string>
     <string name="msg_filter4">Android 4 သည် စစ်ထုတ်ခြင်းကို ဖွင့်ထားရန် လိုအပ်သည်</string>
     <string name="msg_log_disabled">မှတ်တမ်းတင်ခြင်းကို ပိတ်ထားသည်၊ ပြန်ဖွင့်ရန် အပေါ်မှခလုတ်ကို သုံးပါ။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
     <string name="msg_clear_rules">၎င်းသည် စည်းမျဉ်းများနှင့် အခြေအနေများကို မူလတန်ဖိုးများအတိုင်း ပြန်လည်သတ်မှတ်ပါမည်</string>
@@ -341,20 +341,20 @@
     <string name="msg_stop_forward">%1$s ပေါ့တ် %2$d ၏ လက်ဆင့်ကမ်းခြင်းကို ရပ်မလား။</string>
     <string name="msg_metered">ကွန်ယက်မှာ ကန့်သတ်ထားသော ကွန်ယက်ဖြစ်သည်</string>
     <string name="msg_inactive">အင်တာနက် ချိတ်ဆက်ထားခြင်း မရှိပါ</string>
-    <string name="msg_queue">NetGuard အလုပ်များနေသည်</string>
+    <string name="msg_queue">QuietGuard အလုပ်များနေသည်</string>
     <string name="msg_update">အပ်ဒိတ် ရနိုင်သည်၊ ဒေါင်းလုဒ်လုပ်ရန် နှိပ်ပါ</string>
     <string name="msg_usage">အက်ပ်ဘေးရှိ အိုင်ကွန်များကို နှိပ်ခြင်းဖြင့် Wi-Fi သို့မဟုတ် မိုဘိုင်းလ်အင်တာနက် အသုံးပြုခွင့်ကို ခွင့်ပြုခြင်း (အစိမ်းရောင်) သို့မဟုတ် ငြင်းပယ်ခြင်း (အနီရောင်) ပြုလုပ်နိုင်သည်</string>
-    <string name="msg_fairemail">သင်၏ ကိုယ်ရေးအချက်အလက်များကို ကာကွယ်ရန် NetGuard ကို အသုံးပြုပါက လုံခြုံစိတ်ချရသော <a href="https://email.faircode.eu/">FairEmail</a> ကိုလည်း စိတ်ဝင်စားနိုင်ပါသည်။</string>
+    <string name="msg_fairemail">သင်၏ ကိုယ်ရေးအချက်အလက်များကို ကာကွယ်ရန် QuietGuard ကို အသုံးပြုပါက လုံခြုံစိတ်ချရသော <a href="https://email.faircode.eu/">FairEmail</a> ကိုလည်း စိတ်ဝင်စားနိုင်ပါသည်။</string>
     <string name="msg_whitelist">အင်တာနက် အသုံးပြုမှုကို နဂိုမူလကတည်းက ခွင့်ပြုထားသည် (Blacklist mode)၊ ၎င်းကို ဆက်တင်များတွင် ပြောင်းလဲနိုင်သည်</string>
     <string name="msg_push">အဝင် (push) မက်ဆေ့ချ်များကို စနစ်၏ Play services မှ အဓိက ကိုင်တွယ်ပြီး ၎င်းကို နဂိုမူလကတည်းက အင်တာနက် အသုံးပြုခွင့် ပေးထားသည်</string>
     <string name="msg_system">(စနစ်) အက်ပ်များ အားလုံးကို စီမံခြင်းကို ဆက်တင်များတွင် ဖွင့်နိုင်သည်</string>
     <string name="msg_issue">ကျေးဇူးပြု၍ ပြဿနာနှင့် ဖြစ်ပွားသည့်အချိန်ကို ရှင်းပြပါ -</string>
     <string name="msg_vpn_cancelled">VPN ချိတ်ဆက်မှု ပယ်ဖျက်လိုက်သည်၊ အခြား VPN တစ်ခုကို အမြဲတမ်းဖွင့်ထားရန် သတ်မှတ်ထားသလား။</string>
-    <string name="msg_on">NetGuard ဖွင့်ထားစဉ် စက်ပိတ်ပါက စက်ပြန်ဖွင့်ချိန်တွင် NetGuard အလိုအလျောက် ပွင့်လာမည်ဖြစ်သည်</string>
+    <string name="msg_on">QuietGuard ဖွင့်ထားစဉ် စက်ပိတ်ပါက စက်ပြန်ဖွင့်ချိန်တွင် QuietGuard အလိုအလျောက် ပွင့်လာမည်ဖြစ်သည်</string>
     <string name="msg_unavailable">ဤအင်္ဂါရပ်ကို သင်၏ Android ဗားရှင်းတွင် အသုံးမပြုနိုင်ပါ</string>
     <string name="msg_always_on">အခြား VPN တစ်ခုကို အမြဲတမ်းဖွင့်ထားရန် သတ်မှတ်ထားသည်</string>
-    <string name="msg_always_on_lockdown">NetGuard ကို စစ်ထုတ်မှုစနစ်ဖြင့် သုံးရန် Android VPN ဆက်တင်များရှိ \"Block connections without VPN\" ကို ပိတ်ပါ</string>
-    <string name="msg_private_dns">NetGuard ကို စစ်ထုတ်မှုစနစ်ဖြင့် သုံးရန် Android ကွန်ယက် ဆက်တင်များရှိ \"Private DNS\" ကို ပိတ်ပါ</string>
+    <string name="msg_always_on_lockdown">QuietGuard ကို စစ်ထုတ်မှုစနစ်ဖြင့် သုံးရန် Android VPN ဆက်တင်များရှိ \"Block connections without VPN\" ကို ပိတ်ပါ</string>
+    <string name="msg_private_dns">QuietGuard ကို စစ်ထုတ်မှုစနစ်ဖြင့် သုံးရန် Android ကွန်ယက် ဆက်တင်များရှိ \"Private DNS\" ကို ပိတ်ပါ</string>
 
     <string name="title_lockdown_enabled">အသုံးပြုမှုကို ပိတ်ဆို့ထားသည်</string>
     <string name="title_unmetered_allowed">အကန့်အသတ်မဲ့ အသုံးပြုမှုကို ခွင့်ပြုသည်</string>

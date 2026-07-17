@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next는 루트 권한 없이 인터넷 접속을 차단하는 간편하고 고급스러운 방법을 제공합니다. 앱 및 주소별로 Wi-Fi 및/또는 모바일 연결에 대한 액세스를 개별적으로 허용하거나 거부할 수 있습니다.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard는 루트 권한 없이 인터넷 접속을 차단하는 간편하고 고급스러운 방법을 제공합니다. 앱 및 주소별로 Wi-Fi 및/또는 모바일 연결에 대한 액세스를 개별적으로 허용하거나 거부할 수 있습니다.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard는 Android 5.1 이상이 필요합니다.</string>
+    <string name="app_android">QuietGuard는 Android 5.1 이상이 필요합니다.</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">개인정보 보호정책</a></string>
-    <string name="app_first">NetGuard를 개발하고 테스트하는 데 세심한 주의를 기울였으나, 모든 기기에서 올바르게 작동한다고 보장할 수는 없습니다.</string>
+    <string name="app_first">QuietGuard를 개발하고 테스트하는 데 세심한 주의를 기울였으나, 모든 기기에서 올바르게 작동한다고 보장할 수는 없습니다.</string>
     <string name="app_agree">동의함</string>
     <string name="app_disagree">동의하지 않음</string>
-    <string name="app_support">NetGuard는 여러분의 도움이 필요합니다. 프로젝트를 계속 유지할 수 있도록 Pro 기능을 구매해 주세요.</string>
+    <string name="app_support">QuietGuard는 여러분의 도움이 필요합니다. 프로젝트를 계속 유지할 수 있도록 Pro 기능을 구매해 주세요.</string>
     <string name="app_qap">
         Google은 모든 앱을 조회할 수 있는 권한을 요청했다는 이유로 Play 스토어에서 이 앱을 삭제하려 했습니다.
         다섯 차례의 항소와 이 권한이 필요한 이유에 대한 타당한 설명이 모두 거부되었습니다.
@@ -264,14 +264,14 @@
     <string name="setting_section_support">지원</string>
 
     <string name="summary_install">새로 설치된 앱을 직접 구성할 수 있도록 상태 표시줄 알림 표시 (Pro 기능)</string>
-    <string name="summary_auto">위젯을 사용하여 비활성화한 후 선택한 시간(분)이 지나면 NetGuard를 자동으로 다시 활성화 (비활성화하려면 0 입력)</string>
+    <string name="summary_auto">위젯을 사용하여 비활성화한 후 선택한 시간(분)이 지나면 QuietGuard를 자동으로 다시 활성화 (비활성화하려면 0 입력)</string>
     <string name="summary_delay">화면을 끈 후 선택한 시간(분) 동안 화면 켜짐 규칙을 활성 상태로 유지 (비활성화하려면 0 입력)</string>
     <string name="summary_update">GitHub에서 하루에 두 번 새로운 릴리스 확인</string>
 
     <string name="summary_tethering">Android 버전에 따라 테더링이 작동하거나 작동하지 않을 수 있습니다. 테더링된 트래픽은 필터링할 수 없습니다.</string>
     <string name="summary_subnet">서브넷 라우팅 활성화. Wi-Fi 통화가 가능해질 수 있지만 Android 버그가 발생하거나 배터리 소모가 늘어날 수 있습니다.</string>
     <string name="summary_lan">10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16과 같은 로컬 영역 네트워크 주소에 앱이 연결되도록 허용</string>
-    <string name="summary_ip6">IPv6 트래픽을 NetGuard로 라우팅하여 선택적으로 허용 또는 차단</string>
+    <string name="summary_ip6">IPv6 트래픽을 QuietGuard로 라우팅하여 선택적으로 허용 또는 차단</string>
     <string name="summary_wifi_home">선택한 네트워크에 대해서만 Wi-Fi 네트워크 규칙 적용 (다른 Wi-Fi 네트워크에는 모바일 네트워크 규칙 적용)</string>
     <string name="summary_metered">종량제(유료, 테더링) Wi-Fi 네트워크에 모바일 네트워크 규칙 적용</string>
     <string name="summary_metered_2g">2G 데이터 연결에 Wi-Fi 네트워크 규칙 적용</string>
@@ -279,7 +279,7 @@
     <string name="summary_metered_4g">LTE 데이터 연결에 Wi-Fi 네트워크 규칙 적용</string>
     <string name="summary_national_roaming">SIM과 모바일 네트워크 국가가 같을 때 로밍 규칙을 적용하지 않음</string>
     <string name="summary_eu_roaming">SIM과 모바일 네트워크 국가가 EU 내에 있을 때 로밍 규칙을 적용하지 않음 (roam like at home)</string>
-    <string name="summary_call">수신 또는 발신 전화 시 NetGuard 비활성화. IP/Wi-Fi 통화 문제를 해결하는 데 사용할 수 있습니다.</string>
+    <string name="summary_call">수신 또는 발신 전화 시 QuietGuard 비활성화. IP/Wi-Fi 통화 문제를 해결하는 데 사용할 수 있습니다.</string>
 
     <string name="summary_system">시스템 앱에 대한 규칙 정의 (전문가용)</string>
     <string name="summary_log_app">앱의 인터넷 액세스 시도 기록. 배터리 소모가 늘어날 수 있습니다.</string>
@@ -291,7 +291,7 @@
     <string name="summary_rcode">기본값은 3 (NXDOMAIN)이며, \'존재하지 않는 도메인\'을 의미합니다.</string>
     <string name="summary_validate">포트 443 (HTTPS)에서 인터넷 연결을 확인하는 데 사용되는 도메인 이름.</string>
     <string name="summary_socks5_enabled">TCP 트래픽만 프록시 서버로 전송됩니다</string>
-    <string name="summary_watchdog">NetGuard가 실행 중인지 주기적으로 확인 (비활성화하려면 0 입력). 배터리 소모가 늘어날 수 있습니다.</string>
+    <string name="summary_watchdog">QuietGuard가 실행 중인지 주기적으로 확인 (비활성화하려면 0 입력). 배터리 소모가 늘어날 수 있습니다.</string>
 
     <string name="summary_stats">상태 표시줄 알림에 네트워크 속도 그래프 표시</string>
 
@@ -302,9 +302,9 @@
     <string name="msg_packages">%1$d 허용, %2$d 차단됨</string>
     <string name="msg_hosts">%1$d 허용, %2$d 차단됨, %3$d 호스트</string>
     <string name="msg_waiting">이벤트 대기 중</string>
-    <string name="msg_disabled">NetGuard가 비활성화됨. 상단 스위치를 눌러 활성화하세요</string>
+    <string name="msg_disabled">QuietGuard가 비활성화됨. 상단 스위치를 눌러 활성화하세요</string>
     <string name="msg_notifications">알림 권한을 부여하려면 누르세요 (접속 시도 알림, 오류 메시지 등을 위해)</string>
-    <string name="msg_revoked">NetGuard가 비활성화됨. 다른 VPN 앱 사용으로 인한 것일 수 있습니다</string>
+    <string name="msg_revoked">QuietGuard가 비활성화됨. 다른 VPN 앱 사용으로 인한 것일 수 있습니다</string>
     <string name="msg_installed">\'%1$s\' 설치됨</string>
     <string name="msg_installed_n">설치되었습니다</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -313,13 +313,13 @@
     <string name="msg_completed">작업 완료</string>
     <string name="msg_invalid">값을 확인하고 다시 시도하세요.</string>
     <string name="msg_export_failed">내보내기 실패: %1$s</string>
-    <string name="msg_vpn">NetGuard는 로컬 VPN을 사용하여 인터넷 트래픽을 필터링합니다.
+    <string name="msg_vpn">QuietGuard는 로컬 VPN을 사용하여 인터넷 트래픽을 필터링합니다.
 이러한 이유로 다음 대화 상자에서 VPN 연결을 허용해 주세요.
 트래픽은 원격 VPN 서버로 전송되지 않습니다.</string>
-    <string name="msg_autostart">NetGuard가 자동으로 시작되지 않았습니다. 사용 중인 Android 버전의 버그일 수 있습니다.</string>
+    <string name="msg_autostart">QuietGuard가 자동으로 시작되지 않았습니다. 사용 중인 Android 버전의 버그일 수 있습니다.</string>
     <string name="msg_error">예기치 않은 오류 발생: \'%s\'</string>
     <string name="msg_start_failed">Android가 현재 VPN 서비스 시작을 거부했습니다. 사용 중인 Android 버전의 버그일 수 있습니다.</string>
-    <string name="msg_try">NetGuard 사용해 보기</string>
+    <string name="msg_try">QuietGuard 사용해 보기</string>
     <string name="msg_terms">기부함으로써 <a href="http://www.netguard.me/#terms">이용 약관</a>에 동의하게 됩니다</string>
     <string name="msg_dimming">다음 대화 상자에서 확인을 누를 수 없다면, 다른 앱(화면 어둡게 하기 등)이 화면을 제어하고 있는 것일 수 있습니다.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/일</string>
@@ -329,11 +329,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%d회</string>
-    <string name="msg_doze">일관된 결과를 위해 NetGuard에 대한 Android 배터리 최적화를 비활성화해야 합니다.
-\n\n다음 대화 상자 상단에서 \"모든 앱\"을 선택하고 목록에서 NetGuard를 탭한 후 \"최적화하지 않음\"을 선택하고 확인하세요.</string>
-    <string name="msg_datasaving">일관된 결과를 위해 NetGuard에 대한 Android 데이터 절약 옵션을 비활성화해야 합니다.
+    <string name="msg_doze">일관된 결과를 위해 QuietGuard에 대한 Android 배터리 최적화를 비활성화해야 합니다.
+\n\n다음 대화 상자 상단에서 \"모든 앱\"을 선택하고 목록에서 QuietGuard를 탭한 후 \"최적화하지 않음\"을 선택하고 확인하세요.</string>
+    <string name="msg_datasaving">일관된 결과를 위해 QuietGuard에 대한 Android 데이터 절약 옵션을 비활성화해야 합니다.
 \n\n다음 대화 상자에서 \"백그라운드 데이터\" 및 \"무제한 데이터 사용\" 옵션을 활성화하세요.</string>
-    <string name="msg_filter">필터링을 사용하면 Android가 데이터 및 배터리 사용량을 NetGuard의 것으로 간주하게 됩니다. 실제 앱이 아닌 NetGuard가 사용하는 것으로 인식합니다.</string>
+    <string name="msg_filter">필터링을 사용하면 Android가 데이터 및 배터리 사용량을 QuietGuard의 것으로 간주하게 됩니다. 실제 앱이 아닌 QuietGuard가 사용하는 것으로 인식합니다.</string>
     <string name="msg_filter4">Android 4는 필터링 활성화가 필요합니다</string>
     <string name="msg_log_disabled">트래픽 로깅이 비활성화됨. 상단 스위치로 활성화하세요. 로깅은 배터리를 추가로 소모할 수 있습니다.</string>
     <string name="msg_clear_rules">모든 규칙과 조건을 기본값으로 재설정합니다</string>
@@ -346,20 +346,20 @@
     <string name="msg_stop_forward">%1$s 포트 %2$d의 전달을 중단할까요？</string>
     <string name="msg_metered">종량제 네트워크입니다</string>
     <string name="msg_inactive">활성 인터넷 연결 없음</string>
-    <string name="msg_queue">NetGuard가 사용 중입니다</string>
+    <string name="msg_queue">QuietGuard가 사용 중입니다</string>
     <string name="msg_update">업데이트 가능, 눌러서 다운로드</string>
     <string name="msg_usage">앱 옆의 아이콘을 눌러 Wi-Fi 또는 모바일 인터넷 접속을 허용(녹색)하거나 거부(빨간색)할 수 있습니다</string>
-    <string name="msg_fairemail">개인정보 보호를 위해 NetGuard를 설치했다면, 오픈 소스 기반의 개인정보 보호 이메일 앱 <a href="https://email.faircode.eu/">FairEmail</a>에도 관심이 있으실 것입니다.</string>
+    <string name="msg_fairemail">개인정보 보호를 위해 QuietGuard를 설치했다면, 오픈 소스 기반의 개인정보 보호 이메일 앱 <a href="https://email.faircode.eu/">FairEmail</a>에도 관심이 있으실 것입니다.</string>
     <string name="msg_whitelist">인터넷 액세스는 기본적으로 허용됩니다 (블랙리스트 모드). 설정에서 변경 가능합니다.</string>
     <string name="msg_push">수신(푸시) 메시지는 주로 시스템 구성 요소인 Play 서비스에서 처리하며, 이는 기본적으로 인터넷 액세스가 허용됩니다.</string>
     <string name="msg_system">모든 (시스템) 앱 관리는 설정에서 활성화할 수 있습니다</string>
     <string name="msg_issue">문제를 설명하고 발생 시간을 적어주세요:</string>
     <string name="msg_vpn_cancelled">VPN 연결 취소됨\n다른 VPN을 항상 켜져 있는 VPN으로 설정했나요?</string>
-    <string name="msg_on">NetGuard가 활성화된 상태에서 전원을 끄면 다시 켤 때 자동으로 시작됩니다</string>
+    <string name="msg_on">QuietGuard가 활성화된 상태에서 전원을 끄면 다시 켤 때 자동으로 시작됩니다</string>
     <string name="msg_unavailable">이 기능은 현재 Android 버전에서 사용할 수 없습니다</string>
     <string name="msg_always_on">다른 VPN이 항상 켜져 있는 VPN으로 설정되어 있습니다</string>
-    <string name="msg_always_on_lockdown">Android VPN 설정에서 \"VPN 없이 연결 차단\"을 꺼야 NetGuard 필터링 모드를 사용할 수 있습니다</string>
-    <string name="msg_private_dns">Android 네트워크 설정에서 \"프라이빗 DNS\"를 꺼야 NetGuard 필터링 모드를 사용할 수 있습니다</string>
+    <string name="msg_always_on_lockdown">Android VPN 설정에서 \"VPN 없이 연결 차단\"을 꺼야 QuietGuard 필터링 모드를 사용할 수 있습니다</string>
+    <string name="msg_private_dns">Android 네트워크 설정에서 \"프라이빗 DNS\"를 꺼야 QuietGuard 필터링 모드를 사용할 수 있습니다</string>
 
     <string name="title_lockdown_enabled">트래픽이 잠겼습니다</string>
     <string name="title_unmetered_allowed">비종량제 트래픽 허용됨</string>

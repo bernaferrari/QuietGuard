@@ -17,11 +17,11 @@ val hasKeystore = keystorePropertiesFile.exists().also { exists ->
 }
 
 android {
-    namespace = "com.bernaferari.renetguard"
+    namespace = "com.bernaferrari.quietguard"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.bernaferari.renetguard"
+        applicationId = "com.bernaferrari.quietguard"
         versionName = "1"
         minSdk = 26
         targetSdk = 36

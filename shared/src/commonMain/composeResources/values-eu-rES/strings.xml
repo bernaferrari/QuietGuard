@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next-ek internet sarbidea blokeatzeko modu sinple eta aurreratuak ematen dizkizu - ez da root behar. Aplikazio eta helbideko banaka baimendu edo ukatu daiteke Wi-Fi edo sare mugikorraren bitarteko konexioa.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard-ek internet sarbidea blokeatzeko modu sinple eta aurreratuak ematen dizkizu - ez da root behar. Aplikazio eta helbideko banaka baimendu edo ukatu daiteke Wi-Fi edo sare mugikorraren bitarteko konexioa.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuardek Android 5.1 edo berriagoa behar du</string>
+    <string name="app_android">QuietGuardek Android 5.1 edo berriagoa behar du</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Pribatutasun politika</a></string>
-    <string name="app_first">Kontu handiz garatu eta probatu da NetGuard, baina ezin dugu bermatu gailu guztietan ibiliko dela.</string>
+    <string name="app_first">Kontu handiz garatu eta probatu da QuietGuard, baina ezin dugu bermatu gailu guztietan ibiliko dela.</string>
     <string name="app_agree">Ados nago</string>
     <string name="app_disagree">Ez nago ados</string>
-    <string name="app_support">NetGuard proiektuak zure laguntza behar du. Sakatu ordainpeko ezaugarriak erosi eta proiektua babesteko.</string>
+    <string name="app_support">QuietGuard proiektuak zure laguntza behar du. Sakatu ordainpeko ezaugarriak erosi eta proiektua babesteko.</string>
     <string name="app_qap">
         Google-k aplikazioa Play Store-tik kendu behar zuen, aplikazio guztiak kontsultatzeko baimena eskatzen zuelako.
         Bost helegite eta baimen hori zergatik behar den azaltzen zuen arrazoibide on bat baztertu ziren.
@@ -260,7 +260,7 @@
     <string name="setting_section_support">Laguntza</string>
 
     <string name="summary_install">Erakutsi egoera barrako jakinarazpena berriki instalatutako aplikazioak zuzenean konfiguratzeko (ordainpeko ezaugarria)</string>
-    <string name="summary_auto">Trepeta erabiltzea desgaitu eta gero, automatikoki gaitu NetGuard berriro esandako minutu kopurua igarotzean (idatzi 0 ezaugarri hau desgaitzeko)</string>
+    <string name="summary_auto">Trepeta erabiltzea desgaitu eta gero, automatikoki gaitu QuietGuard berriro esandako minutu kopurua igarotzean (idatzi 0 ezaugarri hau desgaitzeko)</string>
     <string name="summary_delay">Pantaila itzali eta gero, mantendu pantaila piztuta dagoeneko arauak aktibo esandako minutu kopuru batez (idatzi zero aukera hau desgaitzeko)</string>
     <string name="summary_update">Egiaztatu bertsio berririk dagoen GitHub-en egunean birritan</string>
 
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Aplikatu Wi-Fi sare arauak LTE datu konexioetan ere</string>
     <string name="summary_national_roaming">Ez aplikatu ibiltaritza arauak SIM eta sarearen herrialdea bera direnean</string>
     <string name="summary_eu_roaming">Ez aplikatu ibiltaritza arauak SIM eta sarearen herrialdeak biak Europar Batasunean badaude (ibiltaritza nazionala bezala)</string>
-    <string name="summary_call">Desgaitu NetGuard telefono deiak jaso edo egitean. Hau IP/Wi-Fi deiekin arazoak daudenean erabili daiteke.</string>
+    <string name="summary_call">Desgaitu QuietGuard telefono deiak jaso edo egitean. Hau IP/Wi-Fi deiekin arazoak daudenean erabili daiteke.</string>
 
     <string name="summary_system">Zehaztu sistemako aplikazioen arauak (adituentzat)</string>
     <string name="summary_log_app">Gorde aplikazioek Internet atzitzeko egindako saiakeren egunkaria. Honek bateria kontsumoa areagotu dezake.</string>
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d baimenduta, %2$d blokeatuta</string>
     <string name="msg_hosts">%1$d baimenduta, %2$d blokeatuta, %3$d ostalari</string>
     <string name="msg_waiting">Gertaeraren zain</string>
-    <string name="msg_disabled">NetGuard desgaituta dago, erabili goiko etengailua NetGuard gaitzeko</string>
+    <string name="msg_disabled">QuietGuard desgaituta dago, erabili goiko etengailua QuietGuard gaitzeko</string>
     <string name="msg_notifications">Sakatu jakinarazpen baimenak emateko (sarbide saiakeren jakinarazpenetarako, erroreez ohartarazteko, etab.)</string>
-    <string name="msg_revoked">NetGuard desgaitua izan da, litekeena beste VPN motako aplikazio bat erabiltzeagatik</string>
+    <string name="msg_revoked">QuietGuard desgaitua izan da, litekeena beste VPN motako aplikazio bat erabiltzeagatik</string>
     <string name="msg_installed">\'%1$s\' instalatuta</string>
     <string name="msg_installed_n">Instalatu da</string>
     <string name="msg_malware">Malware posiblea: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Ekintza burututa</string>
     <string name="msg_invalid">Mesedez, egiaztatu balioak eta saiatu berriro.</string>
     <string name="msg_export_failed">Esportazioak huts egin du: %1$s</string>
-    <string name="msg_vpn">NetGuard-ek VPN lokal bat darabil internet trafikoa iragazteko.
+    <string name="msg_vpn">QuietGuard-ek VPN lokal bat darabil internet trafikoa iragazteko.
 Horregatik, baimendu VPN konexioa hurrengo elkarrizketa koadroan mesedez.
 Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
-    <string name="msg_autostart">NetGuard ezin izan da automatikoki abiatu. Litekeena zure Android bertsioaren akats baten erruz.</string>
+    <string name="msg_autostart">QuietGuard ezin izan da automatikoki abiatu. Litekeena zure Android bertsioaren akats baten erruz.</string>
     <string name="msg_error">Ustekabeko errorea gertatu da: \'%s\'</string>
     <string name="msg_start_failed">Androidek uko egin dio VPN zerbitzua orain abiatzeari. Litekeena zure Android bertsioak akats bat duelako.</string>
-    <string name="msg_try">Probatu NetGuard</string>
+    <string name="msg_try">Probatu QuietGuard</string>
     <string name="msg_terms">Dohaintza eginez <a href="http://www.netguard.me/#terms">termino eta baldintzak</a> onartzen dituzu</string>
     <string name="msg_dimming">Ezin baduzu \'Ados\' zapaldu hurrengo elkarrizketa-koadroan, beste aplikazio bat pantaila manipulatzen dago.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/egunean</string>
@@ -325,11 +325,11 @@ Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Emaitza egokiak izateko, Android sistemako bateria optimizazioak desgaitu behar dira NetGuard aplikazioarentzat.
-\n\nHurrengo elkarrizketa-koadroan, hautatu \"Aplikazio guztiak\" goian, sakatu NetGuard zerrendan eta berretsi \"Ez optimizatu\".</string>
-    <string name="msg_datasaving">Emaitza egokiak izateko, Android sistemako datuak aurrezteko optimizazioak desgaitu behar dira NetGuard aplikazioarentzat.
+    <string name="msg_doze">Emaitza egokiak izateko, Android sistemako bateria optimizazioak desgaitu behar dira QuietGuard aplikazioarentzat.
+\n\nHurrengo elkarrizketa-koadroan, hautatu \"Aplikazio guztiak\" goian, sakatu QuietGuard zerrendan eta berretsi \"Ez optimizatu\".</string>
+    <string name="msg_datasaving">Emaitza egokiak izateko, Android sistemako datuak aurrezteko optimizazioak desgaitu behar dira QuietGuard aplikazioarentzat.
 \n\nHurrengo elkarrizketa-koadroan, gaitu \"bigarren planoko datuak\" eta \"mugagabeko datu erabilera\"</string>
-    <string name="msg_filter">Iragaztea erabiltzean Androiden NetGuard-i egotziko dio datu eta bateria erabilera - Androidek uste du NetGuard-ek erabiltzen duela datuak eta bateria, ez jatorrizko aplikazioek</string>
+    <string name="msg_filter">Iragaztea erabiltzean Androiden QuietGuard-i egotziko dio datu eta bateria erabilera - Androidek uste du QuietGuard-ek erabiltzen duela datuak eta bateria, ez jatorrizko aplikazioek</string>
     <string name="msg_filter4">Android 4-k iragaztea gaitzera behartzen du</string>
     <string name="msg_log_disabled">Trafifoaren egunkaria desgaituta dago, erabili goiko etengailua egunkaria gaitzeko. Trafikoaren egunkariak bateria kontsumoa areagotu dezake.</string>
     <string name="msg_clear_rules">Honek arauak eta baldintzak lehenetsitako balioetara berrezarriko ditu</string>
@@ -342,20 +342,20 @@ Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
     <string name="msg_stop_forward">Utzi %1$s ataka %2$d birbidaltzeari?</string>
     <string name="msg_metered">Sarea neurtutakoa da</string>
     <string name="msg_inactive">Internet konexio aktiborik ez</string>
-    <string name="msg_queue">NetGuard lanpetuta dago</string>
+    <string name="msg_queue">QuietGuard lanpetuta dago</string>
     <string name="msg_update">Eguneraketa eskuragarri, sakatu deskargatzeko</string>
     <string name="msg_usage">Wi-Fi edo mugikor bidez Internetera sarbidea baimendu (berde) edo ukatu (gorri) aplikazioaren ondoan dauden ikonoak sakatuz</string>
-    <string name="msg_fairemail">NetGuard zure pribatutasuna babesteko instalatu baduzu, agian <a href="https://email.faircode.eu/">FairEmail</a> interesatuko zaizu, e-mail bezero librea eta pribatutasuna aintzat duena</string>
+    <string name="msg_fairemail">QuietGuard zure pribatutasuna babesteko instalatu baduzu, agian <a href="https://email.faircode.eu/">FairEmail</a> interesatuko zaizu, e-mail bezero librea eta pribatutasuna aintzat duena</string>
     <string name="msg_whitelist">Internet sarbidea lehenetsita baimenduta dago (zerrenda beltza modua), hau ezarpenetan aldatu daiteke</string>
     <string name="msg_push">Jasotako (push) mezuak gehienbat Play Services osagaiak kudeatzen ditu, eta Internet sarbidea baimentzen zaio lehenetsita</string>
     <string name="msg_system">Aplikazio guztiak (sistemakoak) kudeatzea ezarpenetan gaitu daiteke</string>
     <string name="msg_issue">Azaldu arazoa eta aipatu arazoaren data eta ordua mesedez:</string>
     <string name="msg_vpn_cancelled">VPN konexioa ezeztatuta\nBeste VPN bat ezarri duzu beti gaituta dagoen VPN gisa?</string>
-    <string name="msg_on">NetGuard gaituta dagoela gailua itzaltzen baduzu, NetGuard automatikoki abiatuko da gailua berriro piztean</string>
+    <string name="msg_on">QuietGuard gaituta dagoela gailua itzaltzen baduzu, QuietGuard automatikoki abiatuko da gailua berriro piztean</string>
     <string name="msg_unavailable">Ezaugarri hau ez dago eskuragarri Android bertsio honetan</string>
     <string name="msg_always_on">Beste VPN bat ezarri da beti gaituta dagoen VPN gisa</string>
-    <string name="msg_always_on_lockdown">Itzali \'Blokeatu VPN gabeko konexioak\' Android VPN ezarpenetan NetGuard iragazte moduan erabiltzeko</string>
-    <string name="msg_private_dns">Itzali \'DNS pribatua\' Android sare ezarpenetan NetGuard iragazte moduan erabiltzeko</string>
+    <string name="msg_always_on_lockdown">Itzali \'Blokeatu VPN gabeko konexioak\' Android VPN ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
+    <string name="msg_private_dns">Itzali \'DNS pribatua\' Android sare ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
 
     <string name="title_lockdown_enabled">Trafikoa blokeatuta dago</string>
     <string name="title_unmetered_allowed">Neurtu gabeko trafikoa onartzen da</string>

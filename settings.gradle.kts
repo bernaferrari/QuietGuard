@@ -61,7 +61,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "NetGuard"
+rootProject.name = "QuietGuard"
 include(":app")
 include(":shared")
 include(":sqliteWasmWorker")

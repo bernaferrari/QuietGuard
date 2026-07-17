@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next යනු රූට් (root) අවශ්‍යතාවයකින් තොරව අන්තර්ජාල ප්‍රවේශය අවහිර කිරීමට සරල සහ උසස් ක්‍රම ලබා දෙන යෙදුමකි. ඔබගේ Wi-Fi සහ/හෝ ජංගම දත්ත සම්බන්ධතා සඳහා එක් එක් යෙදුම් සහ ලිපින වලට තනි තනිව ප්‍රවේශය ලබා දීමට හෝ ප්‍රතික්ෂේප කිරීමට මෙහිදී හැකියාව ඇත.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard යනු රූට් (root) අවශ්‍යතාවයකින් තොරව අන්තර්ජාල ප්‍රවේශය අවහිර කිරීමට සරල සහ උසස් ක්‍රම ලබා දෙන යෙදුමකි. ඔබගේ Wi-Fi සහ/හෝ ජංගම දත්ත සම්බන්ධතා සඳහා එක් එක් යෙදුම් සහ ලිපින වලට තනි තනිව ප්‍රවේශය ලබා දීමට හෝ ප්‍රතික්ෂේප කිරීමට මෙහිදී හැකියාව ඇත.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard සඳහා Android 5.1 හෝ ඊට පසු සංස්කරණයක් අවශ්‍ය වේ</string>
+    <string name="app_android">QuietGuard සඳහා Android 5.1 හෝ ඊට පසු සංස්කරණයක් අවශ්‍ය වේ</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">පෞද්ගලිකත්ව ප්‍රතිපත්තිය</a></string>
-    <string name="app_first">NetGuard සංවර්ධනය කිරීමට සහ පරීක්ෂා කිරීමට මහත් සැලකිල්ලක් දක්වා ඇත, කෙසේ වෙතත් NetGuard සෑම උපාංගයකම නිවැරදිව ක්‍රියා කරන බවට සහතික විය නොහැක.</string>
+    <string name="app_first">QuietGuard සංවර්ධනය කිරීමට සහ පරීක්ෂා කිරීමට මහත් සැලකිල්ලක් දක්වා ඇත, කෙසේ වෙතත් QuietGuard සෑම උපාංගයකම නිවැරදිව ක්‍රියා කරන බවට සහතික විය නොහැක.</string>
     <string name="app_agree">මම එකඟයි</string>
     <string name="app_disagree">මම එකඟ නැත</string>
-    <string name="app_support">NetGuard හට ඔබගේ උදව් අවශ්‍යයි. ව්‍යාපෘතිය පවත්වාගෙන යාම සඳහා Pro විශේෂාංග මිලදී ගැනීමට තට්ටු කරන්න.</string>
+    <string name="app_support">QuietGuard හට ඔබගේ උදව් අවශ්‍යයි. ව්‍යාපෘතිය පවත්වාගෙන යාම සඳහා Pro විශේෂාංග මිලදී ගැනීමට තට්ටු කරන්න.</string>
     <string name="app_qap">
         සියලුම යෙදුම් විමසීමට අවසර ඉල්ලා සිටීම නිසා Google විසින් Play Store වෙතින් යෙදුම ඉවත් කිරීමට නියමිතව තිබුණි.
         මෙම අවසරය අවශ්‍ය වන්නේ මන්දැයි හොඳ සාධාරණීකරණයක් ඉදිරිපත් කළත් අභියාචනා පහක්ම ප්‍රතික්ෂේප විය.
@@ -259,14 +259,14 @@
     <string name="setting_section_support">සහාය</string>
 
     <string name="summary_install">අලුතින් ස්ථාපනය කරන ලද යෙදුම් සෘජුවම සැකසීමට තත්ව තීරුවේ දැනුම්දීමක් පෙන්වන්න (pro විශේෂාංගයකි)</string>
-    <string name="summary_auto">විජට් භාවිතයෙන් අක්‍රිය කිරීමෙන් පසුව, තෝරාගත් මිනිත්තු ගණනකට පසුව NetGuard ස්වයංක්‍රීයව නැවත ක්‍රියාත්මක කරන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න)</string>
+    <string name="summary_auto">විජට් භාවිතයෙන් අක්‍රිය කිරීමෙන් පසුව, තෝරාගත් මිනිත්තු ගණනකට පසුව QuietGuard ස්වයංක්‍රීයව නැවත ක්‍රියාත්මක කරන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න)</string>
     <string name="summary_delay">තිරය නිවා දැමූ පසුව, තෝරාගත් මිනිත්තු ගණනක් සඳහා තිරය ක්‍රියාත්මකව තිබියදී අදාළ වන නීති ක්‍රියාත්මකව තබන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න)</string>
     <string name="summary_update">දිනකට දෙවරක් GitHub හි නව නිකුත් කිරීම් පරීක්ෂා කරන්න</string>
 
     <string name="summary_tethering">Android සංස්කරණය අනුව, අන්තර්ජාලය බෙදා ගැනීම ක්‍රියා කළ හෝ නොකළ හැකිය. බෙදා හරින ලද දත්ත ගමනාගමනය පෙරීමට නොහැකිය.</string>
     <string name="summary_subnet">Subnet routing සක්‍රිය කරන්න; එමඟින් Wi-Fi ඇමතුම් ලබා ගැනීමට හැකි වනු ඇත, නමුත් Android හි දෝෂ ඇති වීමට සහ බැටරි පරිභෝජනය වැඩි වීමට ඉඩ ඇත</string>
     <string name="summary_lan">10.0.0.0/8, 172.16.0.0/12 සහ 192.168.0.0/16 වැනි දේශීය ජාල ලිපින වලට සම්බන්ධ වීමට යෙදුම් වලට ඉඩ දෙන්න</string>
-    <string name="summary_ip6">IP version 6 දත්ත ගමනාගමනය NetGuard හරහා යොමු කරන්න, එවිට එය තෝරා බේරා ඉඩ දීමට හෝ අවහිර කිරීමට හැකිය</string>
+    <string name="summary_ip6">IP version 6 දත්ත ගමනාගමනය QuietGuard හරහා යොමු කරන්න, එවිට එය තෝරා බේරා ඉඩ දීමට හෝ අවහිර කිරීමට හැකිය</string>
     <string name="summary_wifi_home">තෝරාගත් ජාල සඳහා පමණක් Wi-Fi ජාල නීති යොදන්න (අනෙකුත් Wi-Fi ජාල සඳහා ජංගම ජාල නීති යොදනු ඇත)</string>
     <string name="summary_metered">සීමා සහිත (metered) Wi-Fi ජාල සඳහා ජංගම ජාල නීති යොදන්න (ගෙවන ලද, බෙදා ගත්)</string>
     <string name="summary_metered_2g">2G දත්ත සම්බන්ධතා සඳහා Wi-Fi ජාල නීති යොදන්න</string>
@@ -274,7 +274,7 @@
     <string name="summary_metered_4g">LTE දත්ත සම්බන්ධතා සඳහා Wi-Fi ජාල නීති යොදන්න</string>
     <string name="summary_national_roaming">සිම්පත සහ ජංගම ජාලය එකම රටක වන විට Roaming නීති අදාළ නොකරන්න</string>
     <string name="summary_eu_roaming">සිම්පත සහ ජංගම ජාලය යුරෝපා සංගමය තුළ වන විට Roaming නීති අදාළ නොකරන්න (නිවසේදී මෙන් Roaming)</string>
-    <string name="summary_call">ඉන්කමින් හෝ අවුට්ගොයින් ටෙලිෆෝන් ඇමතුමකදී NetGuard අක්‍රිය කරන්න. IP/Wi-Fi ඇමතුම් ගැටළු මඟහරවා ගැනීමට මෙය භාවිතා කළ හැක.</string>
+    <string name="summary_call">ඉන්කමින් හෝ අවුට්ගොයින් ටෙලිෆෝන් ඇමතුමකදී QuietGuard අක්‍රිය කරන්න. IP/Wi-Fi ඇමතුම් ගැටළු මඟහරවා ගැනීමට මෙය භාවිතා කළ හැක.</string>
 
     <string name="summary_system">පද්ධති යෙදුම් සඳහා නීති අර්ථ දක්වන්න (ප්‍රවීණයන් සඳහා)</string>
     <string name="summary_log_app">යෙදුම් අන්තර්ජාලයට ප්‍රවේශ වීමට උත්සාහ කිරීම සටහන් කරන්න. මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
@@ -286,7 +286,7 @@
     <string name="summary_rcode">පෙරනිමි අගය 3 (NXDOMAIN) වේ, එහි අර්ථය \'නොපවතින වසම\' යන්නයි.</string>
     <string name="summary_validate">Port 443 (https) හි අන්තර්ජාල සම්බන්ධතාවය තහවුරු කිරීමට භාවිතා කරන වසම් නාමය.</string>
     <string name="summary_socks5_enabled">කෙලින්ම TCP දත්ත ගමනාගමනය පමණක් ප්‍රොක්සි සේවාදායකය වෙත යවනු ලැබේ</string>
-    <string name="summary_watchdog">NetGuard තවමත් ක්‍රියාත්මක දැයි වරින් වර පරීක්ෂා කරන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න). මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
+    <string name="summary_watchdog">QuietGuard තවමත් ක්‍රියාත්මක දැයි වරින් වර පරීක්ෂා කරන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න). මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
 
     <string name="summary_stats">තත්ව තීරුවේ දැනුම්දීම තුළ ජාල වේග ප්‍රස්ථාරය පෙන්වන්න</string>
 
@@ -297,9 +297,9 @@
     <string name="msg_packages">%1$d කට ඉඩ දී ඇත, %2$d ක් අවහිර කර ඇත</string>
     <string name="msg_hosts">%1$d කට ඉඩ දී ඇත, %2$d ක් අවහිර කර ඇත, host ධාරිතාව %3$d</string>
     <string name="msg_waiting">සිදුවීමක් බලාපොරොත්තුවෙන් පවතී</string>
-    <string name="msg_disabled">NetGuard අක්‍රිය කර ඇත, NetGuard ක්‍රියාත්මක කිරීමට ඉහළ ඇති ස්විචය භාවිතා කරන්න</string>
+    <string name="msg_disabled">QuietGuard අක්‍රිය කර ඇත, QuietGuard ක්‍රියාත්මක කිරීමට ඉහළ ඇති ස්විචය භාවිතා කරන්න</string>
     <string name="msg_notifications">දැනුම්දීම් අවසර ලබා දීමට තට්ටු කරන්න (ප්‍රවේශ උත්සාහයන්, දෝෂ පණිවිඩ ආදිය සඳහා)</string>
-    <string name="msg_revoked">NetGuard අක්‍රිය කර ඇත, බොහෝ දුරට වෙනත් VPN යෙදුමක් භාවිත කිරීම මෙයට හේතුව විය හැක</string>
+    <string name="msg_revoked">QuietGuard අක්‍රිය කර ඇත, බොහෝ දුරට වෙනත් VPN යෙදුමක් භාවිත කිරීම මෙයට හේතුව විය හැක</string>
     <string name="msg_installed">\'%1$s\' ස්ථාපනය කරන ලදී</string>
     <string name="msg_installed_n">ස්ථාපනය කර ඇත</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -308,13 +308,13 @@
     <string name="msg_completed">ක්‍රියාව අවසන්</string>
     <string name="msg_invalid">කරුණාකර අගයන් පරීක්ෂා කර නැවත උත්සාහ කරන්න.</string>
     <string name="msg_export_failed">අපනයනය අසාර්ථකයි: %1$s</string>
-    <string name="msg_vpn">NetGuard අන්තර්ජාල ගමනාගමනය පෙරීම සඳහා දේශීය VPN එකක් භාවිතා කරයි.
+    <string name="msg_vpn">QuietGuard අන්තර්ජාල ගමනාගමනය පෙරීම සඳහා දේශීය VPN එකක් භාවිතා කරයි.
 එමනිසා, කරුණාකර ඊළඟ පණිවිඩයේදී VPN සම්බන්ධතාවයකට ඉඩ දෙන්න.
 ඔබේ අන්තර්ජාල දත්ත වෙනත් දුරස්ථ VPN සේවාදායකයකට යවනු නොලැබේ.</string>
-    <string name="msg_autostart">NetGuard ස්වයංක්‍රීයව ආරම්භ කළ නොහැකි විය. මෙය බොහෝ විට ඔබේ Android සංස්කරණයේ දෝෂයක් නිසා විය හැක.</string>
+    <string name="msg_autostart">QuietGuard ස්වයංක්‍රීයව ආරම්භ කළ නොහැකි විය. මෙය බොහෝ විට ඔබේ Android සංස්කරණයේ දෝෂයක් නිසා විය හැක.</string>
     <string name="msg_error">අපේක්ෂා නොකළ දෝෂයක් සිදුවිය: \'%s\'</string>
     <string name="msg_start_failed">ඇන්ඩ්‍රොයිඩ් පද්ධතිය මෙම අවස්ථාවේදී VPN සේවාව ආරම්භ කිරීම ප්‍රතික්ෂේප කළේය. මෙය බොහෝ විට ඔබේ Android සංස්කරණයේ දෝෂයක් නිසා විය හැක.</string>
-    <string name="msg_try">NetGuard උත්සාහ කර බලන්න</string>
+    <string name="msg_try">QuietGuard උත්සාහ කර බලන්න</string>
     <string name="msg_terms">පරිත්‍යාග කිරීමෙන් ඔබ <a href="http://www.netguard.me/#terms">නියමයන් සහ කොන්දේසි</a> වලට එකඟ වේ</string>
     <string name="msg_dimming">ඔබට ඊළඟ පණිවිඩයේ OK එබීමට නොහැකි නම්, වෙනත් යෙදුමක් තිරය මත ක්‍රියාත්මක වෙමින් තිබිය හැක.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/දිනකට</string>
@@ -324,11 +324,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">ස්ථාවර ප්‍රතිඵල සඳහා, NetGuard සඳහා Android බැටරි ප්‍රශස්තකරණය (battery optimization) අක්‍රිය කළ යුතුය.
-\n\nඊළඟ පණිවිඩයේ, ඉහළින් \"All apps\" තෝරන්න, ලැයිස්තුවේ ඇති NetGuard මත තට්ටු කර \"Don\'t optimize\" තෝරා තහවුරු කරන්න.</string>
-    <string name="msg_datasaving">ස්ථාවර ප්‍රතිඵල සඳහා, NetGuard සඳහා Android දත්ත සුරැකීමේ විකල්ප අක්‍රිය කළ යුතුය.
+    <string name="msg_doze">ස්ථාවර ප්‍රතිඵල සඳහා, QuietGuard සඳහා Android බැටරි ප්‍රශස්තකරණය (battery optimization) අක්‍රිය කළ යුතුය.
+\n\nඊළඟ පණිවිඩයේ, ඉහළින් \"All apps\" තෝරන්න, ලැයිස්තුවේ ඇති QuietGuard මත තට්ටු කර \"Don\'t optimize\" තෝරා තහවුරු කරන්න.</string>
+    <string name="msg_datasaving">ස්ථාවර ප්‍රතිඵල සඳහා, QuietGuard සඳහා Android දත්ත සුරැකීමේ විකල්ප අක්‍රිය කළ යුතුය.
 \n\nඊළඟ පණිවිඩයේ, \"Background data\" සහ \"Unrestricted data usage\" යන විකල්ප සක්‍රිය කරන්න.</string>
-    <string name="msg_filter">පෙරීම (filtering) භාවිතා කිරීමෙන් Android පද්ධතිය දත්ත සහ බල භාවිතය මුල් යෙදුම් වලට වඩා NetGuard වෙත පවරනු ඇත.</string>
+    <string name="msg_filter">පෙරීම (filtering) භාවිතා කිරීමෙන් Android පද්ධතිය දත්ත සහ බල භාවිතය මුල් යෙදුම් වලට වඩා QuietGuard වෙත පවරනු ඇත.</string>
     <string name="msg_filter4">Android 4 සඳහා පෙරීම (filtering) සක්‍රිය කළ යුතුය</string>
     <string name="msg_log_disabled">දත්ත ගමනාගමන සටහන් කිරීම (logging) අක්‍රියයි, එය සක්‍රිය කිරීමට ඉහළ ඇති ස්විචය භාවිතා කරන්න. මෙය අමතර බැටරි ප්‍රමාණයක් වැය වීමට හේතු විය හැක.</string>
     <string name="msg_clear_rules">මෙය නීති සහ කොන්දේසි ඒවායේ පෙරනිමි අගයන්ට නැවත සකසනු ඇත</string>
@@ -341,20 +341,20 @@
     <string name="msg_stop_forward">%1$s පෝට් %2$d හි ඉදිරියට යැවීම නවත්වන්නද?</string>
     <string name="msg_metered">ජාලය සීමා සහිතයි (metered)</string>
     <string name="msg_inactive">සක්‍රිය අන්තර්ජාල සම්බන්ධතාවයක් නොමැත</string>
-    <string name="msg_queue">NetGuard කාර්යබහුලයි</string>
+    <string name="msg_queue">QuietGuard කාර්යබහුලයි</string>
     <string name="msg_update">යාවත්කාලීනයක් ඇත, බාගත කිරීමට තට්ටු කරන්න</string>
     <string name="msg_usage">යෙදුමක් අසල ඇති අයිකන මත තට්ටු කිරීමෙන් ඔබට Wi-Fi හෝ ජංගම අන්තර්ජාල ප්‍රවේශය ලැබීමට (කොළ පැහැය) හෝ ප්‍රතික්ෂේප කිරීමට (රතු පැහැය) හැකිය</string>
-    <string name="msg_fairemail">ඔබ ඔබේ පෞද්ගලිකත්වය සුරැකීමට NetGuard ස්ථාපනය කළේ නම්, ඔබට විවෘත මූලාශ්‍ර, පෞද්ගලිකත්ව හිතකාමී විද්‍යුත් තැපැල් යෙදුමක් වන <a href="https://email.faircode.eu/">FairEmail</a> පිළිබඳවද උනන්දු විය හැක.</string>
+    <string name="msg_fairemail">ඔබ ඔබේ පෞද්ගලිකත්වය සුරැකීමට QuietGuard ස්ථාපනය කළේ නම්, ඔබට විවෘත මූලාශ්‍ර, පෞද්ගලිකත්ව හිතකාමී විද්‍යුත් තැපැල් යෙදුමක් වන <a href="https://email.faircode.eu/">FairEmail</a> පිළිබඳවද උනන්දු විය හැක.</string>
     <string name="msg_whitelist">අන්තර්ජාල ප්‍රවේශය පෙරනිමියෙන් ඉඩ දී ඇත (blacklist මාදිලිය), මෙය සැකසුම් තුළ වෙනස් කළ හැක</string>
     <string name="msg_push">ලැබෙන (push) පණිවිඩ බොහෝ දුරට හසුරුවනු ලබන්නේ Play services පද්ධති සංරචකය මඟිනි, එයට පෙරනිමියෙන් අන්තර්ජාල ප්‍රවේශය ඇත</string>
     <string name="msg_system">සියලුම (පද්ධති) යෙදුම් කළමනාකරණය කිරීම සැකසුම් තුළ සක්‍රිය කළ හැක</string>
     <string name="msg_issue">කරුණාකර ගැටළුව විස්තර කර ගැටළුව ඇති වූ වේලාව සඳහන් කරන්න:</string>
     <string name="msg_vpn_cancelled">VPN සම්බන්ධතාවය අවලංගු කරන ලදී\nඔබ වෙනත් VPN එකක් සැමවිටම ක්‍රියාත්මක වන පරිදි සකසා තිබේද?</string>
-    <string name="msg_on">NetGuard සක්‍රියව තිබියදී උපාංගය ක්‍රියා විරහිත කිරීමෙන්, උපාංගය නැවත ක්‍රියාත්මක කරන විට NetGuard ස්වයංක්‍රීයව ආරම්භ වේ</string>
+    <string name="msg_on">QuietGuard සක්‍රියව තිබියදී උපාංගය ක්‍රියා විරහිත කිරීමෙන්, උපාංගය නැවත ක්‍රියාත්මක කරන විට QuietGuard ස්වයංක්‍රීයව ආරම්භ වේ</string>
     <string name="msg_unavailable">මෙම විශේෂාංගය මෙම Android සංස්කරණයේ නොමැත</string>
     <string name="msg_always_on">වෙනත් VPN එකක් සැමවිටම ක්‍රියාත්මක වන පරිදි සකසා ඇත</string>
-    <string name="msg_always_on_lockdown">NetGuard හි පෙරීමේ මාදිලිය භාවිත කිරීමට Android VPN සැකසුම් වල \"Block connections without VPN\" අක්‍රිය කරන්න</string>
-    <string name="msg_private_dns">NetGuard හි පෙරීමේ මාදිලිය භාවිත කිරීමට Android ජාල සැකසුම් වල \"Private DNS\" අක්‍රිය කරන්න</string>
+    <string name="msg_always_on_lockdown">QuietGuard හි පෙරීමේ මාදිලිය භාවිත කිරීමට Android VPN සැකසුම් වල \"Block connections without VPN\" අක්‍රිය කරන්න</string>
+    <string name="msg_private_dns">QuietGuard හි පෙරීමේ මාදිලිය භාවිත කිරීමට Android ජාල සැකසුම් වල \"Private DNS\" අක්‍රිය කරන්න</string>
 
     <string name="title_lockdown_enabled">ගමනාගමනය අගුලු දමා ඇත</string>
     <string name="title_unmetered_allowed">සීමා රහිත ගමනාගමනයට ඉඩ දී ඇත</string>

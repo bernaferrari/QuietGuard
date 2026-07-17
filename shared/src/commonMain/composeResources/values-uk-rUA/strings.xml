@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next надає прості та розширені методи блокування доступу до Інтернету - без необхідності root-прав. Програмам та адресам можна індивідуально дозволяти або забороняти доступ до Wi-Fi та/або мобільного зв\'язку.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard надає прості та розширені методи блокування доступу до Інтернету - без необхідності root-прав. Програмам та адресам можна індивідуально дозволяти або забороняти доступ до Wi-Fi та/або мобільного зв\'язку.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard потребує Android 5.1 або новішої версії</string>
+    <string name="app_android">QuietGuard потребує Android 5.1 або новішої версії</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Політика конфіденційності</a></string>
-    <string name="app_first">При розробці та тестуванні NetGuard було докладено великих зусиль, але неможливо гарантувати, що NetGuard буде працювати правильно на кожному пристрої.</string>
+    <string name="app_first">При розробці та тестуванні QuietGuard було докладено великих зусиль, але неможливо гарантувати, що QuietGuard буде працювати правильно на кожному пристрої.</string>
     <string name="app_agree">Я згоден</string>
     <string name="app_disagree">Я не згоден</string>
-    <string name="app_support">NetGuard потребує вашої допомоги. Натисніть, щоб купити Pro-функції та підтримати продовження проекту.</string>
+    <string name="app_support">QuietGuard потребує вашої допомоги. Натисніть, щоб купити Pro-функції та підтримати продовження проекту.</string>
     <string name="app_qap">
         Google мала намір видалити цей додаток з магазину Play, оскільки він запитував дозвіл на отримання списку всіх додатків.
         П\'ять апеляцій та достатнє обґрунтування того, чому цей дозвіл необхідний, були відхилені.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Підтримка</string>
 
     <string name="summary_install">Відображати сповіщення в рядку стану для прямого налаштування щойно встановлених додатків (функція Pro)</string>
-    <string name="summary_auto">Автоматично вмикати NetGuard знову через вибрану кількість хвилин після вимкнення за допомогою віджета (введіть нуль, щоб вимкнути цю опцію)</string>
+    <string name="summary_auto">Автоматично вмикати QuietGuard знову через вибрану кількість хвилин після вимкнення за допомогою віджета (введіть нуль, щоб вимкнути цю опцію)</string>
     <string name="summary_delay">Зберігати правила \'екран увімкнено\' активними протягом вибраної кількості хвилин після вимкнення екрана (введіть нуль, щоб вимкнути цю опцію)</string>
     <string name="summary_update">Перевіряти наявність нових випусків на GitHub двічі на день</string>
 
     <string name="summary_tethering">Залежно від версії Android, режим модема може працювати або не працювати. Трафік у режимі модема не може бути відфільтрований.</string>
     <string name="summary_subnet">Увімкнути маршрутизацію підмережі; може дозволити дзвінки через Wi-Fi, але також може викликати помилки Android та збільшити споживання заряду батареї</string>
     <string name="summary_lan">Дозволити додаткам підключатися до адрес локальної мережі, таких як 10.0.0.0/8, 172.16.0.0/12 та 192.168.0.0/16</string>
-    <string name="summary_ip6">Спрямовувати трафік IPv6 через NetGuard, щоб дозволити його вибіркове пропускання або блокування</string>
+    <string name="summary_ip6">Спрямовувати трафік IPv6 через QuietGuard, щоб дозволити його вибіркове пропускання або блокування</string>
     <string name="summary_wifi_home">Застосовувати правила мережі Wi-Fi тільки для вибраної мережі (для інших мереж Wi-Fi застосовувати правила мобільної мережі)</string>
     <string name="summary_metered">Застосовувати правила мобільної мережі до платних (лімітованих, спільних) мереж Wi-Fi</string>
     <string name="summary_metered_2g">Застосовувати правила мережі Wi-Fi до з\'єднань даних 2G</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Застосовувати правила мережі Wi-Fi до з\'єднань даних LTE</string>
     <string name="summary_national_roaming">Не застосовувати правила роумінгу, коли країна SIM-карти та країна мобільної мережі однакові</string>
     <string name="summary_eu_roaming">Не застосовувати правила роумінгу, коли країна SIM-карти та країна мобільної мережі обидві знаходяться в ЄС (роумінг як вдома)</string>
-    <string name="summary_call">Вимикати NetGuard під час вхідних або вихідних дзвінків. Це можна використовувати, щоб уникнути проблем із дзвінками IP/Wi-Fi.</string>
+    <string name="summary_call">Вимикати QuietGuard під час вхідних або вихідних дзвінків. Це можна використовувати, щоб уникнути проблем із дзвінками IP/Wi-Fi.</string>
 
     <string name="summary_system">Визначте правила для системних додатків (для експертів)</string>
     <string name="summary_log_app">Журналювати спроби додатків отримати доступ до Інтернету. Це може призвести до додаткового споживання заряду батареї.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Типове значення 3 (NXDOMAIN), що означає \'домен не існує\'.</string>
     <string name="summary_validate">Назва домену, що використовується для валідації інтернет-з\'єднання на порту 443 (https).</string>
     <string name="summary_socks5_enabled">Тільки TCP-трафік буде передаватися на проксі-сервер</string>
-    <string name="summary_watchdog">Періодично перевіряти, чи NetGuard все ще працює (введіть нуль, щоб вимкнути цю опцію). Це може призвести до додаткового споживання заряду батареї.</string>
+    <string name="summary_watchdog">Періодично перевіряти, чи QuietGuard все ще працює (введіть нуль, щоб вимкнути цю опцію). Це може призвести до додаткового споживання заряду батареї.</string>
 
     <string name="summary_stats">Показувати графік швидкості мережі в сповіщенні в рядку стану</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d дозволено, %2$d заблоковано</string>
     <string name="msg_hosts">%1$d дозволено, %2$d заблоковано, %3$d хостів</string>
     <string name="msg_waiting">Очікування подій</string>
-    <string name="msg_disabled">NetGuard вимкнено, будь ласка, використовуйте перемикач вище, щоб увімкнути NetGuard</string>
+    <string name="msg_disabled">QuietGuard вимкнено, будь ласка, використовуйте перемикач вище, щоб увімкнути QuietGuard</string>
     <string name="msg_notifications">Натисніть, щоб надати дозвіл на сповіщення (для сповіщень про спроби доступу, повідомлень про помилки тощо)</string>
-    <string name="msg_revoked">NetGuard було вимкнено, ймовірно, через використання іншого додатка на базі VPN</string>
+    <string name="msg_revoked">QuietGuard було вимкнено, ймовірно, через використання іншого додатка на базі VPN</string>
     <string name="msg_installed">\'%1$s\' встановлено</string>
     <string name="msg_installed_n">Встановлено</string>
     <string name="msg_malware">Можливе шкідливе ПЗ: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Дію завершено</string>
     <string name="msg_invalid">Будь ласка, перевірте значення та спробуйте ще раз.</string>
     <string name="msg_export_failed">Експорт не вдався: %1$s</string>
-    <string name="msg_vpn">NetGuard використовує локальний VPN для фільтрації інтернет-трафіку.
+    <string name="msg_vpn">QuietGuard використовує локальний VPN для фільтрації інтернет-трафіку.
 З цієї причини, будь ласка, дозвольте VPN-з\'єднання в наступному діалоговому вікні.
 Ваш інтернет-трафік не буде надсилатися на жоден віддалений VPN-сервер.</string>
-    <string name="msg_autostart">Не вдалося автоматично запустити NetGuard. Це, швидше за все, через помилку у вашій версії Android.</string>
+    <string name="msg_autostart">Не вдалося автоматично запустити QuietGuard. Це, швидше за все, через помилку у вашій версії Android.</string>
     <string name="msg_error">Сталася неочікувана помилка: \'%s\'</string>
     <string name="msg_start_failed">Android відмовив у запуску служби VPN на даний момент. Це, швидше за все, через помилку у вашій версії Android.</string>
-    <string name="msg_try">Спробуйте NetGuard</string>
+    <string name="msg_try">Спробуйте QuietGuard</string>
     <string name="msg_terms">Роблячи пожертву, ви погоджуєтеся з <a href="http://www.netguard.me/#terms">умовами та положеннями</a></string>
     <string name="msg_dimming">Якщо ви не можете натиснути OK в наступному діалоговому вікні, ймовірно, інший додаток (для затемнення екрана) керує екраном.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; МБ/день</string>
@@ -325,11 +325,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; МБ</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; ГБ</string>
     <string name="msg_count">%d разів</string>
-    <string name="msg_doze">Для отримання стабільних результатів слід вимкнути оптимізацію батареї Android для NetGuard.
-\n\nУ наступному діалоговому вікні виберіть \"Всі додатки\" нагорі, натисніть NetGuard у списку та виберіть і підтвердіть \"Не оптимізувати\".</string>
-    <string name="msg_datasaving">Для отримання стабільних результатів слід вимкнути опцію заощадження даних Android для NetGuard.
+    <string name="msg_doze">Для отримання стабільних результатів слід вимкнути оптимізацію батареї Android для QuietGuard.
+\n\nУ наступному діалоговому вікні виберіть \"Всі додатки\" нагорі, натисніть QuietGuard у списку та виберіть і підтвердіть \"Не оптимізувати\".</string>
+    <string name="msg_datasaving">Для отримання стабільних результатів слід вимкнути опцію заощадження даних Android для QuietGuard.
 \n\nУ наступному діалоговому вікні увімкніть опції \"Фонові дані\" та \"Необмежене використання даних\".</string>
-    <string name="msg_filter">Використання фільтрації призведе до того, що Android припише використання даних та енергії додатку NetGuard - Android буде вважати, що дані та енергія споживаються NetGuard замість оригінального додатка.</string>
+    <string name="msg_filter">Використання фільтрації призведе до того, що Android припише використання даних та енергії додатку QuietGuard - Android буде вважати, що дані та енергія споживаються QuietGuard замість оригінального додатка.</string>
     <string name="msg_filter4">Android 4 потребує увімкнення фільтрації</string>
     <string name="msg_log_disabled">Журнал трафіку вимкнено, будь ласка, увімкніть його перемикачем вище. Журналювання може призвести до додаткового споживання заряду батареї.</string>
     <string name="msg_clear_rules">Це скине правила та умови до типових значень</string>
@@ -342,20 +342,20 @@
     <string name="msg_stop_forward">Зупинити перенаправлення з %1$s порту %2$d?</string>
     <string name="msg_metered">Мережа платна (лімітована)</string>
     <string name="msg_inactive">Немає активного інтернет-з\'єднання</string>
-    <string name="msg_queue">NetGuard зайнятий</string>
+    <string name="msg_queue">QuietGuard зайнятий</string>
     <string name="msg_update">Доступне оновлення, натисніть щоб завантажити</string>
     <string name="msg_usage">Ви можете дозволити (зелений) або заборонити (червоний) доступ до Wi-Fi або мобільного Інтернету, натиснувши іконки поруч із додатком</string>
-    <string name="msg_fairemail">Якщо ви встановили NetGuard, щоб захистити свою конфіденційність, вас також може зацікавити відкритий, дружній до конфіденційності поштовий додаток <a href="https://email.faircode.eu/">FairEmail</a>.</string>
+    <string name="msg_fairemail">Якщо ви встановили QuietGuard, щоб захистити свою конфіденційність, вас також може зацікавити відкритий, дружній до конфіденційності поштовий додаток <a href="https://email.faircode.eu/">FairEmail</a>.</string>
     <string name="msg_whitelist">Доступ до Інтернету дозволено за замовчуванням (режим чорного списку), це можна змінити в налаштуваннях</string>
     <string name="msg_push">Вхідні (push) повідомлення в основному обробляються системним компонентом сервіси Play, якому за замовчуванням дозволено доступ до Інтернету</string>
     <string name="msg_system">Керування всіма (системними) додатками можна увімкнути в налаштуваннях</string>
     <string name="msg_issue">Будь ласка, опишіть проблему та вкажіть час її виникнення:</string>
     <string name="msg_vpn_cancelled">VPN-з\'єднання скасовано\nВи налаштували інший VPN як \"Завжди увімкнений VPN\"?</string>
-    <string name="msg_on">Вимкнення пристрою з увімкненим NetGuard призведе до автоматичного запуску NetGuard при увімкненні пристрою</string>
+    <string name="msg_on">Вимкнення пристрою з увімкненим QuietGuard призведе до автоматичного запуску QuietGuard при увімкненні пристрою</string>
     <string name="msg_unavailable">Ця функція недоступна в цій версії Android</string>
     <string name="msg_always_on">Інший VPN встановлено як завжди увімкнений VPN</string>
-    <string name="msg_always_on_lockdown">Вимкніть \"Блокувати з\'єднання без VPN\" у налаштуваннях VPN Android, щоб використовувати NetGuard у режимі фільтрації</string>
-    <string name="msg_private_dns">Вимкніть \"Приватний DNS\" у налаштуваннях мережі Android, щоб використовувати NetGuard у режимі фільтрації</string>
+    <string name="msg_always_on_lockdown">Вимкніть \"Блокувати з\'єднання без VPN\" у налаштуваннях VPN Android, щоб використовувати QuietGuard у режимі фільтрації</string>
+    <string name="msg_private_dns">Вимкніть \"Приватний DNS\" у налаштуваннях мережі Android, щоб використовувати QuietGuard у режимі фільтрації</string>
 
     <string name="title_lockdown_enabled">Трафік обмежено</string>
     <string name="title_unmetered_allowed">Неплатний трафік дозволено</string>

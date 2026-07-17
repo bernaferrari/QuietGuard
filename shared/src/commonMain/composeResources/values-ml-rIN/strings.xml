@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard ഇന്റർനെറ്റിലേക്കുള്ള ആക്സസ് തടയുന്നതിന് ലളിതവും നൂതനവുമായ മാർഗ്ഗങ്ങൾ നൽകുന്നു - റൂട്ട് ആവശ്യമില്ല. അപ്ലിക്കേഷനുകൾക്കും വിലാസങ്ങൾക്കും നിങ്ങളുടെ വൈഫൈ/മൊബൈൽ കണക്ഷനിലേക്ക് വ്യക്തിഗതമായി പ്രവേശനം അനുവദിക്കുകയോ നിരസിക്കുകയോ ചെയ്യാം.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard ഇന്റർനെറ്റിലേക്കുള്ള ആക്സസ് തടയുന്നതിന് ലളിതവും നൂതനവുമായ മാർഗ്ഗങ്ങൾ നൽകുന്നു - റൂട്ട് ആവശ്യമില്ല. അപ്ലിക്കേഷനുകൾക്കും വിലാസങ്ങൾക്കും നിങ്ങളുടെ വൈഫൈ/മൊബൈൽ കണക്ഷനിലേക്ക് വ്യക്തിഗതമായി പ്രവേശനം അനുവദിക്കുകയോ നിരസിക്കുകയോ ചെയ്യാം.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard- ന് Android 5.1 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത് ആവശ്യമാണ്</string>
+    <string name="app_android">QuietGuard- ന് Android 5.1 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത് ആവശ്യമാണ്</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">സ്വകാര്യതാ നയം</a></string>
     <string name="app_first">നെറ്റ്ഗാർഡ് വികസിപ്പിക്കുന്നതിനും പരിശോധിക്കുന്നതിനും വളരെയധികം ശ്രദ്ധ ചെലുത്തിയിട്ടുണ്ട്, എന്നിരുന്നാലും എല്ലാ ഉപകരണങ്ങളിലും നെറ്റ്ഗാർഡ് ശരിയായി പ്രവർത്തിക്കുമെന്ന് ഉറപ്പുനൽകാൻ കഴിയില്ല.</string>

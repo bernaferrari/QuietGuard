@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard nodrošina vienkāršu un uzlabotu veidu, kā bloķēt piekļuvi internetam. Lietotnēm un adresēm var individuāli atļaut vai aizliegt piekļuvi internetam caur Wi-Fi un/vai mobilo datu savienojumu.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard nodrošina vienkāršu un uzlabotu veidu, kā bloķēt piekļuvi internetam. Lietotnēm un adresēm var individuāli atļaut vai aizliegt piekļuvi internetam caur Wi-Fi un/vai mobilo datu savienojumu.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard nepieciešams Android 5.1 vai jaunāks</string>
+    <string name="app_android">QuietGuard nepieciešams Android 5.1 vai jaunāks</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privātuma politika</a></string>
-    <string name="app_first">Liels darbs ir ieguldīts NetGuard izstrādē un testēšanā. Tai pat laikā nav iespējams garantēt, ka NetGuard darbosies korekti pilnīgi visās ierīcēs.</string>
+    <string name="app_first">Liels darbs ir ieguldīts QuietGuard izstrādē un testēšanā. Tai pat laikā nav iespējams garantēt, ka QuietGuard darbosies korekti pilnīgi visās ierīcēs.</string>
     <string name="app_agree">Es piekrītu</string>
     <string name="app_disagree">Nepiekrītu</string>
-    <string name="app_support">NetGuard ir vajadzīga Tava palīdzība. Spied Pirkt PRO funkcijas, lai nodrošinātu projekta turpmāku attīstību.</string>
+    <string name="app_support">QuietGuard ir vajadzīga Tava palīdzība. Spied Pirkt PRO funkcijas, lai nodrošinātu projekta turpmāku attīstību.</string>
     <string name="app_qap">
         Google gatavojās izņemt lietotni no Play veikala, jo tā pieprasīja atļauju visu lietotņu aptaujāšanai.
         Piecas apelācijas un laba pamatojuma sniegšana par to, kāpēc šī atļauja ir nepieciešama, tika noraidīta.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Atbalsts</string>
 
     <string name="summary_install">Rādīt statusa joslas paziņojumu, lai tieši konfigurētu jauninstalētās lietotnes (pro funkcija)</string>
-    <string name="summary_auto">Pēc atspējošanas ar logrīku, automātiski atkal iespējot NetGuard pēc izvēlētā minūšu skaita (ievadiet nulli, lai atspējotu)</string>
+    <string name="summary_auto">Pēc atspējošanas ar logrīku, automātiski atkal iespējot QuietGuard pēc izvēlētā minūšu skaita (ievadiet nulli, lai atspējotu)</string>
     <string name="summary_delay">Pēc ekrāna izslēgšanas paturēt \'kad ekrāns ieslēgts\' noteikumus aktīvus izvēlēto minūšu skaitu (ievadiet nulli, lai atspējotu)</string>
     <string name="summary_update">Divreiz dienā pārbaudīt jaunas versijas GitHub</string>
 
     <string name="summary_tethering">Atkarībā no Android versijas, tīklājs var darboties vai nedarboties. Tīklāja trafiku nevar filtrēt.</string>
     <string name="summary_subnet">Iespējot apakštīkla maršrutēšanu; var iespējot Wi-Fi zvanus, bet var arī radīt kļūdas Android sistēmā un palielināt akumulatora lietojumu</string>
     <string name="summary_lan">Atļaut lietotnēm izveidot savienojumu ar lokālā tīkla adresēm (piem., 10.0.0.0/8, 172.16.0.0/12 un 192.168.0.0/16)</string>
-    <string name="summary_ip6">Maršrutēt IPv6 trafiku uz NetGuard, lai to varētu selektīvi atļaut vai bloķēt</string>
+    <string name="summary_ip6">Maršrutēt IPv6 trafiku uz QuietGuard, lai to varētu selektīvi atļaut vai bloķēt</string>
     <string name="summary_wifi_home">Piemērot Wi-Fi tīkla noteikumus tikai izvēlētajam tīklam (citos Wi-Fi tīklos piemērot mobilā tīkla noteikumus)</string>
     <string name="summary_metered">Piemērot mobilā tīkla noteikumus mērītajiem (maksas, koplietotajiem) Wi-Fi tīkliem</string>
     <string name="summary_metered_2g">Piemērot Wi-Fi tīkla noteikumus 2G datu savienojumiem</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Piemērot Wi-Fi tīkla noteikumus LTE datu savienojumiem</string>
     <string name="summary_national_roaming">Nepiemērot viesabonēšanas noteikumus, ja SIM un mobilā tīkla valsts ir viena un tā pati</string>
     <string name="summary_eu_roaming">Nepiemērot viesabonēšanas noteikumus, ja SIM un mobilā tīkla valsts ir ES (viesabonēšana kā mājās)</string>
-    <string name="summary_call">Atspējot NetGuard ienākošo vai izejošo tālruņa zvanu laikā. To var izmantot, lai novērstu IP/Wi-Fi zvanu problēmas.</string>
+    <string name="summary_call">Atspējot QuietGuard ienākošo vai izejošo tālruņa zvanu laikā. To var izmantot, lai novērstu IP/Wi-Fi zvanu problēmas.</string>
 
     <string name="summary_system">Definēt noteikumus sistēmas lietotnēm (ekspertiem)</string>
     <string name="summary_log_app">Žurnalēt lietotņu mēģinājumus piekļūt internetam. Tas var palielināt akumulatora lietojumu.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Noklusētā vērtība ir 3 (NXDOMAIN), kas nozīmē \'neeksistējošs domēns\'.</string>
     <string name="summary_validate">Domēna vārds, ko izmanto, lai validētu interneta savienojumu 443. portā (https).</string>
     <string name="summary_socks5_enabled">Tikai TCP trafiks tiks nosūtīts uz starpniekserveri</string>
-    <string name="summary_watchdog">Periodiski pārbaudīt, vai NetGuard joprojām darbojas (ievadiet nulli, lai atspējotu). Tas var palielināt akumulatora lietojumu.</string>
+    <string name="summary_watchdog">Periodiski pārbaudīt, vai QuietGuard joprojām darbojas (ievadiet nulli, lai atspējotu). Tas var palielināt akumulatora lietojumu.</string>
 
     <string name="summary_stats">Rādīt tīkla ātruma grafiku statusa joslas paziņojumā</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d atļauti, %2$d bloķēti</string>
     <string name="msg_hosts">%1$d atļauti, %2$d bloķēti, %3$d hosti</string>
     <string name="msg_waiting">Gaidām notikumu</string>
-    <string name="msg_disabled">NetGuard ir atspējots, izmantojiet slēdzi augšpusē, lai iespējotu NetGuard</string>
+    <string name="msg_disabled">QuietGuard ir atspējots, izmantojiet slēdzi augšpusē, lai iespējotu QuietGuard</string>
     <string name="msg_notifications">Pieskarieties, lai piešķirtu paziņojumu atļaujas (piekļuves mēģinājumu paziņojumiem, kļūdu ziņojumiem utt.)</string>
-    <string name="msg_revoked">NetGuard ir atspējots, iespējams, izmantojot citu VPN lietotni</string>
+    <string name="msg_revoked">QuietGuard ir atspējots, iespējams, izmantojot citu VPN lietotni</string>
     <string name="msg_installed">\'%1$s\' instalēta</string>
     <string name="msg_installed_n">Ir instalēta</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Darbība pabeigta</string>
     <string name="msg_invalid">Lūdzu, pārbaudiet vērtības un mēģiniet vēlreiz.</string>
     <string name="msg_export_failed">Eksportēšana neizdevās: %1$s</string>
-    <string name="msg_vpn">NetGuard izmanto lokālo VPN, lai filtrētu interneta trafiku.
+    <string name="msg_vpn">QuietGuard izmanto lokālo VPN, lai filtrētu interneta trafiku.
 Šī iemesla dēļ, lūdzu, atļaujiet VPN savienojumu nākamajā dialogā.
 Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
-    <string name="msg_autostart">NetGuard nevarēja startēties automātiski. Tas, iespējams, ir Android versijas kļūdas dēļ.</string>
+    <string name="msg_autostart">QuietGuard nevarēja startēties automātiski. Tas, iespējams, ir Android versijas kļūdas dēļ.</string>
     <string name="msg_error">Radusies neparedzēta kļūda: \'%s\'</string>
     <string name="msg_start_failed">Android šobrīd atteicās palaist VPN pakalpojumu. Tas, iespējams, ir Android versijas kļūdas dēļ.</string>
-    <string name="msg_try">Izmēģini NetGuard</string>
+    <string name="msg_try">Izmēģini QuietGuard</string>
     <string name="msg_terms">Ziedojot Jūs piekrītat <a href="http://www.netguard.me/#terms">noteikumiem un nosacījumiem</a></string>
     <string name="msg_dimming">Ja nākamajā dialogā nevarat nospiest OK, iespējams, ekrānu manipulē cita (ekrāna aptumšošanas) lietotne.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/dienā</string>
@@ -325,11 +325,11 @@ Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Pastāvīgu rezultātu sasniegšanai NetGuard lietotnei ir jāatspējo Android akumulatora optimizācija.
-\n\nNākamajā dialogā augšpusē atlasiet \"Visas lietotnes\", sarakstā pieskarieties NetGuard un atlasiet un apstipriniet \"Neoptimizēt\".</string>
-    <string name="msg_datasaving">Pastāvīgu rezultātu sasniegšanai NetGuard lietotnei ir jāatspējo Android datu taupīšanas opcijas.
+    <string name="msg_doze">Pastāvīgu rezultātu sasniegšanai QuietGuard lietotnei ir jāatspējo Android akumulatora optimizācija.
+\n\nNākamajā dialogā augšpusē atlasiet \"Visas lietotnes\", sarakstā pieskarieties QuietGuard un atlasiet un apstipriniet \"Neoptimizēt\".</string>
+    <string name="msg_datasaving">Pastāvīgu rezultātu sasniegšanai QuietGuard lietotnei ir jāatspējo Android datu taupīšanas opcijas.
 \n\nNākamajā dialogā iespējojiet opcijas \"Fona dati\" un \"Neierobežota datu lietošana\".</string>
-    <string name="msg_filter">Filtrēšanas izmantošana liks Android sistēmai datu un enerģijas patēriņu piedēvēt NetGuard, nevis oriģinālajām lietotnēm.</string>
+    <string name="msg_filter">Filtrēšanas izmantošana liks Android sistēmai datu un enerģijas patēriņu piedēvēt QuietGuard, nevis oriģinālajām lietotnēm.</string>
     <string name="msg_filter4">Android 4 nepieciešams iespējot filtrēšanu</string>
     <string name="msg_log_disabled">Trafika žurnalēšana ir atspējota, izmantojiet slēdzi augšpusē, lai to iespējotu. Žurnalēšana var palielināt akumulatora lietojumu.</string>
     <string name="msg_clear_rules">Tas atiestatīs noteikumus un nosacījumus uz to noklusējuma vērtībām</string>
@@ -342,20 +342,20 @@ Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
     <string name="msg_stop_forward">Apturēt %1$s porta %2$d pāradresāciju?</string>
     <string name="msg_metered">Tīkls ir mērīts</string>
     <string name="msg_inactive">Nav aktīva interneta savienojuma</string>
-    <string name="msg_queue">NetGuard ir aizņemts</string>
+    <string name="msg_queue">QuietGuard ir aizņemts</string>
     <string name="msg_update">Pieejams atjauninājums, pieskarieties, lai lejupielādētu</string>
     <string name="msg_usage">Jūs varat atļaut (zaļgans) vai liegt (sārts) Wi-Fi vai mobilo interneta piekļuvi, pieskaroties ikonām blakus lietotnei</string>
-    <string name="msg_fairemail">Ja instalējāt NetGuard, lai aizsargātu savu privātumu, Jūs varētu interesēt arī <a href="https://email.faircode.eu/">FairEmail</a> — atvērtā koda, privātumam draudzīga e-pasta lietotne.</string>
+    <string name="msg_fairemail">Ja instalējāt QuietGuard, lai aizsargātu savu privātumu, Jūs varētu interesēt arī <a href="https://email.faircode.eu/">FairEmail</a> — atvērtā koda, privātumam draudzīga e-pasta lietotne.</string>
     <string name="msg_whitelist">Interneta piekļuve ir atļauta pēc noklusējuma (melnā saraksta režīms), to var mainīt iestatījumos</string>
     <string name="msg_push">Ienākošos (push) paziņojumus pārsvarā apstrādā sistēmas komponents Play pakalpojumi, kam pēc noklusējuma ir atļauta interneta piekļuve</string>
     <string name="msg_system">Visu (sistēmas) lietotņu pārvaldību var iespējot iestatījumos</string>
     <string name="msg_issue">Lūdzu, aprakstiet problēmu un norādiet tās laiku:</string>
     <string name="msg_vpn_cancelled">VPN savienojums atcelts\nVai konfigurējāt citu VPN kā vienmēr ieslēgtu?</string>
-    <string name="msg_on">Ierīces izslēgšana, kad NetGuard ir iespējots, automātiski palaidīs NetGuard ierīces ieslēgšanas brīdī</string>
+    <string name="msg_on">Ierīces izslēgšana, kad QuietGuard ir iespējots, automātiski palaidīs QuietGuard ierīces ieslēgšanas brīdī</string>
     <string name="msg_unavailable">Šī funkcija nav pieejama šajā Android versijā</string>
     <string name="msg_always_on">Cits VPN ir iestatīts kā Always-on VPN</string>
-    <string name="msg_always_on_lockdown">Android VPN iestatījumos izslēdziet \"Bloķēt savienojumus bez VPN\", lai izmantotu NetGuard filtrēšanas režīmā</string>
-    <string name="msg_private_dns">Android tīkla iestatījumos izslēdziet \"Privātais DNS\", lai izmantotu NetGuard filtrēšanas režīmā</string>
+    <string name="msg_always_on_lockdown">Android VPN iestatījumos izslēdziet \"Bloķēt savienojumus bez VPN\", lai izmantotu QuietGuard filtrēšanas režīmā</string>
+    <string name="msg_private_dns">Android tīkla iestatījumos izslēdziet \"Privātais DNS\", lai izmantotu QuietGuard filtrēšanas režīmā</string>
 
     <string name="title_lockdown_enabled">Trafiks ir bloķēts</string>
     <string name="title_unmetered_allowed">Nemērītais trafiks ir atļauts</string>

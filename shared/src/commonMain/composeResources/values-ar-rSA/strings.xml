@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">يوفر NetGuard Next طرقًا بسيطة ومتقدمة لمنع الوصول إلى الإنترنت - بدون الحاجة إلى صلاحيات الروت. يمكن السماح للتطبيقات والعناوين أو رفضها بشكل فردي للوصول إلى شبكة Wi-Fi و/أو اتصال الجوال.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">يوفر QuietGuard طرقًا بسيطة ومتقدمة لمنع الوصول إلى الإنترنت - بدون الحاجة إلى صلاحيات الروت. يمكن السماح للتطبيقات والعناوين أو رفضها بشكل فردي للوصول إلى شبكة Wi-Fi و/أو اتصال الجوال.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">يتطلب NetGuard إصدار أندرويد 5.1 أو أحدث</string>
+    <string name="app_android">يتطلب QuietGuard إصدار أندرويد 5.1 أو أحدث</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">سياسة الخصوصية</a></string>
-    <string name="app_first">تم بذل عناية كبيرة في تطوير واختبار NetGuard، ولكن من المستحيل ضمان عمل NetGuard بشكل صحيح على كل جهاز.</string>
+    <string name="app_first">تم بذل عناية كبيرة في تطوير واختبار QuietGuard، ولكن من المستحيل ضمان عمل QuietGuard بشكل صحيح على كل جهاز.</string>
     <string name="app_agree">أوافق</string>
     <string name="app_disagree">لا أوافق</string>
-    <string name="app_support">NetGuard يحتاج إلى مساعدتكم. اضغط لشراء ميزات المحترفين لدعم استمرار المشروع.</string>
+    <string name="app_support">QuietGuard يحتاج إلى مساعدتكم. اضغط لشراء ميزات المحترفين لدعم استمرار المشروع.</string>
     <string name="app_qap">
         حاولت Google إزالة هذا التطبيق من متجر Play لأنه طلب إذنًا للاستعلام عن جميع التطبيقات.
         تم رفض خمسة استئنافات وتبريرات كافية لسبب الحاجة إلى هذا الإذن.
@@ -259,14 +259,14 @@
     <string name="setting_section_support">الدعم</string>
 
     <string name="summary_install">إظهار إشعار في شريط الحالة لتكوين التطبيقات المثبتة حديثًا مباشرة (ميزة المحترفين)</string>
-    <string name="summary_auto">إعادة تفعيل NetGuard تلقائيًا بعد عدد الدقائق المختار بعد تعطيله باستخدام الويدجت (أدخل صفرًا لتعطيل هذا الخيار)</string>
+    <string name="summary_auto">إعادة تفعيل QuietGuard تلقائيًا بعد عدد الدقائق المختار بعد تعطيله باستخدام الويدجت (أدخل صفرًا لتعطيل هذا الخيار)</string>
     <string name="summary_delay">إبقاء قواعد \'عند تشغيل الشاشة\' نشطة لعدد الدقائق المختار بعد إغلاق الشاشة (أدخل صفرًا لتعطيل هذا الخيار)</string>
     <string name="summary_update">التحقق من الإصدارات الجديدة على GitHub مرتين يوميًا</string>
 
     <string name="summary_tethering">اعتمادًا على إصدار أندرويد، قد تعمل مشاركة الاتصال وقد لا تعمل. لا يمكن تصفية حركة المرور المشاركة.</string>
     <string name="summary_subnet">تمكين توجيه الشبكة الفرعية؛ قد يسمح بمكالمات Wi-Fi، ولكن قد يؤدي أيضًا إلى أخطاء في أندرويد وزيادة استهلاك البطارية</string>
     <string name="summary_lan">السماح للتطبيقات بالاتصال بعناوين الشبكة المحلية، مثل 10.0.0.0/8 و 172.16.0.0/12 و 192.168.0.0/16</string>
-    <string name="summary_ip6">توجيه حركة مرور IPv6 عبر NetGuard ليتم السماح بها أو حظرها بشكل انتقائي</string>
+    <string name="summary_ip6">توجيه حركة مرور IPv6 عبر QuietGuard ليتم السماح بها أو حظرها بشكل انتقائي</string>
     <string name="summary_wifi_home">تطبيق قواعد شبكة Wi-Fi للشبكة المختارة فقط (تطبيق قواعد شبكة الجوال لشبكات Wi-Fi الأخرى)</string>
     <string name="summary_metered">تطبيق قواعد شبكة الجوال على شبكات Wi-Fi المحدودة (مدفوعة، مشاركة اتصال)</string>
     <string name="summary_metered_2g">تطبيق قواعد شبكة Wi-Fi على اتصالات بيانات 2G</string>
@@ -274,7 +274,7 @@
     <string name="summary_metered_4g">تطبيق قواعد شبكة Wi-Fi على اتصالات بيانات LTE</string>
     <string name="summary_national_roaming">عدم تطبيق قواعد التجوال عندما تكون دولة شريحة SIM ودولة شبكة الجوال هما نفسهما</string>
     <string name="summary_eu_roaming">عدم تطبيق قواعد التجوال عندما تكون دولة شريحة SIM ودولة شبكة الجوال داخل الاتحاد الأوروبي (التجوال كأنك في المنزل)</string>
-    <string name="summary_call">تعطيل NetGuard أثناء المكالمات الواردة أو الصادرة. يمكن استخدام هذا لتجنب مشاكل مكالمات IP/Wi-Fi.</string>
+    <string name="summary_call">تعطيل QuietGuard أثناء المكالمات الواردة أو الصادرة. يمكن استخدام هذا لتجنب مشاكل مكالمات IP/Wi-Fi.</string>
 
     <string name="summary_system">تحديد قواعد لتطبيقات النظام (للخبراء)</string>
     <string name="summary_log_app">تسجيل محمحاولات الوصول للإنترنت بواسطة التطبيقات. قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
@@ -286,7 +286,7 @@
     <string name="summary_rcode">القيمة الافتراضية هي 3 (NXDOMAIN)، والتي تعني \'النطاق غير موجود\'.</string>
     <string name="summary_validate">اسم النطاق المستخدم للتحقق من اتصال الإنترنت على المنفذ 443 (https).</string>
     <string name="summary_socks5_enabled">سيتم إرسال حركة مرور TCP فقط إلى خادم البروكسي</string>
-    <string name="summary_watchdog">التحقق دوريًا مما إذا كان NetGuard لا يزال قيد التشغيل (أدخل صفرًا لتعطيل هذا الخيار). قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
+    <string name="summary_watchdog">التحقق دوريًا مما إذا كان QuietGuard لا يزال قيد التشغيل (أدخل صفرًا لتعطيل هذا الخيار). قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
 
     <string name="summary_stats">إظهار رسم بياني لسرعة الشبكة في إشعار شريط الحالة</string>
 
@@ -297,9 +297,9 @@
     <string name="msg_packages">%1$d مسموح، %2$d محظور</string>
     <string name="msg_hosts">%1$d مسموح، %2$d محظور، %3$d مضيف</string>
     <string name="msg_waiting">في انتظار الأحداث</string>
-    <string name="msg_disabled">NetGuard معطل، يرجى استخدام المفتاح في الأعلى لتفعيل NetGuard</string>
+    <string name="msg_disabled">QuietGuard معطل، يرجى استخدام المفتاح في الأعلى لتفعيل QuietGuard</string>
     <string name="msg_notifications">اضغط لمنح إذن الإشعارات (لإشعارات محاولات الوصول، رسائل الخطأ، إلخ)</string>
-    <string name="msg_revoked">تم تعطيل NetGuard، ربما بسبب استخدام تطبيق VPN آخر</string>
+    <string name="msg_revoked">تم تعطيل QuietGuard، ربما بسبب استخدام تطبيق VPN آخر</string>
     <string name="msg_installed">تم تثبيت \'%1$s\'</string>
     <string name="msg_installed_n">تم التثبيت</string>
     <string name="msg_malware" translatable="false">برنامج ضار محتمل: \'%1$s\'</string>
@@ -308,13 +308,13 @@
     <string name="msg_completed">اكتمل الإجراء</string>
     <string name="msg_invalid">يرجى التحقق من القيمة والمحاولة مرة أخرى.</string>
     <string name="msg_export_failed">فشل التصدير: %1$s</string>
-    <string name="msg_vpn">يستخدم NetGuard شبكة VPN محلية لتصفية حركة مرور الإنترنت.
+    <string name="msg_vpn">يستخدم QuietGuard شبكة VPN محلية لتصفية حركة مرور الإنترنت.
 لهذا السبب، يرجى السماح باتصال VPN في الحوار التالي.
 لن يتم إرسال حركة مرور الإنترنت الخاصة بك إلى أي خادم VPN بعيد.</string>
-    <string name="msg_autostart">تعذر بدء NetGuard تلقائيًا. من المحتمل جدًا أن يكون ذلك بسبب خطأ في إصدار أندرويد الخاص بك.</string>
+    <string name="msg_autostart">تعذر بدء QuietGuard تلقائيًا. من المحتمل جدًا أن يكون ذلك بسبب خطأ في إصدار أندرويد الخاص بك.</string>
     <string name="msg_error">حدث خطأ غير متوقع: \'%s\'</string>
     <string name="msg_start_failed">رفض أندرويد بدء خدمة VPN في الوقت الحالي. من المحتمل جدًا أن يكون ذلك بسبب خطأ في إصدار أندرويد الخاص بك.</string>
-    <string name="msg_try">تجربة NetGuard</string>
+    <string name="msg_try">تجربة QuietGuard</string>
     <string name="msg_terms">من خلال التبرع، فإنك توافق على <a href="http://www.netguard.me/#terms">الشروط والأحكام</a></string>
     <string name="msg_dimming">إذا لم تتمكن من الضغط على موافق في الحوار التالي، فمن المحتمل أن يكون هناك تطبيق آخر (تعتيم الشاشة) يتحكم في الشاشة.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; م.ب/يوم</string>
@@ -324,11 +324,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; م.ب</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; ج.ب</string>
     <string name="msg_count">%d مرة</string>
-    <string name="msg_doze">للحصول على نتائج متسقة، يجب تعطيل تحسين البطارية في أندرويد لـ NetGuard.
-\n\nفي الحوار التالي، اختر \"جميع التطبيقات\" في الأعلى، واضغط على NetGuard في القائمة واختر وأكد \"عدم التحسين\".</string>
-    <string name="msg_datasaving">للحصول على نتائج متسقة، يجب تعطيل خيار توفير البيانات في أندرويد لـ NetGuard.
+    <string name="msg_doze">للحصول على نتائج متسقة، يجب تعطيل تحسين البطارية في أندرويد لـ QuietGuard.
+\n\nفي الحوار التالي، اختر \"جميع التطبيقات\" في الأعلى، واضغط على QuietGuard في القائمة واختر وأكد \"عدم التحسين\".</string>
+    <string name="msg_datasaving">للحصول على نتائج متسقة، يجب تعطيل خيار توفير البيانات في أندرويد لـ QuietGuard.
 \n\nفي الحوار التالي، فعل خياري \"بيانات الخلفية\" و \"استخدام البيانات غير المحدود\".</string>
-    <string name="msg_filter">سيؤدي استخدام التصفية إلى قيام أندرويد بنسب استخدام البيانات والطاقة إلى NetGuard - سيعتقد أندرويد أن البيانات والطاقة يستهلكها NetGuard بدلاً من التطبيق الأصلي.</string>
+    <string name="msg_filter">سيؤدي استخدام التصفية إلى قيام أندرويد بنسب استخدام البيانات والطاقة إلى QuietGuard - سيعتقد أندرويد أن البيانات والطاقة يستهلكها QuietGuard بدلاً من التطبيق الأصلي.</string>
     <string name="msg_filter4">يتطلب أندرويد 4 تفعيل التصفية</string>
     <string name="msg_log_disabled">سجل حركة المرور معطل، يرجى استخدام المفتاح في الأعلى لتفعيله. قد يؤدي التسجيل إلى استهلاك إضافي للبطارية.</string>
     <string name="msg_clear_rules">سيؤدي هذا إلى إعادة تعيين القواعد والشروط إلى القيم الافتراضية</string>
@@ -341,20 +341,20 @@
     <string name="msg_stop_forward">إيقاف التوجيه من %1$s منفذ %2$d؟</string>
     <string name="msg_metered">الشبكة محدودة</string>
     <string name="msg_inactive">لا يوجد اتصال إنترنت نشط</string>
-    <string name="msg_queue">NetGuard مشغول</string>
+    <string name="msg_queue">QuietGuard مشغول</string>
     <string name="msg_update">يوجد تحديث متاح، اضغط للتحميل</string>
     <string name="msg_usage">يمكنك السماح (باللون الأخضر) أو رفض (باللون الأحمر) وصول Wi-Fi أو الجوال للإنترنت بالضغط على الأيقونات بجوار التطبيق</string>
-    <string name="msg_fairemail">إذا قمت بتثبيت NetGuard لحماية خصوصيتك، فقد تكون مهتمًا أيضًا بتطبيق البريد الإلكتروني مفتوح المصدر والمهتم بالخصوصية <a href="https://email.faircode.eu/">FairEmail</a>.</string>
+    <string name="msg_fairemail">إذا قمت بتثبيت QuietGuard لحماية خصوصيتك، فقد تكون مهتمًا أيضًا بتطبيق البريد الإلكتروني مفتوح المصدر والمهتم بالخصوصية <a href="https://email.faircode.eu/">FairEmail</a>.</string>
     <string name="msg_whitelist">الوصول للإنترنت مسموح به افتراضيًا (وضع القائمة السوداء)، يمكن تغيير ذلك في الإعدادات</string>
     <string name="msg_push">يتم التعامل مع الرسائل الواردة (push) بشكل أساسي بواسطة مكون النظام خدمات Play، المسموح له بالوصول للإنترنت افتراضيًا</string>
     <string name="msg_system">يمكن تفعيل إدارة جميع تطبيقات (النظام) في الإعدادات</string>
     <string name="msg_issue">يرجى وصف المشكلة وذكر وقت حدوثها:</string>
     <string name="msg_vpn_cancelled">تم إلغاء اتصال VPN\nهل قمت بتكوين VPN آخر كـ \"VPN دائم التشغيل\"؟</string>
-    <string name="msg_on">سيؤدي إغلاق الجهاز مع تفعيل NetGuard إلى بدء NetGuard تلقائيًا عند تشغيل الجهاز</string>
+    <string name="msg_on">سيؤدي إغلاق الجهاز مع تفعيل QuietGuard إلى بدء QuietGuard تلقائيًا عند تشغيل الجهاز</string>
     <string name="msg_unavailable">هذه الميزة غير متوفرة في إصدار أندرويد هذا</string>
     <string name="msg_always_on">تم تعيين VPN آخر كـ VPN دائم التشغيل</string>
-    <string name="msg_always_on_lockdown">قم بإيقاف \"حظر الاتصالات بدون VPN\" في إعدادات VPN في أندرويد لاستخدام NetGuard في وضع التصفية</string>
-    <string name="msg_private_dns">قم بإيقاف \"DNS الخاص\" في إعدادات الشبكة في أندرويد لاستخدام NetGuard في وضع التصفية</string>
+    <string name="msg_always_on_lockdown">قم بإيقاف \"حظر الاتصالات بدون VPN\" في إعدادات VPN في أندرويد لاستخدام QuietGuard في وضع التصفية</string>
+    <string name="msg_private_dns">قم بإيقاف \"DNS الخاص\" في إعدادات الشبكة في أندرويد لاستخدام QuietGuard في وضع التصفية</string>
 
     <string name="title_lockdown_enabled">حركة المرور مقيدة</string>
     <string name="title_unmetered_allowed">حركة المرور غير المحدودة مسموحة</string>

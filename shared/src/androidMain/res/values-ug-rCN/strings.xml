@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
     <string name="app_description">روتسىز تورنى توسۇشقا بولىدۇ. wifi ۋە سىمسىز تورنى باشقۇرغىلى بولىدۇ.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard ئۈچۈن Android 5.1 ياكى ئۇنىڭدىن يۇقىرى نەشرى كېرەك</string>
+    <string name="app_android">QuietGuard ئۈچۈن Android 5.1 ياكى ئۇنىڭدىن يۇقىرى نەشرى كېرەك</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">مەخپىيەتلىك تۈزۈمى</a></string>
-    <string name="app_first">NetGuard نى تەرەققىي قىلدۇرۇش ۋە سىناق قىلىشقا ئىنتايىن ئەھمىيەت بېرىلدى، ئەمما NetGuard نىڭ ھەر بىر ئۈسكۈنىدە نورمال ئىشلىشىگە كاپالەتلىك قىلغىلى بولمايدۇ.</string>
+    <string name="app_first">QuietGuard نى تەرەققىي قىلدۇرۇش ۋە سىناق قىلىشقا ئىنتايىن ئەھمىيەت بېرىلدى، ئەمما QuietGuard نىڭ ھەر بىر ئۈسكۈنىدە نورمال ئىشلىشىگە كاپالەتلىك قىلغىلى بولمايدۇ.</string>
     <string name="app_agree">قوشۇلىمەن</string>
     <string name="app_disagree">قوشۇلمايمەن</string>
-    <string name="app_support">NetGuard سىزنىڭ ياردىمىڭىزگە موھتاج. Pro ئىقتىدارلارنى سېتىۋېلىپ تۈرنى قوللاڭ.</string>
+    <string name="app_support">QuietGuard سىزنىڭ ياردىمىڭىزگە موھتاج. Pro ئىقتىدارلارنى سېتىۋېلىپ تۈرنى قوللاڭ.</string>
     <string name="app_qap">
         Google ئەپنى Play Store دىن چىقىرىۋەتمەكچى بولغان، چۈنكى ئۇ بارلىق ئەپلەرنى سۈرۈشتۈرۈش ھوقۇقىنى تەلەپ قىلغان.
         بەش قېتىملىق ئىلتىماس ۋە بۇ ھوقۇقنىڭ نېمە ئۈچۈن كېرەكلىكى ھەققىدىكى چۈشەندۈرۈشلەر رەت قىلىنغان.
@@ -259,7 +259,7 @@
     <string name="setting_section_support">قوللاش</string>
 
     <string name="summary_install">ئىستون ئوقتۇرشىدا كۆرۈنۈش يېڭى قاچىلانغان ئەپلەرگە ئىشلىتىلدۇ (Pro نەشر)</string>
-    <string name="summary_auto">قوشۇمچە ئەپچىنى ئىشلىتىشنى چەكلىگەندىن كېيىن، تاللىغان ۋاقىتتىن كېيىن NetGuard ئاپتۇماتىك قوزغىلىدۇ (0 نى كىرگۈزۈپ بۇ ئىقتىدارنى چەكلەش)</string>
+    <string name="summary_auto">قوشۇمچە ئەپچىنى ئىشلىتىشنى چەكلىگەندىن كېيىن، تاللىغان ۋاقىتتىن كېيىن QuietGuard ئاپتۇماتىك قوزغىلىدۇ (0 نى كىرگۈزۈپ بۇ ئىقتىدارنى چەكلەش)</string>
     <string name="summary_delay">ئېكران ئۆچكەندىن كېيىن، ئېكراندىكى تاللىغان ۋاقىتىنىڭ ئاكتىپ ھالىتىنى ساقلاڭ (0 نى كىرگۈزۈپ بۇ ئىقتىدارنى چەكلەش)</string>
     <string name="summary_update">كۈندە GitHub يېڭى نەشرنى تەكشۈرۈش</string>
 
@@ -274,7 +274,7 @@
     <string name="summary_metered_4g">LTE تورغا Wi-Fi تور ئۇلاش قائىدىسىنى ئىشلىتىش</string>
     <string name="summary_national_roaming">SIM كارتىسى ۋە كۆچمە تور، خەلقئارا \ رايون ، كەزمە مۇلازىمەت ئوخشاش بولغاندا قائىدىسى ئىشلەتمەيدۇ</string>
     <string name="summary_eu_roaming">SIM كارتىسى ۋە كۆچمە تور دۆلىتى ياۋروپا ئىتتىپاقى ئىچىدە بولسا، كەزمە تور قائىسىنى قوللانماسلىق</string>
-    <string name="summary_call">تېلېفون كەلسە ياكى ئۇرۇلسا NetGuard نى چەكلەش. بۇ IP/Wi-Fi تېلېفون مەسىلىسىنى ھەل قىلىشقا ئىشلىتىلىدۇ.</string>
+    <string name="summary_call">تېلېفون كەلسە ياكى ئۇرۇلسا QuietGuard نى چەكلەش. بۇ IP/Wi-Fi تېلېفون مەسىلىسىنى ھەل قىلىشقا ئىشلىتىلىدۇ.</string>
 
     <string name="summary_system">ئىشلىتىش قائىدىسىگە چۈشەنچە (كەسپى)</string>
     <string name="summary_log_app">ئەپنىڭ تورغا ئۇلىنىشنى خاتىرلەيدۇ، بۇ قوشۇمچە توك ئىشلتشى مومكىن.</string>
@@ -286,7 +286,7 @@
     <string name="summary_rcode">سۈكۈتتىكى قىممەت 3 (NXDOMAIN)، \"يوق ئادىرس\" نى بىلدۈرىدۇ.</string>
     <string name="summary_validate">443 (https) ئېغىزىدا تور ئۇلىنىشىنى جەزملەشتۈرۈش ئۈچۈن ئىشلىتىلىدىغان نام.</string>
     <string name="summary_socks5_enabled">پەقەت TCP ئېقىم مىقدارى ۋاكالىتەن مۇلازىمەتچى ئەۋەتىپ بېرىلىدۇ</string>
-    <string name="summary_watchdog">ۋاقىت بەلگىلەپ NetGuard نىڭ ھەرىكىتىنى تەكشۈرۈش. (0 نى كىرگۈزۈپ بۇ تاللاشنى چەكلەش)، بۇ بەلكىم توك سەرپىياتىنى ئاشۇرۇۋېتىشى مۇمكىن.</string>
+    <string name="summary_watchdog">ۋاقىت بەلگىلەپ QuietGuard نىڭ ھەرىكىتىنى تەكشۈرۈش. (0 نى كىرگۈزۈپ بۇ تاللاشنى چەكلەش)، بۇ بەلكىم توك سەرپىياتىنى ئاشۇرۇۋېتىشى مۇمكىن.</string>
 
     <string name="summary_stats">ئىستوندا تور سۈرئىتى كۆرۈنۈش</string>
 
@@ -297,9 +297,9 @@
     <string name="msg_packages">%1$d يول قويۇلدى, %2$d توسۇلدى</string>
     <string name="msg_hosts">%1$d يول قويۇلدى, %2$d توسۇلدى, %3$d hosts</string>
     <string name="msg_waiting">يېڭى پائالىيەتنى ساقلاش</string>
-    <string name="msg_disabled">NetGuard توسۇلدى، ئۈستىدىن قوزغىتىڭ</string>
+    <string name="msg_disabled">QuietGuard توسۇلدى، ئۈستىدىن قوزغىتىڭ</string>
     <string name="msg_notifications">ئۇقتۇرۇش ھوقۇقى بېرىش ئۈچۈن بېسىڭ (زىيارەت سىناش، خاتالىق ئۇچۇرلىرى قاتارلىقلار ئۈچۈن)</string>
-    <string name="msg_revoked">NetGuard چەكلەندى، بەلكىم باشقا بىر ئەپ تەرپىدىن بولغان</string>
+    <string name="msg_revoked">QuietGuard چەكلەندى، بەلكىم باشقا بىر ئەپ تەرپىدىن بولغان</string>
     <string name="msg_installed">\'%1$s\' قاچىلاندى</string>
     <string name="msg_installed_n">قاچىلانغان</string>
     <string name="msg_malware">ئېھتىماللىق بار زىيانلىق يۇمشاق دېتال: \'%1$s\'</string>
@@ -308,13 +308,13 @@
     <string name="msg_completed">تامام</string>
     <string name="msg_invalid">قىممەتنى تەكشۈرۈپ قايتا سىناڭ.</string>
     <string name="msg_export_failed">چىقىرىش مەغلۇپ بولدى: %1$s</string>
-    <string name="msg_vpn">NetGuard تور ئېقىمىنى سۈزۈش ئۈچۈن يەرلىك VPN ئىشلىتىدۇ.
+    <string name="msg_vpn">QuietGuard تور ئېقىمىنى سۈزۈش ئۈچۈن يەرلىك VPN ئىشلىتىدۇ.
 شۇڭلاشقا كېيىنكى سۆھبەت كۆزنىكىدە VPN ئۇلىنىشىغا يول قويۇڭ.
 تور ئېقىمىڭىز يىراقتىكى VPN مۇلازىمېتىرىغا ئەۋەتىلمەيدۇ.</string>
-    <string name="msg_autostart">NetGuard ئاپتۇماتىك قوزغىلالمىدى، سىزنىڭ تېلېىفونىڭىزنىڭ نەشردىكى مەسلىسى بولشى مومكىن.</string>
+    <string name="msg_autostart">QuietGuard ئاپتۇماتىك قوزغىلالمىدى، سىزنىڭ تېلېىفونىڭىزنىڭ نەشردىكى مەسلىسى بولشى مومكىن.</string>
     <string name="msg_error">ئويلىمغان خاتالىق: \'%s\'</string>
     <string name="msg_start_failed">VPN مۇلازىمتىنى رەت قىلدى، سىزنىڭ تېلېىفونىڭىزنىڭ نەشردىكى مەسلىسى بولشى مومكىن.</string>
-    <string name="msg_try">سىناش NetGuard</string>
+    <string name="msg_try">سىناش QuietGuard</string>
     <string name="msg_terms">قوشۇلسىڭىز <a href="http://www.netguard.me/#terms">شەرتلەر ۋە بەلگىلىمىلەر</a></string>
     <string name="msg_dimming">ئەگەر سىز مۇقۇملاشنى باسالمىسىڭىز، يەنە بىر ئەپ ئېكراننى كونترول قىلىۋاتقان بولۇشى مۇمكىن.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/كۈن</string>
@@ -324,11 +324,11 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">تۇراقلىق نەتىجە ئۈچۈن NetGuard نىڭ باتارېيەنى ئەلالاشتۇرۇش چەكلىمىسىنى بىكار قىلىش كېرەك.
-\n\nكېيىنكى كۆزنەكتە، ئۈستىدىن \"بارلىق ئەپلەر\"نى تاللاپ، تىزىملىكتىن NetGuard نى تېپىپ \"ئەلالاشتۇرما\"نى تاللاڭ.</string>
-    <string name="msg_datasaving">تۇراقلىق نەتىجە ئۈچۈن NetGuard نىڭ ئاندىرويىد تور تېجەش تاللانمىسىنى چەكلەش كېرەك.
+    <string name="msg_doze">تۇراقلىق نەتىجە ئۈچۈن QuietGuard نىڭ باتارېيەنى ئەلالاشتۇرۇش چەكلىمىسىنى بىكار قىلىش كېرەك.
+\n\nكېيىنكى كۆزنەكتە، ئۈستىدىن \"بارلىق ئەپلەر\"نى تاللاپ، تىزىملىكتىن QuietGuard نى تېپىپ \"ئەلالاشتۇرما\"نى تاللاڭ.</string>
+    <string name="msg_datasaving">تۇراقلىق نەتىجە ئۈچۈن QuietGuard نىڭ ئاندىرويىد تور تېجەش تاللانمىسىنى چەكلەش كېرەك.
 \n\nكېيىنكى كۆزنەكتە \"ئارقا پىلان تورى\" ۋە \"چەكسىز تور ئىشلىتىش\"نى قوزغىتىڭ.</string>
-    <string name="msg_filter">سۈزگۈچ ئىشلەتكەندە، ئاندىرويىد تور ۋە توك سەرپىياتىنى NetGuard غا يۈكلەيدۇ - ئەسلىدىكى ئەپلەرگە يۈكلىمەيدۇ.</string>
+    <string name="msg_filter">سۈزگۈچ ئىشلەتكەندە، ئاندىرويىد تور ۋە توك سەرپىياتىنى QuietGuard غا يۈكلەيدۇ - ئەسلىدىكى ئەپلەرگە يۈكلىمەيدۇ.</string>
     <string name="msg_filter4">Android 4 ئۆتكۈزۈش ئىقتىدارىنى ئېچىش كېرەك</string>
     <string name="msg_log_disabled">تور خاتىرىسى تاقالغان، يۇقىرىدىكى ئالماشتۇرغۇچ بىلەن قوزغىتىڭ. خاتىرىلەش توكنى كۆپ سەرپ قىلىشى مۇمكىن.</string>
     <string name="msg_clear_rules">بۇ قائىدە ۋە شەرتلەرنى سۈكۈتتىكى قىممىتىگە قايتۇرىدۇ</string>
@@ -341,20 +341,20 @@
     <string name="msg_stop_forward">%1$s نىڭ %2$d ئېغىزىدىكى يۆتكەشنى توختىتامسىز؟</string>
     <string name="msg_metered">تور ئۆلچەشلىك</string>
     <string name="msg_inactive">ئاكتىپ تور ئۇلىنىشى يوق</string>
-    <string name="msg_queue">NetGuard ئالدىراش</string>
+    <string name="msg_queue">QuietGuard ئالدىراش</string>
     <string name="msg_update">يېڭىلانما بار، بېسىپ چۈشۈرۈڭ</string>
     <string name="msg_usage">ئەپ يىنىدىكى رەسىمنى بېسىپ تور ۋە wifi غا ئۇلىنىشنى باشقۇرالايسىز، يول قويۇش (يېشىل) ياكى رەت قىلىش (قىزىل)</string>
-    <string name="msg_fairemail">ئەگەر سىز مەخپىيەتلىكىڭىزنى قوغداش ئۈچۈن NetGuard نى قاچىلىغان بولسىڭىز، مەخپىيەتلىكنى قوغدايدىغان <a href="https://email.faircode.eu/">FairEmail</a> غا قىزىقىشىڭىز مۇمكىن.</string>
+    <string name="msg_fairemail">ئەگەر سىز مەخپىيەتلىكىڭىزنى قوغداش ئۈچۈن QuietGuard نى قاچىلىغان بولسىڭىز، مەخپىيەتلىكنى قوغدايدىغان <a href="https://email.faircode.eu/">FairEmail</a> غا قىزىقىشىڭىز مۇمكىن.</string>
     <string name="msg_whitelist">تورغا ئۇلىنىش سۈكۈتتىكى ھالەت (قارا تىزىملىك ھالىتى)، بۇنى تەڭشەكتىن ئۆزگەرتكىلى بولىدۇ</string>
     <string name="msg_push">كىرىش ئۇچۇرلىرى (push) ئادەتتە سىستېما تەركىبى بولغان Play مۇلازىمىتى تەرىپىدىن بىر تەرەپ قىلىنىدۇ، ئۇنىڭغا سۈكۈتتە يول قويۇلىدۇ</string>
     <string name="msg_system">بارلىق (سىستېما) ئەپلەرنى باشقۇرۇشنى تەڭشەكتىن قوزغىتىشقا بولىدۇ</string>
     <string name="msg_issue">خاتالىق يۈز بەرگەندىكى مەسلىنى ۋە ۋاقتىنى دوكلات قىلىڭ:</string>
     <string name="msg_vpn_cancelled">VPN ئۇلىنىشى بىكار قىلىندى. باشقا بىر VPN نى ھەمىشە ئوچۇق قىلىپ سەپلىگەنمىدىڭىز؟</string>
-    <string name="msg_on">NetGuard ئوچۇق ھالەتتە تېلېفوننى تاقىسىڭىز، تېلېفون قوزغالغاندا NetGuard ئاپتۇماتىك قوزغىلىدۇ</string>
+    <string name="msg_on">QuietGuard ئوچۇق ھالەتتە تېلېفوننى تاقىسىڭىز، تېلېفون قوزغالغاندا QuietGuard ئاپتۇماتىك قوزغىلىدۇ</string>
     <string name="msg_unavailable">بۇ ئىقتىدار بۇ ئاندىرويىد نەشرىدە يوق</string>
     <string name="msg_always_on">باشقا بىر VPN ھەمىشە ئوچۇق VPN قىلىپ بەلگىلەنگەن</string>
-    <string name="msg_always_on_lockdown">سۈزۈش ھالىتىدە NetGuard نى ئىشلىتىش ئۈچۈن ئاندىرويىد VPN تەڭشىكىدىن \"VPN سىز ئۇلىنىشنى توسۇش\"نى تاقاڭ</string>
-    <string name="msg_private_dns">سۈزۈش ھالىتىدە NetGuard نى ئىشلىتىش ئۈچۈن ئاندىرويىد تور تەڭشىكىدىن \"شەخسىي DNS\"نى تاقاڭ</string>
+    <string name="msg_always_on_lockdown">سۈزۈش ھالىتىدە QuietGuard نى ئىشلىتىش ئۈچۈن ئاندىرويىد VPN تەڭشىكىدىن \"VPN سىز ئۇلىنىشنى توسۇش\"نى تاقاڭ</string>
+    <string name="msg_private_dns">سۈزۈش ھالىتىدە QuietGuard نى ئىشلىتىش ئۈچۈن ئاندىرويىد تور تەڭشىكىدىن \"شەخسىي DNS\"نى تاقاڭ</string>
 
     <string name="title_lockdown_enabled">تور ئېقىمى چەكلەندى</string>
     <string name="title_unmetered_allowed">ئۆلچەمسىز ئېقىمغا يول قويۇلدى</string>

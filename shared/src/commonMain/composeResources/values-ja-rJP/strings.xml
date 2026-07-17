@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next は、インターネットへのアクセスをブロックするシンプルかつ高度な方法を提供します（root 権限不要）。アプリやアドレスごとに、Wi-Fi またはモバイル接続へのアクセスを個別に許可または拒否できます。</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard は、インターネットへのアクセスをブロックするシンプルかつ高度な方法を提供します（root 権限不要）。アプリやアドレスごとに、Wi-Fi またはモバイル接続へのアクセスを個別に許可または拒否できます。</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard には Android 5.1 以降が必要です</string>
+    <string name="app_android">QuietGuard には Android 5.1 以降が必要です</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">プライバシーポリシー</a></string>
-    <string name="app_first">NetGuard の開発とテストには細心の注意を払っていますが、すべてのデバイスで正しく動作することを保証することは不可能です。</string>
+    <string name="app_first">QuietGuard の開発とテストには細心の注意を払っていますが、すべてのデバイスで正しく動作することを保証することは不可能です。</string>
     <string name="app_agree">同意する</string>
     <string name="app_disagree">同意しない</string>
-    <string name="app_support">NetGuard はあなたの助けを必要としています。タップしてプロ機能を購入し、プロジェクトの継続を支援してください。</string>
+    <string name="app_support">QuietGuard はあなたの助けを必要としています。タップしてプロ機能を購入し、プロジェクトの継続を支援してください。</string>
     <string name="app_qap">
         Google は、このアプリがすべてのアプリを照会する権限を要求したため、Play ストアから削除しようとしました。
         5 回の異議申し立てと、この権限が必要な理由についての十分な正当化は却下されました。
@@ -264,14 +264,14 @@
     <string name="setting_section_support">サポート</string>
 
     <string name="summary_install">ステータスバーに通知を表示し、新しくインストールしたアプリを直接設定できます（プロ機能）</string>
-    <string name="summary_auto">ウィジェットを使用して無効にした後、選択した分数が経過すると自動的に NetGuard を再度有効にします（0 を入力するとこのオプションは無効になります）</string>
+    <string name="summary_auto">ウィジェットを使用して無効にした後、選択した分数が経過すると自動的に QuietGuard を再度有効にします（0 を入力するとこのオプションは無効になります）</string>
     <string name="summary_delay">画面をオフにした後、選択した分数の間「画面点灯時」ルールをアクティブに保ちます（0 を入力するとこのオプションは無効になります）</string>
     <string name="summary_update">GitHub で新しいリリースを 1 日 2 回確認します</string>
 
     <string name="summary_tethering">Android のバージョンによって、テザリングが動作する場合と動作しない場合があります。テザリングされたトラフィックはフィルタリングできません。</string>
     <string name="summary_subnet">サブネットルーティングを有効にします。Wi-Fi 通話が可能になる場合がありますが、Android のバグを引き起こし、バッテリー使用量が増える可能性もあります。</string>
     <string name="summary_lan">10.0.0.0/8、172.16.0.0/12、192.168.0.0/16 などのローカルエリアネットワークアドレスへの接続をアプリに許可します。</string>
-    <string name="summary_ip6">IPv6 トラフィックを NetGuard にルーティングし、選択的に許可またはブロックできるようにします。</string>
+    <string name="summary_ip6">IPv6 トラフィックを QuietGuard にルーティングし、選択的に許可またはブロックできるようにします。</string>
     <string name="summary_wifi_home">選択したネットワークに対してのみ Wi-Fi ネットワークルールを適用します（他の Wi-Fi ネットワークにはモバイルネットワークルールを適用します）。</string>
     <string name="summary_metered">従量制（有料、テザリング）Wi-Fi ネットワークにモバイルネットワークルールを適用します。</string>
     <string name="summary_metered_2g">2G データ接続に Wi-Fi ネットワークルールを適用します。</string>
@@ -279,7 +279,7 @@
     <string name="summary_metered_4g">LTE データ接続に Wi-Fi ネットワークルールを適用します。</string>
     <string name="summary_national_roaming">SIM とモバイルネットワークの国が同じ場合はローミングルールを適用しません。</string>
     <string name="summary_eu_roaming">SIM とモバイルネットワークの国が EU 内の場合はローミングルールを適用しません（roam like at home）。</string>
-    <string name="summary_call">着信または発信時に NetGuard を無効にします。これは、IP/Wi-Fi 通話の問題を回避するために使用できます。</string>
+    <string name="summary_call">着信または発信時に QuietGuard を無効にします。これは、IP/Wi-Fi 通話の問題を回避するために使用できます。</string>
 
     <string name="summary_system">システムアプリのルールを定義します（専門家向け）。</string>
     <string name="summary_log_app">アプリのインターネットアクセス試行を記録します。これにより、バッテリーの使用量が増える可能性があります。</string>
@@ -291,7 +291,7 @@
     <string name="summary_rcode">デフォルト値は 3 (NXDOMAIN) で、「存在しないドメイン」を意味します。</string>
     <string name="summary_validate">ポート 443 (https) でインターネット接続を検証するために使用されるドメイン名。</string>
     <string name="summary_socks5_enabled">TCP トラフィックのみがプロキシサーバーに送信されます。</string>
-    <string name="summary_watchdog">NetGuard がまだ実行されているかどうかを定期的に確認します（0 を入力するとこのオプションは無効になります）。これにより、バッテリーの使用量が増える可能性があります。</string>
+    <string name="summary_watchdog">QuietGuard がまだ実行されているかどうかを定期的に確認します（0 を入力するとこのオプションは無効になります）。これにより、バッテリーの使用量が増える可能性があります。</string>
 
     <string name="summary_stats">ステータスバー通知にネットワーク速度グラフを表示します</string>
 
@@ -302,9 +302,9 @@
     <string name="msg_packages">%1$d 許可、%2$d ブロック</string>
     <string name="msg_hosts">%1$d 許可、%2$d ブロック、%3$d ホスト</string>
     <string name="msg_waiting">イベントを待機中</string>
-    <string name="msg_disabled">NetGuard は無効です。上のスイッチを使用して有効にしてください。</string>
+    <string name="msg_disabled">QuietGuard は無効です。上のスイッチを使用して有効にしてください。</string>
     <string name="msg_notifications">タップして通知権限を付与してください（アクセス試行通知、エラーメッセージなどのため）。</string>
-    <string name="msg_revoked">おそらく別の VPN ベースのアプリを使用したため、NetGuard が無効になりました。</string>
+    <string name="msg_revoked">おそらく別の VPN ベースのアプリを使用したため、QuietGuard が無効になりました。</string>
     <string name="msg_installed">\'%1$s\' がインストールされました</string>
     <string name="msg_installed_n">インストールされました</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -313,13 +313,13 @@
     <string name="msg_completed">アクションが完了しました</string>
     <string name="msg_invalid">値を確認して、もう一度お試しください。</string>
     <string name="msg_export_failed">エクスポートに失敗しました: %1$s</string>
-    <string name="msg_vpn">NetGuard はローカル VPN を使用してインターネットトラフィックをフィルタリングします。
+    <string name="msg_vpn">QuietGuard はローカル VPN を使用してインターネットトラフィックをフィルタリングします。
 そのため、次のダイアログで VPN 接続を許可してください。
 インターネットトラフィックはリモート VPN サーバーに送信されません。</string>
-    <string name="msg_autostart">NetGuard を自動的に起動できませんでした。これはおそらく Android のバージョンのバグによるものです。</string>
+    <string name="msg_autostart">QuietGuard を自動的に起動できませんでした。これはおそらく Android のバージョンのバグによるものです。</string>
     <string name="msg_error">予期しないエラーが発生しました: \'%s\'</string>
     <string name="msg_start_failed">Android が現時点で VPN サービスの開始を拒否しました。これはおそらく Android のバージョンのバグによるものです。</string>
-    <string name="msg_try">NetGuard を試す</string>
+    <string name="msg_try">QuietGuard を試す</string>
     <string name="msg_terms">寄付することにより、<a href="http://www.netguard.me/#terms">利用規約</a>に同意したことになります。</string>
     <string name="msg_dimming">次のダイアログで OK を押せない場合は、別の（画面調光）アプリが画面を操作している可能性があります。</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/日</string>
@@ -329,10 +329,10 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%d回</string>
-    <string name="msg_doze">安定した結果を得るには、NetGuard の Android バッテリー最適化を無効にする必要があります。
-\n\n次のダイアログで、上部の「すべてのアプリ」を選択し、リストで NetGuard をタップして「最適化しない」を選択して確認してください。</string>
-    <string name="msg_datasaving">安定した結果を得るには、Android のデータ節約設定を NetGuard に対して無効にする必要があります。\n\n次のダイアログで「バックグラウンドデータ」と「データ通信制限なし」を有効にしてくだい。</string>
-    <string name="msg_filter">フィルタリングを使用すると、Android はデータと電力の使用量を NetGuard に帰属させます。Android は、元のアプリではなく NetGuard がデータと電力を使用していると想定します。</string>
+    <string name="msg_doze">安定した結果を得るには、QuietGuard の Android バッテリー最適化を無効にする必要があります。
+\n\n次のダイアログで、上部の「すべてのアプリ」を選択し、リストで QuietGuard をタップして「最適化しない」を選択して確認してください。</string>
+    <string name="msg_datasaving">安定した結果を得るには、Android のデータ節約設定を QuietGuard に対して無効にする必要があります。\n\n次のダイアログで「バックグラウンドデータ」と「データ通信制限なし」を有効にしてくだい。</string>
+    <string name="msg_filter">フィルタリングを使用すると、Android はデータと電力の使用量を QuietGuard に帰属させます。Android は、元のアプリではなく QuietGuard がデータと電力を使用していると想定します。</string>
     <string name="msg_filter4">Android 4 ではフィルタリングを有効にする必要があります</string>
     <string name="msg_log_disabled">トラフィックログは無効です。上のスイッチを使用してログを有効にしてください。トラフィックログにより、バッテリーの使用量が増える可能性があります。</string>
     <string name="msg_clear_rules">これにより、ルールと条件がデフォルト値にリセットされます</string>
@@ -345,20 +345,20 @@
     <string name="msg_stop_forward">%1$s ポート %2$d の転送を停止しますか？</string>
     <string name="msg_metered">ネットワークは従量制です</string>
     <string name="msg_inactive">アクティブなインターネット接続はありません</string>
-    <string name="msg_queue">NetGuard はビジーです</string>
+    <string name="msg_queue">QuietGuard はビジーです</string>
     <string name="msg_update">アップデートがあります。タップしてダウンロードしてください</string>
     <string name="msg_usage">アプリの横にあるアイコンをタップして、Wi-Fi またはモバイルインターネットアクセスを許可（緑色）または拒否（赤色）できます</string>
-    <string name="msg_fairemail">プライバシーを保護するために NetGuard をインストールした場合は、オープンソースでプライバシーに配慮したメールアプリ <a href="https://email.faircode.eu/">FairEmail</a> にも興味があるかもしれません。</string>
+    <string name="msg_fairemail">プライバシーを保護するために QuietGuard をインストールした場合は、オープンソースでプライバシーに配慮したメールアプリ <a href="https://email.faircode.eu/">FairEmail</a> にも興味があるかもしれません。</string>
     <string name="msg_whitelist">インターネットアクセスはデフォルトで許可されています（ブラックリストモード）。これは設定で変更できます。</string>
     <string name="msg_push">着信（プッシュ）メッセージは主にシステムコンポーネントの Play サービスによって処理されます。Play サービスはデフォルトでインターネットアクセスが許可されています。</string>
     <string name="msg_system">すべての（システム）アプリの管理は設定で有効にできます</string>
     <string name="msg_issue">問題を説明し、問題が発生した時刻を記入してください:</string>
     <string name="msg_vpn_cancelled">VPN 接続がキャンセルされました\n別の VPN を「常時接続 VPN」として構成しましたか？</string>
-    <string name="msg_on">NetGuard を有効にした状態でデバイスの電源をオフにすると、デバイスの電源をオンにしたときに NetGuard が自動的に起動します</string>
+    <string name="msg_on">QuietGuard を有効にした状態でデバイスの電源をオフにすると、デバイスの電源をオンにしたときに QuietGuard が自動的に起動します</string>
     <string name="msg_unavailable">この機能はこの Android バージョンでは利用できません</string>
     <string name="msg_always_on">別の VPN が常時接続 VPN として設定されています</string>
-    <string name="msg_always_on_lockdown">フィルタリングモードで NetGuard を使用するには、Android の VPN 設定で「VPN なしの接続をブロック」をオフにしてください</string>
-    <string name="msg_private_dns">フィルタリングモードで NetGuard を使用するには、Android のネットワーク設定で「プライベート DNS」をオフにしてください</string>
+    <string name="msg_always_on_lockdown">フィルタリングモードで QuietGuard を使用するには、Android の VPN 設定で「VPN なしの接続をブロック」をオフにしてください</string>
+    <string name="msg_private_dns">フィルタリングモードで QuietGuard を使用するには、Android のネットワーク設定で「プライベート DNS」をオフにしてください</string>
 
     <string name="title_lockdown_enabled">トラフィックが制限されています</string>
     <string name="title_unmetered_allowed">非従量制トラフィックは許可されています</string>

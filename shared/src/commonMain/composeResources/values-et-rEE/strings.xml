@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next pakub lihtsaid ja täiustatud viise Interneti-juurdepääsu blokeerimiseks – juurjuurdepääsu pole vaja. Rakendustele ja aadressidele saab eraldi lubada või keelata juurdepääsu teie Wi-Fi- ja/või mobiiliühendusele.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard pakub lihtsaid ja täiustatud viise Interneti-juurdepääsu blokeerimiseks – juurjuurdepääsu pole vaja. Rakendustele ja aadressidele saab eraldi lubada või keelata juurdepääsu teie Wi-Fi- ja/või mobiiliühendusele.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard nõuab Android 5.1 või uuemat versiooni</string>
+    <string name="app_android">QuietGuard nõuab Android 5.1 või uuemat versiooni</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privaatsuspoliitika</a></string>
-    <string name="app_first">NetGuardi arendamisel ja testimisel on olnud suur hoolikus, kuid on võimatu garanteerida, et NetGuard töötab igas seadmes korrektselt.</string>
+    <string name="app_first">QuietGuardi arendamisel ja testimisel on olnud suur hoolikus, kuid on võimatu garanteerida, et QuietGuard töötab igas seadmes korrektselt.</string>
     <string name="app_agree">Nõustun</string>
     <string name="app_disagree">Ei nõustu</string>
-    <string name="app_support">NetGuard vajab teie abi. Puudutage pro-funktsioonide ostmiseks, et projekt jätkuks.</string>
+    <string name="app_support">QuietGuard vajab teie abi. Puudutage pro-funktsioonide ostmiseks, et projekt jätkuks.</string>
     <string name="app_qap">
         Google kavatses rakenduse Play poest eemaldada, kuna see taotles luba kõigi rakenduste päringute tegemiseks.
         Viis apellatsiooni ja hea põhjendus selle kohta, miks seda luba vaja on, lükati tagasi.
@@ -264,14 +264,14 @@
     <string name="setting_section_support">Kasutajatugi</string>
 
     <string name="summary_install">Näita olekuriba teavitust uute installitud rakenduste otseseks seadistamiseks (pro-funktsioon)</string>
-    <string name="summary_auto">Pärast vidina kaudu keelamist luba NetGuard automaatselt uuesti pärast valitud minutite möödumist (sisesta null selle valiku keelamiseks)</string>
+    <string name="summary_auto">Pärast vidina kaudu keelamist luba QuietGuard automaatselt uuesti pärast valitud minutite möödumist (sisesta null selle valiku keelamiseks)</string>
     <string name="summary_delay">Pärast ekraani väljalülitamist hoia \'ekraan on sees\' reeglid aktiivsed valitud minutite jooksul (sisesta null selle valiku keelamiseks)</string>
     <string name="summary_update">Kontrolli uusi väljalaskeid GitHubist kaks korda päevas</string>
 
     <string name="summary_tethering">Sõltuvalt Androidi versioonist võib jagamine töötada või mitte. Jagatud liiklust ei saa filtreerida.</string>
     <string name="summary_subnet">Luba alamvõrgu marsruutimine; võib lubada Wi-Fi kõned, kuid võib põhjustada ka vigu Androidis ja suurendada akukasutust</string>
     <string name="summary_lan">Luba rakendustel luua ühendust kohaliku võrgu aadressidega, nagu 10.0.0.0/8, 172.16.0.0/12 ja 192.168.0.0/16</string>
-    <string name="summary_ip6">Suuna IP versiooni 6 liiklus NetGuardi, et seda saaks valikuliselt lubada või blokeerid</string>
+    <string name="summary_ip6">Suuna IP versiooni 6 liiklus QuietGuardi, et seda saaks valikuliselt lubada või blokeerid</string>
     <string name="summary_wifi_home">Rakenda Wi-Fi võrgureegleid ainult valitud võrgu jaoks (teiste Wi-Fi võrkude puhul rakenda mobiilsidevõrgu reegleid)</string>
     <string name="summary_metered">Rakenda mobiilsidevõrgu reegleid mõõdetud (tasulistele, jagatud) Wi-Fi võrkudele</string>
     <string name="summary_metered_2g">Rakenda Wi-Fi võrgureegleid 2G andmesideühendustele</string>
@@ -279,7 +279,7 @@
     <string name="summary_metered_4g">Rakenda Wi-Fi võrgureegleid LTE andmesideühendustele</string>
     <string name="summary_national_roaming">Ära rakenda rändluseeskirju, kui SIM-kaardi ja mobiilsidevõrgu riik on sama</string>
     <string name="summary_eu_roaming">Ära rakenda rändluseeskirju, kui SIM-kaardi ja mobiilsidevõrgu riik on EL-is (rändlus nagu kodus)</string>
-    <string name="summary_call">Keela NetGuard inkoming või outgoing telefonikõne ajal. Seda saab kasutada IP/Wi-Fi kõneprobleemide lahendamiseks.</string>
+    <string name="summary_call">Keela QuietGuard inkoming või outgoing telefonikõne ajal. Seda saab kasutada IP/Wi-Fi kõneprobleemide lahendamiseks.</string>
 
     <string name="summary_system">Määra reeglid süsteemirakendustele (ekspertidele)</string>
     <string name="summary_log_app">Logi rakenduste Interneti-juurdepääsu katseid. See võib kaasa tuua täiendava akukasutuse.</string>
@@ -291,7 +291,7 @@
     <string name="summary_rcode">Vaikeväärtus on 3 (NXDOMAIN), mis tähendab \'domeeni pole olemas\'.</string>
     <string name="summary_validate">Domeeninimi, mida kasutatakse Interneti-ühenduse valideerimiseks pordis 443 (https).</string>
     <string name="summary_socks5_enabled">Proxy serverisse saadetakse ainult TCP liiklus</string>
-    <string name="summary_watchdog">Kontrolli perioodiliselt, kas NetGuard ikka töötab (sisesta null selle valiku keelamiseks). See võib kaasa tuua täiendava akukasutuse.</string>
+    <string name="summary_watchdog">Kontrolli perioodiliselt, kas QuietGuard ikka töötab (sisesta null selle valiku keelamiseks). See võib kaasa tuua täiendava akukasutuse.</string>
 
     <string name="summary_stats">Näita võrgukiiruse graafikut olekuriba teavituses</string>
 
@@ -302,9 +302,9 @@
     <string name="msg_packages">%1$d lubatud, %2$d blokeeritud</string>
     <string name="msg_hosts">%1$d lubatud, %2$d blokeeritud, %3$d hosti</string>
     <string name="msg_waiting">Sündmuse ootel</string>
-    <string name="msg_disabled">NetGuard on keelatud, kasuta ülaltoodud lülitit NetGuardi lubamiseks</string>
+    <string name="msg_disabled">QuietGuard on keelatud, kasuta ülaltoodud lülitit QuietGuardi lubamiseks</string>
     <string name="msg_notifications">Puuduta teavituste lubade andmiseks (juurdepääsu katsete, veateadete jne jaoks)</string>
-    <string name="msg_revoked">NetGuard on keelatud, tõenäoliselt mõne muu VPN-põhise rakenduse kasutamise tõttu</string>
+    <string name="msg_revoked">QuietGuard on keelatud, tõenäoliselt mõne muu VPN-põhise rakenduse kasutamise tõttu</string>
     <string name="msg_installed">\'%1$s\' installitud</string>
     <string name="msg_installed_n">On installitud</string>
     <string name="msg_malware">Võimalik pahavara: \'%1$s\'</string>
@@ -313,13 +313,13 @@
     <string name="msg_completed">Toiming lõpetatud</string>
     <string name="msg_invalid">Palun kontrolli väärtusi ja proovi uuesti.</string>
     <string name="msg_export_failed">Eksport ebaõnnestus: %1$s</string>
-    <string name="msg_vpn">NetGuard kasutab Interneti-liikluse filtreerimiseks kohalikku VPN-i.
+    <string name="msg_vpn">QuietGuard kasutab Interneti-liikluse filtreerimiseks kohalikku VPN-i.
 Seetõttu palun luba VPN-ühendus järgmises dialoogis.
 Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
-    <string name="msg_autostart">NetGuard ei saanud automaatselt käivituda. See on tõenäoliselt tingitud veast teie Androidi versioonis.</string>
+    <string name="msg_autostart">QuietGuard ei saanud automaatselt käivituda. See on tõenäoliselt tingitud veast teie Androidi versioonis.</string>
     <string name="msg_error">Tekkis ootamatu viga: \'%s\'</string>
     <string name="msg_start_failed">Android keeldus praegu VPN-teenust käivitamast. See on tõenäoliselt tingitud veast teie Androidi versioonis.</string>
-    <string name="msg_try">Proovi NetGuardi</string>
+    <string name="msg_try">Proovi QuietGuardi</string>
     <string name="msg_terms">Annetades nõustute <a href="http://www.netguard.me/#terms">tingimustega</a></string>
     <string name="msg_dimming">Kui te ei saa järgmises dialoogis vajutada OK, siis tõenäoliselt juhib ekraani mõni muu (ekraani hämardamise) rakendus.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/päevas</string>
@@ -329,11 +329,11 @@ Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Stabiilsete tulemuste saavutamiseks tuleks NetGuardi puhul Androidi aku optimeerimine keelata.
-\n\nJärgmises dialoogis vali ülevalt \"Kõik rakendused\", puuduta loendis NetGuardi ja vali ning kinnita \"Ära optimeeri\".</string>
-    <string name="msg_datasaving">Stabiilsete tulemuste saavutamiseks tuleks NetGuardi puhul Androidi andmesäästu valikud keelata.
+    <string name="msg_doze">Stabiilsete tulemuste saavutamiseks tuleks QuietGuardi puhul Androidi aku optimeerimine keelata.
+\n\nJärgmises dialoogis vali ülevalt \"Kõik rakendused\", puuduta loendis QuietGuardi ja vali ning kinnita \"Ära optimeeri\".</string>
+    <string name="msg_datasaving">Stabiilsete tulemuste saavutamiseks tuleks QuietGuardi puhul Androidi andmesäästu valikud keelata.
 \n\nOta järgmises dialoogis kasutusele valikud \"Taustandmed\" ja \"Piiramatu andmekasutus\".</string>
-    <string name="msg_filter">Filtreerimise kasutamine põhjustab selle, et Android omistab andme- ja energiakasutuse NetGuardile – Android eeldab, et andmeid ja energiat kasutab NetGuard, mitte algsed rakendused.</string>
+    <string name="msg_filter">Filtreerimise kasutamine põhjustab selle, et Android omistab andme- ja energiakasutuse QuietGuardile – Android eeldab, et andmeid ja energiat kasutab QuietGuard, mitte algsed rakendused.</string>
     <string name="msg_filter4">Android 4 nõuab filtreerimise lubamist</string>
     <string name="msg_log_disabled">Liikluslogimine on keelatud, kasuta ülaltoodud lülitit logimise lubamiseks. Logimine võib kaasa tuua täiendava akukasutuse.</string>
     <string name="msg_clear_rules">See lähtestab reeglid ja tingimused nende vaikeväärtustele</string>
@@ -346,20 +346,20 @@ Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
     <string name="msg_stop_forward">Kas peatada edasisuunamine pordist %1$s pordini %2$d?</string>
     <string name="msg_metered">Võrk on mõõdetud</string>
     <string name="msg_inactive">Aktiivne Interneti-ühendus puudub</string>
-    <string name="msg_queue">NetGuard on hõivatud</string>
+    <string name="msg_queue">QuietGuard on hõivatud</string>
     <string name="msg_update">Uuendus saadaval, puuduta allalaadimiseks</string>
     <string name="msg_usage">Saate lubada (rohekas) tai keelata (punakas) Wi-Fi või mobiilse Interneti-juurdepääsu, puudutades rakenduse kõrval olevaid ikoone</string>
-    <string name="msg_fairemail">Kui installisite NetGuardi oma privaatsuse kaitsmiseks, võite olla huvitatud ka rakendusest <a href="https://email.faircode.eu/">FairEmail</a>, mis on avatud lähtekoodiga ja privaatsussõbralik e-posti rakendus.</string>
+    <string name="msg_fairemail">Kui installisite QuietGuardi oma privaatsuse kaitsmiseks, võite olla huvitatud ka rakendusest <a href="https://email.faircode.eu/">FairEmail</a>, mis on avatud lähtekoodiga ja privaatsussõbralik e-posti rakendus.</string>
     <string name="msg_whitelist">Interneti-juurdepääs on vaikeväärtusena lubatud (musta nimekirja režiim), seda saab seadetes muuta</string>
     <string name="msg_push">Sissetulevaid (push) sõnumeid käitleb enamasti süsteemikomponent Play teenused, millele on Interneti-juurdepääs vaikimisi lubatud</string>
     <string name="msg_system">Kõigi (süsteemi)rakenduste haldamist saab lubada seadetes</string>
     <string name="msg_issue">Palun kirjeldage probleemi ja märkige probleemi esinemise aeg:</string>
     <string name="msg_vpn_cancelled">VPN-ühendus tühistatud\nKas seadistasite mõne muu VPN-i alati sisselülitatud VPN-iks?</string>
-    <string name="msg_on">Seadme väljalülitamine, kui NetGuard on lubatud, käivitab NetGuardi seadme sisselülitamisel automaatselt</string>
+    <string name="msg_on">Seadme väljalülitamine, kui QuietGuard on lubatud, käivitab QuietGuardi seadme sisselülitamisel automaatselt</string>
     <string name="msg_unavailable">See funktsioon pole selles Androidi versioonis saadaval</string>
     <string name="msg_always_on">Teine VPN on seatud alati sisselülitatud VPN-iks</string>
-    <string name="msg_always_on_lockdown">Lülita Androidi VPN-i seadetes välja valik \"Blokeeri ühendused ilma VPN-ita\", et kasutada NetGuardi filtreerimisrežiimis</string>
-    <string name="msg_private_dns">Lülita Androidi võrguseadetes välja valik \"Privaatne DNS\", et kasutada NetGuardi filtreerimisrežiimis</string>
+    <string name="msg_always_on_lockdown">Lülita Androidi VPN-i seadetes välja valik \"Blokeeri ühendused ilma VPN-ita\", et kasutada QuietGuardi filtreerimisrežiimis</string>
+    <string name="msg_private_dns">Lülita Androidi võrguseadetes välja valik \"Privaatne DNS\", et kasutada QuietGuardi filtreerimisrežiimis</string>
 
     <string name="title_lockdown_enabled">Liiklus on lukustatud</string>
     <string name="title_unmetered_allowed">Mõõtmata liiklus on lubatud</string>

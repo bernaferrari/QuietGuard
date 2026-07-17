@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next egyszerűen és speciálisan blokkolja az internet hozzáférést - nem szükséges root jogosultság hozzá. Az alkalmazásokat és a címeket külön-külön lehet engedélyezni vagy letiltani a Wi-Fi és/vagy a mobil kapcsolatokon.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard egyszerűen és speciálisan blokkolja az internet hozzáférést - nem szükséges root jogosultság hozzá. Az alkalmazásokat és a címeket külön-külön lehet engedélyezni vagy letiltani a Wi-Fi és/vagy a mobil kapcsolatokon.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">A NetGuard használatához Android 5.1 vagy újabb szükséges</string>
+    <string name="app_android">A QuietGuard használatához Android 5.1 vagy újabb szükséges</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Adatvédelmi irányelvek</a></string>
-    <string name="app_first">Nagy figyelmet fordítanak arra, hogy fejlesszék és teszteljék NetGuard-ot, de arra lehetetlen garanciát vállalni, hogy a NetGuard minden eszközön jól fog működni.</string>
+    <string name="app_first">Nagy figyelmet fordítanak arra, hogy fejlesszék és teszteljék QuietGuard-ot, de arra lehetetlen garanciát vállalni, hogy a QuietGuard minden eszközön jól fog működni.</string>
     <string name="app_agree">Elfogadom</string>
     <string name="app_disagree">Nem fogadom el</string>
-    <string name="app_support">A NetGuard-nak szüksége van a segítségére. Koppintson a pro szolgáltatások megvásárlásához, hogy a projekt fennmaradhasson.</string>
+    <string name="app_support">A QuietGuard-nak szüksége van a segítségére. Koppintson a pro szolgáltatások megvásárlásához, hogy a projekt fennmaradhasson.</string>
     <string name="app_qap">
         A Google el akarta távolítani az alkalmazást a Play Áruházból, mert engedélyt kért az összes alkalmazás lekérdezésére.
         Öt fellebbezést és egy jó indoklást arra vonatkozóan, hogy miért van szükség erre az engedélyre, elutasítottak.
@@ -260,14 +260,14 @@
     <string name="setting_section_support">Támogatás</string>
 
     <string name="summary_install">Értesítési sávon megjelenő értesítés az újonnan telepített alkalmazások közvetlen konfigurálásához (pro funkció)</string>
-    <string name="summary_auto">A widgettel történő letiltás után a NetGuard automatikusan újra engedélyezésre kerül a megadott percek után (0 a kikapcsoláshoz)</string>
+    <string name="summary_auto">A widgettel történő letiltás után a QuietGuard automatikusan újra engedélyezésre kerül a megadott percek után (0 a kikapcsoláshoz)</string>
     <string name="summary_delay">A képernyő kikapcsolása után a \'képernyő be\' szabályok aktívak maradnak a megadott percekig (0 a kikapcsoláshoz)</string>
     <string name="summary_update">Naponta kétszer ellenőrzi az új verziókat a GitHubon</string>
 
     <string name="summary_tethering">Android verziótól függően a megosztás működhet vagy sem. A megosztott forgalom nem szűrhető.</string>
     <string name="summary_subnet">Alhálózati útválasztás engedélyezése; lehetővé teheti a Wi-Fi hívást, de hibákat is okozhat és növelheti az akkumulátorhasználatot</string>
     <string name="summary_lan">Alkalmazások kapcsolódásának engedélyezése helyi hálózati címekhez (pl. 10.0.0.0/8, 172.16.0.0/12 és 192.168.0.0/16)</string>
-    <string name="summary_ip6">IPv6 forgalom átirányítása a NetGuard felé a szelektív engedélyezéshez vagy blokkoláshoz</string>
+    <string name="summary_ip6">IPv6 forgalom átirányítása a QuietGuard felé a szelektív engedélyezéshez vagy blokkoláshoz</string>
     <string name="summary_wifi_home">Wi-Fi szabályok alkalmazása csak a kiválasztott hálózatokra (egyéb hálózatokon a mobil szabályok érvényesek)</string>
     <string name="summary_metered">Mobil hálózati szabályok alkalmazása a mért (fizetős, megosztott) Wi-Fi hálózatokra</string>
     <string name="summary_metered_2g">Wi-Fi hálózati szabályok alkalmazása 2G adatkapcsolatokra</string>
@@ -275,7 +275,7 @@
     <string name="summary_metered_4g">Wi-Fi hálózati szabályok alkalmazása LTE adatkapcsolatokra</string>
     <string name="summary_national_roaming">Ne alkalmazza a roaming szabályokat, ha a SIM és a mobilhálózat országa megegyezik</string>
     <string name="summary_eu_roaming">Ne alkalmazza a roaming szabályokat EU-n belüli hálózatok esetén (roaming mint otthon)</string>
-    <string name="summary_call">A NetGuard letiltása telefonhívás közben az IP/Wi-Fi hívási problémák elkerülése érdekében.</string>
+    <string name="summary_call">A QuietGuard letiltása telefonhívás közben az IP/Wi-Fi hívási problémák elkerülése érdekében.</string>
 
     <string name="summary_system">Szabályok meghatározása rendszeralkalmazásokhoz (szakértőknek)</string>
     <string name="summary_log_app">Alkalmazások internet-hozzáférési kísérleteinek naplózása. Növelheti az akkumulátorhasználatot.</string>
@@ -287,7 +287,7 @@
     <string name="summary_rcode">Az alapértelmezett érték 3 (NXDOMAIN), ami azt jelenti: \'nem létező domain\'.</string>
     <string name="summary_validate">Domain név az internetkapcsolat érvényesítéséhez a 443-as (https) porton.</string>
     <string name="summary_socks5_enabled">Csak a TCP forgalom kerül továbbításra a proxy szerverre</string>
-    <string name="summary_watchdog">Rendszeres ellenőrzés, hogy a NetGuard fut-e (0 a kikapcsoláshoz). Növelheti az akkumulátorhasználatot.</string>
+    <string name="summary_watchdog">Rendszeres ellenőrzés, hogy a QuietGuard fut-e (0 a kikapcsoláshoz). Növelheti az akkumulátorhasználatot.</string>
 
     <string name="summary_stats">Hálózati sebesség grafikon megjelenítése az értesítésben</string>
 
@@ -298,9 +298,9 @@
     <string name="msg_packages">%1$d engedélyezve, %2$d blokkolva</string>
     <string name="msg_hosts">%1$d engedélyezve, %2$d blokkolva, %3$d host</string>
     <string name="msg_waiting">Várakozás eseményre</string>
-    <string name="msg_disabled">A NetGuard le van tiltva, használja a fenti kapcsolót az engedélyezéshez</string>
+    <string name="msg_disabled">A QuietGuard le van tiltva, használja a fenti kapcsolót az engedélyezéshez</string>
     <string name="msg_notifications">Koppintson az értesítési engedélyek megadásához (hozzáférési kísérletekhez, hibaüzenetekhez stb.)</string>
-    <string name="msg_revoked">A NetGuard le lett tiltva, valószínűleg egy másik VPN alkalmazás miatt</string>
+    <string name="msg_revoked">A QuietGuard le lett tiltva, valószínűleg egy másik VPN alkalmazás miatt</string>
     <string name="msg_installed">\'%1$s\' telepítve</string>
     <string name="msg_installed_n">Telepítve lett</string>
     <string name="msg_malware">Lehetséges rosszindulatú szoftver: \'%1$s\'</string>
@@ -309,13 +309,13 @@
     <string name="msg_completed">Művelet befejezve</string>
     <string name="msg_invalid">Kérjük, ellenőrizze az értékeket, és próbálja újra.</string>
     <string name="msg_export_failed">Exportálás sikertelen: %1$s</string>
-    <string name="msg_vpn">A NetGuard helyi VPN-t használ a forgalom szűréséhez.
+    <string name="msg_vpn">A QuietGuard helyi VPN-t használ a forgalom szűréséhez.
 Ezért kérjük, engedélyezze a VPN kapcsolatot a következő ablakban.
 A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
-    <string name="msg_autostart">A NetGuard nem tudott automatikusan elindulni. Ez valószínűleg egy Android hiba miatt van.</string>
+    <string name="msg_autostart">A QuietGuard nem tudott automatikusan elindulni. Ez valószínűleg egy Android hiba miatt van.</string>
     <string name="msg_error">Váratlan hiba történt: \'%s\'</string>
     <string name="msg_start_failed">Az Android megtagadta a VPN szolgáltatás indítását. Ez valószínűleg egy Android hiba miatt van.</string>
-    <string name="msg_try">NetGuard kipróbálása</string>
+    <string name="msg_try">QuietGuard kipróbálása</string>
     <string name="msg_terms">A támogatással elfogadja a <a href="http://www.netguard.me/#terms">felhasználási feltételeket</a></string>
     <string name="msg_dimming">Ha nem tudja megnyomni az OK gombot, valószínűleg egy képernyőszűrő alkalmazás akadályozza.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/nap</string>
@@ -325,11 +325,11 @@ A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">A megfelelő működéshez az Android akkumulátor-optimalizálást ki kell kapcsolni a NetGuard számára.
-\n\nA következő ablakban válassza felül az \"Összes alkalmazás\" lehetőséget, koppintson a NetGuardra, és válassza a \"Ne optimalizálja\" opciót.</string>
-    <string name="msg_datasaving">A megfelelő működéshez az Android adatforgalom-csökkentő opcióit ki kell kapcsolni a NetGuard számára.
+    <string name="msg_doze">A megfelelő működéshez az Android akkumulátor-optimalizálást ki kell kapcsolni a QuietGuard számára.
+\n\nA következő ablakban válassza felül az \"Összes alkalmazás\" lehetőséget, koppintson a QuietGuardra, és válassza a \"Ne optimalizálja\" opciót.</string>
+    <string name="msg_datasaving">A megfelelő működéshez az Android adatforgalom-csökkentő opcióit ki kell kapcsolni a QuietGuard számára.
 \n\nA következő ablakban engedélyezze a \"Háttéradatok\" és a \"Korlátlan adathasználat\" opciókat.</string>
-    <string name="msg_filter">A szűrés miatt az Android a NetGuardnak tulajdonítja az adat- és energiafogyasztást az eredeti alkalmazások helyett.</string>
+    <string name="msg_filter">A szűrés miatt az Android a QuietGuardnak tulajdonítja az adat- és energiafogyasztást az eredeti alkalmazások helyett.</string>
     <string name="msg_filter4">Az Android 4-hez szükséges a szűrés engedélyezése</string>
     <string name="msg_log_disabled">A forgalom naplózása le van tiltva. Használja a fenti kapcsolót az engedélyezéshez. Növelheti az akkumulátorhasználatot.</string>
     <string name="msg_clear_rules">Ez visszaállítja a szabályokat és feltételeket az alapértelmezett értékekre</string>
@@ -342,20 +342,20 @@ A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
     <string name="msg_stop_forward">Továbbítás leállítása erről: %1$s port %2$d?</string>
     <string name="msg_metered">A hálózat mért (korlátos)</string>
     <string name="msg_inactive">Nincs aktív internetkapcsolat</string>
-    <string name="msg_queue">A NetGuard elfoglalt</string>
+    <string name="msg_queue">A QuietGuard elfoglalt</string>
     <string name="msg_update">Frissítés érhető el, koppintson a letöltéshez</string>
     <string name="msg_usage">Az alkalmazás melletti ikonokra koppintva engedélyezheti (zöld) vagy tilthatja le (piros) a Wi-Fi vagy mobil internet-hozzáférést</string>
-    <string name="msg_fairemail">Ha az adatvédelem miatt telepítette a NetGuardot, érdekelheti a <a href="https://email.faircode.eu/">FairEmail</a> is, egy nyílt forráskódú, adatvédelem-barát e-mail alkalmazás.</string>
+    <string name="msg_fairemail">Ha az adatvédelem miatt telepítette a QuietGuardot, érdekelheti a <a href="https://email.faircode.eu/">FairEmail</a> is, egy nyílt forráskódú, adatvédelem-barát e-mail alkalmazás.</string>
     <string name="msg_whitelist">Az internet-hozzáférés alapértelmezés szerint engedélyezve van (fekete lista mód), ez a beállításokban módosítható</string>
     <string name="msg_push">A push üzeneteket többnyire a Play-szolgáltatások kezelik, amelynek alapértelmezés szerint van internet-hozzáférése</string>
     <string name="msg_system">A rendszeralkalmazások kezelése a beállításokban engedélyezhető</string>
     <string name="msg_issue">Kérjük, írja le a problémát és annak időpontját:</string>
     <string name="msg_vpn_cancelled">VPN kapcsolat megszakítva. Van másik VPN beállítva állandó VPN-ként?</string>
-    <string name="msg_on">Ha a NetGuard aktív állapotban kapcsolja ki a készüléket, a NetGuard automatikusan elindul a bekapcsoláskor</string>
+    <string name="msg_on">Ha a QuietGuard aktív állapotban kapcsolja ki a készüléket, a QuietGuard automatikusan elindul a bekapcsoláskor</string>
     <string name="msg_unavailable">Ez a funkció nem érhető el ezen az Android verzión</string>
     <string name="msg_always_on">Egy másik VPN van beállítva állandó VPN-nek</string>
-    <string name="msg_always_on_lockdown">Kapcsolja ki a \"VPN nélküli kapcsolatok blokkolása\" opciót az Android VPN beállításokban a NetGuard szűrés használatához</string>
-    <string name="msg_private_dns">Kapcsolja ki a \"Privát DNS\"-t az Android hálózati beállításokban a NetGuard szűrés használatához</string>
+    <string name="msg_always_on_lockdown">Kapcsolja ki a \"VPN nélküli kapcsolatok blokkolása\" opciót az Android VPN beállításokban a QuietGuard szűrés használatához</string>
+    <string name="msg_private_dns">Kapcsolja ki a \"Privát DNS\"-t az Android hálózati beállításokban a QuietGuard szűrés használatához</string>
 
     <string name="title_lockdown_enabled">A forgalom lezárva</string>
     <string name="title_unmetered_allowed">Méretlen forgalom engedélyezve</string>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard zagotavlja preprost in napreden način za blokiranje interneta - koren ni potreben. Aplikacije in naslovi so lahko posamično dovoljeni ali blokirani pri dostopanju do vašega Wi-Fi in/ali mobilne povezave.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard zagotavlja preprost in napreden način za blokiranje interneta - koren ni potreben. Aplikacije in naslovi so lahko posamično dovoljeni ali blokirani pri dostopanju do vašega Wi-Fi in/ali mobilne povezave.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard zahteva Android 5.1 ali novejši</string>
+    <string name="app_android">QuietGuard zahteva Android 5.1 ali novejši</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Politika zasebnosti</a></string>
-    <string name="app_first">Pri razvoju in testiranju NetGuarda je bila posvečena velika pozornost, vendar ni mogoče zagotoviti, da bo NetGuard pravilno deloval na vsaki napravi.</string>
+    <string name="app_first">Pri razvoju in testiranju QuietGuarda je bila posvečena velika pozornost, vendar ni mogoče zagotoviti, da bo QuietGuard pravilno deloval na vsaki napravi.</string>
     <string name="app_agree">Strinjam se</string>
     <string name="app_disagree">Ne strinjam se</string>
-    <string name="app_support">NetGuard potrebuje vašo pomoč. Tapnite za nakup pro funkcij, da projekt še naprej deluje.</string>
+    <string name="app_support">QuietGuard potrebuje vašo pomoč. Tapnite za nakup pro funkcij, da projekt še naprej deluje.</string>
     <string name="app_qap">
         Google je nameraval aplikacijo odstraniti iz trgovine Play, ker je zahtevala dovoljenje za poizvedovanje po vseh aplikacijah.
         Pet pritožb in predložitev dobre utemeljitve, zakaj je to dovoljenje potrebno, je bilo zavrnjenih.
@@ -179,7 +179,7 @@
     <string name="setting_update_checking">Preverjanje...</string>
     <string name="setting_update_result_available">Posodobitev na voljo: %1$s</string>
     <string name="setting_update_result_available_unknown">Posodobitev na voljo</string>
-    <string name="setting_update_result_up_to_date">NetGuard je posodobljen.</string>
+    <string name="setting_update_result_up_to_date">QuietGuard je posodobljen.</string>
     <string name="setting_update_result_failed">Preverjanje posodobitev ni uspelo.</string>
     <string name="setting_update_result_unavailable">Preverjanje posodobitev ni na voljo za to različico.</string>
 
@@ -265,14 +265,14 @@
     <string name="setting_section_support">Podpora</string>
 
     <string name="summary_install">Pokaži obvestila o novo nameščenih aplikacijah in njihovih konfiguracijah (pro funkcija)</string>
-    <string name="summary_auto">Ko onemogočite uporabo widgeta, samodejno ponovno vklopi NetGuard po izbranem številu minut (vnesite 0 za onemogočitev te možnosti)</string>
+    <string name="summary_auto">Ko onemogočite uporabo widgeta, samodejno ponovno vklopi QuietGuard po izbranem številu minut (vnesite 0 za onemogočitev te možnosti)</string>
     <string name="summary_delay">Po izklopu zaslona pustite pravila za vklopljen zaslon aktivna določeno število minut (vnesite 0 za onemogočitev te možnosti)</string>
     <string name="summary_update">Poišči nove izdaje na GitHub dvakrat dnevno</string>
 
     <string name="summary_tethering">Odvisno od različice Androida bo vezanje delovalo ali pa tudi ne. Vezanje prometa ni mogoče filtrirati.</string>
     <string name="summary_subnet">Omogoči podmrežno usmerjanje; lahko omogoči Wi-Fi klicanje ampak lahko sproži hrošče v Androidu in poveča uporabo porabe baterije</string>
     <string name="summary_lan">Dovoli aplikacijam povezavo z naslovi lokalnih omrežji kot so 10.0.0.0/8, 172.16.0.0/12 in 192.168.0.0/16</string>
-    <string name="summary_ip6">Usmeri IP različice 6 promet NetGuardu tako da je lahko selektivno dovoljen ali blokiran</string>
+    <string name="summary_ip6">Usmeri IP različice 6 promet QuietGuardu tako da je lahko selektivno dovoljen ali blokiran</string>
     <string name="summary_wifi_home">Uporabi Wi-Fi pravila samo za izbrano omrežje (uporabi pravila mobilnega omrežja za ostala Wi-Fi omrežja)</string>
     <string name="summary_metered">Pravila mobilnega omrežja veljajo tudi za (plačana, pripeta) Wi-Fi omrežja</string>
     <string name="summary_metered_2g">Wi-Fi omrežna pravila veljajo za 2G podatkovne povezave</string>
@@ -280,7 +280,7 @@
     <string name="summary_metered_4g">Wi-Fi omrežna pravila veljajo za LTE podatkovne povezave</string>
     <string name="summary_national_roaming">Pravila gostovanja ne veljajo ko so SIM in mobilna omrežja države enaka</string>
     <string name="summary_eu_roaming">Pravila gostovanja ne veljajo kadar so SIM in mobilna omrežja v EU (gostuj kot doma)</string>
-    <string name="summary_call">Onemogoči NetGuard ob dohodnih klicih ali odhodnih klicih. To se lahko uporablja za odpravljanje težav z IP/Wi-Fi klici.</string>
+    <string name="summary_call">Onemogoči QuietGuard ob dohodnih klicih ali odhodnih klicih. To se lahko uporablja za odpravljanje težav z IP/Wi-Fi klici.</string>
 
     <string name="summary_system">Definirana pravila za sistem aplikacije (za strokovnjake)</string>
     <string name="summary_log_app">Beleži poskuse dostopa do interneta za aplikacije. To lahko povzroči dodatno porabo baterije.</string>
@@ -292,7 +292,7 @@
     <string name="summary_rcode">Privzeta vrednost je 3 (NXDOMAIN), kar pomeni \"neobstoječa domena\".</string>
     <string name="summary_validate">Domensko ime, uporabljeno za preverjanje internetne povezave na vratih 443 (https).</string>
     <string name="summary_socks5_enabled">Na proxy strežnik bo poslan samo promet TCP</string>
-    <string name="summary_watchdog">Občasno preveri, ali NetGuard še vedno deluje (vnesite nič, da onemogočite to možnost). To lahko povzroči dodatno porabo baterije.</string>
+    <string name="summary_watchdog">Občasno preveri, ali QuietGuard še vedno deluje (vnesite nič, da onemogočite to možnost). To lahko povzroči dodatno porabo baterije.</string>
 
     <string name="summary_stats">Pokaži graf hitrosti omrežja v obvestilu v vrstici stanja</string>
 
@@ -303,9 +303,9 @@
     <string name="msg_packages">%1$d dovoljenih, %2$d blokiranih</string>
     <string name="msg_hosts">%1$d dovoljenih, %2$d blokiranih, %3$d gostiteljev</string>
     <string name="msg_waiting">Čakanje na dogodek</string>
-    <string name="msg_disabled">NetGuard je onemogočen, uporabite stikalo zgoraj, da ga omogočite</string>
+    <string name="msg_disabled">QuietGuard je onemogočen, uporabite stikalo zgoraj, da ga omogočite</string>
     <string name="msg_notifications">Tapnite, da udelite dovoljenja za obvestila (za obvestila o poskusih dostopa, sporočila o napakah itd.)</string>
-    <string name="msg_revoked">NetGuard je bil onemogočen, verjetno z uporabo druge VPN aplikacije</string>
+    <string name="msg_revoked">QuietGuard je bil onemogočen, verjetno z uporabo druge VPN aplikacije</string>
     <string name="msg_installed">\'%1$s\' je nameščen</string>
     <string name="msg_installed_n">Je bila nameščena</string>
     <string name="msg_malware">Možna zlonamerna programska oprema: \'%1$s\'</string>
@@ -314,11 +314,11 @@
     <string name="msg_completed">Dejanje se je dokončalo</string>
     <string name="msg_invalid">Preverite vrednosti in poskusite znova.</string>
     <string name="msg_export_failed">Izvoz ni uspel: %1$s</string>
-    <string name="msg_vpn">NetGuard uporablja lokalni VPN za filtriranje internetnega prometa. Iz tega razloga v naslednjem pogovornem oknu dovolite povezavo VPN. Vaš internetni promet se ne pošilja na oddaljeni strežnik VPN.</string>
-    <string name="msg_autostart">NetGuard se ni mogel samodejno zagnati. To je verjetno posledica hrošča v vaši različici Androida.</string>
+    <string name="msg_vpn">QuietGuard uporablja lokalni VPN za filtriranje internetnega prometa. Iz tega razloga v naslednjem pogovornem oknu dovolite povezavo VPN. Vaš internetni promet se ne pošilja na oddaljeni strežnik VPN.</string>
+    <string name="msg_autostart">QuietGuard se ni mogel samodejno zagnati. To je verjetno posledica hrošča v vaši različici Androida.</string>
     <string name="msg_error">Prišlo je do nepričakovane napake: \'%s\'</string>
     <string name="msg_start_failed">Android trenutno zavrača zagon storitve VPN. To je verjetno posledica hrošča v vaši različici Androida.</string>
-    <string name="msg_try">Poskusi NetGuard</string>
+    <string name="msg_try">Poskusi QuietGuard</string>
     <string name="msg_terms">Z doniranjem se strinjate s <a href="http://www.netguard.me/#terms">pogoji in določili</a></string>
     <string name="msg_dimming">Če v naslednjem pogovornem oknu ne morete pritisniti OK, po vsej verjetnosti druga aplikacija upravlja zaslon naprave (zatemnitev zaslona).</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/dan</string>
@@ -328,9 +328,9 @@
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Za dosledne rezultate bi morale biti optimizacije baterije Android onemogočene za NetGuard.\n\nV naslednjem pogovornem oknu na vrhu izberite \"Vse aplikacije\", na seznamu tapnite NetGuard ter izberite in potrdite \"Ne optimiziraj\".</string>
-    <string name="msg_datasaving">Za dosledne rezultate bi morale biti možnosti varčevanja s podatki Android onemogočene za NetGuard\n\nV naslednjem pogovornem oknu omogočite možnosti \"Podatki v ozadju\" in \"Neomejena uporaba podatkov\"</string>
-    <string name="msg_filter">Uporaba filtriranja bo povzročila, da bo Android porabo podatkov in energije pripisal NetGuardu - Android predvideva, da podatke in energijo uporablja NetGuard, ne pa izvirne aplikacije</string>
+    <string name="msg_doze">Za dosledne rezultate bi morale biti optimizacije baterije Android onemogočene za QuietGuard.\n\nV naslednjem pogovornem oknu na vrhu izberite \"Vse aplikacije\", na seznamu tapnite QuietGuard ter izberite in potrdite \"Ne optimiziraj\".</string>
+    <string name="msg_datasaving">Za dosledne rezultate bi morale biti možnosti varčevanja s podatki Android onemogočene za QuietGuard\n\nV naslednjem pogovornem oknu omogočite možnosti \"Podatki v ozadju\" in \"Neomejena uporaba podatkov\"</string>
+    <string name="msg_filter">Uporaba filtriranja bo povzročila, da bo Android porabo podatkov in energije pripisal QuietGuardu - Android predvideva, da podatke in energijo uporablja QuietGuard, ne pa izvirne aplikacije</string>
     <string name="msg_filter4">Android 4 zahteva omogočeno filtriranje</string>
     <string name="msg_log_disabled">Beleženje prometa je onemogočeno, uporabite stikalo zgoraj, da ga omogočite. Beleženje prometa lahko povzroči dodatno porabo baterije.</string>
     <string name="msg_clear_rules">To bo ponastavilo pravila in pogoje na njihove privzete vrednosti</string>
@@ -343,20 +343,20 @@
     <string name="msg_stop_forward">Ustavi posredovanje %1$s vrat %2$d?</string>
     <string name="msg_metered">Omrežje je omejeno</string>
     <string name="msg_inactive">Ni aktivne internetne povezave</string>
-    <string name="msg_queue">NetGuard je zaseden</string>
+    <string name="msg_queue">QuietGuard je zaseden</string>
     <string name="msg_update">Na voljo je posodobitev, tapnite za prenos</string>
     <string name="msg_usage">Dovolitev (zelenkasto) ali zavrnitev (rdečkasto) dostopa do Wi-Fi ali mobilnega interneta lahko nastavite s tapkanjem na ikone ob aplikaciji</string>
-    <string name="msg_fairemail">Če ste NetGuard namestili za zaščito svoje zasebnosti, vas morda zanima tudi <a href="https://email.faircode.eu/">FairEmail</a>, odprtokodna e-poštna aplikacija, prijazna do zasebnosti</string>
+    <string name="msg_fairemail">Če ste QuietGuard namestili za zaščito svoje zasebnosti, vas morda zanima tudi <a href="https://email.faircode.eu/">FairEmail</a>, odprtokodna e-poštna aplikacija, prijazna do zasebnosti</string>
     <string name="msg_whitelist">Dostop do interneta je privzeto dovoljen (način črnega seznama), to lahko spremenite v nastavitvah</string>
     <string name="msg_push">Dohodna (push) sporočila večinoma obravnava sistemska komponenta storitev Play, ki ima privzeto dovoljen dostop do interneta</string>
     <string name="msg_system">Upravljanje vseh (sistemskih) aplikacij lahko omogočite v nastavitvah</string>
     <string name="msg_issue">Opišite težavo in navedite čas nastanka težave:</string>
     <string name="msg_vpn_cancelled">Povezava VPN je bila preklicana\nSte drug VPN konfigurirali kot vedno vklopljen VPN?</string>
-    <string name="msg_on">Izklop naprave z omogočenim NetGuardom bo ob vklopu naprave samodejno zagnal NetGuard</string>
+    <string name="msg_on">Izklop naprave z omogočenim QuietGuardom bo ob vklopu naprave samodejno zagnal QuietGuard</string>
     <string name="msg_unavailable">Ta funkcija ni na voljo v tej različici Androida</string>
     <string name="msg_always_on">Drug VPN je nastavljen kot vedno vklopljen VPN</string>
-    <string name="msg_always_on_lockdown">V nastavitvah Android VPN izklopite »Blokiraj povezave brez VPN«, če želite uporabljati NetGuard v načinu filtriranja</string>
-    <string name="msg_private_dns">V nastavitvah omrežja Android izklopite »Zasebni DNS«, če želite uporabljati NetGuard v načinu filtriranja</string>
+    <string name="msg_always_on_lockdown">V nastavitvah Android VPN izklopite »Blokiraj povezave brez VPN«, če želite uporabljati QuietGuard v načinu filtriranja</string>
+    <string name="msg_private_dns">V nastavitvah omrežja Android izklopite »Zasebni DNS«, če želite uporabljati QuietGuard v načinu filtriranja</string>
 
     <string name="title_lockdown_enabled">Promet je zaklenjen</string>
     <string name="title_unmetered_allowed">Nemerjen promet je dovoljen</string>

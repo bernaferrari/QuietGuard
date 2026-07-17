@@ -13,9 +13,13 @@ plugins {
     alias(libs.plugins.androidx.room)
 }
 
+compose.resources {
+    packageOfResClass = "com.bernaferrari.quietguard.generated.resources"
+}
+
 kotlin {
     androidLibrary {
-        namespace = "com.bernaferari.renetguard.shared"
+        namespace = "com.bernaferrari.quietguard.shared"
         compileSdk = 37
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)

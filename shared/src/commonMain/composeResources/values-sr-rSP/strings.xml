@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
     <string name="app_description">Нетгард нуди једноставне и напредне начине блокирања приступа интернету без потребе за рутовањем. Апликацијама и адресама се може појединачно дозволити или одбити приступ бежичној и/или мобилној вези.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">Нетгард захтева Андроид 5.1 или новији</string>

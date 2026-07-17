@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/androidx.appfunctions"
-    appfn:description="Provides tools for controlling the NetGuard on-device firewall, lockdown mode, per-app internet access, and recent blocked connections.
+    appfn:description="Provides tools for controlling the QuietGuard on-device firewall, lockdown mode, per-app internet access, and recent blocked connections.
 Operational Patterns:
   - Use 'searchApps' to resolve an app package name before calling 'getAppFirewallStatus' or 'setAppInternetBlocked'.
   - Use 'getFirewallStatus' before changing global firewall or lockdown state.

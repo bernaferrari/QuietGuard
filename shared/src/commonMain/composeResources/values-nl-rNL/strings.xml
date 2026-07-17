@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">NetGuard Next</string>
-    <string name="app_description">NetGuard Next biedt eenvoudige en geavanceerde manieren om internettoegang te blokkeren – zonder root vereist. Apps en adressen kunnen individueel toegang tot je wifi- en/of mobiele verbinding worden verleend of geweigerd.</string>
+    <string name="app_name" translatable="false">QuietGuard</string>
+    <string name="app_description">QuietGuard biedt eenvoudige en geavanceerde manieren om internettoegang te blokkeren – zonder root vereist. Apps en adressen kunnen individueel toegang tot je wifi- en/of mobiele verbinding worden verleend of geweigerd.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
-    <string name="app_android">NetGuard vereist Android 5.1 of hoger</string>
+    <string name="app_android">QuietGuard vereist Android 5.1 of hoger</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privacybeleid</a></string>
-    <string name="app_first">Er is veel zorg besteed aan het ontwikkelen en testen van NetGuard, maar het is onmogelijk om te garanderen dat NetGuard op elk apparaat correct zal werken.</string>
+    <string name="app_first">Er is veel zorg besteed aan het ontwikkelen en testen van QuietGuard, maar het is onmogelijk om te garanderen dat QuietGuard op elk apparaat correct zal werken.</string>
     <string name="app_agree">Akkoord</string>
     <string name="app_disagree">Niet akkoord</string>
-    <string name="app_support">NetGuard heeft je hulp nodig. Tik om pro-functies te kopen en het project voort te zetten.</string>
+    <string name="app_support">QuietGuard heeft je hulp nodig. Tik om pro-functies te kopen en het project voort te zetten.</string>
     <string name="app_qap">
         Google wilde de app uit de Play Store verwijderen omdat deze toestemming vroeg om alle apps op te vragen.
         Vijf beroepen en een goede onderbouwing waarom deze toestemming nodig is, zijn afgewezen.
@@ -265,14 +265,14 @@
     <string name="setting_section_support">Ondersteuning</string>
 
     <string name="summary_install">Toon statusbalkmelding om nieuw geïnstalleerde apps direct te configureren (pro-functie)</string>
-    <string name="summary_auto">Na uitschakelen via widget, NetGuard automatisch weer inschakelen na de gekozen tijd (nul om uit te schakelen)</string>
+    <string name="summary_auto">Na uitschakelen via widget, QuietGuard automatisch weer inschakelen na de gekozen tijd (nul om uit te schakelen)</string>
     <string name="summary_delay">Na uitschakelen scherm, \'scherm aan\'-regels actief houden voor de gekozen tijd (nul om uit te schakelen)</string>
     <string name="summary_update">Controleer twee keer per dag op GitHub op nieuwe versies</string>
 
     <string name="summary_tethering">Afhankelijk van Android-versie kan tethering werken of niet. Getetherd verkeer kan niet worden gefilterd.</string>
     <string name="summary_subnet">Subnet routing inschakelen; kan wifi-bellen mogelijk maken, maar kan ook bugs in Android triggeren en batterijverbruik verhogen</string>
     <string name="summary_lan">Sta apps toe verbinding te maken met lokale netwerkadressen (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)</string>
-    <string name="summary_ip6">IPv6-verkeer naar NetGuard leiden zodat het selectief toegestaan of geblokkeerd kan worden</string>
+    <string name="summary_ip6">IPv6-verkeer naar QuietGuard leiden zodat het selectief toegestaan of geblokkeerd kan worden</string>
     <string name="summary_wifi_home">Pas wifi-regels alleen toe voor geselecteerde netwerken (mobiele regels voor andere wifi-netwerken)</string>
     <string name="summary_metered">Pas mobiele regels toe op gemeten wifi-netwerken (betaald, tethering)</string>
     <string name="summary_metered_2g">Pas wifi-regels toe voor 2G-dataverbindingen</string>
@@ -280,7 +280,7 @@
     <string name="summary_metered_4g">Pas wifi-regels toe voor LTE-dataverbindingen</string>
     <string name="summary_national_roaming">Pas geen roaming-regels toe als SIM en netwerk uit hetzelfde land komen</string>
     <string name="summary_eu_roaming">Pas geen roaming-regels toe binnen de EU (roam like at home)</string>
-    <string name="summary_call">NetGuard uitschakelen tijdens bellen. Kan problemen met IP/wifi-bellen omzeilen.</string>
+    <string name="summary_call">QuietGuard uitschakelen tijdens bellen. Kan problemen met IP/wifi-bellen omzeilen.</string>
 
     <string name="summary_system">Definieer regels voor systeem-apps (for experts)</string>
     <string name="summary_log_app">Log pogingen van apps om verbinding met internet te maken. Kan batterijverbruik verhogen.</string>
@@ -292,7 +292,7 @@
     <string name="summary_rcode">Standaardwaarde is 3 (NXDOMAIN), wat \'niet-bestaand domein\' betekent.</string>
     <string name="summary_validate">Domeinnaam gebruikt om internetverbinding op poort 443 (https) te valideren.</string>
     <string name="summary_socks5_enabled">Alleen TCP-verkeer wordt naar de proxyserver gestuurd</string>
-    <string name="summary_watchdog">Periodiek controleren of NetGuard nog draait (nul om uit te schakelen). Kan batterijverbruik verhogen.</string>
+    <string name="summary_watchdog">Periodiek controleren of QuietGuard nog draait (nul om uit te schakelen). Kan batterijverbruik verhogen.</string>
 
     <string name="summary_stats">Toon netwerksnelheidsgrafiek in statusbalkmelding</string>
 
@@ -303,9 +303,9 @@
     <string name="msg_packages">%1$d toegestaan, %2$d geblokkeerd</string>
     <string name="msg_hosts">%1$d toegestaan, %2$d geblokkeerd, %3$d hosts</string>
     <string name="msg_waiting">Wachten op gebeurtenis</string>
-    <string name="msg_disabled">NetGuard is uitgeschakeld, gebruik de schakelaar om in te schakelen</string>
+    <string name="msg_disabled">QuietGuard is uitgeschakeld, gebruik de schakelaar om in te schakelen</string>
     <string name="msg_notifications">Tik om meldingen toe te staan (voor toegangspogingen, fouten, etc.)</string>
-    <string name="msg_revoked">NetGuard is uitgeschakeld, waarschijnlijk door een andere VPN-app</string>
+    <string name="msg_revoked">QuietGuard is uitgeschakeld, waarschijnlijk door een andere VPN-app</string>
     <string name="msg_installed">\'%1$s\' geïnstalleerd</string>
     <string name="msg_installed_n">Is geïnstalleerd</string>
     <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
@@ -314,13 +314,13 @@
     <string name="msg_completed">Actie voltooid</string>
     <string name="msg_invalid">Controleer de waarden en probeer opnieuw.</string>
     <string name="msg_export_failed">Exporteren mislukt: %1$s</string>
-    <string name="msg_vpn">NetGuard gebruikt een lokale VPN om verkeer te filteren.
+    <string name="msg_vpn">QuietGuard gebruikt een lokale VPN om verkeer te filteren.
 Sta daarom een VPN-verbinding toe in het volgende dialoogvenster.
 Je verkeer wordt niet naar een externe server gestuurd.</string>
-    <string name="msg_autostart">NetGuard kon niet automatisch starten. Waarschijnlijk door een bug in je Android-versie.</string>
+    <string name="msg_autostart">QuietGuard kon niet automatisch starten. Waarschijnlijk door een bug in je Android-versie.</string>
     <string name="msg_error">Onverwachte fout: \'%s\'</string>
     <string name="msg_start_failed">Android weigerde de VPN-dienst te starten. Waarschijnlijk door een bug in je Android-versie.</string>
-    <string name="msg_try">NetGuard proberen</string>
+    <string name="msg_try">QuietGuard proberen</string>
     <string name="msg_terms">Door te doneren ga je akkoord met de <a href="http://www.netguard.me/#terms">voorwaarden</a></string>
     <string name="msg_dimming">Als je niet op OK kunt drukken, wordt het scherm waarschijnlijk gemanipuleerd door een andere app.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/dag</string>
@@ -330,11 +330,11 @@ Je verkeer wordt niet naar een externe server gestuurd.</string>
     <string name="msg_mb">%1$7.3f&#9650; %2$7.3f&#9660; MB</string>
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
-    <string name="msg_doze">Voor consistente resultaten moet batterijoptimalisatie voor NetGuard worden uitgeschakeld.
-\n\nIn het volgende scherm: kies \"Alle apps\", tik op NetGuard en kies \"Niet optimaliseren\".</string>
-    <string name="msg_datasaving">Voor consistente resultaten moeten Android-databesparingsopties worden uitgeschakeld voor NetGuard.
+    <string name="msg_doze">Voor consistente resultaten moet batterijoptimalisatie voor QuietGuard worden uitgeschakeld.
+\n\nIn het volgende scherm: kies \"Alle apps\", tik op QuietGuard en kies \"Niet optimaliseren\".</string>
+    <string name="msg_datasaving">Voor consistente resultaten moeten Android-databesparingsopties worden uitgeschakeld voor QuietGuard.
 \n\nIn het volgende scherm: activeer \"Achtergrondgegevens\" en \"Onbeperkt datagebruik\".</string>
-    <string name="msg_filter">Filtering zorgt ervoor dat Android data- en batterijverbruik aan NetGuard toeschrijft in plaats van de originele apps.</string>
+    <string name="msg_filter">Filtering zorgt ervoor dat Android data- en batterijverbruik aan QuietGuard toeschrijft in plaats van de originele apps.</string>
     <string name="msg_filter4">Android 4 vereist dat filtering is ingeschakeld</string>
     <string name="msg_log_disabled">Loggen is uitgeschakeld. Gebruik de schakelaar boven om in te schakelen. Kan batterijverbruik verhogen.</string>
     <string name="msg_clear_rules">Dit herstelt de regels en voorwaarden naar de standaardwaarden</string>
@@ -347,20 +347,20 @@ Je verkeer wordt niet naar een externe server gestuurd.</string>
     <string name="msg_stop_forward">Stop doorsturen van %1$s poort %2$d?</string>
     <string name="msg_metered">Netwerk is gemeten</string>
     <string name="msg_inactive">Geen actieve internetverbinding</string>
-    <string name="msg_queue">NetGuard is bezig</string>
+    <string name="msg_queue">QuietGuard is bezig</string>
     <string name="msg_update">Update beschikbaar, tik om te downloaden</string>
     <string name="msg_usage">Je kunt wifi of mobiel toestaan (groen) of weigeren (rood) via de icoontjes naast een app</string>
-    <string name="msg_fairemail">Als je NetGuard voor privacy gebruikt, is <a href="https://email.faircode.eu/">FairEmail</a> (open source en privacyvriendelijk) misschien ook wat voor jou.</string>
+    <string name="msg_fairemail">Als je QuietGuard voor privacy gebruikt, is <a href="https://email.faircode.eu/">FairEmail</a> (open source en privacyvriendelijk) misschien ook wat voor jou.</string>
     <string name="msg_whitelist">Toegang is standaard toegestaan (blacklist-modus), dit kan in de instellingen worden gewijzigd</string>
     <string name="msg_push">Pushberichten worden meestal door Play-services afgehandeld, die standaard toegang hebben</string>
     <string name="msg_system">Beheer van alle (systeem)apps kan worden ingeschakeld in de instellingen</string>
     <string name="msg_issue">Beschrijf het probleem en het tijdstip waarop het gebeurde:</string>
     <string name="msg_vpn_cancelled">VPN-verbinding geannuleerd. Is er een andere VPN als \'Altijd aan\' geconfigureerd?</string>
-    <string name="msg_on">Als NetGuard aan staat bij uitschakelen, zal het automatisch starten bij inschakelen</string>
+    <string name="msg_on">Als QuietGuard aan staat bij uitschakelen, zal het automatisch starten bij inschakelen</string>
     <string name="msg_unavailable">Functie niet beschikbaar op deze Android-versie</string>
     <string name="msg_always_on">Een andere VPN staat op \'Altijd aan\'</string>
-    <string name="msg_always_on_lockdown">Zet \"Verbindingen zonder VPN blokkeren\" uit in de VPN-instellingen om NetGuard te gebruiken</string>
-    <string name="msg_private_dns">Zet \"Privé-DNS\" uit in de netwerkinstellingen om NetGuard te gebruiken</string>
+    <string name="msg_always_on_lockdown">Zet \"Verbindingen zonder VPN blokkeren\" uit in de VPN-instellingen om QuietGuard te gebruiken</string>
+    <string name="msg_private_dns">Zet \"Privé-DNS\" uit in de netwerkinstellingen om QuietGuard te gebruiken</string>
 
     <string name="title_lockdown_enabled">Verkeer is vergrendeld</string>
     <string name="title_unmetered_allowed">Ongemeten verkeer toegestaan</string>

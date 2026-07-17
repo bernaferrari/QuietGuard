@@ -29,12 +29,12 @@
     </queries-->
 
     <permission
-        android:name="com.bernaferari.renetguard.permission.ADMIN"
+        android:name="com.bernaferrari.quietguard.permission.ADMIN"
         android:description="@string/app_description"
         android:label="@string/app_name"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.bernaferari.renetguard.permission.ADMIN" />
+    <uses-permission android:name="com.bernaferrari.quietguard.permission.ADMIN" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -169,8 +169,8 @@
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.bernaferari.renetguard.START_PORT_FORWARD" />
-                <action android:name="com.bernaferari.renetguard.STOP_PORT_FORWARD" />
+                <action android:name="com.bernaferrari.quietguard.START_PORT_FORWARD" />
+                <action android:name="com.bernaferrari.quietguard.STOP_PORT_FORWARD" />
             </intent-filter>
         </activity>
 
@@ -182,7 +182,7 @@
             android:permission="android.permission.BIND_VPN_SERVICE">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="NetGuard is a firewall app using the Android VPN service to filter traffic on the device. A foreground service is required to process internet traffic in real-time to be able to allow and block traffic as configured by the user of the app. There is no other way to do this, and other foreground service types are either too limited or not appropriate." />
+                android:value="QuietGuard is a firewall app using the Android VPN service to filter traffic on the device. A foreground service is required to process internet traffic in real-time to be able to allow and block traffic as configured by the user of the app. There is no other way to do this, and other foreground service types are either too limited or not appropriate." />
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
@@ -195,9 +195,9 @@
             android:label="@string/app_name">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="NetGuard is a firewall app using the Android VPN service to filter traffic on the device. A foreground service is required to process internet traffic in real-time to be able to allow and block traffic as configured by the user of the app. There is no other way to do this, and other foreground service types are either too limited or not appropriate." />
+                android:value="QuietGuard is a firewall app using the Android VPN service to filter traffic on the device. A foreground service is required to process internet traffic in real-time to be able to allow and block traffic as configured by the user of the app. There is no other way to do this, and other foreground service types are either too limited or not appropriate." />
             <intent-filter>
-                <action android:name="com.bernaferari.renetguard.DOWNLOAD_HOSTS_FILE" />
+                <action android:name="com.bernaferrari.quietguard.DOWNLOAD_HOSTS_FILE" />
             </intent-filter>
         </service>
 
@@ -292,12 +292,12 @@
             android:name=".WidgetAdmin"
             android:exported="true"
             android:label="@string/app_name"
-            android:permission="com.bernaferari.renetguard.permission.ADMIN">
+            android:permission="com.bernaferrari.quietguard.permission.ADMIN">
             <intent-filter>
-                <action android:name="com.bernaferari.renetguard.ON" />
-                <action android:name="com.bernaferari.renetguard.OFF" />
-                <action android:name="com.bernaferari.renetguard.LOCKDOWN_ON" />
-                <action android:name="com.bernaferari.renetguard.LOCKDOWN_OFF" />
+                <action android:name="com.bernaferrari.quietguard.ON" />
+                <action android:name="com.bernaferrari.quietguard.OFF" />
+                <action android:name="com.bernaferrari.quietguard.LOCKDOWN_ON" />
+                <action android:name="com.bernaferrari.quietguard.LOCKDOWN_OFF" />
             </intent-filter>
         </receiver>
     </application>

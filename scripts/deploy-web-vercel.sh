@@ -53,7 +53,9 @@ export VERCEL_PROJECT_ID="${VERCEL_PROJECT_ID:?Set VERCEL_PROJECT_ID}"
 
 cd "$DIST"
 
-args=(deploy --yes --token "$VERCEL_TOKEN")
+# Bundle the output before uploading. Kotlin/Wasm distributions contain enough
+# generated files to exhaust Vercel's per-file upload quota without an archive.
+args=(deploy --yes --archive=tgz --token "$VERCEL_TOKEN")
 if [[ "$PREVIEW" == false ]]; then
   args+=(--prod)
 fi

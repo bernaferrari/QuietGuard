@@ -1,5 +1,10 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import org.jetbrains.compose.resources.stringResource
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.action_back
@@ -46,28 +51,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Launch
-import androidx.compose.material.icons.automirrored.filled.Undo
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.MobileOff
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material.icons.filled.SignalCellularAlt
-import androidx.compose.material.icons.filled.Smartphone
-import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
@@ -86,7 +71,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -106,6 +90,8 @@ import com.bernaferrari.quietguard.ui.components.FirewallTile
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppRuleDetailScreen(
@@ -179,7 +165,7 @@ fun AppRuleDetailScreen(
                     {
                         IconButton(onClick = onBack) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                icon = MaterialSymbols.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(Res.string.action_back),
                             )
                         }
@@ -211,8 +197,8 @@ fun AppRuleDetailScreen(
                 horizontalArrangement = Arrangement.spacedBy(spacing.extraSmall),
             ) {
                 FirewallTile(
-                    allowedIcon = Icons.Default.Wifi,
-                    blockedIcon = Icons.Default.WifiOff,
+                    allowedIcon = MaterialSymbols.Filled.Wifi,
+                    blockedIcon = MaterialSymbols.Filled.WifiOff,
                     label = stringResource(Res.string.title_wifi),
                     allowed = !rule.wifi_blocked,
                     onToggle = {
@@ -229,8 +215,8 @@ fun AppRuleDetailScreen(
                     modifier = Modifier.weight(1f),
                 )
                 FirewallTile(
-                    allowedIcon = Icons.Default.PhoneAndroid,
-                    blockedIcon = Icons.Default.MobileOff,
+                    allowedIcon = MaterialSymbols.Filled.PhoneAndroid,
+                    blockedIcon = MaterialSymbols.Filled.MobileOff,
                     label = stringResource(Res.string.title_mobile),
                     allowed = !rule.other_blocked,
                     onToggle = {
@@ -254,7 +240,7 @@ fun AppRuleDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
             ) {
                 ToggleRow(
-                    icon = Icons.Default.Wifi,
+                    icon = MaterialSymbols.Filled.Wifi,
                     label = stringResource(Res.string.title_screen_wifi),
                     checked = rule.screen_wifi,
                     defaultChecked = rule.screen_wifi_default,
@@ -269,7 +255,7 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ToggleRow(
-                    icon = Icons.Default.Smartphone,
+                    icon = MaterialSymbols.Filled.Smartphone,
                     label = stringResource(Res.string.title_screen_other),
                     checked = rule.screen_other,
                     defaultChecked = rule.screen_other_default,
@@ -283,7 +269,7 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ToggleRow(
-                    icon = Icons.Default.SignalCellularAlt,
+                    icon = MaterialSymbols.Filled.SignalCellularAlt,
                     label = stringResource(Res.string.title_roaming),
                     checked = rule.roaming,
                     defaultChecked = rule.roaming_default,
@@ -295,7 +281,7 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ToggleRow(
-                    icon = Icons.Default.Lock,
+                    icon = MaterialSymbols.Filled.Lock,
                     label = stringResource(Res.string.title_lockdown),
                     checked = rule.lockdown,
                     defaultChecked = false,
@@ -307,7 +293,7 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ToggleRow(
-                    icon = Icons.Default.Shield,
+                    icon = MaterialSymbols.Filled.Shield,
                     label = stringResource(Res.string.title_apply),
                     checked = rule.apply,
                     defaultChecked = true,
@@ -319,7 +305,7 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ToggleRow(
-                    icon = Icons.Default.Notifications,
+                    icon = MaterialSymbols.Filled.Notifications,
                     label = stringResource(Res.string.title_notify),
                     checked = rule.notify,
                     defaultChecked = true,
@@ -342,7 +328,7 @@ fun AppRuleDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
             ) {
                 ActionRow(
-                    icon = Icons.Default.Info,
+                    icon = MaterialSymbols.Filled.Info,
                     label = stringResource(Res.string.menu_settings),
                     isFirst = true,
                     onClick = {
@@ -350,13 +336,13 @@ fun AppRuleDetailScreen(
                     },
                 )
                 ActionRow(
-                    icon = Icons.AutoMirrored.Filled.Launch,
+                    icon = MaterialSymbols.AutoMirrored.Filled.Launch,
                     label = stringResource(Res.string.menu_launch),
                     enabled = canLaunch,
                     onClick = { rule.packageName?.let { launchApp(it) } },
                 )
                 ActionRow(
-                    icon = Icons.Default.Delete,
+                    icon = MaterialSymbols.Filled.Delete,
                     label = stringResource(Res.string.action_clear_access_history),
                     isLast = true,
                     tint = MaterialTheme.colorScheme.error,
@@ -373,7 +359,7 @@ fun AppRuleDetailScreen(
 
 @Composable
 private fun ToggleRow(
-    icon: ImageVector,
+    icon: MaterialIcon,
     label: String,
     checked: Boolean,
     defaultChecked: Boolean,
@@ -422,7 +408,7 @@ private fun ToggleRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Icon(
-                    imageVector = icon,
+                    icon = icon,
                     contentDescription = null,
                     tint = iconTint,
                     modifier = Modifier.size(22.dp),
@@ -491,7 +477,7 @@ private fun ToggleRow(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Undo,
+                            icon = MaterialSymbols.AutoMirrored.Filled.Undo,
                             contentDescription = stringResource(
                                 Res.string.setting_reset_to_value,
                                 stringResource(
@@ -513,7 +499,7 @@ private fun ToggleRow(
 
 @Composable
 private fun ActionRow(
-    icon: ImageVector,
+    icon: MaterialIcon,
     label: String,
     onClick: () -> Unit,
     isFirst: Boolean = false,
@@ -543,7 +529,7 @@ private fun ActionRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Icon(
-                imageVector = icon,
+                icon = icon,
                 contentDescription = null,
                 tint = if (enabled) tint
                 else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
@@ -557,7 +543,7 @@ private fun ActionRow(
                 modifier = Modifier.weight(1f),
             )
             Icon(
-                imageVector = Icons.Default.ChevronRight,
+                icon = MaterialSymbols.Filled.ChevronRight,
                 contentDescription = null,
                 tint = if (enabled) MaterialTheme.colorScheme.onSurfaceVariant
                 else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
@@ -648,8 +634,8 @@ private fun AccessLogSection(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Icon(
-                        imageVector = if (isAllowed) Icons.Outlined.CheckCircle
-                        else Icons.Default.Block,
+                        icon = if (isAllowed) MaterialSymbols.Outlined.CheckCircle
+                        else MaterialSymbols.Filled.Block,
                         contentDescription = null,
                         modifier = Modifier.size(16.dp),
                         tint = if (entry.allowed >= 0) statusColor

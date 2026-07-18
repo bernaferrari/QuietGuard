@@ -11,19 +11,6 @@ import android.graphics.Bitmap.Config
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CloudUpload
-import androidx.compose.material.icons.filled.Equalizer
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.FileDownload
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.HourglassEmpty
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.SignalCellular4Bar
-import androidx.compose.material.icons.filled.SignalCellularOff
-import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType
@@ -38,6 +25,8 @@ import androidx.compose.ui.graphics.vector.VectorGroup
 import androidx.compose.ui.graphics.vector.VectorNode
 import androidx.compose.ui.graphics.vector.VectorPath
 import androidx.compose.ui.graphics.vector.toPath
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -91,27 +80,27 @@ object Notifications {
 private const val NOTIFICATION_ICON_SIZE_DP = 24
 private val materialNotificationIconCache = ConcurrentHashMap<String, Bitmap>()
 
-fun Context.securityIcon(): Icon = notificationIcon(Icons.Default.Security)
+fun Context.securityIcon(): Icon = notificationIcon(MaterialSymbols.Filled.Security)
 
-fun Context.filterListIcon(): Icon = notificationIcon(Icons.Default.FilterList)
+fun Context.filterListIcon(): Icon = notificationIcon(MaterialSymbols.Filled.FilterList)
 
-fun Context.equalizerIcon(): Icon = notificationIcon(Icons.Default.Equalizer)
+fun Context.equalizerIcon(): Icon = notificationIcon(MaterialSymbols.Filled.Equalizer)
 
-fun Context.hourglassIcon(): Icon = notificationIcon(Icons.Default.HourglassEmpty)
+fun Context.hourglassIcon(): Icon = notificationIcon(MaterialSymbols.Filled.HourglassEmpty)
 
-fun Context.cloudUploadIcon(): Icon = notificationIcon(Icons.Default.CloudUpload)
+fun Context.cloudUploadIcon(): Icon = notificationIcon(MaterialSymbols.Filled.CloudUpload)
 
-fun Context.fileDownloadIcon(): Icon = notificationIcon(Icons.Default.FileDownload)
+fun Context.fileDownloadIcon(): Icon = notificationIcon(MaterialSymbols.Filled.FileDownload)
 
-fun Context.lockIcon(): Icon = notificationIcon(Icons.Default.Lock)
+fun Context.lockIcon(): Icon = notificationIcon(MaterialSymbols.Filled.Lock)
 
-fun Context.errorIcon(): Icon = notificationIcon(Icons.Default.Error)
+fun Context.errorIcon(): Icon = notificationIcon(MaterialSymbols.Filled.Error)
 
 fun Context.wifiIcon(enabled: Boolean): Icon =
-    notificationIcon(if (enabled) Icons.Default.Wifi else Icons.Default.WifiOff)
+    notificationIcon(if (enabled) MaterialSymbols.Filled.Wifi else MaterialSymbols.Filled.WifiOff)
 
 fun Context.cellularIcon(enabled: Boolean): Icon =
-    notificationIcon(if (enabled) Icons.Default.SignalCellular4Bar else Icons.Default.SignalCellularOff)
+    notificationIcon(if (enabled) MaterialSymbols.Filled.SignalCellular4Bar else MaterialSymbols.Filled.SignalCellularOff)
 
 private fun Context.notificationIcon(imageVector: ImageVector): Icon {
     val key = imageVector.name + "@" + resources.displayMetrics.densityDpi
@@ -120,6 +109,8 @@ private fun Context.notificationIcon(imageVector: ImageVector): Icon {
     }
     return Icon.createWithBitmap(bitmap)
 }
+
+private fun Context.notificationIcon(icon: MaterialIcon): Icon = notificationIcon(icon.imageVector)
 
 private fun Context.materialBitmap(imageVector: ImageVector): Bitmap {
     val size = max(1, (NOTIFICATION_ICON_SIZE_DP * resources.displayMetrics.density).roundToInt())

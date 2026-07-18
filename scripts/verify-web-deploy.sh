@@ -3,6 +3,7 @@
 # Usage:
 #   ./scripts/verify-web-deploy.sh          # build + verify artifacts
 #   ./scripts/verify-web-deploy.sh --ci     # same, non-interactive (for CI/act)
+#   ./scripts/verify-web-deploy.sh --web-only # skip unrelated Android project configuration
 #   ./scripts/verify-web-deploy.sh --serve  # build + verify, then preview locally (COOP/COEP)
 set -euo pipefail
 
@@ -10,13 +11,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST="$ROOT/webApp/build/dist/wasmJs/productionExecutable"
 CI_MODE=false
 SERVE_MODE=false
+WEB_ONLY=false
 
 for arg in "$@"; do
   case "$arg" in
     --ci) CI_MODE=true ;;
+    --web-only) WEB_ONLY=true ;;
     --serve) SERVE_MODE=true ;;
     -h|--help)
-      echo "Usage: $0 [--ci] [--serve]"
+      echo "Usage: $0 [--ci] [--web-only] [--serve]"
       exit 0
       ;;
     *)
@@ -29,7 +32,11 @@ done
 cd "$ROOT"
 
 echo "==> Building wasm web distribution (includes Room + sqlite-web worker)"
-./gradlew :webApp:wasmJsBrowserDistribution --no-daemon
+gradle_args=(:webApp:wasmJsBrowserDistribution --no-daemon)
+if [[ "$WEB_ONLY" == true ]]; then
+  gradle_args+=(--configure-on-demand)
+fi
+./gradlew "${gradle_args[@]}"
 
 echo "==> Staging Vercel config in dist"
 cp "$ROOT/webApp/vercel.json" "$DIST/vercel.json"

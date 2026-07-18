@@ -471,4 +471,17 @@ Your internet traffic is not being sent to a remote VPN server.</string>
 
     <string name="label_dns_summary">%1$d entries • %2$d expired</string>
 
+    <string name="settings_quick_controls">Quick controls</string>
+    <string name="settings_more">More settings</string>
+    <string name="settings_firewall_summary">Roaming, metered networks, screen behavior, and local access</string>
+    <string name="settings_advanced_summary">Filtering, lockdown, logging, malware blocking, and statistics</string>
+    <string name="settings_hosts_summary">Block domains with local or downloaded hosts files</string>
+    <string name="settings_network_summary">DNS, proxy, VPN addresses, and port forwarding</string>
+    <string name="settings_background_summary">Watchdog behavior and automatic update checks</string>
+    <string name="settings_diagnostics_summary">Packet capture and troubleshooting options</string>
+    <string name="settings_about_summary">Project information and source code</string>
+    <string name="about_tagline">Private by design. Open source by choice.</string>
+    <string name="about_source_title">Source code</string>
+    <string name="about_source_summary">Explore the project, report issues, or contribute on GitHub</string>
+
 </resources>

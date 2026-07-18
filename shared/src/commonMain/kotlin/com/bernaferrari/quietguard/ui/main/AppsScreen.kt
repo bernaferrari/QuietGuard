@@ -1,5 +1,10 @@
 package com.bernaferrari.quietguard.ui.main
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import org.jetbrains.compose.resources.stringResource
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.action_clear_search
@@ -50,25 +55,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MobileOff
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.outlined.Block
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -96,7 +85,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -122,6 +110,8 @@ import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import kotlinx.coroutines.flow.distinctUntilChanged
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMaterial3ExpressiveApi::class,
@@ -272,7 +262,7 @@ fun AppsScreen(
                         },
                     ) {
                         Icon(
-                            imageVector = if (isSearchOpen) Icons.Default.Close else Icons.Default.Search,
+                            icon = if (isSearchOpen) MaterialSymbols.Filled.Close else MaterialSymbols.Filled.Search,
                             contentDescription = if (isSearchOpen) {
                                 stringResource(Res.string.action_clear_search)
                             } else {
@@ -285,7 +275,7 @@ fun AppsScreen(
                         enabled = !isRefreshing,
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Refresh,
+                            icon = MaterialSymbols.Filled.Refresh,
                             contentDescription = stringResource(Res.string.menu_refresh),
                             modifier = Modifier.graphicsLayer {
                                 rotationZ = if (isRefreshing) rotation else 0f
@@ -309,20 +299,20 @@ fun AppsScreen(
                 FilterOption(
                     AppsFilter.All,
                     stringResource(Res.string.ui_filter_all),
-                    selectedIcon = Icons.Filled.Public,
-                    unselectedIcon = Icons.Outlined.Public,
+                    selectedIcon = MaterialSymbols.Filled.Public,
+                    unselectedIcon = MaterialSymbols.Outlined.Public,
                 ),
                 FilterOption(
                     AppsFilter.Blocked,
                     stringResource(Res.string.menu_traffic_blocked),
-                    selectedIcon = Icons.Filled.Block,
-                    unselectedIcon = Icons.Outlined.Block,
+                    selectedIcon = MaterialSymbols.Filled.Block,
+                    unselectedIcon = MaterialSymbols.Outlined.Block,
                 ),
                 FilterOption(
                     AppsFilter.Allowed,
                     stringResource(Res.string.menu_traffic_allowed),
-                    selectedIcon = Icons.Filled.CheckCircle,
-                    unselectedIcon = Icons.Outlined.CheckCircle,
+                    selectedIcon = MaterialSymbols.Filled.CheckCircle,
+                    unselectedIcon = MaterialSymbols.Outlined.CheckCircle,
                 ),
             )
             Row(
@@ -357,7 +347,7 @@ fun AppsScreen(
                             .semantics { role = Role.RadioButton },
                     ) {
                         Icon(
-                            imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
+                            icon = if (isSelected) item.selectedIcon else item.unselectedIcon,
                             contentDescription = null,
                         )
                         Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
@@ -379,7 +369,7 @@ fun AppsScreen(
                     placeholder = { Text(stringResource(Res.string.menu_search)) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Search,
+                            icon = MaterialSymbols.Filled.Search,
                             contentDescription = null,
                         )
                     },
@@ -387,7 +377,7 @@ fun AppsScreen(
                         if (searchQuery.isNotEmpty()) {
                             IconButton(onClick = { searchQuery = "" }) {
                                 Icon(
-                                    imageVector = Icons.Default.Close,
+                                    icon = MaterialSymbols.Filled.Close,
                                     contentDescription = stringResource(Res.string.action_clear_search),
                                 )
                             }
@@ -405,7 +395,7 @@ fun AppsScreen(
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_loading),
                         message = stringResource(Res.string.home_apps_hint),
-                        icon = Icons.Default.Apps,
+                        icon = MaterialSymbols.Filled.Apps,
                         isLoading = true,
                     )
                 }
@@ -414,7 +404,7 @@ fun AppsScreen(
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_empty_apps_title),
                         message = stringResource(Res.string.ui_empty_apps_body),
-                        icon = Icons.Default.Apps,
+                        icon = MaterialSymbols.Filled.Apps,
                         actionLabel = stringResource(Res.string.menu_refresh),
                         onAction = { viewModel.refreshRules() },
                     )
@@ -425,7 +415,7 @@ fun AppsScreen(
                         StatePlaceholder(
                             title = stringResource(Res.string.ui_empty_apps_title),
                             message = stringResource(Res.string.ui_apps_search_empty),
-                            icon = Icons.Default.Search,
+                            icon = MaterialSymbols.Filled.Search,
                             actionLabel = stringResource(Res.string.action_clear_search),
                             onAction = { searchQuery = "" },
                         )
@@ -433,7 +423,7 @@ fun AppsScreen(
                         StatePlaceholder(
                             title = stringResource(Res.string.ui_empty_apps_title),
                             message = stringResource(Res.string.ui_filter_empty),
-                            icon = Icons.Default.Apps,
+                            icon = MaterialSymbols.Filled.Apps,
                             actionLabel = stringResource(Res.string.ui_filter_all),
                             onAction = { filter = AppsFilter.All },
                         )
@@ -522,8 +512,8 @@ enum class AppsFilter {
 private data class FilterOption(
     val option: AppsFilter,
     val label: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val selectedIcon: MaterialIcon,
+    val unselectedIcon: MaterialIcon,
 )
 
 private enum class CardPosition {
@@ -665,15 +655,15 @@ private fun RuleCard(
             ) {
                 NetworkToggleButton(
                     blocked = rule.wifi_blocked,
-                    allowedIcon = Icons.Default.Wifi,
-                    blockedIcon = Icons.Default.WifiOff,
+                    allowedIcon = MaterialSymbols.Filled.Wifi,
+                    blockedIcon = MaterialSymbols.Filled.WifiOff,
                     contentDescription = wifiDescription,
                     onToggle = onToggleWifi,
                 )
                 NetworkToggleButton(
                     blocked = rule.other_blocked,
-                    allowedIcon = Icons.Default.PhoneAndroid,
-                    blockedIcon = Icons.Default.MobileOff,
+                    allowedIcon = MaterialSymbols.Filled.PhoneAndroid,
+                    blockedIcon = MaterialSymbols.Filled.MobileOff,
                     contentDescription = mobileDescription,
                     onToggle = onToggleMobile,
                 )
@@ -685,8 +675,8 @@ private fun RuleCard(
 @Composable
 private fun NetworkToggleButton(
     blocked: Boolean,
-    allowedIcon: ImageVector,
-    blockedIcon: ImageVector,
+    allowedIcon: MaterialIcon,
+    blockedIcon: MaterialIcon,
     contentDescription: String,
     onToggle: () -> Unit,
 ) {

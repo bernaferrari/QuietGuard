@@ -1,7 +1,9 @@
 package com.bernaferrari.quietguard.ui.screens
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Shield
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
 import androidx.compose.runtime.Composable
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
 import com.bernaferrari.quietguard.platform.openUrl
@@ -20,7 +22,7 @@ fun ProScreen() {
         title = stringResource(Res.string.title_pro),
         message = stringResource(Res.string.ui_empty_pro_body),
         secondaryMessage = stringResource(Res.string.ui_empty_pro_details),
-        icon = Icons.Default.Shield,
+        icon = MaterialSymbols.Filled.Shield,
         actionLabel = stringResource(Res.string.menu_support),
         onAction = { NetGuardPlatform.proFeatures.openProScreen() },
         secondaryActionLabel = stringResource(Res.string.ui_learn_more),

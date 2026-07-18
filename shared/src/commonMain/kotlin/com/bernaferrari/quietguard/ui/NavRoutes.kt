@@ -32,6 +32,22 @@ data object Settings : AppNavKey {
 }
 
 @Serializable
+enum class SettingsSection {
+    Firewall,
+    Advanced,
+    Hosts,
+    Network,
+    Background,
+    Diagnostics,
+    About,
+}
+
+@Serializable
+data class SettingsDetail(val section: SettingsSection) : AppNavKey {
+    override val route = "settings/${section.name.lowercase()}"
+}
+
+@Serializable
 data object Dns : AppNavKey {
     override val route = "dns"
 }
@@ -60,7 +76,11 @@ object NavRoutes {
             Dns.route -> Dns
             Forwarding.route -> Forwarding
             Pro.route -> Pro
-            else -> Home
+            else ->
+                SettingsSection.entries
+                    .firstOrNull { route == "settings/${it.name.lowercase()}" }
+                    ?.let(::SettingsDetail)
+                    ?: Home
         }
 }
 
@@ -73,6 +93,7 @@ val appNavSavedStateConfiguration =
                     subclass(Apps::class, Apps.serializer())
                     subclass(Logs::class, Logs.serializer())
                     subclass(Settings::class, Settings.serializer())
+                    subclass(SettingsDetail::class, SettingsDetail.serializer())
                     subclass(Dns::class, Dns.serializer())
                     subclass(Forwarding::class, Forwarding.serializer())
                     subclass(Pro::class, Pro.serializer())

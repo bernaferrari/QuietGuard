@@ -1,5 +1,10 @@
 package com.bernaferrari.quietguard.ui.main
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -21,11 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -58,6 +59,7 @@ import com.bernaferrari.quietguard.generated.resources.status_enabled
 import com.bernaferrari.quietguard.generated.resources.ui_home_hint
 import org.jetbrains.compose.resources.stringResource
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
 @Composable
 fun HomeScreen(
     viewModel: MainViewModel,
@@ -308,8 +310,8 @@ private fun StatusCard(
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Icon(
-                                    imageVector =
-                                        if (enabled) Icons.Filled.Shield else Icons.Outlined.Shield,
+                                    icon =
+                                        if (enabled) MaterialSymbols.Filled.Shield else MaterialSymbols.Outlined.Shield,
                                     contentDescription = null,
                                     tint = iconTint,
                                     modifier = Modifier

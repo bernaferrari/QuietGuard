@@ -1,8 +1,9 @@
 package com.bernaferrari.quietguard.ui.components
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -14,5 +15,5 @@ expect fun AppIcon(
     size: Dp = 40.dp,
     cornerRadius: Dp = size / 3f,
     contentDescription: String? = null,
-    fallbackIcon: ImageVector? = null,
+    fallbackIcon: MaterialIcon? = null,
 )

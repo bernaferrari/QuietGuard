@@ -19,7 +19,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,12 +28,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 /**
  * A reusable placeholder component for empty, loading, and error states.
  * Features subtle pulse animation during loading for a professional feel.
@@ -43,7 +43,7 @@ import com.bernaferrari.quietguard.ui.theme.spacing
 fun StatePlaceholder(
     title: String,
     message: String,
-    icon: ImageVector,
+    icon: MaterialIcon,
     secondaryMessage: String? = null,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null,
@@ -102,7 +102,7 @@ fun StatePlaceholder(
                         color = MaterialTheme.colorScheme.primaryContainer,
                     ) {
                         Icon(
-                            imageVector = icon,
+                            icon = icon,
                             contentDescription = title,
                             tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.padding(spacing.small),

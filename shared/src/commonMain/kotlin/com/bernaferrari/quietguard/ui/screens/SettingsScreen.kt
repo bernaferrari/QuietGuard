@@ -1,9 +1,15 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import org.jetbrains.compose.resources.stringResource
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.app_description
 import com.bernaferrari.quietguard.generated.resources.app_name
+import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.content_desc_show_info
 import com.bernaferrari.quietguard.generated.resources.menu_about
 import com.bernaferrari.quietguard.generated.resources.menu_ok
@@ -103,6 +109,18 @@ import com.bernaferrari.quietguard.generated.resources.tooltip_pcap
 import com.bernaferrari.quietguard.generated.resources.tooltip_rcode
 import com.bernaferrari.quietguard.generated.resources.tooltip_ttl
 import com.bernaferrari.quietguard.generated.resources.ui_settings_title
+import com.bernaferrari.quietguard.generated.resources.settings_quick_controls
+import com.bernaferrari.quietguard.generated.resources.settings_more
+import com.bernaferrari.quietguard.generated.resources.settings_firewall_summary
+import com.bernaferrari.quietguard.generated.resources.settings_advanced_summary
+import com.bernaferrari.quietguard.generated.resources.settings_hosts_summary
+import com.bernaferrari.quietguard.generated.resources.settings_network_summary
+import com.bernaferrari.quietguard.generated.resources.settings_background_summary
+import com.bernaferrari.quietguard.generated.resources.settings_diagnostics_summary
+import com.bernaferrari.quietguard.generated.resources.settings_about_summary
+import com.bernaferrari.quietguard.generated.resources.about_tagline
+import com.bernaferrari.quietguard.generated.resources.about_source_title
+import com.bernaferrari.quietguard.generated.resources.about_source_summary
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -129,26 +147,6 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Forward
-import androidx.compose.material.icons.filled.BrightnessAuto
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Dns
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.MobileOff
-import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.outlined.BrightnessAuto
-import androidx.compose.material.icons.outlined.DarkMode
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.LightMode
-import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -158,8 +156,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -198,6 +196,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -208,6 +207,7 @@ import com.bernaferrari.quietguard.platform.PlatformContext
 
 import com.bernaferrari.quietguard.platform.showToast
 import com.bernaferrari.quietguard.ui.screens.vm.SettingsViewModel
+import com.bernaferrari.quietguard.ui.SettingsSection
 import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferrari.quietguard.ui.components.ExpandableContent
 import com.bernaferrari.quietguard.ui.components.FirewallTile
@@ -228,11 +228,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 private const val PROJECT_GITHUB_URL = "https://github.com/bernaferrari/QuietGuard"
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SettingsScreen(
+    section: SettingsSection? = null,
+    onBack: () -> Unit = {},
+    onOpenSection: (SettingsSection) -> Unit = {},
     onOpenDns: () -> Unit,
     onOpenForwarding: () -> Unit,
 ) {
@@ -316,20 +321,55 @@ fun SettingsScreen(
         NetGuardPlatform.widgets.updateAll()
     }
 
+    val screenTitle =
+        when (section) {
+            null -> stringResource(Res.string.ui_settings_title)
+            SettingsSection.Firewall -> stringResource(Res.string.setting_section_firewall)
+            SettingsSection.Advanced -> stringResource(Res.string.setting_section_advanced)
+            SettingsSection.Hosts -> stringResource(Res.string.setting_section_hosts)
+            SettingsSection.Network -> stringResource(Res.string.setting_section_network)
+            SettingsSection.Background -> stringResource(Res.string.setting_section_background)
+            SettingsSection.Diagnostics -> stringResource(Res.string.setting_section_diagnostics)
+            SettingsSection.About -> stringResource(Res.string.menu_about)
+        }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(Res.string.ui_settings_title),
-                        fontWeight = FontWeight.Bold,
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
-            )
+            if (section == null) {
+                LargeTopAppBar(
+                    title = {
+                        Text(
+                            text = screenTitle,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
+                )
+            } else {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                icon = MaterialSymbols.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(Res.string.action_back),
+                            )
+                        }
+                    },
+                    title = {
+                        Text(
+                            text = screenTitle,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
+                )
+            }
         },
+        containerColor = MaterialTheme.colorScheme.surface,
     ) { innerPadding ->
         val topPadding = innerPadding.calculateTopPadding()
         Box(
@@ -347,26 +387,27 @@ fun SettingsScreen(
             ) {
 
 
-            // Appearance Section
-            val appearanceTitle = stringResource(Res.string.setting_section_appearance)
-            CollapsibleSettingsSection(title = appearanceTitle, framed = false) {
+            if (section == null) {
+                // Appearance Section
+                val appearanceTitle = stringResource(Res.string.setting_section_appearance)
+                CollapsibleSettingsSection(title = appearanceTitle, framed = false) {
                 val currentTheme = str("theme", "teal")
                 val dynamicSwatchColor = Teal500
                 val modeOptions = listOf(
                     Triple(
                         "light",
                         stringResource(Res.string.setting_appearance_light),
-                        Pair(Icons.Default.LightMode, Icons.Outlined.LightMode),
+                        Pair(MaterialSymbols.Filled.LightMode, MaterialSymbols.Outlined.LightMode),
                     ),
                     Triple(
                         "dark",
                         stringResource(Res.string.setting_appearance_dark),
-                        Pair(Icons.Default.DarkMode, Icons.Outlined.DarkMode),
+                        Pair(MaterialSymbols.Filled.DarkMode, MaterialSymbols.Outlined.DarkMode),
                     ),
                     Triple(
                         "auto",
                         stringResource(Res.string.setting_appearance_auto),
-                        Pair(Icons.Default.BrightnessAuto, Icons.Outlined.BrightnessAuto),
+                        Pair(MaterialSymbols.Filled.BrightnessAuto, MaterialSymbols.Outlined.BrightnessAuto),
                     ),
                 )
 
@@ -404,7 +445,7 @@ fun SettingsScreen(
                             modifier = Modifier.semantics { role = Role.RadioButton },
                         ) {
                             Icon(
-                                imageVector = if (selected) Icons.Default.Check else icons.second,
+                                icon = if (selected) MaterialSymbols.Filled.Check else icons.second,
                                 contentDescription = null,
                                 modifier = Modifier.size(ToggleButtonDefaults.IconSize),
                             )
@@ -467,19 +508,42 @@ fun SettingsScreen(
                     }
                 }
 
+                }
+
+                QuickFirewallControls(
+                    wifiAllowed = !bool("whitelist_wifi", true),
+                    mobileAllowed = !bool("whitelist_other", true),
+                    onToggleWifi = {
+                        updateFlag(
+                            "whitelist_wifi",
+                            !bool("whitelist_wifi", true),
+                            reload = true,
+                        )
+                    },
+                    onToggleMobile = {
+                        updateFlag(
+                            "whitelist_other",
+                            !bool("whitelist_other", true),
+                            reload = true,
+                        )
+                    },
+                )
+
+                SettingsDirectory(onOpenSection = onOpenSection)
             }
 
             // Firewall Section
-            val firewallTitle = stringResource(Res.string.setting_section_firewall)
-            CollapsibleSettingsSection(title = firewallTitle) {
+            if (section == SettingsSection.Firewall) {
+                val firewallTitle = stringResource(Res.string.setting_section_firewall)
+                CollapsibleSettingsSection(title = firewallTitle) {
                 // Main allow/block toggles — uses the same FirewallTile as per-app detail
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(spacing.extraSmall),
                 ) {
                     FirewallTile(
-                        allowedIcon = Icons.Default.Wifi,
-                        blockedIcon = Icons.Default.WifiOff,
+                        allowedIcon = MaterialSymbols.Filled.Wifi,
+                        blockedIcon = MaterialSymbols.Filled.WifiOff,
                         label = stringResource(Res.string.title_wifi),
                         allowed = !bool("whitelist_wifi", true),
                         onToggle = {
@@ -498,8 +562,8 @@ fun SettingsScreen(
                         modifier = Modifier.weight(1f),
                     )
                     FirewallTile(
-                        allowedIcon = Icons.Default.PhoneAndroid,
-                        blockedIcon = Icons.Default.MobileOff,
+                        allowedIcon = MaterialSymbols.Filled.PhoneAndroid,
+                        blockedIcon = MaterialSymbols.Filled.MobileOff,
                         label = stringResource(Res.string.title_mobile),
                         allowed = !bool("whitelist_other", true),
                         onToggle = {
@@ -663,11 +727,13 @@ fun SettingsScreen(
                     isLast = true,
                     onReset = { resetFlag("disable_on_call", reload = true) },
                 ) { updateFlag("disable_on_call", it, reload = true) }
+                }
             }
 
             // Advanced Section
-            val advancedTitle = stringResource(Res.string.setting_section_advanced)
-            CollapsibleSettingsSection(title = advancedTitle) {
+            if (section == SettingsSection.Advanced) {
+                val advancedTitle = stringResource(Res.string.setting_section_advanced)
+                CollapsibleSettingsSection(title = advancedTitle) {
                 SettingToggleRow(
                     title = stringResource(Res.string.setting_system),
                     checked = bool("manage_system", false),
@@ -803,11 +869,13 @@ fun SettingsScreen(
                     onReset = { preferencesRepository.removeString("stats_samples") },
                     onValueChange = { preferencesRepository.putString("stats_samples", it) },
                 )
+                }
             }
 
             // Hosts Section
-            val hostsTitle = stringResource(Res.string.setting_section_hosts)
-            CollapsibleSettingsSection(title = hostsTitle) {
+            if (section == SettingsSection.Hosts) {
+                val hostsTitle = stringResource(Res.string.setting_section_hosts)
+                CollapsibleSettingsSection(title = hostsTitle) {
                 SettingToggleRow(
                     title = stringResource(Res.string.setting_use_hosts),
                     checked = bool("use_hosts", false),
@@ -831,7 +899,7 @@ fun SettingsScreen(
                     FilledTonalButton(
                         onClick = { showHostsMenu = true },
                     ) {
-                        Icon(imageVector = Icons.Default.Download, contentDescription = null)
+                        Icon(icon = MaterialSymbols.Filled.Download, contentDescription = null)
                         Spacer(modifier = Modifier.width(spacing.small))
                         Text(text = stringResource(Res.string.setting_section_hosts))
                     }
@@ -843,7 +911,7 @@ fun SettingsScreen(
                             text = { Text(stringResource(Res.string.setting_hosts)) },
                             leadingIcon = {
                                 Icon(
-                                    Icons.Default.Download,
+                                    MaterialSymbols.Filled.Download,
                                     contentDescription = null
                                 )
                             },
@@ -856,7 +924,7 @@ fun SettingsScreen(
                             text = { Text(stringResource(Res.string.setting_hosts_append)) },
                             leadingIcon = {
                                 Icon(
-                                    Icons.Default.Download,
+                                    MaterialSymbols.Filled.Download,
                                     contentDescription = null
                                 )
                             },
@@ -869,7 +937,7 @@ fun SettingsScreen(
                             text = { Text(stringResource(Res.string.setting_hosts_download)) },
                             leadingIcon = {
                                 Icon(
-                                    Icons.Default.Download,
+                                    MaterialSymbols.Filled.Download,
                                     contentDescription = null
                                 )
                             },
@@ -880,14 +948,16 @@ fun SettingsScreen(
                         )
                     }
                 }
+                }
             }
 
             // Network Section (DNS + Proxy + VPN)
-            val networkSectionTitle = stringResource(Res.string.setting_section_network)
-            val dnsTitle = stringResource(Res.string.setting_section_dns)
-            val proxyTitle = stringResource(Res.string.setting_section_proxy)
-            val vpnTitle = stringResource(Res.string.setting_section_vpn)
-            CollapsibleSettingsSection(title = networkSectionTitle) {
+            if (section == SettingsSection.Network) {
+                val networkSectionTitle = stringResource(Res.string.setting_section_network)
+                val dnsTitle = stringResource(Res.string.setting_section_dns)
+                val proxyTitle = stringResource(Res.string.setting_section_proxy)
+                val vpnTitle = stringResource(Res.string.setting_section_vpn)
+                CollapsibleSettingsSection(title = networkSectionTitle) {
                 Text(
                     text = dnsTitle,
                     style = MaterialTheme.typography.titleSmall,
@@ -923,7 +993,7 @@ fun SettingsScreen(
                     onClick = onOpenDns,
                     modifier = Modifier.align(Alignment.Start),
                 ) {
-                    Icon(imageVector = Icons.Default.Dns, contentDescription = null)
+                    Icon(icon = MaterialSymbols.Filled.Dns, contentDescription = null)
                     Spacer(modifier = Modifier.width(spacing.small))
                     Text(text = stringResource(Res.string.setting_show_resolved))
                 }
@@ -1016,21 +1086,23 @@ fun SettingsScreen(
                     onReset = { preferencesRepository.removeString("dns2") },
                     onValueChange = { preferencesRepository.putString("dns2", it) },
                 )
-            }
+                }
 
-            // Forwarding Section
-            val forwardingTitle = stringResource(Res.string.setting_forwarding)
-            CollapsibleSettingsSection(title = forwardingTitle) {
-                FilledTonalButton(onClick = onOpenForwarding) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.Forward, contentDescription = null)
-                    Spacer(modifier = Modifier.width(spacing.small))
-                    Text(text = stringResource(Res.string.setting_forwarding))
+                // Forwarding Section
+                val forwardingTitle = stringResource(Res.string.setting_forwarding)
+                CollapsibleSettingsSection(title = forwardingTitle) {
+                    FilledTonalButton(onClick = onOpenForwarding) {
+                        Icon(icon = MaterialSymbols.AutoMirrored.Filled.Forward, contentDescription = null)
+                        Spacer(modifier = Modifier.width(spacing.small))
+                        Text(text = stringResource(Res.string.setting_forwarding))
+                    }
                 }
             }
 
             // Background Section
-            val backgroundTitle = stringResource(Res.string.setting_section_background)
-            CollapsibleSettingsSection(title = backgroundTitle) {
+            if (section == SettingsSection.Background) {
+                val backgroundTitle = stringResource(Res.string.setting_section_background)
+                CollapsibleSettingsSection(title = backgroundTitle) {
                 SettingTextRow(
                     title = stringResource(Res.string.setting_watchdog, str("watchdog", "0")),
                     value = str("watchdog", "0"),
@@ -1074,7 +1146,7 @@ fun SettingsScreen(
                             Spacer(modifier = Modifier.width(spacing.small))
                             Text(text = stringResource(Res.string.setting_update_checking))
                         } else {
-                            Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+                            Icon(icon = MaterialSymbols.Filled.Refresh, contentDescription = null)
                             Spacer(modifier = Modifier.width(spacing.small))
                             Text(text = stringResource(Res.string.setting_update_now))
                         }
@@ -1104,11 +1176,13 @@ fun SettingsScreen(
                         )
                     }
                 }
+                }
             }
 
             // Diagnostics Section
-            val diagnosticsTitle = stringResource(Res.string.setting_section_diagnostics)
-            CollapsibleSettingsSection(title = diagnosticsTitle) {
+            if (section == SettingsSection.Diagnostics) {
+                val diagnosticsTitle = stringResource(Res.string.setting_section_diagnostics)
+                CollapsibleSettingsSection(title = diagnosticsTitle) {
                 SettingToggleRowWithTooltip(
                     title = stringResource(Res.string.setting_pcap),
                     tooltip = stringResource(Res.string.tooltip_pcap),
@@ -1140,53 +1214,11 @@ fun SettingsScreen(
                     onReset = { preferencesRepository.removeString("pcap_file_size") },
                     onValueChange = { preferencesRepository.putString("pcap_file_size", it) },
                 )
+                }
             }
 
-            CollapsibleSettingsSection(title = stringResource(Res.string.menu_about)) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(spacing.medium),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-                    ) {
-                        Surface(
-                            shape = MaterialTheme.shapes.large,
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.size(56.dp),
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Shield,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(34.dp),
-                                )
-                            }
-                        }
-                        Text(
-                            text = stringResource(Res.string.app_name),
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                    }
-                    Text(
-                        text = stringResource(Res.string.app_description),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    FilledTonalButton(
-                        onClick = { uriHandler.openUri(PROJECT_GITHUB_URL) },
-                        modifier = Modifier.align(Alignment.Start),
-                    ) {
-                        Icon(imageVector = Icons.Default.Code, contentDescription = null)
-                        Spacer(modifier = Modifier.width(spacing.small))
-                        Text(text = "GitHub")
-                    }
-                }
+            if (section == SettingsSection.About) {
+                AboutContent(onOpenGitHub = { uriHandler.openUri(PROJECT_GITHUB_URL) })
             }
             }
         }
@@ -1202,6 +1234,231 @@ fun SettingsScreen(
             },
             title = { Text(text = stringResource(Res.string.setting_hosts)) },
             text = { Text(text = stringResource(Res.string.summary_block_domains)) },
+        )
+    }
+}
+
+@Composable
+private fun QuickFirewallControls(
+    wifiAllowed: Boolean,
+    mobileAllowed: Boolean,
+    onToggleWifi: () -> Unit,
+    onToggleMobile: () -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+    Column(verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+        Text(
+            text = stringResource(Res.string.settings_quick_controls),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = spacing.extraSmall),
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            FirewallTile(
+                allowedIcon = MaterialSymbols.Filled.Wifi,
+                blockedIcon = MaterialSymbols.Filled.WifiOff,
+                label = stringResource(Res.string.title_wifi),
+                allowed = wifiAllowed,
+                onToggle = onToggleWifi,
+                shape = MaterialTheme.shapes.extraLarge,
+                modifier = Modifier.weight(1f),
+            )
+            FirewallTile(
+                allowedIcon = MaterialSymbols.Filled.PhoneAndroid,
+                blockedIcon = MaterialSymbols.Filled.MobileOff,
+                label = stringResource(Res.string.title_mobile),
+                allowed = mobileAllowed,
+                onToggle = onToggleMobile,
+                shape = MaterialTheme.shapes.extraLarge,
+                modifier = Modifier.weight(1f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
+    val spacing = MaterialTheme.spacing
+    Column(verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+        Text(
+            text = stringResource(Res.string.settings_more),
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = spacing.extraSmall),
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_firewall),
+            subtitle = stringResource(Res.string.settings_firewall_summary),
+            icon = MaterialSymbols.Outlined.Shield,
+            onClick = { onOpenSection(SettingsSection.Firewall) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_advanced),
+            subtitle = stringResource(Res.string.settings_advanced_summary),
+            icon = MaterialSymbols.Filled.Tune,
+            onClick = { onOpenSection(SettingsSection.Advanced) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_hosts),
+            subtitle = stringResource(Res.string.settings_hosts_summary),
+            icon = MaterialSymbols.Filled.Download,
+            onClick = { onOpenSection(SettingsSection.Hosts) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_network),
+            subtitle = stringResource(Res.string.settings_network_summary),
+            icon = MaterialSymbols.Filled.Public,
+            onClick = { onOpenSection(SettingsSection.Network) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_background),
+            subtitle = stringResource(Res.string.settings_background_summary),
+            icon = MaterialSymbols.Filled.Refresh,
+            onClick = { onOpenSection(SettingsSection.Background) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.setting_section_diagnostics),
+            subtitle = stringResource(Res.string.settings_diagnostics_summary),
+            icon = MaterialSymbols.Outlined.Info,
+            onClick = { onOpenSection(SettingsSection.Diagnostics) },
+        )
+        SettingsDestinationRow(
+            title = stringResource(Res.string.menu_about),
+            subtitle = stringResource(Res.string.settings_about_summary),
+            icon = MaterialSymbols.Filled.Code,
+            onClick = { onOpenSection(SettingsSection.About) },
+        )
+    }
+}
+
+@Composable
+private fun SettingsDestinationRow(
+    title: String,
+    subtitle: String,
+    icon: MaterialIcon,
+    trailingIcon: MaterialIcon = MaterialSymbols.Filled.ChevronRight,
+    onClick: () -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+    Surface(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 80.dp),
+        shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+    ) {
+        Row(
+            modifier = Modifier.padding(
+                start = spacing.medium,
+                top = spacing.medium,
+                end = spacing.small,
+                bottom = spacing.medium,
+            ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+        ) {
+            Surface(
+                modifier = Modifier.size(48.dp),
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(icon = icon, contentDescription = null)
+                }
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Icon(
+                icon = trailingIcon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun AboutContent(onOpenGitHub: () -> Unit) {
+    val spacing = MaterialTheme.spacing
+    Column(verticalArrangement = Arrangement.spacedBy(spacing.large)) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.extraLarge,
+            color = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        ) {
+            Column(
+                modifier = Modifier.padding(
+                    horizontal = spacing.extraLarge,
+                    vertical = spacing.xxLarge,
+                ),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(spacing.medium),
+            ) {
+                Surface(
+                    modifier = Modifier.size(96.dp),
+                    shape = MaterialTheme.shapes.extraLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            icon = MaterialSymbols.Filled.Shield,
+                            contentDescription = null,
+                            modifier = Modifier.size(52.dp),
+                        )
+                    }
+                }
+                Text(
+                    text = stringResource(Res.string.app_name),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = stringResource(Res.string.about_tagline),
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+
+        Text(
+            text = stringResource(Res.string.app_description),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = spacing.medium),
+        )
+
+        SettingsDestinationRow(
+            title = stringResource(Res.string.about_source_title),
+            subtitle = stringResource(Res.string.about_source_summary),
+            icon = MaterialSymbols.Filled.Code,
+            trailingIcon = MaterialSymbols.AutoMirrored.Filled.OpenInNew,
+            onClick = onOpenGitHub,
         )
     }
 }
@@ -1320,7 +1577,7 @@ private fun ThemeSwatch(
             if (isSelected || isDynamic) {
                 val iconSize = if (isSelected) 18.dp else 16.dp
                 Icon(
-                    imageVector = if (isSelected) Icons.Default.Check else Icons.Default.Palette,
+                    icon = if (isSelected) MaterialSymbols.Filled.Check else MaterialSymbols.Filled.Palette,
                     contentDescription = null,
                     modifier = Modifier
                         .size(iconSize)
@@ -1432,7 +1689,7 @@ private fun SettingResetAction(
             modifier = Modifier.size(TouchTargets.minimum),
         ) {
             Icon(
-                imageVector = Icons.Default.Refresh,
+                icon = MaterialSymbols.Filled.Refresh,
                 contentDescription = stringResource(
                     Res.string.setting_reset_accessibility,
                     title,
@@ -1461,7 +1718,7 @@ private fun SettingResetAction(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Refresh,
+                        icon = MaterialSymbols.Filled.Refresh,
                         contentDescription = null,
                     )
                 },
@@ -1618,7 +1875,7 @@ private fun SettingToggleRowWithTooltip(
                         modifier = Modifier.size(TouchTargets.minimum),
                     ) {
                         Icon(
-                            imageVector = Icons.Outlined.Info,
+                            icon = MaterialSymbols.Outlined.Info,
                             contentDescription = stringResource(
                                 Res.string.content_desc_show_info,
                                 title,
@@ -1759,7 +2016,7 @@ private fun SettingTextRowWithTooltip(
                 modifier = Modifier.size(TouchTargets.minimum),
             ) {
                 Icon(
-                    imageVector = Icons.Outlined.Info,
+                    icon = MaterialSymbols.Outlined.Info,
                     contentDescription = stringResource(Res.string.content_desc_show_info, title),
                     modifier = Modifier.size(18.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,

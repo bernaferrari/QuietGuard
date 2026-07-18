@@ -1,7 +1,9 @@
 package com.bernaferrari.quietguard.ui.util
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
 import androidx.compose.runtime.Composable
 
 @Composable
@@ -12,6 +14,6 @@ fun InfoScreen(
     StatePlaceholder(
         title = title,
         message = body,
-        icon = Icons.Default.Info,
+        icon = MaterialSymbols.Filled.Info,
     )
 }

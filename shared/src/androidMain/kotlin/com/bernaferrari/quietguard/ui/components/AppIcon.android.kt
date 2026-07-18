@@ -1,11 +1,15 @@
 package com.bernaferrari.quietguard.ui.components
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -13,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -29,11 +32,11 @@ actual fun AppIcon(
     size: Dp,
     cornerRadius: Dp,
     contentDescription: String?,
-    fallbackIcon: ImageVector?,
+    fallbackIcon: MaterialIcon?,
 ) {
     val context = LocalContext.current
     val shape = RoundedCornerShape(cornerRadius)
-    val icon = fallbackIcon ?: Icons.Default.Apps
+    val icon = fallbackIcon ?: MaterialSymbols.Filled.Apps
     val drawable =
         remember(packageName) {
             packageName?.let { pkg ->
@@ -52,7 +55,7 @@ actual fun AppIcon(
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
-                    imageVector = icon,
+                    icon = icon,
                     contentDescription = contentDescription,
                     modifier = Modifier.size(size / 2f),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,

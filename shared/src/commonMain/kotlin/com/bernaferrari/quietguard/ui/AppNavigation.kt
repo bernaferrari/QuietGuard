@@ -1,5 +1,10 @@
 package com.bernaferrari.quietguard.ui
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -11,14 +16,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
@@ -61,16 +59,23 @@ import com.bernaferrari.quietguard.generated.resources.ui_apps_title
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 private enum class NavDestination(
     val key: AppNavKey,
     val labelRes: StringResource,
-    val selectedIcon: androidx.compose.ui.graphics.vector.ImageVector,
-    val unselectedIcon: androidx.compose.ui.graphics.vector.ImageVector = selectedIcon,
+    val selectedIcon: MaterialIcon,
+    val unselectedIcon: MaterialIcon = selectedIcon,
 ) {
-    HomeTab(Home, Res.string.menu_home, Icons.Filled.Shield, Icons.Outlined.Shield),
-    AppsTab(Apps, Res.string.menu_firewall, Icons.Default.Tune),
-    LogsTab(Logs, Res.string.menu_log, Icons.AutoMirrored.Filled.List),
-    SettingsTab(Settings, Res.string.menu_settings, Icons.Default.Settings),
+    HomeTab(Home, Res.string.menu_home, MaterialSymbols.Filled.Shield, MaterialSymbols.Outlined.Shield),
+    AppsTab(Apps, Res.string.menu_firewall, MaterialSymbols.Filled.Tune),
+    LogsTab(Logs, Res.string.menu_log, MaterialSymbols.AutoMirrored.Filled.List),
+    SettingsTab(
+        Settings,
+        Res.string.menu_settings,
+        MaterialSymbols.Filled.Settings,
+        MaterialSymbols.Outlined.Settings,
+    ),
 }
 
 @OptIn(
@@ -130,16 +135,12 @@ fun AppNavigation(
         val current = backStack.lastOrNull() as? AppNavKey ?: return
 
         when {
-            current is AppRuleDetail && backStack.size > 1 -> {
-                backStack.removeAt(backStack.lastIndex)
-            }
+            backStack.size > 1 -> backStack.removeAt(backStack.lastIndex)
             current != Home -> {
                 backStack.clear()
                 backStack.add(Home)
             }
-            else -> {
-                backStack.removeAt(backStack.lastIndex)
-            }
+            else -> backStack.removeAt(backStack.lastIndex)
         }
     }
 
@@ -154,6 +155,7 @@ fun AppNavigation(
             Apps -> setStack(Home, Apps)
             Logs -> setStack(Home, Logs)
             Settings -> setStack(Home, Settings)
+            is SettingsDetail -> setStack(Home, Settings, destination)
             Dns -> setStack(Home, Settings, Dns)
             Forwarding -> setStack(Home, Settings, Forwarding)
             Pro -> setStack(Home, Settings, Pro)
@@ -180,7 +182,7 @@ fun AppNavigation(
         val appKey = current as? AppNavKey ?: return null
         return when (appKey) {
             is AppRuleDetail -> Apps
-            Dns, Forwarding, Pro -> Settings
+            Dns, Forwarding, Pro, is SettingsDetail -> Settings
             else -> appKey
         }
     }
@@ -219,7 +221,7 @@ fun AppNavigation(
                     onClick = { navigateTo(destination.key) },
                     icon = {
                         Icon(
-                            imageVector =
+                            icon =
                                 if (selected) destination.selectedIcon else destination.unselectedIcon,
                             contentDescription = stringResource(destination.labelRes),
                         )
@@ -271,7 +273,7 @@ fun AppNavigation(
                                         StatePlaceholder(
                                             title = stringResource(Res.string.ui_apps_title),
                                             message = stringResource(Res.string.home_apps_hint),
-                                            icon = Icons.Default.Tune,
+                                            icon = MaterialSymbols.Filled.Tune,
                                         )
                                     },
                                 ),
@@ -309,6 +311,19 @@ fun AppNavigation(
                         entry<Settings> {
                             CenteredScreen {
                                 SettingsScreen(
+                                    section = null,
+                                    onOpenSection = { navigateTo(SettingsDetail(it)) },
+                                    onOpenDns = { navigateTo(Dns) },
+                                    onOpenForwarding = { navigateTo(Forwarding) },
+                                )
+                            }
+                        }
+                        entry<SettingsDetail> { key ->
+                            CenteredScreen {
+                                SettingsScreen(
+                                    section = key.section,
+                                    onBack = { popBackStack() },
+                                    onOpenSection = { navigateTo(SettingsDetail(it)) },
                                     onOpenDns = { navigateTo(Dns) },
                                     onOpenForwarding = { navigateTo(Forwarding) },
                                 )

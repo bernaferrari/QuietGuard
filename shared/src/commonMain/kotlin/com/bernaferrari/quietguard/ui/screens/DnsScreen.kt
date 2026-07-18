@@ -1,5 +1,9 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -12,17 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Dns
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -71,6 +68,7 @@ import com.bernaferrari.quietguard.generated.resources.ui_logs_filter_status
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -119,7 +117,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                 actions = {
                     IconButton(onClick = { /* Room/DB flow auto-refreshes */ }) {
                         Icon(
-                            imageVector = Icons.Default.Refresh,
+                            icon = MaterialSymbols.Filled.Refresh,
                             contentDescription = stringResource(Res.string.menu_refresh),
                         )
                     }
@@ -150,7 +148,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                 ) {
                     FilledTonalButton(onClick = { viewModel.cleanup() }) {
                         Icon(
-                            imageVector = Icons.Default.Tune,
+                            icon = MaterialSymbols.Filled.Tune,
                             contentDescription = null,
                         )
                         Spacer(modifier = Modifier.width(spacing.small))
@@ -158,7 +156,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                     }
                     OutlinedButton(onClick = { viewModel.clearAll() }) {
                         Icon(
-                            imageVector = Icons.Default.Delete,
+                            icon = MaterialSymbols.Filled.Delete,
                             contentDescription = null,
                         )
                         Spacer(modifier = Modifier.width(spacing.small))
@@ -176,7 +174,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                         },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Download,
+                            icon = MaterialSymbols.Filled.Download,
                             contentDescription = null,
                         )
                         Spacer(modifier = Modifier.width(spacing.small))
@@ -229,7 +227,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_loading),
                         message = stringResource(Res.string.ui_dns_hint),
-                        icon = Icons.Default.Dns,
+                        icon = MaterialSymbols.Filled.Dns,
                         isLoading = true,
                     )
                 }
@@ -238,7 +236,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_empty_dns_title),
                         message = stringResource(Res.string.ui_empty_dns_body),
-                        icon = Icons.Default.Dns,
+                        icon = MaterialSymbols.Filled.Dns,
                         actionLabel = stringResource(Res.string.menu_refresh),
                         onAction = { /* Room/DB flow auto-refreshes */ },
                     )
@@ -248,7 +246,7 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_dns_title),
                         message = stringResource(Res.string.ui_dns_filter_empty),
-                        icon = Icons.Default.Dns,
+                        icon = MaterialSymbols.Filled.Dns,
                         actionLabel = stringResource(Res.string.ui_filter_all),
                         onAction = { viewModel.setFilter(DnsListFilter.All) },
                     )

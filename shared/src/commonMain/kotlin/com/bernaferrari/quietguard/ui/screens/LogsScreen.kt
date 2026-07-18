@@ -1,5 +1,9 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
 import com.bernaferrari.quietguard.ui.screens.vm.LogsViewModel
 import com.bernaferrari.quietguard.platform.AppDisplayInfo
 import com.bernaferrari.quietguard.platform.LogEntry
@@ -72,19 +76,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Inbox
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -111,7 +103,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -122,6 +113,8 @@ import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import kotlinx.coroutines.delay
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
 private val AllowedStatusContentLight = Color(0xFF1B5E20)
 private val AllowedStatusContentDark = Color(0xFFA5D6A7)
 
@@ -260,7 +253,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     Box {
                         IconButton(onClick = { viewModel.setFiltersExpanded(!filtersExpanded) }) {
                             Icon(
-                                imageVector = Icons.Default.Tune,
+                                icon = MaterialSymbols.Filled.Tune,
                                 contentDescription = stringResource(Res.string.ui_logs_filters),
                                 tint = filterIconTint,
                             )
@@ -281,7 +274,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     }
                     IconButton(onClick = { /* Room/DB flow auto-refreshes */ }) {
                         Icon(
-                            imageVector = Icons.Default.Refresh,
+                            icon = MaterialSymbols.Filled.Refresh,
                             contentDescription = stringResource(Res.string.menu_refresh),
                         )
                     }
@@ -330,7 +323,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                 StatePlaceholder(
                     title = stringResource(Res.string.title_pro),
                     message = stringResource(Res.string.msg_log_disabled),
-                    icon = Icons.Default.Inbox,
+                    icon = MaterialSymbols.Filled.Inbox,
                     actionLabel = stringResource(Res.string.title_pro),
                     onAction = { NetGuardPlatform.proFeatures.openProScreen() },
                 )
@@ -356,7 +349,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.setting_log_app),
                         message = stringResource(Res.string.summary_log_app),
-                        icon = Icons.Default.Inbox,
+                        icon = MaterialSymbols.Filled.Inbox,
                         actionLabel = stringResource(Res.string.action_enable),
                         onAction = {
                             viewModel.enableLogging()
@@ -370,7 +363,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_loading),
                         message = stringResource(Res.string.home_logs_hint),
-                        icon = Icons.Default.Inbox,
+                        icon = MaterialSymbols.Filled.Inbox,
                         isLoading = true,
                     )
                 }
@@ -379,7 +372,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_empty_logs_title),
                         message = stringResource(Res.string.ui_empty_logs_body),
-                        icon = Icons.Default.Inbox,
+                        icon = MaterialSymbols.Filled.Inbox,
                     )
                 }
 
@@ -461,7 +454,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                                         StatePlaceholder(
                                             title = stringResource(Res.string.ui_empty_apps_title),
                                             message = stringResource(Res.string.ui_apps_search_empty),
-                                            icon = Icons.Default.Apps,
+                                            icon = MaterialSymbols.Filled.Apps,
                                         )
                                     } else {
                                         LazyColumn(
@@ -579,7 +572,7 @@ private fun AppPickerField(
                 horizontalArrangement = Arrangement.spacedBy(spacing.small),
             ) {
                 Icon(
-                    imageVector = Icons.Default.Apps,
+                    icon = MaterialSymbols.Filled.Apps,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(18.dp),
@@ -597,7 +590,7 @@ private fun AppPickerField(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
+                    icon = MaterialSymbols.Filled.ArrowDropDown,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -634,7 +627,7 @@ private fun AppPickerField(
                         placeholder = { Text(text = stringResource(Res.string.menu_search)) },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Default.Search,
+                                icon = MaterialSymbols.Filled.Search,
                                 contentDescription = null,
                             )
                         },
@@ -642,7 +635,7 @@ private fun AppPickerField(
                             {
                                 IconButton(onClick = { searchQuery = "" }) {
                                     Icon(
-                                        imageVector = Icons.Default.Close,
+                                        icon = MaterialSymbols.Filled.Close,
                                         contentDescription = stringResource(Res.string.action_clear_search),
                                     )
                                 }
@@ -896,7 +889,7 @@ private fun LogEntryCard(
             domain = entry.dname,
         )
     }
-    val fallbackAppIcon = if (entry.uid > 0) Icons.Default.Apps else Icons.Default.Public
+    val fallbackAppIcon = if (entry.uid > 0) MaterialSymbols.Filled.Apps else MaterialSymbols.Filled.Public
     val protocolText = entry.protocolLabel.uppercase()
     val statusLabel = if (isAllowed) stringResource(Res.string.menu_traffic_allowed)
     else stringResource(Res.string.menu_traffic_blocked)
@@ -974,7 +967,7 @@ private fun LogEntryCard(
                         text = statusLabel,
                         containerColor = statusContainerColor,
                         contentColor = statusContentColor,
-                        icon = if (isAllowed) Icons.Default.CheckCircle else Icons.Default.Block,
+                        icon = if (isAllowed) MaterialSymbols.Filled.CheckCircle else MaterialSymbols.Filled.Block,
                     )
                     MetaTextBadge(text = metadataText)
                 }
@@ -988,7 +981,7 @@ private fun StatusTextBadge(
     text: String,
     containerColor: androidx.compose.ui.graphics.Color,
     contentColor: androidx.compose.ui.graphics.Color,
-    icon: ImageVector,
+    icon: MaterialIcon,
 ) {
     val spacing = MaterialTheme.spacing
     Surface(
@@ -1001,7 +994,7 @@ private fun StatusTextBadge(
             horizontalArrangement = Arrangement.spacedBy(3.dp),
         ) {
             Icon(
-                imageVector = icon,
+                icon = icon,
                 contentDescription = null,
                 modifier = Modifier.size(10.dp),
                 tint = contentColor,

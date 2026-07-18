@@ -23,4 +23,4 @@ if (( java_major < 17 )); then
 fi
 
 java -version
-exec "$ROOT/scripts/verify-web-deploy.sh" --ci
+exec "$ROOT/scripts/verify-web-deploy.sh" --ci --web-only

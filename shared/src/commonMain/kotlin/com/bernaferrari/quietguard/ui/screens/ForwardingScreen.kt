@@ -1,5 +1,10 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialSymbols
+
+
+
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,10 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Forward
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,7 +24,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -84,6 +84,7 @@ import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
@@ -128,7 +129,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                 actions = {
                     IconButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
-                            imageVector = Icons.Default.Add,
+                            icon = MaterialSymbols.Filled.Add,
                             contentDescription = stringResource(Res.string.menu_add),
                         )
                     }
@@ -157,7 +158,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                 ) {
                     FilledTonalButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
-                            imageVector = Icons.Default.Add,
+                            icon = MaterialSymbols.Filled.Add,
                             contentDescription = null,
                         )
                         Spacer(modifier = Modifier.width(spacing.small))
@@ -196,7 +197,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_loading),
                         message = stringResource(Res.string.setting_forwarding),
-                        icon = Icons.Default.Add,
+                        icon = MaterialSymbols.Filled.Add,
                         isLoading = true,
                     )
                 }
@@ -205,7 +206,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_empty_forwarding_title),
                         message = stringResource(Res.string.ui_empty_forwarding_body),
-                        icon = Icons.Default.Add,
+                        icon = MaterialSymbols.Filled.Add,
                         actionLabel = stringResource(Res.string.menu_add),
                         onAction = { viewModel.setShowAddDialog(true) },
                     )
@@ -215,7 +216,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                     StatePlaceholder(
                         title = stringResource(Res.string.ui_forwarding_title),
                         message = stringResource(Res.string.ui_forwarding_filter_empty),
-                        icon = Icons.AutoMirrored.Filled.Forward,
+                        icon = MaterialSymbols.AutoMirrored.Filled.Forward,
                         actionLabel = stringResource(Res.string.ui_filter_all),
                         onAction = { viewModel.setProtocolFilter(ForwardingListFilter.All) },
                     )
@@ -274,7 +275,7 @@ private fun ForwardingEntryCard(
                 color = MaterialTheme.colorScheme.primaryContainer,
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Forward,
+                    icon = MaterialSymbols.AutoMirrored.Filled.Forward,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.padding(8.dp),
@@ -333,7 +334,7 @@ private fun ForwardingEntryCard(
                     color = MaterialTheme.colorScheme.errorContainer,
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
+                        icon = MaterialSymbols.Filled.Delete,
                         contentDescription = stringResource(Res.string.menu_delete),
                         tint = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.padding(6.dp),

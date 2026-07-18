@@ -1,5 +1,8 @@
 package com.bernaferrari.quietguard.ui.components
 
+import com.bernaferrari.quietguard.ui.components.icons.Icon
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
+
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.animateFloat
@@ -8,7 +11,6 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
@@ -20,7 +22,6 @@ import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -74,8 +75,8 @@ object DiagonalWipeIconDefaults {
 @Composable
 fun DiagonalWipeIcon(
     blocked: Boolean,
-    allowedIcon: ImageVector,
-    blockedIcon: ImageVector,
+    allowedIcon: MaterialIcon,
+    blockedIcon: MaterialIcon,
     allowedTint: Color,
     blockedTint: Color,
     contentDescription: String?,
@@ -89,9 +90,10 @@ fun DiagonalWipeIcon(
     // Transition is keyed by the target blocked state.
     val transition = updateTransition(targetState = blocked, label = "diagonalWipeIcon")
 
-    // Vector painters are reused across frames for efficient icon drawing in Canvas.
-    val allowedPainter = rememberVectorPainter(allowedIcon)
-    val blockedPainter = rememberVectorPainter(blockedIcon)
+    // Load the bundled Google Material SVGs once per icon and reuse the painters during the
+    // transition. This keeps the wipe independent of the former Material Icons dependency.
+    val allowedPainter = rememberVectorPainter(allowedIcon.imageVector)
+    val blockedPainter = rememberVectorPainter(blockedIcon.imageVector)
 
     // Shared progress for both layers. 0 = fully allowed, 1 = fully blocked.
     val blockedRevealProgress by transition.animateFloat(
@@ -124,7 +126,7 @@ fun DiagonalWipeIcon(
         // Fast path: no in-between draw work when fully allowed.
         if (blockedProgress <= 0.001f) {
             Icon(
-                imageVector = allowedIcon,
+                icon = allowedIcon,
                 contentDescription = contentDescription,
                 modifier = Modifier.fillMaxSize(),
                 tint = allowedTint,
@@ -135,7 +137,7 @@ fun DiagonalWipeIcon(
         // Fast path: no in-between draw work when fully blocked.
         if (blockedProgress >= 0.999f) {
             Icon(
-                imageVector = blockedIcon,
+                icon = blockedIcon,
                 contentDescription = contentDescription,
                 modifier = Modifier.fillMaxSize(),
                 tint = blockedTint,

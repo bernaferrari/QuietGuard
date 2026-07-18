@@ -1,5 +1,7 @@
 package com.bernaferrari.quietguard.ui.components
 
+import com.bernaferrari.quietguard.ui.components.icons.MaterialIcon
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -31,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,8 +46,8 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun FirewallTile(
-    allowedIcon: ImageVector,
-    blockedIcon: ImageVector,
+    allowedIcon: MaterialIcon,
+    blockedIcon: MaterialIcon,
     label: String,
     allowed: Boolean,
     onToggle: () -> Unit,

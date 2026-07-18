@@ -101,13 +101,7 @@ Deploy manually (after `vercel login` or with a token):
 VERCEL_TOKEN=... VERCEL_ORG_ID=... VERCEL_PROJECT_ID=... ./scripts/deploy-web-vercel.sh
 ```
 
-Pushes to `main` run `.github/workflows/deploy-web-vercel.yml`, which builds the wasm bundle and deploys to [quietguard.vercel.app](https://quietguard.vercel.app/). Add these repository secrets:
-
-| Secret | Where to find it |
-|--------|------------------|
-| `VERCEL_TOKEN` | [vercel.com/account/tokens](https://vercel.com/account/tokens) |
-| `VERCEL_ORG_ID` | Vercel project → Settings → General |
-| `VERCEL_PROJECT_ID` | Vercel project → Settings → General |
+Pushes and pull requests run the Android and web checks in GitHub Actions. The Vercel Git integration deploys previews from branches and deploys `main` to [quietguard.vercel.app](https://quietguard.vercel.app/). The verified bundle can also be deployed manually with `./scripts/deploy-web-vercel.sh`.
 
 ## Behavior Notes
 

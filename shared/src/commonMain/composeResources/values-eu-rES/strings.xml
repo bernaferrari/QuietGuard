@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard-ek internet sarbidea blokeatzeko modu sinple eta aurreratuak ematen dizkizu - ez da root behar. Aplikazio eta helbideko banaka baimendu edo ukatu daiteke Wi-Fi edo sare mugikorraren bitarteko konexioa.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuardek Android 5.1 edo berriagoa behar du</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Pribatutasun politika</a></string>
     <string name="app_first">Kontu handiz garatu eta probatu da QuietGuard, baina ezin dugu bermatu gailu guztietan ibiliko dela.</string>
     <string name="app_agree">Ados nago</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Helburuaren helbidea</string>
     <string name="title_rport">Helburuaren ataka</string>
     <string name="title_ruid">Helburuaren aplikazioa</string>
-    <string name="title_external">Kanpo zerbitzari baterako aukeratu \'inor ez\'</string>
+    <string name="title_external">Kanpo zerbitzari baterako aukeratu 'inor ez'</string>
 
     <string name="setting_defaults">Lehenetsitakoak (zerrenda zuri/beltza)</string>
     <string name="setting_whitelist_wifi">Blokeatu Wi-Fia</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Iluna</string>
     <string name="theme_dynamic">Dinamikoa</string>
     <string name="setting_install">Jakinarazi instalazio berria</string>
-    <string name="setting_screen_on">Aplikatu \'pantaila piztuta dagoenean\' arauak</string>
+    <string name="setting_screen_on">Aplikatu 'pantaila piztuta dagoenean' arauak</string>
     <string name="setting_auto">Automatikoki gaitu %1$s minutura</string>
     <string name="setting_delay">Atzeratu pantaila itzaltzea %1$s minutu</string>
     <string name="setting_update">Egiaztatu eguneraketarik dagoen</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Iragazi VPN tuneletik ateratako IP paketeak. Honek bateria kontsumoa areagotu dezake.</string>
     <string name="summary_track_usage">Monitorizatu aplikazio eta helbide bakoitzak bidali eta jasotako byte kopurua. Honek bateria kontsumoa areagotzea ekar lezake.</string>
     <string name="summary_block_domains">Erantzun blokeatutako domeinuentzat konfiguratutako DNS erantzun kodearekin. Etengailu hau desgaituta dago hosts fitxategirik ez badago.</string>
-    <string name="summary_rcode">Lehenetsitako balioa 3 (NXDOMAIN) da, eta \'domeinua ez da existitzen\' esan nahi du.</string>
+    <string name="summary_rcode">Lehenetsitako balioa 3 (NXDOMAIN) da, eta 'domeinua ez da existitzen' esan nahi du.</string>
     <string name="summary_validate">Internet konexioa 443 atakan (https) balioztatzeko erabilitako domeinuaren izena.</string>
     <string name="summary_socks5_enabled">TCP trafikoa besterik ez da bidaliko proxy zerbitzarira</string>
     <string name="summary_watchdog">Egiaztatu aldiro NetGuarg oraindik martxan dagoen (idatzi 0 ezaugarri hau desgaitzeko). Honek bateria gehiago erabiltzea ekar lezake.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard desgaituta dago, erabili goiko etengailua QuietGuard gaitzeko</string>
     <string name="msg_notifications">Sakatu jakinarazpen baimenak emateko (sarbide saiakeren jakinarazpenetarako, erroreez ohartarazteko, etab.)</string>
     <string name="msg_revoked">QuietGuard desgaitua izan da, litekeena beste VPN motako aplikazio bat erabiltzeagatik</string>
-    <string name="msg_installed">\'%1$s\' instalatuta</string>
+    <string name="msg_installed">'%1$s' instalatuta</string>
     <string name="msg_installed_n">Instalatu da</string>
-    <string name="msg_malware">Malware posiblea: \'%1$s\'</string>
+    <string name="msg_malware">Malware posiblea: '%1$s'</string>
     <string name="msg_access">%1$s internet atzitzen saiatu da</string>
     <string name="msg_access_n">Internet atzitzen saiatu da</string>
     <string name="msg_completed">Ekintza burututa</string>
@@ -313,11 +313,11 @@
 Horregatik, baimendu VPN konexioa hurrengo elkarrizketa koadroan mesedez.
 Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
     <string name="msg_autostart">QuietGuard ezin izan da automatikoki abiatu. Litekeena zure Android bertsioaren akats baten erruz.</string>
-    <string name="msg_error">Ustekabeko errorea gertatu da: \'%s\'</string>
+    <string name="msg_error">Ustekabeko errorea gertatu da: '%s'</string>
     <string name="msg_start_failed">Androidek uko egin dio VPN zerbitzua orain abiatzeari. Litekeena zure Android bertsioak akats bat duelako.</string>
     <string name="msg_try">Probatu QuietGuard</string>
     <string name="msg_terms">Dohaintza eginez <a href="http://www.netguard.me/#terms">termino eta baldintzak</a> onartzen dituzu</string>
-    <string name="msg_dimming">Ezin baduzu \'Ados\' zapaldu hurrengo elkarrizketa-koadroan, beste aplikazio bat pantaila manipulatzen dago.</string>
+    <string name="msg_dimming">Ezin baduzu 'Ados' zapaldu hurrengo elkarrizketa-koadroan, beste aplikazio bat pantaila manipulatzen dago.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/egunean</string>
     <string name="msg_kbsec">%7.3f KB/s</string>
     <string name="msg_mbsec">%7.3f MB/s</string>
@@ -338,7 +338,7 @@ Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
     <string name="msg_downloading">Deskargatzen\n%1s</string>
     <string name="msg_downloaded">Ostalarien fitxategia deskargatuta</string>
     <string name="msg_download_last">Azken deskarga: %s</string>
-    <string name="msg_start_forward">Hasi birbidalketa, hemendik %1$s ataka %2$d hona %3$s:%4$d - \'%5$s\'?</string>
+    <string name="msg_start_forward">Hasi birbidalketa, hemendik %1$s ataka %2$d hona %3$s:%4$d - '%5$s'?</string>
     <string name="msg_stop_forward">Utzi %1$s ataka %2$d birbidaltzeari?</string>
     <string name="msg_metered">Sarea neurtutakoa da</string>
     <string name="msg_inactive">Internet konexio aktiborik ez</string>
@@ -354,8 +354,8 @@ Zure internet trafikoa ez da kanpo VPN zerbitzari batera bidaltzen.</string>
     <string name="msg_on">QuietGuard gaituta dagoela gailua itzaltzen baduzu, QuietGuard automatikoki abiatuko da gailua berriro piztean</string>
     <string name="msg_unavailable">Ezaugarri hau ez dago eskuragarri Android bertsio honetan</string>
     <string name="msg_always_on">Beste VPN bat ezarri da beti gaituta dagoen VPN gisa</string>
-    <string name="msg_always_on_lockdown">Itzali \'Blokeatu VPN gabeko konexioak\' Android VPN ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
-    <string name="msg_private_dns">Itzali \'DNS pribatua\' Android sare ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
+    <string name="msg_always_on_lockdown">Itzali 'Blokeatu VPN gabeko konexioak' Android VPN ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
+    <string name="msg_private_dns">Itzali 'DNS pribatua' Android sare ezarpenetan QuietGuard iragazte moduan erabiltzeko</string>
 
     <string name="title_lockdown_enabled">Trafikoa blokeatuta dago</string>
     <string name="title_unmetered_allowed">Neurtu gabeko trafikoa onartzen da</string>

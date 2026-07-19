@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard pakub lihtsaid ja täiustatud viise Interneti-juurdepääsu blokeerimiseks – juurjuurdepääsu pole vaja. Rakendustele ja aadressidele saab eraldi lubada või keelata juurdepääsu teie Wi-Fi- ja/või mobiiliühendusele.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard nõuab Android 5.1 või uuemat versiooni</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privaatsuspoliitika</a></string>
     <string name="app_first">QuietGuardi arendamisel ja testimisel on olnud suur hoolikus, kuid on võimatu garanteerida, et QuietGuard töötab igas seadmes korrektselt.</string>
     <string name="app_agree">Nõustun</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">Sihtkoha aadress</string>
     <string name="title_rport">Sihtkoha port</string>
     <string name="title_ruid">Sihtrakendus</string>
-    <string name="title_external">Välise serveri jaoks vali \'nobody\'</string>
+    <string name="title_external">Välise serveri jaoks vali 'nobody'</string>
 
     <string name="setting_defaults">Vaikesätted (valge/must nimekiri)</string>
     <string name="setting_whitelist_wifi">Blokeeri Wi-Fi</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">Tume</string>
     <string name="theme_dynamic">Dünaamiline</string>
     <string name="setting_install">Teavita uuest installist</string>
-    <string name="setting_screen_on">Rakenda \'kui ekraan on sees\' reegleid</string>
+    <string name="setting_screen_on">Rakenda 'kui ekraan on sees' reegleid</string>
     <string name="setting_auto">Automaatne lubamine %1$s minuti pärast</string>
     <string name="setting_delay">Ekraani väljalülitumise viivitus %1$s minutit</string>
     <string name="setting_update">Kontrolli uuendusi</string>
@@ -265,7 +265,7 @@
 
     <string name="summary_install">Näita olekuriba teavitust uute installitud rakenduste otseseks seadistamiseks (pro-funktsioon)</string>
     <string name="summary_auto">Pärast vidina kaudu keelamist luba QuietGuard automaatselt uuesti pärast valitud minutite möödumist (sisesta null selle valiku keelamiseks)</string>
-    <string name="summary_delay">Pärast ekraani väljalülitamist hoia \'ekraan on sees\' reeglid aktiivsed valitud minutite jooksul (sisesta null selle valiku keelamiseks)</string>
+    <string name="summary_delay">Pärast ekraani väljalülitamist hoia 'ekraan on sees' reeglid aktiivsed valitud minutite jooksul (sisesta null selle valiku keelamiseks)</string>
     <string name="summary_update">Kontrolli uusi väljalaskeid GitHubist kaks korda päevas</string>
 
     <string name="summary_tethering">Sõltuvalt Androidi versioonist võib jagamine töötada või mitte. Jagatud liiklust ei saa filtreerida.</string>
@@ -288,7 +288,7 @@
     <string name="summary_filter">Filtreeri VPN-tunnelist väljuvaid IP-pakette. See võib kaasa tuua täiendava akukasutuse.</string>
     <string name="summary_track_usage">Jälgi iga rakenduse ja aadressi saadetud ja vastuvõetud baitide arvu. See võib kaasa tuua täiendava akukasutuse.</string>
     <string name="summary_block_domains">Vasta blokeeritud domeeninimede puhul seadistatud DNS-vastuse koodiga. See lüliti on keelatud, kui hosts fail pole saadaval.</string>
-    <string name="summary_rcode">Vaikeväärtus on 3 (NXDOMAIN), mis tähendab \'domeeni pole olemas\'.</string>
+    <string name="summary_rcode">Vaikeväärtus on 3 (NXDOMAIN), mis tähendab 'domeeni pole olemas'.</string>
     <string name="summary_validate">Domeeninimi, mida kasutatakse Interneti-ühenduse valideerimiseks pordis 443 (https).</string>
     <string name="summary_socks5_enabled">Proxy serverisse saadetakse ainult TCP liiklus</string>
     <string name="summary_watchdog">Kontrolli perioodiliselt, kas QuietGuard ikka töötab (sisesta null selle valiku keelamiseks). See võib kaasa tuua täiendava akukasutuse.</string>
@@ -305,9 +305,9 @@
     <string name="msg_disabled">QuietGuard on keelatud, kasuta ülaltoodud lülitit QuietGuardi lubamiseks</string>
     <string name="msg_notifications">Puuduta teavituste lubade andmiseks (juurdepääsu katsete, veateadete jne jaoks)</string>
     <string name="msg_revoked">QuietGuard on keelatud, tõenäoliselt mõne muu VPN-põhise rakenduse kasutamise tõttu</string>
-    <string name="msg_installed">\'%1$s\' installitud</string>
+    <string name="msg_installed">'%1$s' installitud</string>
     <string name="msg_installed_n">On installitud</string>
-    <string name="msg_malware">Võimalik pahavara: \'%1$s\'</string>
+    <string name="msg_malware">Võimalik pahavara: '%1$s'</string>
     <string name="msg_access">%1$s püüdis pääseda Internetti</string>
     <string name="msg_access_n">Püüdis pääseda Internetti</string>
     <string name="msg_completed">Toiming lõpetatud</string>
@@ -317,7 +317,7 @@
 Seetõttu palun luba VPN-ühendus järgmises dialoogis.
 Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
     <string name="msg_autostart">QuietGuard ei saanud automaatselt käivituda. See on tõenäoliselt tingitud veast teie Androidi versioonis.</string>
-    <string name="msg_error">Tekkis ootamatu viga: \'%s\'</string>
+    <string name="msg_error">Tekkis ootamatu viga: '%s'</string>
     <string name="msg_start_failed">Android keeldus praegu VPN-teenust käivitamast. See on tõenäoliselt tingitud veast teie Androidi versioonis.</string>
     <string name="msg_try">Proovi QuietGuardi</string>
     <string name="msg_terms">Annetades nõustute <a href="http://www.netguard.me/#terms">tingimustega</a></string>
@@ -342,7 +342,7 @@ Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
     <string name="msg_downloading">Allalaadimine\n%1s</string>
     <string name="msg_downloaded">Hosts fail alla laaditud</string>
     <string name="msg_download_last">Viimane allalaadimine: %s</string>
-    <string name="msg_start_forward">Kas alustada edasisuunamist pordist %1$s pordini %2$d rakendusse %3$s:%4$d (\'%5$s\')?</string>
+    <string name="msg_start_forward">Kas alustada edasisuunamist pordist %1$s pordini %2$d rakendusse %3$s:%4$d ('%5$s')?</string>
     <string name="msg_stop_forward">Kas peatada edasisuunamine pordist %1$s pordini %2$d?</string>
     <string name="msg_metered">Võrk on mõõdetud</string>
     <string name="msg_inactive">Aktiivne Interneti-ühendus puudub</string>

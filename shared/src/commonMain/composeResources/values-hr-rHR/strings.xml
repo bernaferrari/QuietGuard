@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard nudi jednostavne i napredne načine blokiranja pristupa internetu - root pristup nije potreban. Pristup Wi-Fi i/ili mobilnoj vezi može se individualno dopustiti ili odbiti aplikacijama i adresama.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard zahtijeva Android 5.1 ili noviji</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Pravilnik o privatnosti</a></string>
     <string name="app_first">Velika pažnja je posvećena razvijanju i testiranju QuietGuard aplikacije, no nemoguće je jamčiti da će QuietGuard ispravno raditi na svim uređajima.</string>
     <string name="app_agree">Slažem se</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Odredišna adresa</string>
     <string name="title_rport">Odredišni port</string>
     <string name="title_ruid">Ciljana aplikacija</string>
-    <string name="title_external">Za vanjski poslužitelj odaberite \'nitko\'</string>
+    <string name="title_external">Za vanjski poslužitelj odaberite 'nitko'</string>
 
     <string name="setting_defaults">Zadano (bijela/crna lista)</string>
     <string name="setting_whitelist_wifi">Blokiraj Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Tamno</string>
     <string name="theme_dynamic">Dinamična</string>
     <string name="setting_install">Obavijesti o novoj instalaciji</string>
-    <string name="setting_screen_on">Primijeni pravila \'kad je zaslon uključen\'</string>
+    <string name="setting_screen_on">Primijeni pravila 'kad je zaslon uključen'</string>
     <string name="setting_auto">Automatski omogući nakon %1$s minuta</string>
     <string name="setting_delay">Odgodi gašenje zaslona za %1$s minuta</string>
     <string name="setting_update">Provjeri ažuriranja</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filtriraj IP pakete koji izlaze iz VPN tunela. Može povećati potrošnju baterije.</string>
     <string name="summary_track_usage">Prati broj poslanih i primljenih bajtova za svaku aplikaciju i adresu. Može povećati potrošnju baterije.</string>
     <string name="summary_block_domains">Odgovori konfiguriranim kôdom za blokirane domene. Onemogućeno bez hosts datoteke.</string>
-    <string name="summary_rcode">Zadana vrijednost je 3 (NXDOMAIN), što znači \'nepostojeća domena\'.</string>
+    <string name="summary_rcode">Zadana vrijednost je 3 (NXDOMAIN), što znači 'nepostojeća domena'.</string>
     <string name="summary_validate">Domena koja se koristi za provjeru internet veze na portu 443 (https).</string>
     <string name="summary_socks5_enabled">Samo TCP promet bit će poslan na proxy poslužitelj</string>
     <string name="summary_watchdog">Povremeno provjeri radi li QuietGuard još uvijek (unesite nulu za onemogućavanje). Može povećati potrošnju baterije.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard je onemogućen, upotrijebite prekidač za aktivaciju</string>
     <string name="msg_notifications">Dodirnite za dopuštenje obavijesti (za pokušaje pristupa, greške itd.)</string>
     <string name="msg_revoked">QuietGuard je onemogućen, vjerojatno od strane druge VPN aplikacije</string>
-    <string name="msg_installed">\'%1$s\' je instaliran</string>
+    <string name="msg_installed">'%1$s' je instaliran</string>
     <string name="msg_installed_n">Instaliran je</string>
-    <string name="msg_malware">Mogući zlonamjerni softver: \'%1$s\'</string>
+    <string name="msg_malware">Mogući zlonamjerni softver: '%1$s'</string>
     <string name="msg_access">%1$s je pokušao pristupiti internetu</string>
     <string name="msg_access_n">Pokušaj pristupa internetu</string>
     <string name="msg_completed">Radnja završena</string>
@@ -313,7 +313,7 @@
 Molimo dopustite VPN vezu u sljedećem dijalogu.
 Vaš promet se ne šalje na udaljeni VPN poslužitelj.</string>
     <string name="msg_autostart">QuietGuard se nije mogao automatski pokrenuti. Vjerojatno zbog greške u vašoj verziji Androida.</string>
-    <string name="msg_error">Neočekivana pogreška: \'%s\'</string>
+    <string name="msg_error">Neočekivana pogreška: '%s'</string>
     <string name="msg_start_failed">Android je odbio pokrenuti VPN uslugu. Vjerojatno zbog greške u vašoj verziji Androida.</string>
     <string name="msg_try">Isprobaj QuietGuard</string>
     <string name="msg_terms">Donacijom prihvaćate <a href="http://www.netguard.me/#terms">uvjete i odredbe</a></string>
@@ -338,7 +338,7 @@ Vaš promet se ne šalje na udaljeni VPN poslužitelj.</string>
     <string name="msg_downloading">Preuzimanje\n%1s</string>
     <string name="msg_downloaded">Hosts datoteka preuzeta</string>
     <string name="msg_download_last">Zadnje preuzimanje: %s</string>
-    <string name="msg_start_forward">Pokrenuti prosljeđivanje s %1$s porta %2$d na %3$s:%4$d za \'%5$s\'?</string>
+    <string name="msg_start_forward">Pokrenuti prosljeđivanje s %1$s porta %2$d na %3$s:%4$d za '%5$s'?</string>
     <string name="msg_stop_forward">Zaustaviti prosljeđivanje s %1$s porta %2$d?</string>
     <string name="msg_metered">Mreža je mjerljiva</string>
     <string name="msg_inactive">Nema aktivne internet veze</string>

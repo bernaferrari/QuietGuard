@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard は、インターネットへのアクセスをブロックするシンプルかつ高度な方法を提供します（root 権限不要）。アプリやアドレスごとに、Wi-Fi またはモバイル接続へのアクセスを個別に許可または拒否できます。</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard には Android 5.1 以降が必要です</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">プライバシーポリシー</a></string>
     <string name="app_first">QuietGuard の開発とテストには細心の注意を払っていますが、すべてのデバイスで正しく動作することを保証することは不可能です。</string>
     <string name="app_agree">同意する</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">宛先アドレス</string>
     <string name="title_rport">宛先ポート</string>
     <string name="title_ruid">ターゲットアプリ</string>
-    <string name="title_external">外部サーバーの場合は \'nobody\' を選択してください</string>
+    <string name="title_external">外部サーバーの場合は 'nobody' を選択してください</string>
 
     <string name="setting_defaults">デフォルト（ホワイト/ブラックリスト）</string>
     <string name="setting_whitelist_wifi">Wi-Fi をブロック</string>
@@ -305,9 +305,9 @@
     <string name="msg_disabled">QuietGuard は無効です。上のスイッチを使用して有効にしてください。</string>
     <string name="msg_notifications">タップして通知権限を付与してください（アクセス試行通知、エラーメッセージなどのため）。</string>
     <string name="msg_revoked">おそらく別の VPN ベースのアプリを使用したため、QuietGuard が無効になりました。</string>
-    <string name="msg_installed">\'%1$s\' がインストールされました</string>
+    <string name="msg_installed">'%1$s' がインストールされました</string>
     <string name="msg_installed_n">インストールされました</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s がインターネットアクセスを試みました</string>
     <string name="msg_access_n">インターネットアクセスを試みました</string>
     <string name="msg_completed">アクションが完了しました</string>
@@ -317,7 +317,7 @@
 そのため、次のダイアログで VPN 接続を許可してください。
 インターネットトラフィックはリモート VPN サーバーに送信されません。</string>
     <string name="msg_autostart">QuietGuard を自動的に起動できませんでした。これはおそらく Android のバージョンのバグによるものです。</string>
-    <string name="msg_error">予期しないエラーが発生しました: \'%s\'</string>
+    <string name="msg_error">予期しないエラーが発生しました: '%s'</string>
     <string name="msg_start_failed">Android が現時点で VPN サービスの開始を拒否しました。これはおそらく Android のバージョンのバグによるものです。</string>
     <string name="msg_try">QuietGuard を試す</string>
     <string name="msg_terms">寄付することにより、<a href="http://www.netguard.me/#terms">利用規約</a>に同意したことになります。</string>
@@ -341,7 +341,7 @@
     <string name="msg_downloading">ダウンロード中\n%1s</string>
     <string name="msg_downloaded">hosts ファイルをダウンロードしました</string>
     <string name="msg_download_last">最終ダウンロード: %s</string>
-    <string name="msg_start_forward">%1$s ポート %2$d から \'%5$s\' の %3$s:%4$d への転送を開始しますか？</string>
+    <string name="msg_start_forward">%1$s ポート %2$d から '%5$s' の %3$s:%4$d への転送を開始しますか？</string>
     <string name="msg_stop_forward">%1$s ポート %2$d の転送を停止しますか？</string>
     <string name="msg_metered">ネットワークは従量制です</string>
     <string name="msg_inactive">アクティブなインターネット接続はありません</string>

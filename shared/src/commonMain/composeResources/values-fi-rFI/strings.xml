@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard tarjoaa yksinkertaisia ja edistyneitä keinoja estää yhteydet internettiin - ilman tarvetta root-oikeuksille. Sovelluksille ja osoitteille voi yksilöllisesti sallia tai estää pääsyn Wi-Fi- ja/tai mobiiliyhteyteesi.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard edellyttää vähintään Android versiota 5.1</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Tietosuojakäytäntö</a></string>
     <string name="app_first">QuietGuardia kehitettäessä ja testatessa on noudatettu suurta huolellisuutta, mutta on mahdotonta taata, että se toimii oikein kaikissa laitteissa.</string>
     <string name="app_agree">Hyväksyn</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard on pois käytöstä. Ota se käyttöön yllä olevasta kytkimestä.</string>
     <string name="msg_notifications">Napauta antaaksesi ilmoitusluvat (yhteysyrityksiä, virheilmoituksia jne. varten)</string>
     <string name="msg_revoked">QuietGuard on poistettu käytöstä, todennäköisesti toisen VPN-sovelluksen takia</string>
-    <string name="msg_installed">\'%1$s\' asennettu</string>
+    <string name="msg_installed">'%1$s' asennettu</string>
     <string name="msg_installed_n">On asennettu</string>
-    <string name="msg_malware">Mahdollinen haittaohjelma: \'%1$s\'</string>
+    <string name="msg_malware">Mahdollinen haittaohjelma: '%1$s'</string>
     <string name="msg_access">%1$s yritti käyttää internetiä</string>
     <string name="msg_access_n">Internet-yhteyttä yritetty</string>
     <string name="msg_completed">Toiminto valmis</string>
@@ -313,7 +313,7 @@
 Tästä syystä salli VPN-yhteys seuraavassa ikkunassa.
 Internet-liikennettäsi ei lähetetä ulkoiselle VPN-palvelimelle.</string>
     <string name="msg_autostart">QuietGuard ei voinut käynnistyä automaattisesti. Tämä johtuu todennäköisesti Android-version virheestä.</string>
-    <string name="msg_error">Tapahtui odottamaton virhe: \'%s\'</string>
+    <string name="msg_error">Tapahtui odottamaton virhe: '%s'</string>
     <string name="msg_start_failed">Android kieltäytyi käynnistämästä VPN-palvelua juuri nyt. Tämä johtuu todennäköisesti Android-version virheestä.</string>
     <string name="msg_try">Kokeile QuietGuardia</string>
     <string name="msg_terms">Lahjoittamalla hyväksyt <a href="http://www.netguard.me/#terms">käyttöehdot</a></string>
@@ -338,7 +338,7 @@ Internet-liikennettäsi ei lähetetä ulkoiselle VPN-palvelimelle.</string>
     <string name="msg_downloading">Ladataan\n%1s</string>
     <string name="msg_downloaded">Hosts-tiedosto ladattu</string>
     <string name="msg_download_last">Viimeisin lataus: %s</string>
-    <string name="msg_start_forward">Aloitetaanko portin %1$s %2$d uudelleenohjaus kohteeseen %3$s:%4$d sovellukselle \'%5$s\'?</string>
+    <string name="msg_start_forward">Aloitetaanko portin %1$s %2$d uudelleenohjaus kohteeseen %3$s:%4$d sovellukselle '%5$s'?</string>
     <string name="msg_stop_forward">Lopetetaanko portin %1$s %2$d uudelleenohjaus?</string>
     <string name="msg_metered">Verkko on rajoitettu</string>
     <string name="msg_inactive">Ei aktiivista internet-yhteyttä</string>

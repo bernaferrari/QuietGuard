@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard tilbyder enkle og avancerede metoder til blokering af Internetadgang - ingen root-rettighed krævet. Apps og adresser kan individuelt tillades eller nægtes adgang til din Wi-Fi- og/eller mobilforbindelse.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard kræver Android 5.1 eller senere</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privatlivspolitik</a></string>
     <string name="app_first">Stor omhu er lagt i at udvikle og teste QuietGuard, men det er umuligt at garantere, at QuietGuard vil fungere korrekt på alle enheder.</string>
     <string name="app_agree">Jeg accepterer</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Modtageradresse</string>
     <string name="title_rport">Modtagerport</string>
     <string name="title_ruid">Modtager-app</string>
-    <string name="title_external">For en ekstern server vælg \'nobody\'</string>
+    <string name="title_external">For en ekstern server vælg 'nobody'</string>
 
     <string name="setting_defaults">Standarder (hvid-/sortliste)</string>
     <string name="setting_whitelist_wifi">Bloker Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Mørk</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Giv besked ved ny installation</string>
-    <string name="setting_screen_on">Anvend \'når skærm er tændt\'-regler</string>
+    <string name="setting_screen_on">Anvend 'når skærm er tændt'-regler</string>
     <string name="setting_auto">Auto-aktiver efter %1$s minutter</string>
     <string name="setting_delay">Forsink skærm slukket %1$s minutter</string>
     <string name="setting_update">Søg efter opdateringer</string>
@@ -289,7 +289,7 @@
     <string name="summary_filter">Filtrer IP-pakker, der forlader VPN-tunnelen. Dette kan medføre ekstra batteriforbrug.</string>
     <string name="summary_track_usage">Spor antallet af sendte og modtagne bytes for hver app og adresse. Dette kan medføre ekstra batteriforbrug.</string>
     <string name="summary_block_domains">Svar med den konfigurerede DNS-svarkode for blokerede domænenavne. Denne kontakt er deaktiveret, når ingen hosts-fil er tilgængelig.</string>
-    <string name="summary_rcode">Standardværdien er 3 (NXDOMAIN), som betyder \'ikke-eksisterende domæne\'.</string>
+    <string name="summary_rcode">Standardværdien er 3 (NXDOMAIN), som betyder 'ikke-eksisterende domæne'.</string>
     <string name="summary_validate">Domænenavn der bruges til at validere internetforbindelsen på port 443 (https).</string>
     <string name="summary_socks5_enabled">Kun TCP-trafik vil blive sendt til proxy-serveren</string>
     <string name="summary_watchdog">Kontroller periodisk, om QuietGuard still kører (indtast nul for at deaktivere denne mulighed). Dette kan medføre ekstra batteriforbrug.</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard er deaktiveret, brug kontakten ovenfor for at aktivere QuietGuard</string>
     <string name="msg_notifications">Tryk for at give tilladelse til notifikationer (til besked om adgangsforsøg, fejlmeddelelser osv.)</string>
     <string name="msg_revoked">QuietGuard er blevet deaktiveret, sandsynligvis ved brug af en anden VPN-baseret app</string>
-    <string name="msg_installed">\'%1$s\' installeret</string>
+    <string name="msg_installed">'%1$s' installeret</string>
     <string name="msg_installed_n">Er blevet installeret</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s forsøgte internetadgang</string>
     <string name="msg_access_n">Forsøgte internetadgang</string>
     <string name="msg_completed">Handling fuldført</string>
@@ -318,7 +318,7 @@
 Tillad derfor venligst en VPN-forbindelse i næste dialogboks.
 Din internettrafik bliver ikke sendt til en ekstern VPN-server.</string>
     <string name="msg_autostart">QuietGuard kunne ikke starte automatisk. Dette skyldes sandsynligvis en fejl i din Android-version.</string>
-    <string name="msg_error">Der er opstået en uventet fejl: \'%s\'</string>
+    <string name="msg_error">Der er opstået en uventet fejl: '%s'</string>
     <string name="msg_start_failed">Android nægtede at starte VPN-tjenesten i øjeblikket. Dette skyldes sandsynligvis en fejl i din Android-version.</string>
     <string name="msg_try">Prøv QuietGuard</string>
     <string name="msg_terms">Ved at donere accepterer du <a href="http://www.netguard.me/#terms">vilkår og betingelser</a></string>
@@ -343,7 +343,7 @@ Din internettrafik bliver ikke sendt til en ekstern VPN-server.</string>
     <string name="msg_downloading">Downloader\n%1s</string>
     <string name="msg_downloaded">Hosts-fil downloadet</string>
     <string name="msg_download_last">Sidste download: %s</string>
-    <string name="msg_start_forward">Start viderestilling fra %1$s port %2$d til %3$s:%4$d for \'%5$s\'?</string>
+    <string name="msg_start_forward">Start viderestilling fra %1$s port %2$d til %3$s:%4$d for '%5$s'?</string>
     <string name="msg_stop_forward">Stop viderestilling af %1$s port %2$d?</string>
     <string name="msg_metered">Netværk er forbrugsafregnet</string>
     <string name="msg_inactive">Ingen aktiv internetforbindelse</string>

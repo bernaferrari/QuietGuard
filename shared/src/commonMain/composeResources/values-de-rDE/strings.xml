@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard bietet einfache und erweiterte Möglichkeiten, den Zugriff auf das Internet zu blockieren – kein Root erforderlich. Apps und Adressen kann der Zugriff auf Ihre WLAN- und/oder Mobilfunkverbindung einzeln erlaubt oder verweigert werden.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard erfordert Android 5.1 oder neuer</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Datenschutzerklärung</a></string>
     <string name="app_first">Die Entwicklung und das Testen von QuietGuard erfolgten mit großer Sorgfalt, jedoch kann nicht garantiert werden, dass QuietGuard auf jedem Gerät korrekt funktioniert.</string>
     <string name="app_agree">Ich stimme zu</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Zieladresse</string>
     <string name="title_rport">Zielport</string>
     <string name="title_ruid">Ziel-App</string>
-    <string name="title_external">Wählen Sie für einen externen Server \'nobody\'</string>
+    <string name="title_external">Wählen Sie für einen externen Server 'nobody'</string>
 
     <string name="setting_defaults">Standards (White-/Blacklist)</string>
     <string name="setting_whitelist_wifi">WLAN blockieren</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Dunkel</string>
     <string name="theme_dynamic">Dynamisch</string>
     <string name="setting_install">Benachrichtigen bei Neuinstallation</string>
-    <string name="setting_screen_on">\'Bei Bildschirm an\'-Regeln anwenden</string>
+    <string name="setting_screen_on">'Bei Bildschirm an'-Regeln anwenden</string>
     <string name="setting_auto">Autom. aktivieren nach %1$s Minuten</string>
     <string name="setting_delay">Bildschirm-aus verzögern um %1$s Min.</string>
     <string name="setting_update">Auf Updates prüfen</string>
@@ -266,7 +266,7 @@
 
     <string name="summary_install">Statusleisten-Benachrichtigung anzeigen, um neu installierte Apps direkt zu konfigurieren (Pro-Funktion)</string>
     <string name="summary_auto">Nach dem Deaktivieren über das Widget wird QuietGuard nach der gewählten Zeit automatisch wieder aktiviert (Null zum Deaktivieren)</string>
-    <string name="summary_delay">Nach dem Ausschalten des Bildschirms die \'Bildschirm an\'-Regeln für die gewählte Zeit aktiv lassen (Null zum Deaktivieren)</string>
+    <string name="summary_delay">Nach dem Ausschalten des Bildschirms die 'Bildschirm an'-Regeln für die gewählte Zeit aktiv lassen (Null zum Deaktivieren)</string>
     <string name="summary_update">Zweimal täglich auf GitHub nach neuen Versionen suchen</string>
 
     <string name="summary_tethering">Abhängig von der Android-Version kann Tethering funktionieren oder nicht. Tethering-Verkehr kann nicht gefiltert werden.</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard ist deaktiviert, Schalter oben zum Aktivieren verwenden</string>
     <string name="msg_notifications">Tippen, um Benachrichtigungsberechtigungen zu gewähren (für Zugriffsversuche, Fehlermeldungen etc.)</string>
     <string name="msg_revoked">QuietGuard wurde deaktiviert, vermutlich durch eine andere VPN-App</string>
-    <string name="msg_installed">\'%1$s\' installiert</string>
+    <string name="msg_installed">'%1$s' installiert</string>
     <string name="msg_installed_n">Wurde installiert</string>
-    <string name="msg_malware">Mögliche Malware: \'%1$s\'</string>
+    <string name="msg_malware">Mögliche Malware: '%1$s'</string>
     <string name="msg_access">%1$s hat Internetzugriff versucht</string>
     <string name="msg_access_n">Internetzugriff versucht</string>
     <string name="msg_completed">Aktion abgeschlossen</string>
@@ -318,7 +318,7 @@
 Erlauben Sie daher bitte die VPN-Verbindung im nächsten Dialog.
 Ihr Verkehr wird NICHT an einen entfernten VPN-Server gesendet.</string>
     <string name="msg_autostart">QuietGuard konnte nicht automatisch starten. Dies liegt vermutlich an einem Fehler in Ihrer Android-Version.</string>
-    <string name="msg_error">Ein unerwarteter Fehler ist aufgetreten: \'%s\'</string>
+    <string name="msg_error">Ein unerwarteter Fehler ist aufgetreten: '%s'</string>
     <string name="msg_start_failed">Android hat den Start des VPN-Dienstes abgelehnt. Dies liegt vermutlich an einem Fehler in Ihrer Android-Version.</string>
     <string name="msg_try">QuietGuard testen</string>
     <string name="msg_terms">Durch eine Spende stimmen Sie den <a href="http://www.netguard.me/#terms">Bedingungen</a> zu.</string>
@@ -343,7 +343,7 @@ Ihr Verkehr wird NICHT an einen entfernten VPN-Server gesendet.</string>
     <string name="msg_downloading">Lade herunter\n%1s</string>
     <string name="msg_downloaded">Hosts-Datei heruntergeladen</string>
     <string name="msg_download_last">Letzter Download: %s</string>
-    <string name="msg_start_forward">Weiterleitung von %1$s Port %2$d nach %3$s:%4$d von \'%5$s\' starten?</string>
+    <string name="msg_start_forward">Weiterleitung von %1$s Port %2$d nach %3$s:%4$d von '%5$s' starten?</string>
     <string name="msg_stop_forward">Weiterleitung von %1$s Port %2$d stoppen?</string>
     <string name="msg_metered">Netzwerk ist getaktet</string>
     <string name="msg_inactive">Keine aktive Internetverbindung</string>
@@ -355,10 +355,10 @@ Ihr Verkehr wird NICHT an einen entfernten VPN-Server gesendet.</string>
     <string name="msg_push">Eingehende (Push-)Nachrichten werden meist vom Play-Dienste-Systemdienst verarbeitet, der standardmäßig Internetzugriff hat</string>
     <string name="msg_system">Die Verwaltung aller (System-)Apps kann in den Einstellungen aktiviert werden</string>
     <string name="msg_issue">Bitte beschreiben Sie das Problem und geben Sie den Zeitpunkt an:</string>
-    <string name="msg_vpn_cancelled">VPN-Verbindung abgebrochen\nHaben Sie ein anderes VPN als \'Durchgehend aktives VPN\' konfiguriert?</string>
+    <string name="msg_vpn_cancelled">VPN-Verbindung abgebrochen\nHaben Sie ein anderes VPN als 'Durchgehend aktives VPN' konfiguriert?</string>
     <string name="msg_on">Wenn QuietGuard beim Ausschalten aktiv war, wird es beim Einschalten automatisch gestartet</string>
     <string name="msg_unavailable">Diese Funktion ist in dieser Android-Version nicht verfügbar</string>
-    <string name="msg_always_on">Ein anderes VPN ist als \'Durchgehend aktives VPN\' konfiguriert</string>
+    <string name="msg_always_on">Ein anderes VPN ist als 'Durchgehend aktives VPN' konfiguriert</string>
     <string name="msg_always_on_lockdown">Deaktivieren Sie \"Verbindungen ohne VPN blockieren\" in den Android-VPN-Einstellungen, um QuietGuard im Filtermodus zu nutzen</string>
     <string name="msg_private_dns">Deaktivieren Sie \"Privates DNS\" in den Android-Netzwerkeinstellungen, um QuietGuard im Filtermodus zu nutzen</string>
 

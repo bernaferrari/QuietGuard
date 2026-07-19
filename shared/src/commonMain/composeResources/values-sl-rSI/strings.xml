@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard zagotavlja preprost in napreden način za blokiranje interneta - koren ni potreben. Aplikacije in naslovi so lahko posamično dovoljeni ali blokirani pri dostopanju do vašega Wi-Fi in/ali mobilne povezave.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard zahteva Android 5.1 ali novejši</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Politika zasebnosti</a></string>
     <string name="app_first">Pri razvoju in testiranju QuietGuarda je bila posvečena velika pozornost, vendar ni mogoče zagotoviti, da bo QuietGuard pravilno deloval na vsaki napravi.</string>
     <string name="app_agree">Strinjam se</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Temno</string>
     <string name="theme_dynamic">Dinamično</string>
     <string name="setting_install">Obvesti ko je na novo nameščeno</string>
-    <string name="setting_screen_on">Uporabi pravila \'ko je zaslon vklopljen\'</string>
+    <string name="setting_screen_on">Uporabi pravila 'ko je zaslon vklopljen'</string>
     <string name="setting_auto">Samodejno omogoči po %1$s minutah</string>
     <string name="setting_delay">Zakasnitev izklopa zaslona po %1$s minutah</string>
     <string name="setting_update">Preverite za posodobitev</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard je onemogočen, uporabite stikalo zgoraj, da ga omogočite</string>
     <string name="msg_notifications">Tapnite, da udelite dovoljenja za obvestila (za obvestila o poskusih dostopa, sporočila o napakah itd.)</string>
     <string name="msg_revoked">QuietGuard je bil onemogočen, verjetno z uporabo druge VPN aplikacije</string>
-    <string name="msg_installed">\'%1$s\' je nameščen</string>
+    <string name="msg_installed">'%1$s' je nameščen</string>
     <string name="msg_installed_n">Je bila nameščena</string>
-    <string name="msg_malware">Možna zlonamerna programska oprema: \'%1$s\'</string>
+    <string name="msg_malware">Možna zlonamerna programska oprema: '%1$s'</string>
     <string name="msg_access">%1$s: poskus dostopa do interneta</string>
     <string name="msg_access_n">Poskus dostopa do interneta</string>
     <string name="msg_completed">Dejanje se je dokončalo</string>
@@ -316,7 +316,7 @@
     <string name="msg_export_failed">Izvoz ni uspel: %1$s</string>
     <string name="msg_vpn">QuietGuard uporablja lokalni VPN za filtriranje internetnega prometa. Iz tega razloga v naslednjem pogovornem oknu dovolite povezavo VPN. Vaš internetni promet se ne pošilja na oddaljeni strežnik VPN.</string>
     <string name="msg_autostart">QuietGuard se ni mogel samodejno zagnati. To je verjetno posledica hrošča v vaši različici Androida.</string>
-    <string name="msg_error">Prišlo je do nepričakovane napake: \'%s\'</string>
+    <string name="msg_error">Prišlo je do nepričakovane napake: '%s'</string>
     <string name="msg_start_failed">Android trenutno zavrača zagon storitve VPN. To je verjetno posledica hrošča v vaši različici Androida.</string>
     <string name="msg_try">Poskusi QuietGuard</string>
     <string name="msg_terms">Z doniranjem se strinjate s <a href="http://www.netguard.me/#terms">pogoji in določili</a></string>
@@ -339,7 +339,7 @@
     <string name="msg_downloading">Prenos\n%1s</string>
     <string name="msg_downloaded">Datoteka hosts je prenesena</string>
     <string name="msg_download_last">Zadnji prenos: %s</string>
-    <string name="msg_start_forward">Začni posredovanje iz %1$s vrat %2$d na %3$s:%4$d od \'%5$s\'?</string>
+    <string name="msg_start_forward">Začni posredovanje iz %1$s vrat %2$d na %3$s:%4$d od '%5$s'?</string>
     <string name="msg_stop_forward">Ustavi posredovanje %1$s vrat %2$d?</string>
     <string name="msg_metered">Omrežje je omejeno</string>
     <string name="msg_inactive">Ni aktivne internetne povezave</string>

@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard užtikrina lengvą ir pažengusį metodus apribojant prieigą prie interneto, nereikalaujančius root teisių. Atskiros programos ir adresai gali būti leidžiami ar blokuojami pasiekti Wi-Fi ir/ar mobiliuosius duomenis.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard veiks su Android 5.1 arba naujesne versija</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privatumo politika</a></string>
     <string name="app_first">QuietGuard kūrimui ir bandymams buvo įdėta daug pastangų, vis dėlto neįmanoma užtikrinti, jog QuietGuard tinkamai veiks visuose įrenginiuose.</string>
     <string name="app_agree">Sutinku</string>
@@ -303,7 +303,7 @@
     <string name="msg_revoked">QuietGuard buvo išjungta, tikriausiai dėl kitos VPN programėlės naudojimo</string>
     <string name="msg_installed">„%1$s“ įdiegta</string>
     <string name="msg_installed_n">Buvo įdiegta</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s bandė pasiekti internetą</string>
     <string name="msg_access_n">Bandymas pasiekti internetą</string>
     <string name="msg_completed">Veiksmas atliktas</string>

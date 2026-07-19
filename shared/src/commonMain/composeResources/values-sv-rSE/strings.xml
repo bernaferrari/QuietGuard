@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard ger enkla och avancerade sätt att blockera åtkomst till internet - ingen root krävs. Appar och adresser kan individuellt tillåtas eller nekas åtkomst till din Wi-Fi- och/eller mobildata-anslutning.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard kräver Android 5.1 eller senare</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Sekretesspolicy</a></string>
     <string name="app_first">Stor omsorg har tagits för att utveckla och testa QuietGuard, men det är omöjligt att garantera att QuietGuard fungerar korrekt på alla enheter.</string>
     <string name="app_agree">Jag godkänner</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Destinationsadress</string>
     <string name="title_rport">Destinationsport</string>
     <string name="title_ruid">Destinationsapp</string>
-    <string name="title_external">För en extern server, välj \'nobody\'</string>
+    <string name="title_external">För en extern server, välj 'nobody'</string>
 
     <string name="setting_defaults">Standardvärden (vit-/svartlista)</string>
     <string name="setting_whitelist_wifi">Blockera Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Mörk</string>
     <string name="theme_dynamic">Dynamisk</string>
     <string name="setting_install">Meddela vid ny installation</string>
-    <string name="setting_screen_on">Tillämpa regler \'när skärmen är påslagen\'</string>
+    <string name="setting_screen_on">Tillämpa regler 'när skärmen är påslagen'</string>
     <string name="setting_auto">Aktivera automatiskt efter %1$s minuter</string>
     <string name="setting_delay">Dröj skärmavstängning i %1$s minuter</string>
     <string name="setting_update">Sök efter uppdateringar</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard är inaktiverad, använd skjutreglage ovan för att aktivera QuietGuard</string>
     <string name="msg_notifications">Tryck för att bevilja aviseringsbehörigheter (för åtkomstförsöksaviseringar, felmeddelanden etc.)</string>
     <string name="msg_revoked">QuietGuard har inaktiverats, sannolikt för att en annan VPN-baserade app används</string>
-    <string name="msg_installed">\'%1$s\' installerad</string>
+    <string name="msg_installed">'%1$s' installerad</string>
     <string name="msg_installed_n">Har installerats</string>
-    <string name="msg_malware">Möjlig skadlig programvara: \'%1$s\'</string>
+    <string name="msg_malware">Möjlig skadlig programvara: '%1$s'</string>
     <string name="msg_access">%1$s försökte få tillgång till internet</string>
     <string name="msg_access_n">Försökte få tillgång till internet</string>
     <string name="msg_completed">Åtgärdad</string>
@@ -318,7 +318,7 @@
 Av denna anledning, vänligen tillåt en VPN-anslutning i nästa dialogruta.
 Din internettrafik skickas inte till en avlägsen VPN-server.</string>
     <string name="msg_autostart">QuietGuard kunde inte starta automatiskt. Detta är sannolikt på grund av ett fel i din Android-version.</string>
-    <string name="msg_error">Ett oväntat fel har inträffat: \'%s\'</string>
+    <string name="msg_error">Ett oväntat fel har inträffat: '%s'</string>
     <string name="msg_start_failed">Android vägrade att starta VPN-tjänsten just nu. Detta är sannolikt på grund av ett fel i din Android-version.</string>
     <string name="msg_try">Prova QuietGuard</string>
     <string name="msg_terms">Genom att donera samtycker du till <a href="http://www.netguard.me/#terms">villkor</a></string>
@@ -343,7 +343,7 @@ Din internettrafik skickas inte till en avlägsen VPN-server.</string>
     <string name="msg_downloading">Hämtar\n%1s</string>
     <string name="msg_downloaded">Hosts-filen hämtad</string>
     <string name="msg_download_last">Senaste hämtning: %s</string>
-    <string name="msg_start_forward">Börja vidarebefodra från %1$s port %2$d till %3$s:%4$d av \'%5$s\'?</string>
+    <string name="msg_start_forward">Börja vidarebefodra från %1$s port %2$d till %3$s:%4$d av '%5$s'?</string>
     <string name="msg_stop_forward">Sluta vidarebefordra %1$s port %2$d?</string>
     <string name="msg_metered">Nätverket är uppmätt</string>
     <string name="msg_inactive">Ingen aktiv internetanslutning</string>

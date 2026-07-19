@@ -4,7 +4,7 @@
     <string name="app_description">ନେଟଗାର୍ଡ (QuietGuard) ଇଣ୍ଟରନେଟ୍ ଆକ୍ସେସକୁ ବନ୍ଦ କରିବା ପାଇଁ ସରଳ ଏବଂ ଉନ୍ନତ ଉପାୟ ପ୍ରଦାନ କରେ - କୌଣସି ରୁଟ୍ (root) ଆବଶ୍ୟକ ନାହିଁ | ଆପଣଙ୍କର ୱାଇ-ଫାଇ (Wi-Fi) କିମ୍ବା ମୋବାଇଲ୍ ସଂଯୋଗକୁ ଆପ୍ ଏବଂ ଠିକଣାଗୁଡ଼ିକୁ ବ୍ୟକ୍ତିଗତ ଭାବରେ ଅନୁମତି ଦିଆଯାଇପାରିବ କିମ୍ବା ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଯାଇପାରିବ |</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">ନେଟଗାର୍ଡ ପାଇଁ ଆଣ୍ଡ୍ରଏଡ୍ ୫.୧ କିମ୍ବା ତା’ଠାରୁ ଅଧିକ ଆବଶ୍ୟକ</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">ଗୋପନୀୟତା ନୀତି</a></string>
     <string name="app_first">ନେଟଗାର୍ଡକୁ ବିକଶିତ କରିବା ଏବଂ ପରୀକ୍ଷା କରିବା ପାଇଁ ବହୁତ ଯତ୍ନ ନିଆଯାଇଛି, ତଥାପି ନେଟଗାର୍ଡ ପ୍ରତ୍ୟେକ ଡିଭାଇସରେ ସଠିକ୍ ଭାବରେ କାମ କରିବ ବୋଲି ଗ୍ୟାରେଣ୍ଟି ଦେବା ଅସମ୍ଭବ |</string>
     <string name="app_agree">ମୁଁ ସହମତ</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">ଲକ୍ଷ୍ୟ ଠିକଣա</string>
     <string name="title_rport">ଲକ୍ଷ୍ୟ ପୋର୍ଟ</string>
     <string name="title_ruid">ଲକ୍ଷ୍ୟ ଆପ୍</string>
-    <string name="title_external">ଏକ ବାହ୍ୟ ସର୍ଭର ପାଇଁ \'କେହି ନୁହେଁ\' ଚୟନ କରନ୍ତୁ</string>
+    <string name="title_external">ଏକ ବାହ୍ୟ ସର୍ଭର ପାଇଁ 'କେହି ନୁହେଁ' ଚୟନ କରନ୍ତୁ</string>
 
     <string name="setting_defaults">ଡିଫଲ୍ଟ (ଧଳା/କଳା ତାଲିକା)</string>
     <string name="setting_whitelist_wifi">ୱାଇ-ଫାଇ ବନ୍ଦ କରନ୍ତୁ</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">ଅନ୍ଧାର</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">ନୂତନ ଇନଷ୍ଟଲ୍ ରେ ସୂଚନା ଦିଅନ୍ତୁ</string>
-    <string name="setting_screen_on">\'ସ୍କ୍ରିନ୍ ଅନ୍ ଥିବାବେଳେ\' ନିୟମ ପ୍ରୟୋଗ କରନ୍ତୁ</string>
+    <string name="setting_screen_on">'ସ୍କ୍ରିନ୍ ଅନ୍ ଥିବାବେଳେ' ନିୟମ ପ୍ରୟୋଗ କରନ୍ତୁ</string>
     <string name="setting_auto">%1$s ମିନିଟ୍ ପରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସକ୍ଷମ ହୁଏ</string>
     <string name="setting_delay">ସ୍କ୍ରିନ୍ ଅଫ୍ %1$s ମିନିଟ୍ ବିଳମ୍ବ କରନ୍ତୁ</string>
     <string name="setting_update">ଅପଡେଟ୍ ଯାଞ୍ଚ କରନ୍ତୁ</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">ଫିଲ୍ଟର୍ IP ପ୍ୟାକେଟ୍ ଗୁଡ଼ିକୁ VPN ଟନେଲରୁ ବାହାରକୁ ଯାଉଥିବା IP ପ୍ୟାକେଟ୍ ଗୁଡ଼ିକୁ ଫିଲ୍ଟର୍ କରନ୍ତୁ | ଏହା ଅତିରିକ୍ତ ବ୍ୟାଟେରୀ ବ୍ୟବହାର କରିପାରେ |</string>
     <string name="summary_track_usage">ପ୍ରତ୍ୟେକ ଆପ୍ ଏବଂ ଠିକଣା ପାଇଁ ପଠାଯାଇଥିବା ଏବଂ ଗ୍ରହଣ କରାଯାଇଥିବା ବାଇଟ୍ ସଂଖ୍ୟା ଟ୍ରାକ୍ କରନ୍ତୁ | ଏହା ଅତିରିକ୍ତ ବ୍ୟାଟେରୀ ବ୍ୟବହାର କରିପାରେ |</string>
     <string name="summary_block_domains">ଅବରୋଧିତ ଡୋମେନ୍ ନାମ ପାଇଁ ବିନ୍ୟାସିତ DNS ପ୍ରତିକ୍ରିୟା କୋଡ୍ ସହିତ ଉତ୍ତର ଦିଅନ୍ତୁ | କୌଣସି ହୋଷ୍ଟ ଫାଇଲ୍ ଉପଲବ୍ଧ ନଥିବାବେଳେ ଏହି ସୁଇଚ୍ ଅକ୍ଷମ ହୋଇଥାଏ |</string>
-    <string name="summary_rcode">ଡିଫଲ୍ଟ ମୂଲ୍ୟ ହେଉଛି ୩ (NXDOMAIN), ଯାହାର ଅର୍ଥ ହେଉଛି \'ଅଣ-ବିଦ୍ୟମାନ ଡୋମେନ୍\' |</string>
+    <string name="summary_rcode">ଡିଫଲ୍ଟ ମୂଲ୍ୟ ହେଉଛି ୩ (NXDOMAIN), ଯାହାର ଅର୍ଥ ହେଉଛି 'ଅଣ-ବିଦ୍ୟମାନ ଡୋମେନ୍' |</string>
     <string name="summary_validate">ପୋର୍ଟ ୪୪୩ (https) ରେ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ବୈଧ କରିବା ପାଇଁ ବ୍ୟବହୃତ ଡୋମେନ୍ ନାମ |</string>
     <string name="summary_socks5_enabled">କେବଳ TCP ଟ୍ରାଫିକ୍ ପ୍ରକ୍ସି ସର୍ଭରକୁ ପଠାଯିବ</string>
     <string name="summary_watchdog">ନେଟଗାର୍ଡ ଏବେ ମଧ୍ୟ ଚାଲୁଛି କି ନାହିଁ ପର୍ଯ୍ୟାୟକ୍ରମେ ଯାଞ୍ច କରନ୍ତୁ (ଏହି ବିକଳ୍ପକୁ ଅକ୍ଷମ କରିବାକୁ ଶୂନ୍ୟ ପ୍ରବେଶ କରନ୍ତୁ) | ଏହା ଅତିରିକ୍ତ ବ୍ୟାଟେରୀ ବ୍ୟବହାର କରିପାରେ |</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">ନେଟଗାର୍ଡ ଅକ୍ଷମ ଅଛି, ନେଟଗାର୍ଡ ସକ୍ଷମ କରିବାକୁ ଉପର ସୁଇଚ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="msg_notifications">ବିଜ୍ଞପ୍ତି ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ (ଆକ୍ସେସ୍ ପ୍ରୟାସ ବିଜ୍ଞପ୍ତି, ତ୍ରୁଟି ବାର୍ତ୍ତା ଇତ୍ୟାଦି ପାଇଁ)</string>
     <string name="msg_revoked">ନେଟଗାର୍ଡ ଅକ୍ଷମ ହୋଇଛି, ସମ୍ଭବତଃ ଅନ୍ୟ ଏକ VPN ଆଧାରିତ ଆପ୍ ବ୍ୟବହାର କରିବା ଦ୍ୱାରା</string>
-    <string name="msg_installed">\'%1$s\' ସ୍ଥାପିତ ହେଲା</string>
+    <string name="msg_installed">'%1$s' ସ୍ଥାପିତ ହେଲା</string>
     <string name="msg_installed_n">ସ୍ଥାପିତ ହୋଇଛି</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s ଇଣ୍ଟରନେଟ୍ ଆକ୍ସେସ୍ କରିବାକୁ ଚେଷ୍ଟା କଲା</string>
     <string name="msg_access_n">ଇଣ୍ଟରନେଟ୍ ଆକ୍ସେସ୍ ପ୍ରୟାସ କରାଯାଇଛି</string>
     <string name="msg_completed">କାର୍ଯ୍ୟ ସମ୍ପୂର୍ଣ୍ଣ</string>
@@ -313,7 +313,7 @@
 ଏହି କାରଣରୁ, ଦୟାକରି ପରବର୍ତ୍ତୀ ସଂଳାପରେ ଏକ VPN ସଂଯୋଗ ଅନୁମତି ଦିଅନ୍ତୁ |
 ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ଟ୍ରାଫିକ୍ ଏକ ଦୂରବର୍ତ୍ତୀ VPN ସର୍ଭରକୁ ପଠାଯାଉ ନାହିଁ |</string>
     <string name="msg_autostart">ନେଟଗାର୍ଡ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଆରମ୍ଭ ହୋଇପାରିଲା ନାହିଁ | ଏହା ସମ୍ଭବତଃ ଆପଣଙ୍କର ଆଣ୍ଡ୍ରଏଡ୍ ସଂସ୍କରଣରେ ଏକ ବଗ୍ ଯୋଗୁଁ ହୋଇଛି |</string>
-    <string name="msg_error">ଏକ ଅପ୍ରତ୍ୟାଶିତ ତ୍ରୁଟି ଘଟିଛି: \'%s\'</string>
+    <string name="msg_error">ଏକ ଅପ୍ରତ୍ୟାଶିତ ତ୍ରୁଟି ଘଟିଛି: '%s'</string>
     <string name="msg_start_failed">ଆଣ୍ଡ୍ରଏଡ୍ ଏହି ସମୟରେ VPN ସେବା ଆରମ୍ଭ କରିବାକୁ ମନା କରିଦେଇଛି | ଏହା ସମ୍ଭବତଃ ଆପଣଙ୍କର ଆଣ୍ଡ୍ରଏଡ୍ ସଂସ୍କରଣରେ ଏକ ବଗ୍ ଯୋଗୁଁ ହୋଇଛି |</string>
     <string name="msg_try">ନେଟଗାର୍ଡ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="msg_terms">ଦାନ କରିବା ଦ୍ୱାରା ଆପଣ <a href="http://www.netguard.me/#terms">ନିୟମ ଏବଂ ସର୍ତ୍ତାବଳୀ</a> ସହିତ ସହମତ ହୁଅନ୍ତି</string>
@@ -338,7 +338,7 @@
     <string name="msg_downloading">ଡାଉନଲୋଡ୍ ହେଉଛି\n%1s</string>
     <string name="msg_downloaded">ହୋଷ୍ଟ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି</string>
     <string name="msg_download_last">ଅନ୍ତିମ ଡାଉନଲୋଡ୍: %s</string>
-    <string name="msg_start_forward">%1$s ପୋର୍ଟ %2$d ରୁ \'%5$s\' ର %3$s:%4$d କୁ ଫରୱାର୍ଡିଂ ଆରମ୍ଭ କରିବେ କି?</string>
+    <string name="msg_start_forward">%1$s ପୋର୍ଟ %2$d ରୁ '%5$s' ର %3$s:%4$d କୁ ଫରୱାର୍ଡିଂ ଆରମ୍ଭ କରିବେ କି?</string>
     <string name="msg_stop_forward">%1$s ପୋର୍ଟ %2$d ର ଫରୱାର୍ଡିଂ ବନ୍ଦ କରିବେ କି?</string>
     <string name="msg_metered">ନେଟୱାର୍କ ମିଟର ଅଟେ</string>
     <string name="msg_inactive">କୌණସି ସକ୍ରିୟ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ନାହିଁ</string>

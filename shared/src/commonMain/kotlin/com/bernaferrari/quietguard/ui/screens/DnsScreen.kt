@@ -52,6 +52,7 @@ import com.bernaferrari.quietguard.generated.resources.label_uid
 import com.bernaferrari.quietguard.generated.resources.menu_cleanup
 import com.bernaferrari.quietguard.generated.resources.menu_clear
 import com.bernaferrari.quietguard.generated.resources.menu_export
+import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.menu_refresh
 import com.bernaferrari.quietguard.generated.resources.msg_completed
 import com.bernaferrari.quietguard.generated.resources.msg_invalid
@@ -72,7 +73,10 @@ import com.bernaferrari.quietguard.ui.icons.Icon
 @ExperimentalMaterial3Api
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
+fun DnsScreen(
+    onBack: () -> Unit = {},
+    viewModel: DnsViewModel = koinViewModel(),
+) {
     val spacing = MaterialTheme.spacing
     val dnsUi by viewModel.uiState.collectAsState()
     val entries = dnsUi.entries.data
@@ -87,6 +91,14 @@ fun DnsScreen(viewModel: DnsViewModel = koinViewModel()) {
     Scaffold(
         topBar = {
             TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            icon = MaterialSymbols.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(Res.string.action_back),
+                        )
+                    }
+                },
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,

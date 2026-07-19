@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard راهکارهای ساده و پیشرفته‌ای برای مسدود کردن دسترسی به اینترنت فراهم می‌کند - بدون نیاز به روت بودن گوشی. هرکدام از برنامه‌ها و سایتها می‌توانند جداگانه به وای‌فای/داده موبایل دسترسی مجاز یا غیر مجاز داشته باشند.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard نیاز به اندروید 5.1 یا بالاتر دارد</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">سیاست حفظ حریم خصوصی</a></string>
     <string name="app_first">مراقبتی عالی برای توسعه و آزمایش QuietGuard بکار برده شده است، با این حال تضمین اینکه QuietGuard بر روی هر دستگاهی به درستی کار خواد کرد غیرممکن است.</string>
     <string name="app_agree">می‌پذیرم</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">آدرس مقصد</string>
     <string name="title_rport">درگاه مقصد</string>
     <string name="title_ruid">برنامه مقصد</string>
-    <string name="title_external">برای سرور خارجی گزینۀ \'هیچ‌کس\' را انتخاب کنید</string>
+    <string name="title_external">برای سرور خارجی گزینۀ 'هیچ‌کس' را انتخاب کنید</string>
 
     <string name="setting_defaults">پیش‌فرض‌ها (لیست سفید/سیاه)</string>
     <string name="setting_whitelist_wifi">مسدود کردن وای‌فای</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">فیلتر کردن بسته‌های IP خروجی از تونل VPN. ممکن است باعث مصرف اضافی باتری شود.</string>
     <string name="summary_track_usage">ردیابی تعداد بایت‌های ارسالی و دریافتی برای هر برنامه و آدرس. ممکن است باعث مصرف اضافی باتری شود.</string>
     <string name="summary_block_domains">پاسخ با کد DNS تنظیم شده برای دامنه‌های مسدود شده. در صورت نبود فایل hosts غیرفعال است.</string>
-    <string name="summary_rcode">مقدار پیش‌فرض 3 (NXDOMAIN) است که به معنای \'دامنه وجود ندارد\' است.</string>
+    <string name="summary_rcode">مقدار پیش‌فرض 3 (NXDOMAIN) است که به معنای 'دامنه وجود ندارد' است.</string>
     <string name="summary_validate">نام دامنه مورد استفاده برای تایید اتصال اینترنت در درگاه 443 (https).</string>
     <string name="summary_socks5_enabled">فقط ترافیک TCP به سرور پروکسی فرستاده خواهد شد</string>
     <string name="summary_watchdog">بررسی دوره‌ای برای اطمینان از در حال اجرا بودن QuietGuard (0 برای غیرفعال کردن). ممکن است باعث مصرف اضافی باتری شود.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard غیرفعال است، از کلید بالا برای فعال‌سازی استفاده کنید</string>
     <string name="msg_notifications">برای اعطای مجوزهای اعلان ضربه بزنید (برای اعلان تلاش‌های دسترسی، پیام‌های خطا و غیره)</string>
     <string name="msg_revoked">QuietGuard غیرفعال شده است، احتمالاً توسط یک برنامه VPN دیگر</string>
-    <string name="msg_installed">\'%1$s\' نصب شد</string>
+    <string name="msg_installed">'%1$s' نصب شد</string>
     <string name="msg_installed_n">نصب شده است</string>
-    <string name="msg_malware">بدافزار احتمالی: \'%1$s\'</string>
+    <string name="msg_malware">بدافزار احتمالی: '%1$s'</string>
     <string name="msg_access">%1$s برای دسترسی به اینترنت تلاش کرد</string>
     <string name="msg_access_n">تلاش برای دسترسی به اینترنت</string>
     <string name="msg_completed">عملیات انجام شد</string>
@@ -313,7 +313,7 @@
 لطفاً در دیالوگ بعدی اجازه اتصال VPN را بدهید.
 ترافیک شما به سرور VPN راه دور فرستاده نمی‌شود.</string>
     <string name="msg_autostart">QuietGuard نتوانست خودکار اجرا شود. احتمالاً به دلیل باگی در نسخه اندروید شماست.</string>
-    <string name="msg_error">خطای غیرمنتظره: \'%s\'</string>
+    <string name="msg_error">خطای غیرمنتظره: '%s'</string>
     <string name="msg_start_failed">اندروید اجازه شروع سرویس VPN را نداد. احتمالاً به دلیل باگی در نسخه اندروید شماست.</string>
     <string name="msg_try">امتحان QuietGuard</string>
     <string name="msg_terms">با اهدا کردن شما با <a href="http://www.netguard.me/#terms">شرایط و ضوابط</a> موافقت می‌کنید</string>
@@ -338,7 +338,7 @@
     <string name="msg_downloading">در حال دانلود\n%1s</string>
     <string name="msg_downloaded">فایل hosts دانلود شد</string>
     <string name="msg_download_last">آخرین دانلود: %s</string>
-    <string name="msg_start_forward">شروع هدایت از %1$s پورت %2$d به %3$s:%4$d برای \'%5$s\'؟</string>
+    <string name="msg_start_forward">شروع هدایت از %1$s پورت %2$d به %3$s:%4$d برای '%5$s'؟</string>
     <string name="msg_stop_forward">توقف هدایت %1$s پورت %2$d؟</string>
     <string name="msg_metered">شبکه دارای محدودیت مصرف است</string>
     <string name="msg_inactive">اتصال اینترنت فعالی وجود ندارد</string>

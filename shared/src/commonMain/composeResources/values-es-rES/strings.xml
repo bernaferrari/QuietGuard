@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard proporciona formas sencillas y avanzadas de bloquear el acceso a Internet, sin necesidad de root. Las aplicaciones y direcciones pueden permitirse o denegarse individualmente para su conexión Wi-Fi y/o móvil.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard requiere Android 5.1 o posterior</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Política de privacidad</a></string>
     <string name="app_first">Se ha tenido gran cuidado al desarrollar y probar QuietGuard, sin embargo, es imposible garantizar que QuietGuard funcionará correctamente en todos los dispositivos.</string>
     <string name="app_agree">Acepto</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Dirección de destino</string>
     <string name="title_rport">Puerto de destino</string>
     <string name="title_ruid">Aplicación de destino</string>
-    <string name="title_external">Para un servidor externo selecciona \'nadie\'</string>
+    <string name="title_external">Para un servidor externo selecciona 'nadie'</string>
 
     <string name="setting_defaults">Valores por defecto (lista blanca/negra)</string>
     <string name="setting_whitelist_wifi">Bloquear Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Oscuro</string>
     <string name="theme_dynamic">Dinámico</string>
     <string name="setting_install">Notificar nueva instalación</string>
-    <string name="setting_screen_on">Aplicar reglas \'con pantalla encendida\'</string>
+    <string name="setting_screen_on">Aplicar reglas 'con pantalla encendida'</string>
     <string name="setting_auto">Activar automáticamente tras %1$s minutos</string>
     <string name="setting_delay">Retrasar apagado de pantalla %1$s minutos</string>
     <string name="setting_update">Buscar actualizaciones</string>
@@ -289,7 +289,7 @@
     <string name="summary_filter">Filtra paquetes IP que salen del túnel VPN. Esto puede aumentar el uso de la batería.</string>
     <string name="summary_track_usage">Registra el número de bytes enviados y recibidos para cada aplicación y dirección. Esto puede aumentar el uso de la batería.</string>
     <string name="summary_block_domains">Responde con el código de respuesta DNS configurado para dominios bloqueados. Esta opción se desactiva si no hay archivo hosts disponible.</string>
-    <string name="summary_rcode">El valor por defecto es 3 (NXDOMAIN), que significa \'dominio inexistente\'.</string>
+    <string name="summary_rcode">El valor por defecto es 3 (NXDOMAIN), que significa 'dominio inexistente'.</string>
     <string name="summary_validate">Dominio usado para validar la conexión a Internet en el puerto 443 (https).</string>
     <string name="summary_socks5_enabled">Solo se enviará tráfico TCP al servidor proxy</string>
     <string name="summary_watchdog">Comprueba periódicamente si QuietGuard sigue funcionando (pon cero para desactivar). Esto puede aumentar el uso de la batería.</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard está desactivado, usa el interruptor de arriba para activarlo</string>
     <string name="msg_notifications">Toca para conceder permisos de notificación (para notificaciones de acceso, mensajes de error, etc.)</string>
     <string name="msg_revoked">QuietGuard ha sido desactivado, probablemente por usar otra aplicación basada en VPN</string>
-    <string name="msg_installed">\'%1$s\' instalado</string>
+    <string name="msg_installed">'%1$s' instalado</string>
     <string name="msg_installed_n">Se ha instalado</string>
-    <string name="msg_malware">Posible malware: \'%1$s\'</string>
+    <string name="msg_malware">Posible malware: '%1$s'</string>
     <string name="msg_access">%1$s intentó acceder a Internet</string>
     <string name="msg_access_n">Intento de acceso a Internet</string>
     <string name="msg_completed">Acción completada</string>
@@ -318,7 +318,7 @@
 Por esta razón, por favor permite una conexión VPN en el siguiente cuadro de diálogo.
 Tu tráfico de Internet no se está enviando a un servidor VPN remoto.</string>
     <string name="msg_autostart">QuietGuard no pudo iniciarse automáticamente. Probablemente se deba a un error en tu versión de Android.</string>
-    <string name="msg_error">Ha ocurrido un error inesperado: \'%s\'</string>
+    <string name="msg_error">Ha ocurrido un error inesperado: '%s'</string>
     <string name="msg_start_failed">Android ha rechazado iniciar el servicio VPN en este momento. Probablemente se deba a un error en tu versión de Android.</string>
     <string name="msg_try">Prueba QuietGuard</string>
     <string name="msg_terms">Al donar aceptas los <a href="http://www.netguard.me/#terms">términos y condiciones</a></string>
@@ -343,7 +343,7 @@ Tu tráfico de Internet no se está enviando a un servidor VPN remoto.</string>
     <string name="msg_downloading">Descargando\n%1s</string>
     <string name="msg_downloaded">Archivo hosts descargado</string>
     <string name="msg_download_last">Última descarga: %s</string>
-    <string name="msg_start_forward">¿Iniciar redirección desde %1$s puerto %2$d a %3$s:%4$d de \'%5$s\'?</string>
+    <string name="msg_start_forward">¿Iniciar redirección desde %1$s puerto %2$d a %3$s:%4$d de '%5$s'?</string>
     <string name="msg_stop_forward">¿Detener redirección de %1$s puerto %2$d?</string>
     <string name="msg_metered">La red es medida</string>
     <string name="msg_inactive">No hay conexión a Internet activa</string>

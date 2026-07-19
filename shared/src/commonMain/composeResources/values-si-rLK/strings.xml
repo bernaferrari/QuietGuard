@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard යනු රූට් (root) අවශ්‍යතාවයකින් තොරව අන්තර්ජාල ප්‍රවේශය අවහිර කිරීමට සරල සහ උසස් ක්‍රම ලබා දෙන යෙදුමකි. ඔබගේ Wi-Fi සහ/හෝ ජංගම දත්ත සම්බන්ධතා සඳහා එක් එක් යෙදුම් සහ ලිපින වලට තනි තනිව ප්‍රවේශය ලබා දීමට හෝ ප්‍රතික්ෂේප කිරීමට මෙහිදී හැකියාව ඇත.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard සඳහා Android 5.1 හෝ ඊට පසු සංස්කරණයක් අවශ්‍ය වේ</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">පෞද්ගලිකත්ව ප්‍රතිපත්තිය</a></string>
     <string name="app_first">QuietGuard සංවර්ධනය කිරීමට සහ පරීක්ෂා කිරීමට මහත් සැලකිල්ලක් දක්වා ඇත, කෙසේ වෙතත් QuietGuard සෑම උපාංගයකම නිවැරදිව ක්‍රියා කරන බවට සහතික විය නොහැක.</string>
     <string name="app_agree">මම එකඟයි</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">ගමනාන්ත ලිපිනය</string>
     <string name="title_rport">ගමනාන්ත පෝට් එක</string>
     <string name="title_ruid">ඉලක්කගත යෙදුම</string>
-    <string name="title_external">බාහිර සේවාදායකයක් සඳහා \'nobody\' තෝරන්න</string>
+    <string name="title_external">බාහිර සේවාදායකයක් සඳහා 'nobody' තෝරන්න</string>
 
     <string name="setting_defaults">පෙරනිමි (සුදු/කළු ලැයිස්තුව)</string>
     <string name="setting_whitelist_wifi">Wi-Fi අවහිර කරන්න</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">අඳුරු</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">නව ස්ථාපනයන් ගැන දන්වන්න</string>
-    <string name="setting_screen_on">\'තිරය ක්‍රියාත්මක විට\' නීති යොදන්න</string>
+    <string name="setting_screen_on">'තිරය ක්‍රියාත්මක විට' නීති යොදන්න</string>
     <string name="setting_auto">මිනිත්තු %1$s කට පසු ස්වයංක්‍රීයව ක්‍රියාත්මක කරන්න</string>
     <string name="setting_delay">තිරය නිවීයාම මිනිත්තු %1$s කින් ප්‍රමාද කරන්න</string>
     <string name="setting_update">යාවත්කාලීන පරීක්ෂා කරන්න</string>
@@ -283,7 +283,7 @@
     <string name="summary_filter">VPN උමගෙන් පිටතට යන IP පැකට් පෙරන්න. මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
     <string name="summary_track_usage">ප්‍රතීක ආප් සහ ලිපිනය සඳහා යවන ලද සහ ලැබුණු බයිට් ගණන නිරීක්ෂණය කරන්න. මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
     <string name="summary_block_domains">අවහිර කළ වසම් නාම සඳහා වින්‍යාස කළ DNS ප්‍රතිචාර කේතය සමඟ පිළිතුරු දෙන්න. Hosts ගොනුවක් නොමැති විට මෙම ස්විචය අක්‍රිය වේ.</string>
-    <string name="summary_rcode">පෙරනිමි අගය 3 (NXDOMAIN) වේ, එහි අර්ථය \'නොපවතින වසම\' යන්නයි.</string>
+    <string name="summary_rcode">පෙරනිමි අගය 3 (NXDOMAIN) වේ, එහි අර්ථය 'නොපවතින වසම' යන්නයි.</string>
     <string name="summary_validate">Port 443 (https) හි අන්තර්ජාල සම්බන්ධතාවය තහවුරු කිරීමට භාවිතා කරන වසම් නාමය.</string>
     <string name="summary_socks5_enabled">කෙලින්ම TCP දත්ත ගමනාගමනය පමණක් ප්‍රොක්සි සේවාදායකය වෙත යවනු ලැබේ</string>
     <string name="summary_watchdog">QuietGuard තවමත් ක්‍රියාත්මක දැයි වරින් වර පරීක්ෂා කරන්න (මෙම විකල්පය අක්‍රිය කිරීමට ශුන්‍යය ඇතුළත් කරන්න). මෙහිදී අමතර බැටරි ප්‍රමාණයක් වැය විය හැක.</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">QuietGuard අක්‍රිය කර ඇත, QuietGuard ක්‍රියාත්මක කිරීමට ඉහළ ඇති ස්විචය භාවිතා කරන්න</string>
     <string name="msg_notifications">දැනුම්දීම් අවසර ලබා දීමට තට්ටු කරන්න (ප්‍රවේශ උත්සාහයන්, දෝෂ පණිවිඩ ආදිය සඳහා)</string>
     <string name="msg_revoked">QuietGuard අක්‍රිය කර ඇත, බොහෝ දුරට වෙනත් VPN යෙදුමක් භාවිත කිරීම මෙයට හේතුව විය හැක</string>
-    <string name="msg_installed">\'%1$s\' ස්ථාපනය කරන ලදී</string>
+    <string name="msg_installed">'%1$s' ස්ථාපනය කරන ලදී</string>
     <string name="msg_installed_n">ස්ථාපනය කර ඇත</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s අන්තර්ජාලයට ප්‍රවේශ වීමට උත්සාහ කරන ලදී</string>
     <string name="msg_access_n">අන්තර්ජාල ප්‍රවේශ උත්සාහයක්</string>
     <string name="msg_completed">ක්‍රියාව අවසන්</string>
@@ -312,7 +312,7 @@
 එමනිසා, කරුණාකර ඊළඟ පණිවිඩයේදී VPN සම්බන්ධතාවයකට ඉඩ දෙන්න.
 ඔබේ අන්තර්ජාල දත්ත වෙනත් දුරස්ථ VPN සේවාදායකයකට යවනු නොලැබේ.</string>
     <string name="msg_autostart">QuietGuard ස්වයංක්‍රීයව ආරම්භ කළ නොහැකි විය. මෙය බොහෝ විට ඔබේ Android සංස්කරණයේ දෝෂයක් නිසා විය හැක.</string>
-    <string name="msg_error">අපේක්ෂා නොකළ දෝෂයක් සිදුවිය: \'%s\'</string>
+    <string name="msg_error">අපේක්ෂා නොකළ දෝෂයක් සිදුවිය: '%s'</string>
     <string name="msg_start_failed">ඇන්ඩ්‍රොයිඩ් පද්ධතිය මෙම අවස්ථාවේදී VPN සේවාව ආරම්භ කිරීම ප්‍රතික්ෂේප කළේය. මෙය බොහෝ විට ඔබේ Android සංස්කරණයේ දෝෂයක් නිසා විය හැක.</string>
     <string name="msg_try">QuietGuard උත්සාහ කර බලන්න</string>
     <string name="msg_terms">පරිත්‍යාග කිරීමෙන් ඔබ <a href="http://www.netguard.me/#terms">නියමයන් සහ කොන්දේසි</a> වලට එකඟ වේ</string>
@@ -325,7 +325,7 @@
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
     <string name="msg_doze">ස්ථාවර ප්‍රතිඵල සඳහා, QuietGuard සඳහා Android බැටරි ප්‍රශස්තකරණය (battery optimization) අක්‍රිය කළ යුතුය.
-\n\nඊළඟ පණිවිඩයේ, ඉහළින් \"All apps\" තෝරන්න, ලැයිස්තුවේ ඇති QuietGuard මත තට්ටු කර \"Don\'t optimize\" තෝරා තහවුරු කරන්න.</string>
+\n\nඊළඟ පණිවිඩයේ, ඉහළින් \"All apps\" තෝරන්න, ලැයිස්තුවේ ඇති QuietGuard මත තට්ටු කර \"Don't optimize\" තෝරා තහවුරු කරන්න.</string>
     <string name="msg_datasaving">ස්ථාවර ප්‍රතිඵල සඳහා, QuietGuard සඳහා Android දත්ත සුරැකීමේ විකල්ප අක්‍රිය කළ යුතුය.
 \n\nඊළඟ පණිවිඩයේ, \"Background data\" සහ \"Unrestricted data usage\" යන විකල්ප සක්‍රිය කරන්න.</string>
     <string name="msg_filter">පෙරීම (filtering) භාවිතා කිරීමෙන් Android පද්ධතිය දත්ත සහ බල භාවිතය මුල් යෙදුම් වලට වඩා QuietGuard වෙත පවරනු ඇත.</string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">බාගත වෙමින් පවතී\n%1s</string>
     <string name="msg_downloaded">Hosts ගොනුව බාගත කරන ලදී</string>
     <string name="msg_download_last">අවසන් වරට බාගත කළේ: %s</string>
-    <string name="msg_start_forward">%1$s පෝට් %2$d සිට \'%5$s\' හි %3$s:%4$d වෙත ඉදිරියට යැවීම ආරම්භ කරන්නද?</string>
+    <string name="msg_start_forward">%1$s පෝට් %2$d සිට '%5$s' හි %3$s:%4$d වෙත ඉදිරියට යැවීම ආරම්භ කරන්නද?</string>
     <string name="msg_stop_forward">%1$s පෝට් %2$d හි ඉදිරියට යැවීම නවත්වන්නද?</string>
     <string name="msg_metered">ජාලය සීමා සහිතයි (metered)</string>
     <string name="msg_inactive">සක්‍රිය අන්තර්ජාල සම්බන්ධතාවයක් නොමැත</string>

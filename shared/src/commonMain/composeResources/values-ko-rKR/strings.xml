@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard는 루트 권한 없이 인터넷 접속을 차단하는 간편하고 고급스러운 방법을 제공합니다. 앱 및 주소별로 Wi-Fi 및/또는 모바일 연결에 대한 액세스를 개별적으로 허용하거나 거부할 수 있습니다.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard는 Android 5.1 이상이 필요합니다.</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">개인정보 보호정책</a></string>
     <string name="app_first">QuietGuard를 개발하고 테스트하는 데 세심한 주의를 기울였으나, 모든 기기에서 올바르게 작동한다고 보장할 수는 없습니다.</string>
     <string name="app_agree">동의함</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">대상 주소</string>
     <string name="title_rport">대상 포트</string>
     <string name="title_ruid">대상 앱</string>
-    <string name="title_external">외부 서버의 경우 \'nobody\'를 선택하세요</string>
+    <string name="title_external">외부 서버의 경우 'nobody'를 선택하세요</string>
 
     <string name="setting_defaults">기본값 (화이트/블랙리스트)</string>
     <string name="setting_whitelist_wifi">Wi-Fi 차단</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">다크</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">새 앱 설치 시 알림</string>
-    <string name="setting_screen_on">\'화면이 켜져 있을 때\' 규칙 적용</string>
+    <string name="setting_screen_on">'화면이 켜져 있을 때' 규칙 적용</string>
     <string name="setting_auto">%1$s분 후 자동 활성화</string>
     <string name="setting_delay">화면 꺼짐 %1$s분 지연</string>
     <string name="setting_update">업데이트 확인</string>
@@ -288,7 +288,7 @@
     <string name="summary_filter">VPN 터널에서 나가는 IP 패킷 필터링. 배터리 소모가 늘어날 수 있습니다.</string>
     <string name="summary_track_usage">각 앱 및 주소별 송수신 바이트 수 추적. 배터리 소모가 늘어날 수 있습니다.</string>
     <string name="summary_block_domains">차단된 도메인에 대해 구성된 DNS 응답 코드로 응답. hosts 파일이 없으면 비활성화됩니다.</string>
-    <string name="summary_rcode">기본값은 3 (NXDOMAIN)이며, \'존재하지 않는 도메인\'을 의미합니다.</string>
+    <string name="summary_rcode">기본값은 3 (NXDOMAIN)이며, '존재하지 않는 도메인'을 의미합니다.</string>
     <string name="summary_validate">포트 443 (HTTPS)에서 인터넷 연결을 확인하는 데 사용되는 도메인 이름.</string>
     <string name="summary_socks5_enabled">TCP 트래픽만 프록시 서버로 전송됩니다</string>
     <string name="summary_watchdog">QuietGuard가 실행 중인지 주기적으로 확인 (비활성화하려면 0 입력). 배터리 소모가 늘어날 수 있습니다.</string>
@@ -305,9 +305,9 @@
     <string name="msg_disabled">QuietGuard가 비활성화됨. 상단 스위치를 눌러 활성화하세요</string>
     <string name="msg_notifications">알림 권한을 부여하려면 누르세요 (접속 시도 알림, 오류 메시지 등을 위해)</string>
     <string name="msg_revoked">QuietGuard가 비활성화됨. 다른 VPN 앱 사용으로 인한 것일 수 있습니다</string>
-    <string name="msg_installed">\'%1$s\' 설치됨</string>
+    <string name="msg_installed">'%1$s' 설치됨</string>
     <string name="msg_installed_n">설치되었습니다</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s이(가) 인터넷 액세스를 시도함</string>
     <string name="msg_access_n">인터넷 액세스 시도됨</string>
     <string name="msg_completed">작업 완료</string>
@@ -317,7 +317,7 @@
 이러한 이유로 다음 대화 상자에서 VPN 연결을 허용해 주세요.
 트래픽은 원격 VPN 서버로 전송되지 않습니다.</string>
     <string name="msg_autostart">QuietGuard가 자동으로 시작되지 않았습니다. 사용 중인 Android 버전의 버그일 수 있습니다.</string>
-    <string name="msg_error">예기치 않은 오류 발생: \'%s\'</string>
+    <string name="msg_error">예기치 않은 오류 발생: '%s'</string>
     <string name="msg_start_failed">Android가 현재 VPN 서비스 시작을 거부했습니다. 사용 중인 Android 버전의 버그일 수 있습니다.</string>
     <string name="msg_try">QuietGuard 사용해 보기</string>
     <string name="msg_terms">기부함으로써 <a href="http://www.netguard.me/#terms">이용 약관</a>에 동의하게 됩니다</string>
@@ -342,7 +342,7 @@
     <string name="msg_downloading">다운로드 중\n%1s</string>
     <string name="msg_downloaded">hosts 파일 다운로드됨</string>
     <string name="msg_download_last">최근 다운로드: %s</string>
-    <string name="msg_start_forward">%1$s 포트 %2$d에서 \'%5$s\'의 %3$s:%4$d(으)로 전달을 시작할까요？</string>
+    <string name="msg_start_forward">%1$s 포트 %2$d에서 '%5$s'의 %3$s:%4$d(으)로 전달을 시작할까요？</string>
     <string name="msg_stop_forward">%1$s 포트 %2$d의 전달을 중단할까요？</string>
     <string name="msg_metered">종량제 네트워크입니다</string>
     <string name="msg_inactive">활성 인터넷 연결 없음</string>

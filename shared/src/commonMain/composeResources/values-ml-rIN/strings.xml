@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard ഇന്റർനെറ്റിലേക്കുള്ള ആക്സസ് തടയുന്നതിന് ലളിതവും നൂതനവുമായ മാർഗ്ഗങ്ങൾ നൽകുന്നു - റൂട്ട് ആവശ്യമില്ല. അപ്ലിക്കേഷനുകൾക്കും വിലാസങ്ങൾക്കും നിങ്ങളുടെ വൈഫൈ/മൊബൈൽ കണക്ഷനിലേക്ക് വ്യക്തിഗതമായി പ്രവേശനം അനുവദിക്കുകയോ നിരസിക്കുകയോ ചെയ്യാം.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard- ന് Android 5.1 അല്ലെങ്കിൽ അതിനുശേഷമുള്ളത് ആവശ്യമാണ്</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">സ്വകാര്യതാ നയം</a></string>
     <string name="app_first">നെറ്റ്ഗാർഡ് വികസിപ്പിക്കുന്നതിനും പരിശോധിക്കുന്നതിനും വളരെയധികം ശ്രദ്ധ ചെലുത്തിയിട്ടുണ്ട്, എന്നിരുന്നാലും എല്ലാ ഉപകരണങ്ങളിലും നെറ്റ്ഗാർഡ് ശരിയായി പ്രവർത്തിക്കുമെന്ന് ഉറപ്പുനൽകാൻ കഴിയില്ല.</string>
     <string name="app_agree">ഞാൻ അംഗീകരിക്കുന്നു</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">ലക്ഷ്യസ്ഥാന വിലാസം</string>
     <string name="title_rport">ലക്ഷ്യസ്ഥാന പോർട്ട്</string>
     <string name="title_ruid">ലക്ഷ്യസ്ഥാന ആപ്പ്</string>
-    <string name="title_external">ഒരു ബാഹ്യ സെർവറിനായി \'ഒരാളും ഇല്ല\' എന്നത് തിരഞ്ഞെടുക്കുക</string>
+    <string name="title_external">ഒരു ബാഹ്യ സെർവറിനായി 'ഒരാളും ഇല്ല' എന്നത് തിരഞ്ഞെടുക്കുക</string>
 
     <string name="setting_defaults">സ്ഥിരസ്ഥിതികൾ (വൈറ്റ്/ബ്ലാക്ക്‌ലിസ്റ്റ്)</string>
     <string name="setting_whitelist_wifi">Wi-Fi തടയുക</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">ഡാർക്ക്</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">പുതിയ ഇൻസ്റ്റാളേഷനെ കുറിച്ച് അറിയിക്കുക</string>
-    <string name="setting_screen_on">\'സ്‌ക്രീൻ ഓണായിരിക്കുമ്പോൾ\' ഉള്ള നിയമങ്ങൾ ബാധകമാക്കുക</string>
+    <string name="setting_screen_on">'സ്‌ക്രീൻ ഓണായിരിക്കുമ്പോൾ' ഉള്ള നിയമങ്ങൾ ബാധകമാക്കുക</string>
     <string name="setting_auto">%1$s മിനിറ്റിന് ശേഷം ഓട്ടോമാറ്റിക് ആയി പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="setting_delay">സ്‌ക്രീൻ ഓഫാകുന്നത് %1$s മിനിറ്റ് വൈകിപ്പിക്കുക</string>
     <string name="setting_update">അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുക</string>
@@ -283,7 +283,7 @@
     <string name="summary_filter">VPN ടണലിൽ നിന്ന് പുറത്തേക്ക് പോകുന്ന IP പാക്കറ്റുകൾ ഫിൽട്ടർ ചെയ്യുക. ഇത് അധിക ബാറ്ററി ഉപയോഗത്തിന് കാരണമായേക്കാം.</string>
     <string name="summary_track_usage">ഓരോ ആപ്പിനും വിലാസത്തിനും അയച്ചതും സ്വീകരിച്ചതുമായ ബൈറ്റുകളുടെ എണ്ണം ട്രാക്ക് ചെയ്യുക. ഇത് അധിക ബാറ്ററി ഉപയോഗത്തിന് കാരണമായേക്കാം.</string>
     <string name="summary_block_domains">തടഞ്ഞ ഡൊമെയ്ൻ നാമങ്ങൾക്കായി കോൺഫിഗർ ചെയ്ത DNS പ്രതികരണ കോഡ് ഉപയോഗിച്ച് മറുപടി നൽകുക. ഹോസ്റ്റ് ഫയൽ ലഭ്യമല്ലെങ്കിൽ ഈ സ്വിച്ച് പ്രവർത്തനരഹിതമാകും.</string>
-    <string name="summary_rcode">നാല്പത്തിയൊന്ന് ഡിഫോൾട്ട് മൂല്യം 3 (NXDOMAIN) ആണ്, അതായത് \'നിലവിലില്ലാത്ത ഡൊമെയ്ൻ\'.</string>
+    <string name="summary_rcode">നാല്പത്തിയൊന്ന് ഡിഫോൾട്ട് മൂല്യം 3 (NXDOMAIN) ആണ്, അതായത് 'നിലവിലില്ലാത്ത ഡൊമെയ്ൻ'.</string>
     <string name="summary_validate">പോർട്ട് 443 (https)-ൽ ഇന്റർനെറ്റ് കണക്ഷൻ സാധൂകരിക്കാൻ ഉപയോഗിക്കുന്ന ഡൊമെയ്ൻ നാമം.</string>
     <string name="summary_socks5_enabled">TCP ട്രാഫിക് മാത്രമേ പ്രോക്സി സെർവറിലേക്ക് അയയ്ക്കൂ</string>
     <string name="summary_watchdog">നെറ്റ്ഗാർഡ് ഇപ്പോഴും പ്രവർത്തിക്കുന്നുണ്ടോ എന്ന് ഇടയ്ക്കിടെ പരിശോധിക്കുക (ഈ ഓപ്ഷൻ പ്രവർത്തനരഹിതമാക്കാൻ പൂജ്യം നൽകുക). ഇത് അധിക ബാറ്ററി ഉപയോഗത്തിന് കാരണമായേക്കാം.</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">നെറ്റ്ഗാർഡ് പ്രവർത്തനരഹിതമാണ്, നെറ്റ്ഗാർഡ് പ്രവർത്തനക്ഷമമാക്കാൻ മുകളിലുള്ള സ്വിച്ച് ഉപയോഗിക്കുക</string>
     <string name="msg_notifications">അറിയിപ്പ് അനുമതികൾ നൽകാൻ ടാപ്പുചെയ്യുക (ആക്‌സസ് ശ്രമ അറിയിപ്പുകൾ, പിശക് സന്ദേശങ്ങൾ തുടങ്ങിയവയ്ക്കായി)</string>
     <string name="msg_revoked">നെറ്റ്ഗാർഡ് പ്രവർത്തനരഹിതമാക്കി, മിക്കവാറും മറ്റൊരു VPN ആപ്പ് ഉപയോഗിക്കുന്നത് കാരണമാകാം</string>
-    <string name="msg_installed">\'%1$s\' ഇൻസ്റ്റാളുചെയ്‌തു</string>
+    <string name="msg_installed">'%1$s' ഇൻസ്റ്റാളുചെയ്‌തു</string>
     <string name="msg_installed_n">ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ട്</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s ഇന്റർനെറ്റ് ആക്‌സസ് ചെയ്യാൻ ശ്രമിച്ചു</string>
     <string name="msg_access_n">ഇന്റർനെറ്റ് ആക്‌സസ് ചെയ്യാൻ ശ്രമിച്ചു</string>
     <string name="msg_completed">പ്രവർത്തനം പൂർത്തിയായി</string>
@@ -312,7 +312,7 @@
 ഈ കാരണത്താൽ, അടുത്ത ഡയലോഗിൽ ഒരു VPN കണക്ഷൻ അനുവദിക്കുക.
 നിങ്ങളുടെ ഇന്റർനെറ്റ് ട്രാഫിക് ഒരു വിദൂര VPN സെർവറിലേക്ക് അയയ്ക്കുന്നില്ല.</string>
     <string name="msg_autostart">നെറ്റ്ഗാർഡിന് സ്വയമേവ ആരംഭിക്കാൻ കഴിഞ്ഞില്ല. ഇത് നിങ്ങളുടെ ആൻഡ്രോയിഡ് പതിപ്പിലെ ബഗ് കാരണമാകാം.</string>
-    <string name="msg_error">പ്രതീക്ഷിക്കാത്ത പിശക് സംഭവിച്ചു: \'%s\'</string>
+    <string name="msg_error">പ്രതീക്ഷിക്കാത്ത പിശക് സംഭവിച്ചു: '%s'</string>
     <string name="msg_start_failed">ആൻഡ്രോയിഡ് ഈ നിമിഷം VPN സേവനം ആരംഭിക്കാൻ വിസമ്മതിച്ചു. ഇത് നിങ്ങളുടെ ആൻഡ്രോയിഡ് പതിപ്പിലെ ബഗ് കാരണമാകാം.</string>
     <string name="msg_try">നെറ്റ്ഗാർഡ് പരീക്ഷിക്കുക</string>
     <string name="msg_terms">സംഭാവന നൽകുന്നതിലൂടെ നിങ്ങൾ <a href="http://www.netguard.me/#terms">നിബന്ധനകളും വ്യവസ്ഥകളും</a> അംഗീകരിക്കുന്നു</string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">ഡൗൺലോഡ് ചെയ്യുന്നു\n%1s</string>
     <string name="msg_downloaded">ഹോസ്റ്റ് ഫയൽ ഡൗൺലോഡ് ചെയ്തു</string>
     <string name="msg_download_last">അവസാന ഡൗൺലോഡ്: %s</string>
-    <string name="msg_start_forward">%1$s പോർട്ട് %2$d-ൽ നിന്ന് \'%5$s\'-ന്റെ %3$s:%4$d-ലേക്ക് ഫോർവേഡിംഗ് ആരംഭിക്കണോ?</string>
+    <string name="msg_start_forward">%1$s പോർട്ട് %2$d-ൽ നിന്ന് '%5$s'-ന്റെ %3$s:%4$d-ലേക്ക് ഫോർവേഡിംഗ് ആരംഭിക്കണോ?</string>
     <string name="msg_stop_forward">%1$s പോർട്ട് %2$d-ന്റെ ഫോർവേഡിംഗ് നിർത്തണോ?</string>
     <string name="msg_metered">നെറ്റ്‌വർക്ക് മീറ്റേർഡ് ആണ്</string>
     <string name="msg_inactive">സജീവമായ ഇന്റർനെറ്റ് കണക്ഷൻ ഇല്ല</string>

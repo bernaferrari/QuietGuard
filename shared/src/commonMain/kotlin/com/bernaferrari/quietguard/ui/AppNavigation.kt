@@ -132,15 +132,15 @@ fun AppNavigation(
     }
 
     fun popBackStack() {
-        val current = backStack.lastOrNull() as? AppNavKey ?: return
-
         when {
             backStack.size > 1 -> backStack.removeAt(backStack.lastIndex)
-            current != Home -> {
+            // At a single non-Home root, fall back to Home. At Home itself this is a
+            // no-op: popping the last entry would leave NavDisplay with an empty
+            // backstack, which throws.
+            backStack.lastOrNull() != Home -> {
                 backStack.clear()
                 backStack.add(Home)
             }
-            else -> backStack.removeAt(backStack.lastIndex)
         }
     }
 
@@ -331,12 +331,12 @@ fun AppNavigation(
                         }
                         entry<Dns> {
                             CenteredScreen {
-                                DnsScreen()
+                                DnsScreen(onBack = { popBackStack() })
                             }
                         }
                         entry<Forwarding> {
                             CenteredScreen {
-                                ForwardingScreen()
+                                ForwardingScreen(onBack = { popBackStack() })
                             }
                         }
                         entry<Pro> {

@@ -4,7 +4,7 @@
     <string name="app_description">Ang QuietGuard ang nagbibigay ng simple at pinahusay na mga paraan para harangan ang akses sa internet - ang root ay hindi kinakailangan. Ang mga App at mga adres ay isa-isang pinapayagan o tinatanggihan ang akses sa iyong Wi-Fi at/o sa iyong mobile koneksyon.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">Ang QuietGuard ay nangangailangan ng Android 5.1 o mas bago</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Patakaran sa pagiging pribado</a></string>
     <string name="app_first">Lubos na pag-iingat ang ginawa sa pagbuo at pagsubok sa QuietGuard, gayunpaman imposible na garantiyahan na ang QuietGuard ay gagana nang tama sa bawat device.</string>
     <string name="app_agree">Sumasang-ayon ako</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Destination address</string>
     <string name="title_rport">Destination port</string>
     <string name="title_ruid">Destination app</string>
-    <string name="title_external">Para sa isang external server piliin ang \'wala\'</string>
+    <string name="title_external">Para sa isang external server piliin ang 'wala'</string>
 
     <string name="setting_defaults">Mga Default (white/blacklist)</string>
     <string name="setting_whitelist_wifi">I-block ang Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Madilim</string>
     <string name="theme_dynamic">Dynamic</string>
     <string name="setting_install">Mag-notify sa bagong install</string>
-    <string name="setting_screen_on">I-apply ang mga rule na \'kapag nakabukas ang screen\'</string>
+    <string name="setting_screen_on">I-apply ang mga rule na 'kapag nakabukas ang screen'</string>
     <string name="setting_auto">Auto enable pagkatapos ng %1$s minuto</string>
     <string name="setting_delay">I-delay ang pag-off ng screen ng %1$s minuto</string>
     <string name="setting_update">Mag-tsek para sa mga updeyt</string>
@@ -289,7 +289,7 @@
     <string name="summary_filter">I-filter ang mga IP packet na lumalabas sa VPN tunnel. Maaari itong magresulta sa ekstrang gamit ng baterya.</string>
     <string name="summary_track_usage">Subaybayan ang bilang ng mga byte na ipinadala at natanggap para sa bawat app at address. Maaari itong magresulta sa ekstrang gamit ng baterya.</string>
     <string name="summary_block_domains">Tumugon gamit ang na-configure na DNS response code para sa mga naka-block na domain name. Ang switch na ito ay naka-disable kapag walang hosts file na available.</string>
-    <string name="summary_rcode">Ang default na halaga ay 3 (NXDOMAIN), na nangangahulugang \'hindi umiiral na domain\'.</string>
+    <string name="summary_rcode">Ang default na halaga ay 3 (NXDOMAIN), na nangangahulugang 'hindi umiiral na domain'.</string>
     <string name="summary_validate">Domain name na ginagamit para i-validate ang internet connection sa port 443 (https).</string>
     <string name="summary_socks5_enabled">TCP trapiko lamang ang ipadadala sa proxy server</string>
     <string name="summary_watchdog">Pana-panahong suriin kung tumatakbo pa ang QuietGuard (ilagay ang zero para i-disable ang opsyong ito). Maaari itong magresulta sa ekstrang gamit ng baterya.</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">Naka-disable ang QuietGuard, gamitin ang switch sa itaas para i-enable ang QuietGuard</string>
     <string name="msg_notifications">I-tap para magbigay ng mga pahintulot sa notipikasyon (para sa mga notipikasyon sa pagtatangka sa akses, mga mensahe ng error, atbp.)</string>
     <string name="msg_revoked">Naka-disable ang QuietGuard, malamang dahil sa paggamit ng isa pang VPN based app</string>
-    <string name="msg_installed">Nai-install ang \'%1$s\'</string>
+    <string name="msg_installed">Nai-install ang '%1$s'</string>
     <string name="msg_installed_n">Nai-install na</string>
-    <string name="msg_malware">Posibleng malware: \'%1$s\'</string>
+    <string name="msg_malware">Posibleng malware: '%1$s'</string>
     <string name="msg_access">Nag-tangkang mag-akses sa internet ang %1$s</string>
     <string name="msg_access_n">Nag-tangkang mag-akses sa internet</string>
     <string name="msg_completed">Kumpleto na ang aksyon</string>
@@ -318,7 +318,7 @@
 Dahil dito, mangyaring payagan ang isang koneksyon sa VPN sa susunod na dialog.
 Ang iyong internet trapiko ay hindi ipinapadala sa isang remote VPN server.</string>
     <string name="msg_autostart">Hindi awtomatikong makapagsimula ang QuietGuard. Malamang na ito ay dahil sa isang bug sa iyong bersyon ng Android.</string>
-    <string name="msg_error">Nagkaroon ng hindi inaasahang error: \'%s\'</string>
+    <string name="msg_error">Nagkaroon ng hindi inaasahang error: '%s'</string>
     <string name="msg_start_failed">Tumanggi ang Android na simulan ang serbisyo ng VPN sa sandaling ito. Malamang na ito ay dahil sa isang bug sa iyong bersyon ng Android.</string>
     <string name="msg_try">Subukan ang QuietGuard</string>
     <string name="msg_terms">Sa pamamagitan ng pag-donate sumasang-ayon ka sa mga <a href="http://www.netguard.me/#terms">tuntunin at kondisyon</a></string>
@@ -343,7 +343,7 @@ Ang iyong internet trapiko ay hindi ipinapadala sa isang remote VPN server.</str
     <string name="msg_downloading">Nag-da-download\n%1s</string>
     <string name="msg_downloaded">Nai-download ang hosts file</string>
     <string name="msg_download_last">Huling download: %s</string>
-    <string name="msg_start_forward">Simulan ang pag-forward mula sa %1$s port %2$d patungo sa %3$s:%4$d ng \'%5$s\'?</string>
+    <string name="msg_start_forward">Simulan ang pag-forward mula sa %1$s port %2$d patungo sa %3$s:%4$d ng '%5$s'?</string>
     <string name="msg_stop_forward">Itigil ang pag-forward ng %1$s port %2$d?</string>
     <string name="msg_metered">Ang network ay limitado</string>
     <string name="msg_inactive">Walang aktibong koneksyon sa internet</string>

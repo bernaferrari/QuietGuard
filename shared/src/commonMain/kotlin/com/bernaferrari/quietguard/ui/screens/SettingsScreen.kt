@@ -1742,6 +1742,9 @@ private fun SettingToggleRow(
     onReset: (() -> Unit)? = null,
     onCheckedChange: (Boolean) -> Unit,
 ) {
+    val localizedState = stringResource(
+        if (checked) Res.string.setting_value_on else Res.string.setting_value_off,
+    )
     val spacing = MaterialTheme.spacing
     val rowShape =
         settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
@@ -1809,7 +1812,7 @@ private fun SettingToggleRow(
                     checked = checked,
                     onCheckedChange = null,
                     modifier = Modifier.semantics {
-                        contentDescription = "$title: ${if (checked) "enabled" else "disabled"}"
+                        contentDescription = "$title: $localizedState"
                     },
                 )
             }
@@ -1828,6 +1831,9 @@ private fun SettingToggleRowWithTooltip(
     onReset: (() -> Unit)? = null,
     onCheckedChange: (Boolean) -> Unit,
 ) {
+    val localizedState = stringResource(
+        if (checked) Res.string.setting_value_on else Res.string.setting_value_off,
+    )
     val spacing = MaterialTheme.spacing
     val rowShape =
         settingItemShape(isFirst = isFirst, isLast = isLast, baseShape = MaterialTheme.shapes.small)
@@ -1906,7 +1912,7 @@ private fun SettingToggleRowWithTooltip(
                         checked = checked,
                         onCheckedChange = null,
                         modifier = Modifier.semantics {
-                            contentDescription = "$title: ${if (checked) "enabled" else "disabled"}"
+                            contentDescription = "$title: $localizedState"
                         },
                     )
                 }

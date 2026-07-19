@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">QuietGuard</string>
-    <string name="app_description">QuietGuard надає прості та розширені методи блокування доступу до Інтернету - без необхідності root-прав. Програмам та адресам можна індивідуально дозволяти або забороняти доступ до Wi-Fi та/або мобільного зв\'язку.</string>
+    <string name="app_description">QuietGuard надає прості та розширені методи блокування доступу до Інтернету - без необхідності root-прав. Програмам та адресам можна індивідуально дозволяти або забороняти доступ до Wi-Fi та/або мобільного зв'язку.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard потребує Android 5.1 або новішої версії</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Політика конфіденційності</a></string>
     <string name="app_first">При розробці та тестуванні QuietGuard було докладено великих зусиль, але неможливо гарантувати, що QuietGuard буде працювати правильно на кожному пристрої.</string>
     <string name="app_agree">Я згоден</string>
@@ -12,7 +12,7 @@
     <string name="app_support">QuietGuard потребує вашої допомоги. Натисніть, щоб купити Pro-функції та підтримати продовження проекту.</string>
     <string name="app_qap">
         Google мала намір видалити цей додаток з магазину Play, оскільки він запитував дозвіл на отримання списку всіх додатків.
-        П\'ять апеляцій та достатнє обґрунтування того, чому цей дозвіл необхідний, були відхилені.
+        П'ять апеляцій та достатнє обґрунтування того, чому цей дозвіл необхідний, були відхилені.
         Ця версія додатка більше не запитує цей дозвіл.
         Незважаючи на це, майже всі додатки все одно будуть перераховані,
         за винятком деяких (системних) додатків, які не можна запустити вручну зі списку додатків Android.
@@ -55,11 +55,11 @@
     <string name="notify_traffic_debug">Сесія %1$d/%2$d/%3$d • Файл %4$d/%5$d</string>
     <string name="ui_loading">Завантаження…</string>
     <string name="ui_empty_logs_title">Ще немає трафіку</string>
-    <string name="ui_empty_logs_body">Як тільки з\'являться з\'єднання, вони будуть відображені тут.</string>
+    <string name="ui_empty_logs_body">Як тільки з'являться з'єднання, вони будуть відображені тут.</string>
     <string name="ui_empty_apps_title">Додатки не знайдено</string>
     <string name="ui_empty_apps_body">Будь ласка, спробуйте оновити список.</string>
     <string name="ui_empty_dns_title">Ще немає розпізнаних DNS</string>
-    <string name="ui_empty_dns_body">Після перегляду сайтів тут з\'являться DNS-відповіді.</string>
+    <string name="ui_empty_dns_body">Після перегляду сайтів тут з'являться DNS-відповіді.</string>
     <string name="ui_dns_filter_empty">Немає DNS-записів, що відповідають фільтру.</string>
     <string name="ui_empty_forwarding_title">Немає правил перенаправлення</string>
     <string name="ui_empty_forwarding_body">Додайте правило, щоб почати перенаправляти трафік.</string>
@@ -148,11 +148,11 @@
     <string name="title_raddr">Адреса призначення</string>
     <string name="title_rport">Порт призначення</string>
     <string name="title_ruid">Цільовий додаток</string>
-    <string name="title_external">Виберіть \'nobody\' для зовнішніх серверів</string>
+    <string name="title_external">Виберіть 'nobody' для зовнішніх серверів</string>
 
     <string name="setting_defaults">Типові значення (Білий/Чорний список)</string>
     <string name="setting_whitelist_wifi">Блокувати Wi-Fi</string>
-    <string name="setting_whitelist_other">Блокувати мобільний зв\'язок</string>
+    <string name="setting_whitelist_other">Блокувати мобільний зв'язок</string>
     <string name="setting_screen_wifi">Дозволити Wi-Fi при увімкненому екрані</string>
     <string name="setting_screen_other">Дозволити мобільний при увімкненому екрані</string>
     <string name="setting_whitelist_roaming">Блокувати роумінг</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Темний</string>
     <string name="theme_dynamic">Динамічна</string>
     <string name="setting_install">Сповіщати про новий додаток</string>
-    <string name="setting_screen_on">Застосовувати правила \'екран увімкнено\'</string>
+    <string name="setting_screen_on">Застосовувати правила 'екран увімкнено'</string>
     <string name="setting_auto">Увімкнути автоматично через %1$s хв</string>
     <string name="setting_delay">Зберігати правила протягом %1$s хв після вимк. екрана</string>
     <string name="setting_update">Перевіряти наявність оновлень</string>
@@ -193,7 +193,7 @@
     <string name="setting_call">Вимикати під час дзвінків</string>
     <string name="setting_lockdown_wifi">Блокування Wi-Fi</string>
     <string name="setting_lockdown_other">Блокування мобільних даних</string>
-    <string name="setting_reload_onconnectivity">Перезавантажувати при кожній зміні з\'єднання</string>
+    <string name="setting_reload_onconnectivity">Перезавантажувати при кожній зміні з'єднання</string>
 
     <string name="setting_advanced_options">Розширені опції</string>
     <string name="setting_system">Керувати системними додатками</string>
@@ -203,7 +203,7 @@
     <string name="setting_filter">Фільтрувати трафік</string>
     <string name="setting_filter_udp">Фільтрувати UDP-трафік</string>
     <string name="setting_handover">Безшовна передача VPN при перезавантаженні</string>
-    <string name="setting_clear_onreload">Закривати з\'єднання при перезавантаженні</string>
+    <string name="setting_clear_onreload">Закривати з'єднання при перезавантаженні</string>
     <string name="setting_lockdown">Блокувати трафік</string>
     <string name="setting_malware">Захист від шкідливого ПЗ</string>
     <string name="setting_track_usage">Відстежувати використання мережі</string>
@@ -261,7 +261,7 @@
 
     <string name="summary_install">Відображати сповіщення в рядку стану для прямого налаштування щойно встановлених додатків (функція Pro)</string>
     <string name="summary_auto">Автоматично вмикати QuietGuard знову через вибрану кількість хвилин після вимкнення за допомогою віджета (введіть нуль, щоб вимкнути цю опцію)</string>
-    <string name="summary_delay">Зберігати правила \'екран увімкнено\' активними протягом вибраної кількості хвилин після вимкнення екрана (введіть нуль, щоб вимкнути цю опцію)</string>
+    <string name="summary_delay">Зберігати правила 'екран увімкнено' активними протягом вибраної кількості хвилин після вимкнення екрана (введіть нуль, щоб вимкнути цю опцію)</string>
     <string name="summary_update">Перевіряти наявність нових випусків на GitHub двічі на день</string>
 
     <string name="summary_tethering">Залежно від версії Android, режим модема може працювати або не працювати. Трафік у режимі модема не може бути відфільтрований.</string>
@@ -270,9 +270,9 @@
     <string name="summary_ip6">Спрямовувати трафік IPv6 через QuietGuard, щоб дозволити його вибіркове пропускання або блокування</string>
     <string name="summary_wifi_home">Застосовувати правила мережі Wi-Fi тільки для вибраної мережі (для інших мереж Wi-Fi застосовувати правила мобільної мережі)</string>
     <string name="summary_metered">Застосовувати правила мобільної мережі до платних (лімітованих, спільних) мереж Wi-Fi</string>
-    <string name="summary_metered_2g">Застосовувати правила мережі Wi-Fi до з\'єднань даних 2G</string>
-    <string name="summary_metered_3g">Застосовувати правила мережі Wi-Fi до з\'єднань даних 3G</string>
-    <string name="summary_metered_4g">Застосовувати правила мережі Wi-Fi до з\'єднань даних LTE</string>
+    <string name="summary_metered_2g">Застосовувати правила мережі Wi-Fi до з'єднань даних 2G</string>
+    <string name="summary_metered_3g">Застосовувати правила мережі Wi-Fi до з'єднань даних 3G</string>
+    <string name="summary_metered_4g">Застосовувати правила мережі Wi-Fi до з'єднань даних LTE</string>
     <string name="summary_national_roaming">Не застосовувати правила роумінгу, коли країна SIM-карти та країна мобільної мережі однакові</string>
     <string name="summary_eu_roaming">Не застосовувати правила роумінгу, коли країна SIM-карти та країна мобільної мережі обидві знаходяться в ЄС (роумінг як вдома)</string>
     <string name="summary_call">Вимикати QuietGuard під час вхідних або вихідних дзвінків. Це можна використовувати, щоб уникнути проблем із дзвінками IP/Wi-Fi.</string>
@@ -284,8 +284,8 @@
     <string name="summary_filter">Фільтрувати IP-пакети, що виходять із тунелю VPN. Це може призвести до додаткового споживання заряду батареї.</string>
     <string name="summary_track_usage">Відстежувати кількість надісланих та отриманих байтів кожним додатком та адресою. Це може призвести до додаткового споживання заряду батареї.</string>
     <string name="summary_block_domains">Відповідати налаштованим кодом відповіді DNS для заблокованих доменів. Цей перемикач буде вимкнено, якщо файл hosts недоступний.</string>
-    <string name="summary_rcode">Типове значення 3 (NXDOMAIN), що означає \'домен не існує\'.</string>
-    <string name="summary_validate">Назва домену, що використовується для валідації інтернет-з\'єднання на порту 443 (https).</string>
+    <string name="summary_rcode">Типове значення 3 (NXDOMAIN), що означає 'домен не існує'.</string>
+    <string name="summary_validate">Назва домену, що використовується для валідації інтернет-з'єднання на порту 443 (https).</string>
     <string name="summary_socks5_enabled">Тільки TCP-трафік буде передаватися на проксі-сервер</string>
     <string name="summary_watchdog">Періодично перевіряти, чи QuietGuard все ще працює (введіть нуль, щоб вимкнути цю опцію). Це може призвести до додаткового споживання заряду батареї.</string>
 
@@ -301,19 +301,19 @@
     <string name="msg_disabled">QuietGuard вимкнено, будь ласка, використовуйте перемикач вище, щоб увімкнути QuietGuard</string>
     <string name="msg_notifications">Натисніть, щоб надати дозвіл на сповіщення (для сповіщень про спроби доступу, повідомлень про помилки тощо)</string>
     <string name="msg_revoked">QuietGuard було вимкнено, ймовірно, через використання іншого додатка на базі VPN</string>
-    <string name="msg_installed">\'%1$s\' встановлено</string>
+    <string name="msg_installed">'%1$s' встановлено</string>
     <string name="msg_installed_n">Встановлено</string>
-    <string name="msg_malware">Можливе шкідливе ПЗ: \'%1$s\'</string>
+    <string name="msg_malware">Можливе шкідливе ПЗ: '%1$s'</string>
     <string name="msg_access">%1$s намагався отримати доступ до Інтернету</string>
     <string name="msg_access_n">Намагався отримати доступ до Інтернету</string>
     <string name="msg_completed">Дію завершено</string>
     <string name="msg_invalid">Будь ласка, перевірте значення та спробуйте ще раз.</string>
     <string name="msg_export_failed">Експорт не вдався: %1$s</string>
     <string name="msg_vpn">QuietGuard використовує локальний VPN для фільтрації інтернет-трафіку.
-З цієї причини, будь ласка, дозвольте VPN-з\'єднання в наступному діалоговому вікні.
+З цієї причини, будь ласка, дозвольте VPN-з'єднання в наступному діалоговому вікні.
 Ваш інтернет-трафік не буде надсилатися на жоден віддалений VPN-сервер.</string>
     <string name="msg_autostart">Не вдалося автоматично запустити QuietGuard. Це, швидше за все, через помилку у вашій версії Android.</string>
-    <string name="msg_error">Сталася неочікувана помилка: \'%s\'</string>
+    <string name="msg_error">Сталася неочікувана помилка: '%s'</string>
     <string name="msg_start_failed">Android відмовив у запуску служби VPN на даний момент. Це, швидше за все, через помилку у вашій версії Android.</string>
     <string name="msg_try">Спробуйте QuietGuard</string>
     <string name="msg_terms">Роблячи пожертву, ви погоджуєтеся з <a href="http://www.netguard.me/#terms">умовами та положеннями</a></string>
@@ -338,10 +338,10 @@
     <string name="msg_downloading">Завантаження\n%1s</string>
     <string name="msg_downloaded">Файл hosts завантажено</string>
     <string name="msg_download_last">Останнє завантаження: %s</string>
-    <string name="msg_start_forward">Почати перенаправлення з %1$s порту %2$d на %3$s:%4$d для \'%5$s\'?</string>
+    <string name="msg_start_forward">Почати перенаправлення з %1$s порту %2$d на %3$s:%4$d для '%5$s'?</string>
     <string name="msg_stop_forward">Зупинити перенаправлення з %1$s порту %2$d?</string>
     <string name="msg_metered">Мережа платна (лімітована)</string>
-    <string name="msg_inactive">Немає активного інтернет-з\'єднання</string>
+    <string name="msg_inactive">Немає активного інтернет-з'єднання</string>
     <string name="msg_queue">QuietGuard зайнятий</string>
     <string name="msg_update">Доступне оновлення, натисніть щоб завантажити</string>
     <string name="msg_usage">Ви можете дозволити (зелений) або заборонити (червоний) доступ до Wi-Fi або мобільного Інтернету, натиснувши іконки поруч із додатком</string>
@@ -350,11 +350,11 @@
     <string name="msg_push">Вхідні (push) повідомлення в основному обробляються системним компонентом сервіси Play, якому за замовчуванням дозволено доступ до Інтернету</string>
     <string name="msg_system">Керування всіма (системними) додатками можна увімкнути в налаштуваннях</string>
     <string name="msg_issue">Будь ласка, опишіть проблему та вкажіть час її виникнення:</string>
-    <string name="msg_vpn_cancelled">VPN-з\'єднання скасовано\nВи налаштували інший VPN як \"Завжди увімкнений VPN\"?</string>
+    <string name="msg_vpn_cancelled">VPN-з'єднання скасовано\nВи налаштували інший VPN як \"Завжди увімкнений VPN\"?</string>
     <string name="msg_on">Вимкнення пристрою з увімкненим QuietGuard призведе до автоматичного запуску QuietGuard при увімкненні пристрою</string>
     <string name="msg_unavailable">Ця функція недоступна в цій версії Android</string>
     <string name="msg_always_on">Інший VPN встановлено як завжди увімкнений VPN</string>
-    <string name="msg_always_on_lockdown">Вимкніть \"Блокувати з\'єднання без VPN\" у налаштуваннях VPN Android, щоб використовувати QuietGuard у режимі фільтрації</string>
+    <string name="msg_always_on_lockdown">Вимкніть \"Блокувати з'єднання без VPN\" у налаштуваннях VPN Android, щоб використовувати QuietGuard у режимі фільтрації</string>
     <string name="msg_private_dns">Вимкніть \"Приватний DNS\" у налаштуваннях мережі Android, щоб використовувати QuietGuard у режимі фільтрації</string>
 
     <string name="title_lockdown_enabled">Трафік обмежено</string>
@@ -368,7 +368,7 @@
     <string name="title_host_blocked">Адресу заблоковано</string>
     <string name="title_interactive_allowed">Дозволити при увімкненому екрані</string>
     <string name="title_roaming_blocked">Блокувати в роумінгу</string>
-    <string name="title_metered">За замовчуванням з\'єднання Wi-Fi вважаються неплатними, а мобільні - платними</string>
+    <string name="title_metered">За замовчуванням з'єднання Wi-Fi вважаються неплатними, а мобільні - платними</string>
 
     <string name="title_internet">Немає дозволу на Інтернет</string>
     <string name="title_disabled">Вимкнено</string>
@@ -383,7 +383,7 @@
     <string name="label_ttl">TTL: %s с</string>
     <string name="label_uid">UID: %s</string>
     <string name="title_lockdown">Дозволити в режимі блокування</string>
-    <string name="title_related">Пов\'язано з фільтрацією</string>
+    <string name="title_related">Пов'язано з фільтрацією</string>
     <string name="title_access">Спроби доступу</string>
     <string name="title_precedence">Правила доступу мають пріоритет над іншими правилами</string>
     <string name="title_options">Опції</string>

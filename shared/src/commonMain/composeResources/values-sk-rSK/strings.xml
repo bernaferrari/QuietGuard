@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard poskytuje jednoduché a pokročilé spôsoby blokovania prístupu na internet - nevyžadujúcich root prístup. Aplikáciám a adresám môže byť individuálne povolený alebo odmietnutý prístup k Wi-Fi alebo mobilnému pripojeniu.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard vyžaduje Android vo verzii 5.1 alebo novšej</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Zásady ochrany osobných údajov</a></string>
     <string name="app_first">Skvelá starostlivosť bola venovaná pri vývoji a testovaní QuietGuardu, avšak je nemožné garantovať, že QuietGuard bude pracovať správne na každom jednom zariadení.</string>
     <string name="app_agree">Súhlasím</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Cieľová adresa</string>
     <string name="title_rport">Cieľový port</string>
     <string name="title_ruid">Cieľová aplikácia</string>
-    <string name="title_external">Pre externý server vyberte \'nikto\'</string>
+    <string name="title_external">Pre externý server vyberte 'nikto'</string>
 
     <string name="setting_defaults">Predvolené nastavenia (biely/čierny zoznam)</string>
     <string name="setting_whitelist_wifi">Blokovať Wi-Fi</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filtrovať IP pakety vychádzajúce z tunela VPN. Môže to viesť k zvýšenej spotrebe batérie.</string>
     <string name="summary_track_usage">Sledovať počet odoslaných a prijatých bajtov pre každú aplikáciu a adresu. Môže to viesť k zvýšenej spotrebe batérie.</string>
     <string name="summary_block_domains">Odpovedať s nakonfigurovaným kódom odpovede DNS pre blokované názvy domén. Tento prepínač je zakázaný, ak nie je k dispozícii žiadny súbor hosts.</string>
-    <string name="summary_rcode">Predvolená hodnota je 3 (NXDOMAIN), čo znamená \'neexistujúca doména\'.</string>
+    <string name="summary_rcode">Predvolená hodnota je 3 (NXDOMAIN), čo znamená 'neexistujúca doména'.</string>
     <string name="summary_validate">Názov domény použitý na overenie internetového pripojenia na porte 443 (https).</string>
     <string name="summary_socks5_enabled">Na proxy server sa bude odosielať iba prevádzka TCP</string>
     <string name="summary_watchdog">Periodicky kontrolovať, či QuietGuard stále beží (zadajte nulu pre zakázanie tejto možnosti). Môže to viesť k zvýšenej spotrebe batérie.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard je zakázaný, na povolenie QuietGuardu použite prepínač vyššie</string>
     <string name="msg_notifications">Klepnutím udelíte povolenia na oznámenia (pre oznámenia o pokusoch o prístup, chybové správy atď.)</string>
     <string name="msg_revoked">QuietGuard bol zakázaný, pravdepodobne použitím inej aplikácie založenej na VPN</string>
-    <string name="msg_installed">\'%1$s\' nainštalované</string>
+    <string name="msg_installed">'%1$s' nainštalované</string>
     <string name="msg_installed_n">Bolo nainštalované</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s sa pokúsil o prístup k internetu</string>
     <string name="msg_access_n">Pokus o prístup k internetu</string>
     <string name="msg_completed">Akcia dokončená</string>
@@ -311,7 +311,7 @@
     <string name="msg_export_failed">Export zlyhal: %1$s</string>
     <string name="msg_vpn">QuietGuard používa lokálnu VPN na filtrovanie internetovej prevádzky. Z tohto dôvodu povoľte pripojenie VPN v nasledujúcom dialógovom okne. Vaša internetová prevádzka sa neodosiela na vzdialený VPN server.</string>
     <string name="msg_autostart">QuietGuard sa nemohol spustiť automaticky. Pravdepodobne je to spôsobené chybou vo vašej verzii Androidu.</string>
-    <string name="msg_error">Vyskytla sa neočakávaná chyba: \'%s\'</string>
+    <string name="msg_error">Vyskytla sa neočakávaná chyba: '%s'</string>
     <string name="msg_start_failed">Android v tejto chvíli odmietol spustiť službu VPN. Pravdepodobne je to spôsobené chybou vo vašej verzii Androidu.</string>
     <string name="msg_try">Vyskúšať QuietGuard</string>
     <string name="msg_terms">Darovaním súhlasíte so <a href="http://www.netguard.me/#terms">zmluvnými podmienkami</a></string>
@@ -334,7 +334,7 @@
     <string name="msg_downloading">Sťahovanie\n%1s</string>
     <string name="msg_downloaded">Súbor hosts bol stiahnutý</string>
     <string name="msg_download_last">Posledné stiahnutie: %s</string>
-    <string name="msg_start_forward">Spustiť presmerovanie z %1$s port %2$d na %3$s:%4$d pre \'%5$s\'?</string>
+    <string name="msg_start_forward">Spustiť presmerovanie z %1$s port %2$d na %3$s:%4$d pre '%5$s'?</string>
     <string name="msg_stop_forward">Zastaviť presmerovanie %1$s port %2$d?</string>
     <string name="msg_metered">Sieť je meraná</string>
     <string name="msg_inactive">Žiadne aktívne internetové pripojenie</string>

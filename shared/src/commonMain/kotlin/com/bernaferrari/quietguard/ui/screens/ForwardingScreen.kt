@@ -12,20 +12,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -34,7 +34,6 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,9 +44,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.domain.FirewallRule
 import com.bernaferrari.quietguard.platform.ForwardingEntry
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
@@ -58,6 +60,7 @@ import com.bernaferrari.quietguard.ui.screens.vm.ForwardingViewModel
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
+import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.menu_add
 import com.bernaferrari.quietguard.generated.resources.menu_cancel
 import com.bernaferrari.quietguard.generated.resources.menu_delete
@@ -85,9 +88,12 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 import com.bernaferrari.quietguard.ui.icons.Icon
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
+fun ForwardingScreen(
+    onBack: () -> Unit = {},
+    viewModel: ForwardingViewModel = koinViewModel(),
+) {
     val spacing = MaterialTheme.spacing
     val fwdUi by viewModel.uiState.collectAsState()
     val entries = fwdUi.entries.data
@@ -95,10 +101,20 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
     val protocolFilter = fwdUi.protocolFilter
     val showDialog = fwdUi.showAddDialog
     val filteredEntries = fwdUi.filtered
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            MediumFlexibleTopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            icon = MaterialSymbols.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(Res.string.action_back),
+                        )
+                    }
+                },
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -134,9 +150,7 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
@@ -147,46 +161,31 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                 .padding(spacing.default),
             verticalArrangement = Arrangement.spacedBy(spacing.medium),
         ) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(spacing.medium),
-                    verticalArrangement = Arrangement.spacedBy(spacing.small),
-                ) {
-                    FilledTonalButton(onClick = { viewModel.setShowAddDialog(true) }) {
-                        Icon(
-                            icon = MaterialSymbols.Filled.Add,
-                            contentDescription = null,
-                        )
-                        Spacer(modifier = Modifier.width(spacing.small))
-                        Text(text = stringResource(Res.string.menu_add))
-                    }
-                    Text(
-                        text = stringResource(Res.string.ui_logs_filter_protocol),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+            Column(verticalArrangement = Arrangement.spacedBy(spacing.small)) {
+                Text(
+                    text = stringResource(Res.string.ui_logs_filter_protocol),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = spacing.default),
+                )
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                    val options = listOf(
+                        ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
+                        ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
+                        ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
                     )
-                    SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                        val options = listOf(
-                            ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
-                            ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
-                            ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
-                        )
-                        options.forEachIndexed { index, (value, label) ->
-                            SegmentedButton(
-                                selected = protocolFilter == value,
-                                onClick = { viewModel.setProtocolFilter(value) },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = index,
-                                    count = options.size
-                                ),
-                                modifier = Modifier.weight(1f),
-                            ) {
-                                Text(text = label, maxLines = 1)
-                            }
+                    options.forEachIndexed { index, (value, label) ->
+                        SegmentedButton(
+                            selected = protocolFilter == value,
+                            onClick = { viewModel.setProtocolFilter(value) },
+                            shape = SegmentedButtonDefaults.itemShape(
+                                index = index,
+                                count = options.size
+                            ),
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(text = label, maxLines = 1)
                         }
                     }
                 }
@@ -225,14 +224,18 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
                 else -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(spacing.small),
+                        verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
-                        items(
+                        itemsIndexed(
                             filteredEntries,
-                            key = { "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" },
-                        ) { entry ->
+                            key = { _, it -> "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" },
+                        ) { index, entry ->
                             ForwardingEntryCard(
                                 entry = entry,
+                                shape = groupItemShape(
+                                    isFirst = index == 0,
+                                    isLast = index == filteredEntries.lastIndex,
+                                ),
                                 onDelete = { viewModel.deleteForward(entry) },
                             )
                         }
@@ -255,13 +258,16 @@ fun ForwardingScreen(viewModel: ForwardingViewModel = koinViewModel()) {
 @Composable
 private fun ForwardingEntryCard(
     entry: ForwardingEntry,
+    shape: Shape,
     onDelete: () -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
     val protocolLabel = NetGuardPlatform.uiHelpers.getProtocolName(entry.protocol, 0, false)
 
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = shape,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
         Row(
             modifier = Modifier
@@ -320,12 +326,28 @@ private fun ForwardingEntryCard(
                         )
                     }
                 }
-                Text(
-                    text = "${entry.dport} → ${entry.raddr}:${entry.rport}",
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+                ) {
+                    Text(
+                        text = entry.dport.toString(),
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                    )
+                    Icon(
+                        icon = MaterialSymbols.Filled.ChevronRight,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text(
+                        text = "${entry.raddr}:${entry.rport}",
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
 
             IconButton(onClick = onDelete) {

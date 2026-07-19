@@ -4,7 +4,7 @@
     <string name="app_description">يوفر QuietGuard طرقًا بسيطة ومتقدمة لمنع الوصول إلى الإنترنت - بدون الحاجة إلى صلاحيات الروت. يمكن السماح للتطبيقات والعناوين أو رفضها بشكل فردي للوصول إلى شبكة Wi-Fi و/أو اتصال الجوال.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">يتطلب QuietGuard إصدار أندرويد 5.1 أو أحدث</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">سياسة الخصوصية</a></string>
     <string name="app_first">تم بذل عناية كبيرة في تطوير واختبار QuietGuard، ولكن من المستحيل ضمان عمل QuietGuard بشكل صحيح على كل جهاز.</string>
     <string name="app_agree">أوافق</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">عنوان الوجهة</string>
     <string name="title_rport">المنفذ الوجهة</string>
     <string name="title_ruid">التطبيق المستهدف</string>
-    <string name="title_external">اختر \'nobody\' للخوادم الخارجية</string>
+    <string name="title_external">اختر 'nobody' للخوادم الخارجية</string>
 
     <string name="setting_defaults">الافتراضيات (القائمة البيضاء/السوداء)</string>
     <string name="setting_whitelist_wifi">حظر Wi-Fi</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">داكن</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">إشعار عند تثبيت تطبيق جديد</string>
-    <string name="setting_screen_on">تطبيق قواعد \'عند تشغيل الشاشة\'</string>
+    <string name="setting_screen_on">تطبيق قواعد 'عند تشغيل الشاشة'</string>
     <string name="setting_auto">تفعيل تلقائي بعد %1$s دقيقة</string>
     <string name="setting_delay">تأخير بعد إغلاق الشاشة لمد %1$s دقيقة</string>
     <string name="setting_update">التحقق من التحديثات</string>
@@ -260,7 +260,7 @@
 
     <string name="summary_install">إظهار إشعار في شريط الحالة لتكوين التطبيقات المثبتة حديثًا مباشرة (ميزة المحترفين)</string>
     <string name="summary_auto">إعادة تفعيل QuietGuard تلقائيًا بعد عدد الدقائق المختار بعد تعطيله باستخدام الويدجت (أدخل صفرًا لتعطيل هذا الخيار)</string>
-    <string name="summary_delay">إبقاء قواعد \'عند تشغيل الشاشة\' نشطة لعدد الدقائق المختار بعد إغلاق الشاشة (أدخل صفرًا لتعطيل هذا الخيار)</string>
+    <string name="summary_delay">إبقاء قواعد 'عند تشغيل الشاشة' نشطة لعدد الدقائق المختار بعد إغلاق الشاشة (أدخل صفرًا لتعطيل هذا الخيار)</string>
     <string name="summary_update">التحقق من الإصدارات الجديدة على GitHub مرتين يوميًا</string>
 
     <string name="summary_tethering">اعتمادًا على إصدار أندرويد، قد تعمل مشاركة الاتصال وقد لا تعمل. لا يمكن تصفية حركة المرور المشاركة.</string>
@@ -283,7 +283,7 @@
     <string name="summary_filter">تصفية حزم IP الخارجة من نفق VPN. قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
     <string name="summary_track_usage">تتبع البايتات المرسلة والمستقبلة لكل تطبيق وعنوان. قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
     <string name="summary_block_domains">الرد برمز رد DNS المكون للنطاقات المحظورة. سيتم تعطيل هذا المفتاح في حالة عدم توفر ملف hosts.</string>
-    <string name="summary_rcode">القيمة الافتراضية هي 3 (NXDOMAIN)، والتي تعني \'النطاق غير موجود\'.</string>
+    <string name="summary_rcode">القيمة الافتراضية هي 3 (NXDOMAIN)، والتي تعني 'النطاق غير موجود'.</string>
     <string name="summary_validate">اسم النطاق المستخدم للتحقق من اتصال الإنترنت على المنفذ 443 (https).</string>
     <string name="summary_socks5_enabled">سيتم إرسال حركة مرور TCP فقط إلى خادم البروكسي</string>
     <string name="summary_watchdog">التحقق دوريًا مما إذا كان QuietGuard لا يزال قيد التشغيل (أدخل صفرًا لتعطيل هذا الخيار). قد يؤدي ذلك إلى استهلاك إضافي للبطارية.</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">QuietGuard معطل، يرجى استخدام المفتاح في الأعلى لتفعيل QuietGuard</string>
     <string name="msg_notifications">اضغط لمنح إذن الإشعارات (لإشعارات محاولات الوصول، رسائل الخطأ، إلخ)</string>
     <string name="msg_revoked">تم تعطيل QuietGuard، ربما بسبب استخدام تطبيق VPN آخر</string>
-    <string name="msg_installed">تم تثبيت \'%1$s\'</string>
+    <string name="msg_installed">تم تثبيت '%1$s'</string>
     <string name="msg_installed_n">تم التثبيت</string>
-    <string name="msg_malware" translatable="false">برنامج ضار محتمل: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">برنامج ضار محتمل: '%1$s'</string>
     <string name="msg_access">حاول %1$s الوصول إلى الإنترنت</string>
     <string name="msg_access_n">حاول الوصول إلى الإنترنت</string>
     <string name="msg_completed">اكتمل الإجراء</string>
@@ -312,7 +312,7 @@
 لهذا السبب، يرجى السماح باتصال VPN في الحوار التالي.
 لن يتم إرسال حركة مرور الإنترنت الخاصة بك إلى أي خادم VPN بعيد.</string>
     <string name="msg_autostart">تعذر بدء QuietGuard تلقائيًا. من المحتمل جدًا أن يكون ذلك بسبب خطأ في إصدار أندرويد الخاص بك.</string>
-    <string name="msg_error">حدث خطأ غير متوقع: \'%s\'</string>
+    <string name="msg_error">حدث خطأ غير متوقع: '%s'</string>
     <string name="msg_start_failed">رفض أندرويد بدء خدمة VPN في الوقت الحالي. من المحتمل جدًا أن يكون ذلك بسبب خطأ في إصدار أندرويد الخاص بك.</string>
     <string name="msg_try">تجربة QuietGuard</string>
     <string name="msg_terms">من خلال التبرع، فإنك توافق على <a href="http://www.netguard.me/#terms">الشروط والأحكام</a></string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">جاري التحميل\n%1s</string>
     <string name="msg_downloaded">تم تحميل ملف hosts</string>
     <string name="msg_download_last">آخر تحميل: %s</string>
-    <string name="msg_start_forward">بدء التوجيه من %1$s منفذ %2$d إلى %3$s:%4$d لـ \'%5$s\'؟</string>
+    <string name="msg_start_forward">بدء التوجيه من %1$s منفذ %2$d إلى %3$s:%4$d لـ '%5$s'؟</string>
     <string name="msg_stop_forward">إيقاف التوجيه من %1$s منفذ %2$d؟</string>
     <string name="msg_metered">الشبكة محدودة</string>
     <string name="msg_inactive">لا يوجد اتصال إنترنت نشط</string>

@@ -4,7 +4,7 @@
     <string name="app_description">Нетгард нуди једноставне и напредне начине блокирања приступа интернету без потребе за рутовањем. Апликацијама и адресама се може појединачно дозволити или одбити приступ бежичној и/или мобилној вези.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">Нетгард захтева Андроид 5.1 или новији</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Политика приватности</a></string>
     <string name="app_first">Огромна пажња је посвећена развоју и тестирању Нетгард апликације. Међутим, немогуће је гарантовати да ће Нетгард радити исправно на сваком уређају.</string>
     <string name="app_agree">Слажем се</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Тамно</string>
     <string name="theme_dynamic">Динамички</string>
     <string name="setting_install">Обавести при новим инсталацијама</string>
-    <string name="setting_screen_on">Примени правило \'укљученог екрана\'</string>
+    <string name="setting_screen_on">Примени правило 'укљученог екрана'</string>
     <string name="setting_auto">Сам укључи након %1$s мин.</string>
     <string name="setting_delay">Одложи угашен екран %1$s мин.</string>
     <string name="setting_update">Провери ажурирања</string>
@@ -237,10 +237,10 @@
     <string name="setting_backup">Резервна копија</string>
     <string name="setting_export">Извези поставке</string>
     <string name="setting_import">Увези поставке</string>
-    <string name="setting_hosts">Увези \'hosts\' фајл</string>
-    <string name="setting_hosts_append">Увези \'hosts\' фајл (придодај)</string>
-    <string name="setting_hosts_url">УРЛ за преузимање \'hosts\' фајла</string>
-    <string name="setting_hosts_download">Преузми \'hosts\' фајл</string>
+    <string name="setting_hosts">Увези 'hosts' фајл</string>
+    <string name="setting_hosts_append">Увези 'hosts' фајл (придодај)</string>
+    <string name="setting_hosts_url">УРЛ за преузимање 'hosts' фајла</string>
+    <string name="setting_hosts_download">Преузми 'hosts' фајл</string>
     <string name="setting_use_hosts">Користи hosts фајл</string>
 
     <string name="setting_technical">Технички подаци</string>
@@ -283,7 +283,7 @@
     <string name="summary_access">Прикажи обавештење кад апликација покуша приступ новој интернет адреси (кад је филтрирање искључено, само блокирани покушаји биће објављени)</string>
     <string name="summary_filter">Филтрирај ИП пакете који излазе из ВПН тунела. Може повећати потрошњу батерије.</string>
     <string name="summary_track_usage">Прати број послатих и примљених бајтова за сваку апликацију и адресу. Може повећати потрошњу батерије.</string>
-    <string name="summary_block_domains">Одговори са подешеним ДНС кодом одговора за блокиране називе домена. Искључено је када \'hosts\' фајл није доступан.</string>
+    <string name="summary_block_domains">Одговори са подешеним ДНС кодом одговора за блокиране називе домена. Искључено је када 'hosts' фајл није доступан.</string>
     <string name="summary_rcode">Подразумевана вредност је 3 (NXDOMAIN), што значи „непостојећи домен“.</string>
     <string name="summary_validate">Назив домена где се проверава интернет веза на порту 443 (https).</string>
     <string name="summary_socks5_enabled">Само ТЦП саобраћај ће бити послат на прокси сервер</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">Нетгард је искључен. Користите прекидач изнад да га укључите</string>
     <string name="msg_notifications">Тапните да бисте доделили дозволе за обавештења (за обавештења о покушајима приступа, поруке о грешкама итд.)</string>
     <string name="msg_revoked">Нетгард је искључен. Вероватно од стране друге ВПН апликације</string>
-    <string name="msg_installed">инсталирано \'%1$s\'</string>
+    <string name="msg_installed">инсталирано '%1$s'</string>
     <string name="msg_installed_n">Је инсталирано</string>
-    <string name="msg_malware">Могући злонамерни софтвер: \'%1$s\'</string>
+    <string name="msg_malware">Могући злонамерни софтвер: '%1$s'</string>
     <string name="msg_access">%1$s покушава приступ интернету</string>
     <string name="msg_access_n">Покушан приступ интернету</string>
     <string name="msg_completed">Радња извршена</string>
@@ -336,7 +336,7 @@
     <string name="msg_reset_access">Ово ће обрисати линије без дозволи/блокирај правила из дневника покушаја приступа</string>
     <string name="msg_import_last">Последњи увоз: %s</string>
     <string name="msg_downloading">Преузимам\n%1s</string>
-    <string name="msg_downloaded">\'hosts\' фајл преузет</string>
+    <string name="msg_downloaded">'hosts' фајл преузет</string>
     <string name="msg_download_last">Последње преузимање: %s</string>
     <string name="msg_start_forward">Да прослеђујем са %1$s порт %2$d на %3$s:%4$d за „%5$s“?</string>
     <string name="msg_stop_forward">Да зауставим прослеђивање %1$s порт %2$d?</string>

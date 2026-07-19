@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard oferă modalități simple și avansate de a bloca accesul la internet - nu este necesar root. Aplicațiilor și adreselor li se poate permite sau refuza accesul la conexiunea Wi-Fi și/atau mobilă în mod individual.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard necesită Android 5.1 sau o versiune ulterioară</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Politica de confidențialitate</a></string>
     <string name="app_first">S-au depus eforturi mari pentru a dezvolta și testa QuietGuard, totuși este imposibil să garantăm că QuietGuard va funcționa corect pe fiecare dispozitiv.</string>
     <string name="app_agree">Sunt de acord</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Adresă destinație</string>
     <string name="title_rport">Port destinație</string>
     <string name="title_ruid">Aplicație țintă</string>
-    <string name="title_external">Pentru un server extern selectați \'nobody\'</string>
+    <string name="title_external">Pentru un server extern selectați 'nobody'</string>
 
     <string name="setting_defaults">Valori implicite (listă albă/neagră)</string>
     <string name="setting_whitelist_wifi">Blochează Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Întunecat</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Notifică la instalare nouă</string>
-    <string name="setting_screen_on">Aplică regulile \'când ecranul este pornit\'</string>
+    <string name="setting_screen_on">Aplică regulile 'când ecranul este pornit'</string>
     <string name="setting_auto">Activează automat după %1$s minute</string>
     <string name="setting_delay">Întârzie oprirea ecranului %1$s minute</string>
     <string name="setting_update">Verifică actualizări</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filtrează pachetele IP care ies din tunelul VPN. Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
     <string name="summary_track_usage">Urmărește numărul de octeți trimiși și primiți pentru fiecare aplicație și adresă. Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
     <string name="summary_block_domains">Răspunde cu codul de răspuns DNS configurat pentru numele de domenii blocate. Acest comutator este dezactivat atunci când nu este disponibil niciun fișier hosts.</string>
-    <string name="summary_rcode">Valoarea implicită este 3 (NXDOMAIN), ceea ce înseamnă \'domeniu inexistent\'.</string>
+    <string name="summary_rcode">Valoarea implicită este 3 (NXDOMAIN), ceea ce înseamnă 'domeniu inexistent'.</string>
     <string name="summary_validate">Numele de domeniu utilizat pentru a valida conexiunea la internet la portul 443 (https).</string>
     <string name="summary_socks5_enabled">Numai traficul TCP va fi trimis către serverul proxy</string>
     <string name="summary_watchdog">Verifică periodic dacă QuietGuard încă rulează (introduceți zero pentru a dezactiva această opțiune). Acest lucru ar putea duce la un consum suplimentar de baterie.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard este dezactivat, utilizează comutatorul de mai sus pentru a activa QuietGuard</string>
     <string name="msg_notifications">Atinge pentru a acorda permisiuni de notificare (pentru notificări de încercare de acces, mesaje de eroare etc.)</string>
     <string name="msg_revoked">QuietGuard a fost dezactivat, probabil prin utilizarea unei alte aplicații bazate pe VPN</string>
-    <string name="msg_installed">\'%1$s\' instalat</string>
+    <string name="msg_installed">'%1$s' instalat</string>
     <string name="msg_installed_n">A fost instalat</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s a încercat să acceseze internetul</string>
     <string name="msg_access_n">Încercare de acces la internet</string>
     <string name="msg_completed">Acțiune finalizată</string>
@@ -313,7 +313,7 @@
 Din acest motiv, vă rugăm să permiteți o conexiune VPN în următorul dialog.
 Traficul dvs. de internet nu este trimis către un server VPN la distanță.</string>
     <string name="msg_autostart">QuietGuard nu a putut porni automat. Acest lucru este probabil din cauza unei erori în versiunea de Android.</string>
-    <string name="msg_error">A apărut o eroare neașteptată: \'%s\'</string>
+    <string name="msg_error">A apărut o eroare neașteptată: '%s'</string>
     <string name="msg_start_failed">Android a refuzat să pornească serviciul VPN în acest moment. Acest lucru este probabil din cauza unei erori în versiunea de Android.</string>
     <string name="msg_try">Încearcă QuietGuard</string>
     <string name="msg_terms">Prin donație sunteți de acord cu <a href="http://www.netguard.me/#terms">termenii și condițiile</a></string>
@@ -338,7 +338,7 @@ Traficul dvs. de internet nu este trimis către un server VPN la distanță.</st
     <string name="msg_downloading">Se descarcă\n%1s</string>
     <string name="msg_downloaded">Fișierul hosts a fost descărcat</string>
     <string name="msg_download_last">Ultima descărcare: %s</string>
-    <string name="msg_start_forward">Începe redirecționarea de la %1$s port %2$d la %3$s:%4$d pentru \'%5$s\'?</string>
+    <string name="msg_start_forward">Începe redirecționarea de la %1$s port %2$d la %3$s:%4$d pentru '%5$s'?</string>
     <string name="msg_stop_forward">Oprește redirecționarea pentru %1$s port %2$d?</string>
     <string name="msg_metered">Rețeaua este cu tarifare după consum</string>
     <string name="msg_inactive">Nicio conexiune la internet activă</string>

@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard, root-a ehtiyac olmadan internetə müraciəti əngəlləmək üçün sadə və qabaqcıl yolları təqdim edir. Wi-Fi və/və ya mobil bağlantı üzərindən tətbiqlər və ünvanlar üçün internetə müraciəti tək-tək ləğv edə bilərsiniz.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard, Android 5.1 və daha yuxarı versiyanı tələb edir</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Gizlilik siyasəti</a></string>
     <string name="app_first">QuietGuard-ı tərtib etmək və sınaqdan keçirmək üçün böyük diqqət göstərilmişdir, ancaq QuietGuard-ın hər cihazda düzgün işləməyinə zəmanət vermək mümkünsüzdür.</string>
     <string name="app_agree">Razıyam</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Təyinat ünvanı</string>
     <string name="title_rport">Təyinat portu</string>
     <string name="title_ruid">Təyinat tətbiqi</string>
-    <string name="title_external">Xarici bir server üçün \'heç kim\' seç</string>
+    <string name="title_external">Xarici bir server üçün 'heç kim' seç</string>
 
     <string name="setting_defaults">İlkin (ağ/qara siyahı)</string>
     <string name="setting_whitelist_wifi">\"Wi-Fi\"ı əngəllə</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Tünd</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Yeni tətbiqləri bildir</string>
-    <string name="setting_screen_on">\'Ekran açıq olanda\' qaydalarını tətbiq et</string>
+    <string name="setting_screen_on">'Ekran açıq olanda' qaydalarını tətbiq et</string>
     <string name="setting_auto">%1$s dəqiqə sonra avto-fəallaşdır</string>
     <string name="setting_delay">Ekran sönməsini %1$s dəqiqə gecikdir</string>
     <string name="setting_update">Güncəlləmələri yoxla</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">VPN tunelindən çıxan IP paketləri filtrlə. Bu, batareya istifadəsini artıra bilər.</string>
     <string name="summary_track_usage">Hər bir tətbiq və ünvan üçün göndərilən və alınan bayt sayını izləyin. Bu, batareya istifadəsini artıra bilər.</string>
     <string name="summary_block_domains">Əngəllənən domen adları üçün konfiqurasiya edilmiş DNS cavab kodu ilə cavablayın. Hosts faylı mövcud olmayanda bu seçim ləğv edilir.</string>
-    <string name="summary_rcode">İlkin dəyər 3 (NXDOMAIN), yəni \'mövcud olmayan domen\'.</string>
+    <string name="summary_rcode">İlkin dəyər 3 (NXDOMAIN), yəni 'mövcud olmayan domen'.</string>
     <string name="summary_validate">443 (https) portundakı internet bağlantısını təsdiqləmək üçün istifadə olunan domen adı.</string>
     <string name="summary_socks5_enabled">Yalnız TCP trafiki proksi serverə göndəriləcək</string>
     <string name="summary_watchdog">QuietGuard-ın işlədiyini müntəzəm olaraq yoxla (bu seçimi ləğv etmək üçün sıfır yazın). Batareya istifadəsini artıra bilər.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard ləğv edildi, yuxarıdan fəallaşdırın</string>
     <string name="msg_notifications">Bildiriş icazələrini aktivləşdirmək üçün toxunun (bildirişlərə müraciət cəhdləri, xəta mesajları və s.)</string>
     <string name="msg_revoked">QuietGuard ləğv edildi, yəqin ki, başqa bir VPN əsaslı tətbiq istifadə edilir</string>
-    <string name="msg_installed">\'%1$s\' quraşdırıldı</string>
+    <string name="msg_installed">'%1$s' quraşdırıldı</string>
     <string name="msg_installed_n">Quraşdırıldı</string>
-    <string name="msg_malware" translatable="false">Ehtimal olunan zərərli proqram: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Ehtimal olunan zərərli proqram: '%1$s'</string>
     <string name="msg_access">%1$s internetə müraciət etməyə cəhd etdi</string>
     <string name="msg_access_n">Internetə müraciətə cəhd etdi</string>
     <string name="msg_completed">Əməliyyat tamamlandı</string>
@@ -313,7 +313,7 @@
 Buna görə də, zəhmət olmasa növbəti dialoqda VPN bağlantısına icazə verin.
 İnternet trafikiniz heç bir VPN serverinə göndərilmir.</string>
     <string name="msg_autostart">QuietGuard avtomatik olaraq başladıla bilmədi. Yəqin ki, Android versiyanızda bir xəta buna səbəb olur.</string>
-    <string name="msg_error">Gözlənilməz bir xəta baş verdi: \'%s\'</string>
+    <string name="msg_error">Gözlənilməz bir xəta baş verdi: '%s'</string>
     <string name="msg_start_failed">Android, hal-hazırda VPN xidmətini başlatmağı rədd etdi. Yəqin ki, Android versiyanızda bir xəta buna səbəb olur.</string>
     <string name="msg_try">QuietGuard-ı sınayın</string>
     <string name="msg_terms">İanə verərək <a href="http://www.netguard.me/#terms">şərtlər və qaydalarla</a> razılaşırsınız</string>
@@ -338,7 +338,7 @@ Buna görə də, zəhmət olmasa növbəti dialoqda VPN bağlantısına icazə v
     <string name="msg_downloading">Endirilir\n%1s</string>
     <string name="msg_downloaded">Hosts fayl endirildi</string>
     <string name="msg_download_last">Son endirmə: %s</string>
-    <string name="msg_start_forward">%1$s port %2$d-dən %3$s:%4$d ünvanına \'%5$s\' üçün yönləndirmə başladılsın?</string>
+    <string name="msg_start_forward">%1$s port %2$d-dən %3$s:%4$d ünvanına '%5$s' üçün yönləndirmə başladılsın?</string>
     <string name="msg_stop_forward">%1$s port %2$d yönləndirilməsi dayandırılsın?</string>
     <string name="msg_metered">Şəbəkə ölçüldü</string>
     <string name="msg_inactive">Aktiv internet bağlantısı yoxdur</string>

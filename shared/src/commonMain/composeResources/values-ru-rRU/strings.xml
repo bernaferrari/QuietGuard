@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard предоставляет простые и расширенные способы блокировки доступа в Интернет без необходимости root-прав. Приложениям и адресам можно индивидуально разрешить или запретить доступ к Wi-Fi и/или мобильному соединению.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">Для QuietGuard требуется Android 5.1 или новее</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Политика конфиденциальности</a></string>
     <string name="app_first">Разработке и тестированию QuietGuard было уделено большое внимание, однако невозможно гарантировать корректную работу QuietGuard на каждом устройстве.</string>
     <string name="app_agree">Я согласен</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Адрес назначения</string>
     <string name="title_rport">Порт назначения</string>
     <string name="title_ruid">Целевое приложение</string>
-    <string name="title_external">Для внешнего сервера выберите \'nobody\'</string>
+    <string name="title_external">Для внешнего сервера выберите 'nobody'</string>
 
     <string name="setting_defaults">По умолчанию (белый/черный список)</string>
     <string name="setting_whitelist_wifi">Блокировать Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Темная</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Уведомлять о новой установке</string>
-    <string name="setting_screen_on">Применять правила \'при вкл. экране\'</string>
+    <string name="setting_screen_on">Применять правила 'при вкл. экране'</string>
     <string name="setting_auto">Авто-включение через %1$s мин.</string>
     <string name="setting_delay">Задержка выкл. экрана %1$s мин.</string>
     <string name="setting_update">Проверять обновления</string>
@@ -261,7 +261,7 @@
 
     <string name="summary_install">Уведомление в статус-баре для настройки новых приложений (Pro-функция)</string>
     <string name="summary_auto">Авто-включение QuietGuard через выбранное время после выключения (0 для отключения)</string>
-    <string name="summary_delay">После выключения экрана правила \'экран включен\' остаются активными (0 для отключения)</string>
+    <string name="summary_delay">После выключения экрана правила 'экран включен' остаются активными (0 для отключения)</string>
     <string name="summary_update">Проверка новых релизов на GitHub дважды в день</string>
 
     <string name="summary_tethering">В зависимости от версии Android тетеринг может работать или нет. Такой трафик не фильтруется.</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Фильтровать IP-пакеты на выходе из VPN туннеля. Может увеличить расход батареи.</string>
     <string name="summary_track_usage">Отслеживать объем данных для каждого приложения и адреса. Может увеличить расход батареи.</string>
     <string name="summary_block_domains">Отвечать выбранным DNS-кодом для заблокированных доменов. Неактивно без файла hosts.</string>
-    <string name="summary_rcode">Значение по умолчанию 3 (NXDOMAIN) — \'домен не существует\'.</string>
+    <string name="summary_rcode">Значение по умолчанию 3 (NXDOMAIN) — 'домен не существует'.</string>
     <string name="summary_validate">Домен для проверки интернет-соединения на порту 443 (https).</string>
     <string name="summary_socks5_enabled">Только TCP трафик будет направляться через прокси</string>
     <string name="summary_watchdog">Периодическая проверка работы QuietGuard (0 для отключения). Может увеличить расход батареи.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard отключен, включите его переключателем вверху</string>
     <string name="msg_notifications">Нажмите, чтобы дать разрешение на уведомления (для попыток доступа, ошибок и т.д.)</string>
     <string name="msg_revoked">QuietGuard был отключен, вероятно, другим VPN-приложением</string>
-    <string name="msg_installed">\'%1$s\' установлено</string>
+    <string name="msg_installed">'%1$s' установлено</string>
     <string name="msg_installed_n">Приложение установлено</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s: попытка доступа в Интернет</string>
     <string name="msg_access_n">Попытка доступа в Интернет</string>
     <string name="msg_completed">Действие завершено</string>
@@ -313,7 +313,7 @@
 Разрешите VPN-соединение в следующем диалоге.
 Ваш трафик НЕ отправляется на удаленный VPN-сервер.</string>
     <string name="msg_autostart">QuietGuard не смог запуститься автоматически. Вероятно, это баг вашей версии Android.</string>
-    <string name="msg_error">Произошла непредвиденная ошибка: \'%s\'</string>
+    <string name="msg_error">Произошла непредвиденная ошибка: '%s'</string>
     <string name="msg_start_failed">Android отказал в запуске VPN службы. Вероятно, это баг вашей версии Android.</string>
     <string name="msg_try">Попробовать QuietGuard</string>
     <string name="msg_terms">Делая пожертвование, вы соглашаетесь с <a href="http://www.netguard.me/#terms">условиями и положениями</a></string>
@@ -338,7 +338,7 @@
     <string name="msg_downloading">Загрузка\n%1s</string>
     <string name="msg_downloaded">Файл hosts загружен</string>
     <string name="msg_download_last">Последняя загрузка: %s</string>
-    <string name="msg_start_forward">Начать перенаправление с %1$s порт %2$d на %3$s:%4$d для \'%5$s\'?</string>
+    <string name="msg_start_forward">Начать перенаправление с %1$s порт %2$d на %3$s:%4$d для '%5$s'?</string>
     <string name="msg_stop_forward">Остановить перенаправление %1$s порт %2$d?</string>
     <string name="msg_metered">Сеть лимитирована</string>
     <string name="msg_inactive">Нет активного интернет-соединения</string>
@@ -350,10 +350,10 @@
     <string name="msg_push">Входящие push-сообщения обычно обрабатываются сервисами Play, которым доступ разрешен по умолчанию</string>
     <string name="msg_system">Управление всеми (системными) приложениями можно включить в настройках</string>
     <string name="msg_issue">Опишите проблему и укажите время её возникновения:</string>
-    <string name="msg_vpn_cancelled">VPN соединение отменено. У вас настроен другой VPN в режиме \'Всегда включен\'?</string>
+    <string name="msg_vpn_cancelled">VPN соединение отменено. У вас настроен другой VPN в режиме 'Всегда включен'?</string>
     <string name="msg_on">Если QuietGuard был включен при выключении устройства, он запустится автоматически при включении</string>
     <string name="msg_unavailable">Эта функция недоступна в данной версии Android</string>
-    <string name="msg_always_on">Другой VPN установлен как \'Всегда включенный\'</string>
+    <string name="msg_always_on">Другой VPN установлен как 'Всегда включенный'</string>
     <string name="msg_always_on_lockdown">Выключите \"Блокировать соединения без VPN\" в настройках VPN Android для работы QuietGuard</string>
     <string name="msg_private_dns">Выключите \"Частный DNS\" в сетевых настройках Android для работы QuietGuard</string>
 

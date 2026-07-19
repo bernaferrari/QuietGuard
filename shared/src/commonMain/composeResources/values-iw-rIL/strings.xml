@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard מספקת דרכים פשוטות ומתקדמות לחסימת גישה לאינטרנט - ללא צורך ברוט (root). ניתן לאפשר או למנוע גישה לחיבור ה-Wi-Fi ו/או הנתונים הניידים שלך באופן פרטני עבור כל אפליקציה וכתובת.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard זקוק לגירסת אנדרואיד 5.1 ומעלה</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">מדיניות פרטיות</a></string>
     <string name="app_first">תשומת לב רבה הושקעה בפיתוח ובדיקת QuietGuard, אך לא ניתן לערוב ש-QuietGuard תעבוד בצורה תקינה על כל המכשירים.</string>
     <string name="app_agree">אני מסכים</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">כתובת יעד</string>
     <string name="title_rport">פורט יעד</string>
     <string name="title_ruid">אפליקציית יעד</string>
-    <string name="title_external">עבור שרת חיצוני בחר \'ללא\'</string>
+    <string name="title_external">עבור שרת חיצוני בחר 'ללא'</string>
 
     <string name="setting_defaults">ברירות מחדל (רשימה לבנה/שחורה)</string>
     <string name="setting_whitelist_wifi">חסום Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">כהה</string>
     <string name="theme_dynamic">דינמי</string>
     <string name="setting_install">התראה על התקנה חדשה</string>
-    <string name="setting_screen_on">החל כללי \'כשהמסך דולק\'</string>
+    <string name="setting_screen_on">החל כללי 'כשהמסך דולק'</string>
     <string name="setting_auto">הפעל אוטומטית לאחר %1$s דקות</string>
     <string name="setting_delay">השהה כיבוי מסך ב-%1$s דקות</string>
     <string name="setting_update">בדוק עדכונים</string>
@@ -260,8 +260,8 @@
     <string name="setting_section_support">תמיכה</string>
 
     <string name="summary_install">הצג התראה בשורת המצב כדי להגדיר ישירות אפליקציות שהותקנו לאחרונה (תכונת Pro)</string>
-    <string name="summary_auto">לאחר השבתה באמצעות הווידג\'ט, הפעל מחדש את QuietGuard אוטומטית לאחר מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
-    <string name="summary_delay">לאחר כיבוי המסך, השאר את כללי \'מסך דולק\' פעילים למשך מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
+    <string name="summary_auto">לאחר השבתה באמצעות הווידג'ט, הפעל מחדש את QuietGuard אוטומטית לאחר מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
+    <string name="summary_delay">לאחר כיבוי המסך, השאר את כללי 'מסך דולק' פעילים למשך מספר הדקות שנבחר (הזן אפס כדי להשבית אפשרות זו)</string>
     <string name="summary_update">בדוק גרסאות חדשות ב-GitHub פעמיים ביום</string>
 
     <string name="summary_tethering">בהתאם לגרסת האנדרואיד, שיתוף אינטרנט עשוי לעבוד או לא לעבוד. לא ניתן לסנן תעבורה משותפת.</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">סנן חבילות IP היוצאות ממנהרת ה-VPN. זה עשוי לגרום לשימוש נוסף בסוללה.</string>
     <string name="summary_track_usage">עקוב אחר מספר הבתים שנשלחו והתקבלו עבור כל אפליקציה וכתובת. זה עשוי לגרום לשימוש נוסף בסוללה.</string>
     <string name="summary_block_domains">הגב עם קוד תגובת ה-DNS המוגדר עבור שמות דומיין חסומים. מתג זה מושבת כאשר אין קובץ hosts זמין.</string>
-    <string name="summary_rcode">ערך ברירת המחדל הוא 3 (NXDOMAIN), שפירושו \'דומיין לא קיים\'.</string>
+    <string name="summary_rcode">ערך ברירת המחדל הוא 3 (NXDOMAIN), שפירושו 'דומיין לא קיים'.</string>
     <string name="summary_validate">שם דומיין המשמש לאימות חיבור האינטרנט בפורט 443 (https).</string>
     <string name="summary_socks5_enabled">רק תעבורת TCP תישלח לשרת הפרוקסי</string>
     <string name="summary_watchdog">בדוק מעת לעת אם QuietGuard עדיין פועל (הזן אפס כדי להשבית אפשרות זו). זה עשוי לגרום לשימוש נוסף בסוללה.</string>
@@ -299,11 +299,11 @@
     <string name="msg_hosts">%1$d מורשים, %2$d חסומים, %3$d מארחים</string>
     <string name="msg_waiting">ממתין לאירוע</string>
     <string name="msg_disabled">QuietGuard מושבת, השתמש במתג למעלה כדי להפעיל את QuietGuard</string>
-    <string name="msg_notifications">הקש כדי להעניק הרשאות התראה (עבור התראות על ניסיונות גישה, הודעות שגיאה וכו\')</string>
+    <string name="msg_notifications">הקש כדי להעניק הרשאות התראה (עבור התראות על ניסיונות גישה, הודעות שגיאה וכו')</string>
     <string name="msg_revoked">QuietGuard הושבת, כנראה על ידי שימוש באפליקציה אחרת המבוססת על VPN</string>
-    <string name="msg_installed">\'%1$s\' הותקן</string>
+    <string name="msg_installed">'%1$s' הותקן</string>
     <string name="msg_installed_n">הותקן</string>
-    <string name="msg_malware">ייתכן שמדובר בתוכנה זדונית: \'%1$s\'</string>
+    <string name="msg_malware">ייתכן שמדובר בתוכנה זדונית: '%1$s'</string>
     <string name="msg_access">%1$s ניסה לגשת לאינטרנט</string>
     <string name="msg_access_n">ניסיון גישה לאינטרנט</string>
     <string name="msg_completed">פעולה הושלמה</string>
@@ -313,7 +313,7 @@
 מסיבה זו, אנא אשר חיבור VPN בדיאלוג הבא.
 תעבורת האינטרנט שלך אינה נשלחת לשרת VPN מרוחק.</string>
     <string name="msg_autostart">QuietGuard לא הצליח להתחיל אוטומטית. זה כנראה בגלל באג בגרסת האנדרואיד שלך.</string>
-    <string name="msg_error">אירעה שגיאה בלתי צפויה: \'%s\'</string>
+    <string name="msg_error">אירעה שגיאה בלתי צפויה: '%s'</string>
     <string name="msg_start_failed">אנדרואיד סירב להפעיל את שירות ה-VPN כרגע. זה כנראה בגלל באג בגרסת האנדרואיד שלך.</string>
     <string name="msg_try">נסה את QuietGuard</string>
     <string name="msg_terms">על ידי תרומה אתה מסכים ל <a href="http://www.netguard.me/#terms">תנאים והגבלות</a></string>
@@ -338,7 +338,7 @@
     <string name="msg_downloading">מוריד\n%1s</string>
     <string name="msg_downloaded">קובץ hosts הורד</string>
     <string name="msg_download_last">הורדה אחרונה: %s</string>
-    <string name="msg_start_forward">להתחיל הפניה מ-%1$s פורט %2$d ל-%3$s:%4$d של \'%5$s\'?</string>
+    <string name="msg_start_forward">להתחיל הפניה מ-%1$s פורט %2$d ל-%3$s:%4$d של '%5$s'?</string>
     <string name="msg_stop_forward">להפסיק הפניה של %1$s פורט %2$d?</string>
     <string name="msg_metered">הרשת מדודה</string>
     <string name="msg_inactive">אין חיבור אינטרנט פעיל</string>

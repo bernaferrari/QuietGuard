@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard zapewnia proste i zaawansowane sposoby blokowania dostępu do Internetu - bez konieczności rootowania urządzenia. Aplikacje i adresy mogą mieć indywidualnie przyznawany lub blokowany dostęp do połączeń Wi-Fi i/lub mobilnych.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard wymaga systemu Android 5.1 lub nowszego</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Polityka prywatności</a></string>
     <string name="app_first">Włożono wiele wysiłku w rozwój i testowanie QuietGuard, ale niemożliwe jest zagwarantowanie, że QuietGuard będzie działał poprawnie na każdym urządzeniu.</string>
     <string name="app_agree">Zgadzam się</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Adres docelowy</string>
     <string name="title_rport">Port docelowy</string>
     <string name="title_ruid">Aplikacja docelowa</string>
-    <string name="title_external">Wybierz \'nobody\' dla zewnętrznych serwerów</string>
+    <string name="title_external">Wybierz 'nobody' dla zewnętrznych serwerów</string>
 
     <string name="setting_defaults">Domyślne (Biała/Czarna lista)</string>
     <string name="setting_whitelist_wifi">Blokuj Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Ciemny</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Powiadamiaj o nowej aplikacji</string>
-    <string name="setting_screen_on">Stosuj reguły \'gdy ekran włączony\'</string>
+    <string name="setting_screen_on">Stosuj reguły 'gdy ekran włączony'</string>
     <string name="setting_auto">Włącz automatycznie po %1$s min</string>
     <string name="setting_delay">Utrzymuj reguły przez %1$s min po wył. ekranu</string>
     <string name="setting_update">Sprawdzaj aktualizacje</string>
@@ -266,7 +266,7 @@
 
     <string name="summary_install">Wyświetl powiadomienie na pasku stanu, aby bezpośrednio skonfigurować nowo zainstalowane aplikacje (funkcja Pro)</string>
     <string name="summary_auto">Automatycznie włącz QuietGuard ponownie po wybranych minutach od wyłączenia za pomocą widgetu (wpisz zero, aby wyłączyć tę opcję)</string>
-    <string name="summary_delay">Utrzymuj reguły \'gdy ekran włączony\' przez wybrane minuty po wyłączeniu ekranu (wpisz zero, aby wyłączyć tę opcję)</string>
+    <string name="summary_delay">Utrzymuj reguły 'gdy ekran włączony' przez wybrane minuty po wyłączeniu ekranu (wpisz zero, aby wyłączyć tę opcję)</string>
     <string name="summary_update">Sprawdzaj nowe wersje na GitHubie dwa razy dziennie</string>
 
     <string name="summary_tethering">W zależności od wersji Androida tethering może działać lub nie. Ruch tetheringu nie może być filtrowany.</string>
@@ -289,7 +289,7 @@
     <string name="summary_filter">Filtruj pakiety IP wychodzące z tunelu VPN. Może to spowodować dodatkowe zużycie baterii.</string>
     <string name="summary_track_usage">Śledź liczbę wysłanych i odebranych bajtów przez każdą aplikację i adres. Może to spowodować dodatkowe zużycie baterii.</string>
     <string name="summary_block_domains">Odpowiadaj skonfigurowanym kodem odpowiedzi DNS dla zablokowanych domen. Ten przełącznik zostanie wyłączony, jeśli plik hosts nie jest dostępny.</string>
-    <string name="summary_rcode">Domyślna wartość to 3 (NXDOMAIN), co oznacza \'domena nie istnieje\'.</string>
+    <string name="summary_rcode">Domyślna wartość to 3 (NXDOMAIN), co oznacza 'domena nie istnieje'.</string>
     <string name="summary_validate">Nazwa domeny używana do walidacji połączenia internetowego na porcie 443 (https).</string>
     <string name="summary_socks5_enabled">Tylko ruch TCP będzie przesyłany do serwera proxy</string>
     <string name="summary_watchdog">Okresowo sprawdzaj, czy QuietGuard nadal działa (wpisz zero, aby wyłączyć tę opcję). Może to spowodować dodatkowe zużycie baterii.</string>
@@ -306,9 +306,9 @@
     <string name="msg_disabled">QuietGuard jest wyłączony, użyj przełącznika powyżej, aby włączyć QuietGuard</string>
     <string name="msg_notifications">Dotknij, aby przyznać uprawnienia do powiadomień (dla powiadomień o próbach dostępu, komunikatów o błędach itp.)</string>
     <string name="msg_revoked">QuietGuard został wyłączony, prawdopodobnie z powodu użycia innej aplikacji opartej na VPN</string>
-    <string name="msg_installed">\'%1$s\' zainstalowano</string>
+    <string name="msg_installed">'%1$s' zainstalowano</string>
     <string name="msg_installed_n">Zainstalowano</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s próbował uzyskać dostęp do Internetu</string>
     <string name="msg_access_n">Próbowano uzyskać dostęp do Internetu</string>
     <string name="msg_completed">Akcja zakończona</string>
@@ -318,7 +318,7 @@
 Z tego powodu proszę zezwolić na połączenie VPN w kolejnym oknie dialogowym.
 Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</string>
     <string name="msg_autostart">Nie można automatycznie uruchomić QuietGuard. Jest to najprawdopodobniej spowodowane błędem w Twojej wersji systemu Android.</string>
-    <string name="msg_error">Wystąpił nieoczekiwany błąd: \'%s\'</string>
+    <string name="msg_error">Wystąpił nieoczekiwany błąd: '%s'</string>
     <string name="msg_start_failed">Android odmówił uruchomienia usługi VPN w tej chwili. Jest to najprawdopodobniej spowodowane błędem w Twojej wersji systemu Android.</string>
     <string name="msg_try">Wypróbuj QuietGuard</string>
     <string name="msg_terms">Przekazując darowiznę, zgadzasz się na <a href="http://www.netguard.me/#terms">regulamin</a></string>
@@ -343,7 +343,7 @@ Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</
     <string name="msg_downloading">Pobieranie\n%1s</string>
     <string name="msg_downloaded">Plik hosts pobrany</string>
     <string name="msg_download_last">Ostatnie pobieranie: %s</string>
-    <string name="msg_start_forward">Rozpocząć przekierowanie z %1$s port %2$d do %3$s:%4$d dla \'%5$s\'?</string>
+    <string name="msg_start_forward">Rozpocząć przekierowanie z %1$s port %2$d do %3$s:%4$d dla '%5$s'?</string>
     <string name="msg_stop_forward">Zatrzymać przekierowanie z %1$s port %2$d?</string>
     <string name="msg_metered">Sieć jest płatna (limitowana)</string>
     <string name="msg_inactive">Brak aktywnego połączenia z Internetem</string>

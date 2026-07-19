@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard gir enkle og avanserte måter å blokkere tilgang til internett - ingen root er nødvendig. Apper og adresser kan enkelt tillates eller nektes tilgang til Wi-Fi- og/eller mobilforbindelsen din.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard krever Android 5.1 eller nyere</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privatlivsretningslinjer</a></string>
     <string name="app_first">Stort omhu er brukt i utvikling og testing av QuietGuard, men det umulig å garantere at QuietGuard vil fungere korrekt på alle enheter.</string>
     <string name="app_agree">Jeg aksepterer</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Mørk</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Varsle ved ny installasjon</string>
-    <string name="setting_screen_on">Bruk \'når skjermen er på\'-regler</string>
+    <string name="setting_screen_on">Bruk 'når skjermen er på'-regler</string>
     <string name="setting_auto">Aktiver automatisk etter %1$s minutter</string>
     <string name="setting_delay">Forsink skjerm av med %1$s minutter</string>
     <string name="setting_update">Se etter oppdateringer</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filtrer IP-pakker som går ut av VPN-tunnelen. Dette kan øke batteribruken.</string>
     <string name="summary_track_usage">Spor antall byte sendt og mottatt for hver app og adresse. Dette kan øke batteribruken.</string>
     <string name="summary_block_domains">Svar med konfigurert DNS-svarkode for blokkerte domenenavn. Deaktivert uten hosts-fil.</string>
-    <string name="summary_rcode">Standardverdien er 3 (NXDOMAIN), som betyr \'ikke-eksisterende domene\'.</string>
+    <string name="summary_rcode">Standardverdien er 3 (NXDOMAIN), som betyr 'ikke-eksisterende domene'.</string>
     <string name="summary_validate">Domenenavn som brukes til å validere internettilkoblingen på port 443 (https).</string>
     <string name="summary_socks5_enabled">Bare TCP-trafikk vil bli sendt til proxy-serveren</string>
     <string name="summary_watchdog">Sjekk jevnlig om QuietGuard fortsatt kjører (sett til 0 for å deaktivere). Dette kan øke batteribruken.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard er deaktivert, bruk bryteren ovenfor for å aktivere QuietGuard</string>
     <string name="msg_notifications">Trykk for å gi varslingstillatelse (for varsling om tilgangsforsøk, feilmeldinger osv.)</string>
     <string name="msg_revoked">QuietGuard har blitt deaktivert, sannsynligvis av en annen VPN-basert app</string>
-    <string name="msg_installed">\'%1$s\' installert</string>
+    <string name="msg_installed">'%1$s' installert</string>
     <string name="msg_installed_n">Er installert</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s forsøkte internettilgang</string>
     <string name="msg_access_n">Forsøk på internettilgang</string>
     <string name="msg_completed">Handlingen er fullført</string>
@@ -313,7 +313,7 @@
 Tillat derfor en VPN-tilkobling i neste dialog.
 Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
     <string name="msg_autostart">QuietGuard kunne ikke starte automatisk. Dette skyldes sannsynligvis en feil i din Android-versjon.</string>
-    <string name="msg_error">En uventet feil har oppstått: \'%s\'</string>
+    <string name="msg_error">En uventet feil har oppstått: '%s'</string>
     <string name="msg_start_failed">Android nektet å starte VPN-tjenesten for øyeblikket. Dette skyldes sannsynligvis en feil i din Android-versjon.</string>
     <string name="msg_try">Prøv QuietGuard</string>
     <string name="msg_terms">Ved å donere godtar du <a href="http://www.netguard.me/#terms">vilkår og betingelser</a></string>
@@ -338,7 +338,7 @@ Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
     <string name="msg_downloading">Laster ned\n%1s</string>
     <string name="msg_downloaded">Hosts-fil lastet ned</string>
     <string name="msg_download_last">Siste nedlasting: %s</string>
-    <string name="msg_start_forward">Start videresending fra %1$s port %2$d til %3$s:%4$d for \'%5$s\'?</string>
+    <string name="msg_start_forward">Start videresending fra %1$s port %2$d til %3$s:%4$d for '%5$s'?</string>
     <string name="msg_stop_forward">Stopp videresending av %1$s port %2$d?</string>
     <string name="msg_metered">Nettverket er forbruksmålt</string>
     <string name="msg_inactive">Ingen aktiv internettilkobling</string>

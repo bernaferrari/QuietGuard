@@ -4,12 +4,12 @@
     <string name="app_description">QuietGuard, internet erişimini engellemenin basit ve gelişmiş yollarını sunar - root erişimi gerekmez. Uygulamaların ve adreslerin Wi-Fi ve/veya mobil bağlantıya erişimi tek tek izin verilebilir veya engellenebilir.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard, Android 5.1 veya daha yenisini gerektirir</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Gizlilik politikası</a></string>
-    <string name="app_first">QuietGuard\'ın geliştirilmesi ve test edilmesinde büyük özen gösterilmiştir ancak QuietGuard\'ın her cihazda doğru çalışacağını garanti etmek imkansızdır.</string>
+    <string name="app_first">QuietGuard'ın geliştirilmesi ve test edilmesinde büyük özen gösterilmiştir ancak QuietGuard'ın her cihazda doğru çalışacağını garanti etmek imkansızdır.</string>
     <string name="app_agree">Kabul ediyorum</string>
     <string name="app_disagree">Kabul etmiyorum</string>
-    <string name="app_support">QuietGuard\'ın yardımınıza ihtiyacı var. Pro özelliklerini satın alarak projenin devam etmesine yardımcı olmak için dokunun.</string>
+    <string name="app_support">QuietGuard'ın yardımınıza ihtiyacı var. Pro özelliklerini satın alarak projenin devam etmesine yardımcı olmak için dokunun.</string>
     <string name="app_qap">
         Google, tüm uygulamaları sorgulama izni istediği için bu uygulamayı Play mağazasından kaldırmayı amaçladı.
         Beş itiraz ve bu iznin neden gerekli olduğuna dair yeterli gerekçelendirme reddedildi.
@@ -31,7 +31,7 @@
     <string name="menu_app_disabled">Devre dışı uygulamaları göster</string>
     <string name="menu_sort">Uygulamaları sırala</string>
     <string name="menu_sort_name">İsme göre sırala</string>
-    <string name="menu_sort_uid">UID\'ye göre sırala</string>
+    <string name="menu_sort_uid">UID'ye göre sırala</string>
     <string name="menu_sort_data">Kullanıma göre sırala</string>
     <string name="menu_launch">Uygulamayı başlat</string>
     <string name="menu_log">Günlüğü göster</string>
@@ -147,12 +147,12 @@
     <string name="title_raddr">Hedef adresi</string>
     <string name="title_rport">Hedef portu</string>
     <string name="title_ruid">Hedef uygulama</string>
-    <string name="title_external">Dış sunucular için \'nobody\' seçin</string>
+    <string name="title_external">Dış sunucular için 'nobody' seçin</string>
 
     <string name="setting_defaults">Varsayılanlar (Beyaz/Kara liste)</string>
     <string name="setting_whitelist_wifi">Wi-Fi engelle</string>
     <string name="setting_whitelist_other">Mobil engelle</string>
-    <string name="setting_screen_wifi">Ekran açıkken Wi-Fi\'ya izin ver</string>
+    <string name="setting_screen_wifi">Ekran açıkken Wi-Fi'ya izin ver</string>
     <string name="setting_screen_other">Ekran açıkken mobil veriye izin ver</string>
     <string name="setting_whitelist_roaming">Dolaşımı engelle</string>
 
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">Karanlık</string>
     <string name="theme_dynamic">Dinamik</string>
     <string name="setting_install">Yeni uygulama yüklendiğinde bildir</string>
-    <string name="setting_screen_on">\'Ekran açıkken\' kurallarını uygula</string>
+    <string name="setting_screen_on">'Ekran açıkken' kurallarını uygula</string>
     <string name="setting_auto">%1$s dakika sonra otomatik etkinleştir</string>
     <string name="setting_delay">Ekran kapandıktan %1$s dakika sonra kuralları sürdür</string>
     <string name="setting_update">Güncellemeleri kontrol et</string>
@@ -184,13 +184,13 @@
     <string name="setting_ip6">IPv6 trafiğini etkinleştir</string>
     <string name="setting_wifi_home">Wi-Fi ev ağı: %1$s</string>
     <string name="setting_metered">Ücretli Wi-Fi ağlarını yönet</string>
-    <string name="setting_metered_2g">2G\'yi ücretsiz say</string>
-    <string name="setting_metered_3g">3G\'yi ücretsiz say</string>
-    <string name="setting_metered_4g">LTE\'yi ücretsiz say</string>
+    <string name="setting_metered_2g">2G'yi ücretsiz say</string>
+    <string name="setting_metered_3g">3G'yi ücretsiz say</string>
+    <string name="setting_metered_4g">LTE'yi ücretsiz say</string>
     <string name="setting_national_roaming">Ulusal dolaşımı yoksay</string>
     <string name="setting_eu_roaming">AB dolaşımını yoksay</string>
     <string name="setting_call">Arama sırasında devre dışı bırak</string>
-    <string name="setting_lockdown_wifi">Wi-Fi\'ı kilitle</string>
+    <string name="setting_lockdown_wifi">Wi-Fi'ı kilitle</string>
     <string name="setting_lockdown_other">Mobil veriyi kilitle</string>
     <string name="setting_reload_onconnectivity">Bağlantı her değiştiğinde yeniden yükle</string>
 
@@ -238,7 +238,7 @@
     <string name="setting_import">Ayarları içe aktar</string>
     <string name="setting_hosts">hosts dosyasını içe aktar</string>
     <string name="setting_hosts_append">hosts dosyasını içe aktar (ekle)</string>
-    <string name="setting_hosts_url">hosts dosyası indirme URL\'si</string>
+    <string name="setting_hosts_url">hosts dosyası indirme URL'si</string>
     <string name="setting_hosts_download">hosts dosyasını indir</string>
     <string name="setting_use_hosts">hosts dosyasını kullan</string>
 
@@ -259,8 +259,8 @@
     <string name="setting_section_support">Destek</string>
 
     <string name="summary_install">Yeni yüklenen uygulamaları doğrudan yapılandırmak için durum çubuğunda bir bildirim gösterin (Pro özelliği)</string>
-    <string name="summary_auto">Widget kullanarak devre dışı bıraktıktan sonra seçilen süre sonunda QuietGuard\'ı otomatik olarak yeniden etkinleştirin (bu seçeneği devre dışı bırakmak için sıfır girin)</string>
-    <string name="summary_delay">Ekranı kapattıktan sonra seçilen süre boyunca \'ekran açıkken\' kurallarını aktif tutun (bu seçeneği devre dışı bırakmak için sıfır girin)</string>
+    <string name="summary_auto">Widget kullanarak devre dışı bıraktıktan sonra seçilen süre sonunda QuietGuard'ı otomatik olarak yeniden etkinleştirin (bu seçeneği devre dışı bırakmak için sıfır girin)</string>
+    <string name="summary_delay">Ekranı kapattıktan sonra seçilen süre boyunca 'ekran açıkken' kurallarını aktif tutun (bu seçeneği devre dışı bırakmak için sıfır girin)</string>
     <string name="summary_update">GitHub üzerinden günde iki kez yeni sürümleri kontrol edin</string>
 
     <string name="summary_tethering">Android sürümüne bağlı olarak internet paylaşımı çalışabilir veya çalışmayabilir. Paylaşılan trafik filtrelenemez.</string>
@@ -274,7 +274,7 @@
     <string name="summary_metered_4g">LTE veri bağlantılarına Wi-Fi ağ kurallarını uygulayın</string>
     <string name="summary_national_roaming">SIM ve mobil ağ ülkesi aynı olduğunda dolaşım kurallarını uygulama</string>
     <string name="summary_eu_roaming">SIM ve mobil ağ ülkesi her ikisi de AB içindeyken dolaşım kurallarını uygulama (kendi ülkendeymiş gibi kullan)</string>
-    <string name="summary_call">Gelen veya giden bir arama olduğunda QuietGuard\'ı devre dışı bırakın. Bu, IP/Wi-Fi üzerinden arama sorunlarını önlemek için kullanılabilir.</string>
+    <string name="summary_call">Gelen veya giden bir arama olduğunda QuietGuard'ı devre dışı bırakın. Bu, IP/Wi-Fi üzerinden arama sorunlarını önlemek için kullanılabilir.</string>
 
     <string name="summary_system">Sistem uygulamaları için kurallar tanımlayın (uzmanlar için)</string>
     <string name="summary_log_app">Uygulamaların internet erişim denemelerini kaydedin. Bu, ek pil tüketimine neden olabilir.</string>
@@ -283,10 +283,10 @@
     <string name="summary_filter">VPN tünelinden çıkan IP paketlerini filtreleyin. Bu, ek pil tüketimine neden olabilir.</string>
     <string name="summary_track_usage">Her uygulama ve adres tarafından gönderilen ve alınan baytları takip edin. Bu, ek pil tüketimine neden olabilir.</string>
     <string name="summary_block_domains">Engellenen alan adları için yapılandırılmış DNS yanıt kodu ile yanıt verin. Bir hosts dosyası mevcut değilse bu anahtar devre dışı bırakılacaktır.</string>
-    <string name="summary_rcode">Varsayılan değer 3\'tür (NXDOMAIN), \'alan adı mevcut değil\' anlamına gelir.</string>
+    <string name="summary_rcode">Varsayılan değer 3'tür (NXDOMAIN), 'alan adı mevcut değil' anlamına gelir.</string>
     <string name="summary_validate">443 (https) portu üzerinden internet bağlantısını doğrulamak için kullanılan alan adı.</string>
     <string name="summary_socks5_enabled">Sadece TCP trafiği vekil sunucuya gönderilecektir</string>
-    <string name="summary_watchdog">QuietGuard\'ın hala çalışıp çalışmadığını periyodik olarak kontrol edin (bu seçeneği devre dışı bırakmak için sıfır girin). Bu, ek pil tüketimine neden olabilir.</string>
+    <string name="summary_watchdog">QuietGuard'ın hala çalışıp çalışmadığını periyodik olarak kontrol edin (bu seçeneği devre dışı bırakmak için sıfır girin). Bu, ek pil tüketimine neden olabilir.</string>
 
     <string name="summary_stats">Durum çubuğu bildiriminde ağ hızı grafiğini gösterin</string>
 
@@ -297,12 +297,12 @@
     <string name="msg_packages">%1$d izin verildi, %2$d engellendi</string>
     <string name="msg_hosts">%1$d izin verildi, %2$d engellendi, %3$d ana bilgisayar</string>
     <string name="msg_waiting">Olaylar bekleniyor</string>
-    <string name="msg_disabled">QuietGuard devre dışı, lütfen QuietGuard\'ı etkinleştirmek için yukarıdaki anahtarı kullanın</string>
+    <string name="msg_disabled">QuietGuard devre dışı, lütfen QuietGuard'ı etkinleştirmek için yukarıdaki anahtarı kullanın</string>
     <string name="msg_notifications">Bildirim izni vermek için dokunun (erişim deneme bildirimleri, hata mesajları vb. için)</string>
     <string name="msg_revoked">QuietGuard devre dışı bırakıldı, muhtemelen başka bir VPN tabanlı uygulama kullanılması nedeniyle</string>
-    <string name="msg_installed">\'%1$s\' yüklendi</string>
+    <string name="msg_installed">'%1$s' yüklendi</string>
     <string name="msg_installed_n">Yüklendi</string>
-    <string name="msg_malware">Olası zararlı yazılım: \'%1$s\'</string>
+    <string name="msg_malware">Olası zararlı yazılım: '%1$s'</string>
     <string name="msg_access">%1$s internete erişmeye çalıştı</string>
     <string name="msg_access_n">Internete erişmeye çalıştı</string>
     <string name="msg_completed">Eylem tamamlandı</string>
@@ -312,11 +312,11 @@
 Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
 İnternet trafiğiniz herhangi bir uzak VPN sunucusuna gönderilmeyecektir.</string>
     <string name="msg_autostart">QuietGuard otomatik olarak başlatılamadı. Bu büyük olasılıkla Android sürümünüzdeki bir hatadan kaynaklanmaktadır.</string>
-    <string name="msg_error">Beklenmeyen bir hata oluştu: \'%s\'</string>
+    <string name="msg_error">Beklenmeyen bir hata oluştu: '%s'</string>
     <string name="msg_start_failed">Android şu anda VPN hizmetini başlatmayı reddetti. Bu büyük olasılıkla Android sürümünüzdeki bir hatadan kaynaklanmaktadır.</string>
-    <string name="msg_try">QuietGuard\'ı dene</string>
+    <string name="msg_try">QuietGuard'ı dene</string>
     <string name="msg_terms">Bağış yaparak <a href="http://www.netguard.me/#terms">şartlar ve koşulları</a> kabul etmiş olursunuz</string>
-    <string name="msg_dimming">Sonraki iletişim kutusunda Tamam\'a basamıyorsanız, muhtemelen başka bir (ekran karartma) uygulama ekranı kontrol ediyordur.</string>
+    <string name="msg_dimming">Sonraki iletişim kutusunda Tamam'a basamıyorsanız, muhtemelen başka bir (ekran karartma) uygulama ekranı kontrol ediyordur.</string>
     <string name="msg_mbday">&#177; %1$.3f&#9650; %2$.3f&#9660; MB/gün</string>
     <string name="msg_kbsec">%7.3f KB/s</string>
     <string name="msg_mbsec">%7.3f MB/s</string>
@@ -325,10 +325,10 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
     <string name="msg_doze">Tutarlı sonuçlar için QuietGuard için Android pil optimizasyonu devre dışı bırakılmalıdır.
-\n\nSonraki iletişim kutusunda, üstten \"Tüm uygulamalar\"ı seçin, listede QuietGuard\'a dokunun ve \"Optimize etme\"yi seçip onaylayın.</string>
+\n\nSonraki iletişim kutusunda, üstten \"Tüm uygulamalar\"ı seçin, listede QuietGuard'a dokunun ve \"Optimize etme\"yi seçip onaylayın.</string>
     <string name="msg_datasaving">Tutarlı sonuçlar için QuietGuard için Android veri tasarrufu seçeneği devre dışı bırakılmalıdır.
 \n\nSonraki iletişim kutusunda \"Arka plan verileri\" ve \"Sınırsız veri kullanımı\" seçeneklerini etkinleştirin.</string>
-    <string name="msg_filter">Filtreleme kullanmak Android\'in veri ve güç kullanımını QuietGuard\'a atfetmesine neden olacaktır - Android, verinin ve gücün asıl uygulama yerine QuietGuard tarafından tüketildiğini düşünecektir.</string>
+    <string name="msg_filter">Filtreleme kullanmak Android'in veri ve güç kullanımını QuietGuard'a atfetmesine neden olacaktır - Android, verinin ve gücün asıl uygulama yerine QuietGuard tarafından tüketildiğini düşünecektir.</string>
     <string name="msg_filter4">Android 4, filtrelemenin etkinleştirilmesini gerektirir</string>
     <string name="msg_log_disabled">Trafik günlüğü devre dış, lütfen yukarıdaki anahtarla etkinleştirin. Günlük tutma ek pil tüketimine neden olabilir.</string>
     <string name="msg_clear_rules">Bu, kuralları ve koşulları varsayılan değerlere sıfırlayacaktır</string>
@@ -337,7 +337,7 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="msg_downloading">İndiriliyor\n%1s</string>
     <string name="msg_downloaded">hosts dosyası indirildi</string>
     <string name="msg_download_last">Son indirme: %s</string>
-    <string name="msg_start_forward">%1$s port %2$d\'den %3$s:%4$d adresine \'%5$s\' için yönlendirme başlatılsın mı?</string>
+    <string name="msg_start_forward">%1$s port %2$d'den %3$s:%4$d adresine '%5$s' için yönlendirme başlatılsın mı?</string>
     <string name="msg_stop_forward">%1$s port %2$d yönlendirmesi durdurulsun mu?</string>
     <string name="msg_metered">Ağ ücretli (kotalı)</string>
     <string name="msg_inactive">Aktif internet bağlantısı yok</string>
@@ -349,12 +349,12 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="msg_push">Gelen (push) mesajlar esas olarak varsayılan olarak internet erişimine izin verilen bir sistem bileşeni olan Play hizmetleri tarafından işlenir</string>
     <string name="msg_system">Tüm (sistem) uygulamalarının yönetimi ayarlardan etkinleştirilebilir</string>
     <string name="msg_issue">Lütfen sorunu açıklayın ve sorunun oluştuğu zamanı belirtin:</string>
-    <string name="msg_vpn_cancelled">VPN bağlantısı iptal edildi\nBaşka bir VPN\'i \"Her zaman açık VPN\" olarak mı yapılandırdınız?</string>
-    <string name="msg_on">QuietGuard etkinken cihazı kapatmak, cihaz açıldığında QuietGuard\'ı otomatik olarak başlatacaktır</string>
+    <string name="msg_vpn_cancelled">VPN bağlantısı iptal edildi\nBaşka bir VPN'i \"Her zaman açık VPN\" olarak mı yapılandırdınız?</string>
+    <string name="msg_on">QuietGuard etkinken cihazı kapatmak, cihaz açıldığında QuietGuard'ı otomatik olarak başlatacaktır</string>
     <string name="msg_unavailable">Bu özellik bu Android sürümünde mevcut değil</string>
     <string name="msg_always_on">Başka bir VPN, her zaman açık VPN olarak ayarlanmış</string>
-    <string name="msg_always_on_lockdown">QuietGuard\'ı filtreleme modunda kullanmak için Android VPN ayarlarında \"VPN olmadan bağlantıları engelle\" seçeneğini kapatın</string>
-    <string name="msg_private_dns">QuietGuard\'ı filtreleme modunda kullanmak için Android ağ ayarlarında \"Özel DNS\"i kapatın</string>
+    <string name="msg_always_on_lockdown">QuietGuard'ı filtreleme modunda kullanmak için Android VPN ayarlarında \"VPN olmadan bağlantıları engelle\" seçeneğini kapatın</string>
+    <string name="msg_private_dns">QuietGuard'ı filtreleme modunda kullanmak için Android ağ ayarlarında \"Özel DNS\"i kapatın</string>
 
     <string name="title_lockdown_enabled">Trafik kısıtlandı</string>
     <string name="title_unmetered_allowed">Ücretsiz trafiğe izin veriliyor</string>
@@ -375,7 +375,7 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="title_download">İndirmeler bu uygulama tarafından değil indirme yöneticisi tarafından gerçekleştirilir, bu nedenle bu uygulamayı engellemekle engellenemezler</string>
     <string name="title_apply">Kuralları ve koşulları uygula</string>
     <string name="title_conditions">Koşullar</string>
-    <string name="title_screen_wifi">Ekran açıkken Wi-Fi\'ya izin ver</string>
+    <string name="title_screen_wifi">Ekran açıkken Wi-Fi'ya izin ver</string>
     <string name="title_screen_other">Ekran açıkken mobil veriye izin ver</string>
     <string name="title_roaming_symbol">R</string>
     <string name="title_roaming">Dolaşımda engelle</string>
@@ -404,8 +404,8 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="title_block">Engelle</string>
     <string name="title_wifi">Wi-Fi</string>
     <string name="title_mobile">Mobil</string>
-    <string name="title_allow_wifi">Wi-Fi\'ya izin ver</string>
-    <string name="title_block_wifi">Wi-Fi\'yı engelle</string>
+    <string name="title_allow_wifi">Wi-Fi'ya izin ver</string>
+    <string name="title_block_wifi">Wi-Fi'yı engelle</string>
     <string name="title_allow_other">Mobil veriye izin ver</string>
     <string name="title_block_other">Mobil veriyi engelle</string>
     <string name="title_root">root</string>
@@ -436,7 +436,7 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="title_pro_reponse">Yanıt</string>
     <string name="title_pro_feature">Bu bir Pro özelliğidir</string>
     <string name="title_pro_subscription">
-        Aylık 1 veya 2 Euro\'luk (yerel vergiler hariç) bir abonelik tüm Pro özellikleri etkinleştirecektir.
+        Aylık 1 veya 2 Euro'luk (yerel vergiler hariç) bir abonelik tüm Pro özellikleri etkinleştirecektir.
         Aboneliğinizi Play mağazası uygulamasının abonelikler sekmesinden iptal edebilir veya yönetebilirsiniz.
     </string>
     <string name="title_pro_already">Pro özellikler zaten etkinleştirilmiş</string>

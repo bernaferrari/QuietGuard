@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard သည် အင်တာနက် အသုံးပြုခွင့်ကို ပိတ်ဆို့ရန် ရိုးရှင်းပြီး အဆင့်မြင့်သော နည်းလမ်းများကို ပံ့ပိုးပေးသည် - root လုပ်ရန် မလိုပါ။ သင်၏ Wi-Fi နှင့်/သို့မဟုတ် မိုဘိုင်းချိတ်ဆက်မှုသို့ အက်ပ်များနှင့် လိပ်စာများကို တစ်ခုချင်းစီ အသုံးပြုခွင့် ပေးနိုင်သည် သို့မဟုတ် ငြင်းပယ်နိုင်သည်။</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard သည် Android 5.1 သို့မဟုတ် နောက်ပိုင်း လိုအပ်သည်</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">ကိုယ်ရေးအချက်အလက် မူဝါဒ</a></string>
     <string name="app_first">QuietGuard ကို ဖော်ဆောင်ရန်နှင့် စမ်းသပ်ရန် အထူးဂရုစိုက်ထားသော်လည်း စက်တိုင်းတွင် QuietGuard မှန်ကန်စွာ အလုပ်လုပ်မည်ဟု အာမခံရန် မဖြစ်နိုင်ပါ။</string>
     <string name="app_agree">ကျွန်ုပ်သဘောတူတယ်</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">Destination address</string>
     <string name="title_rport">Destination port</string>
     <string name="title_ruid">ပစ်မှတ် အက်ပ်</string>
-    <string name="title_external">ပြင်ပ ဆာဗာအတွက် \'nobody\' ကို ရွေးပါ</string>
+    <string name="title_external">ပြင်ပ ဆာဗာအတွက် 'nobody' ကို ရွေးပါ</string>
 
     <string name="setting_defaults">မူလဆက်တင်များ (ခွင့်ပြု/ပိတ်ဆို့ စာရင်း)</string>
     <string name="setting_whitelist_wifi">Wi-Fi ကို ပိတ်ဆို့ပါ</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">အမှောင်</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">အက်ပ်အသစ် ထည့်သွင်းပါက အသိပေးပါ</string>
-    <string name="setting_screen_on">\'မျက်နှာပြင် လင်းနေစဉ်\' စည်းမျဉ်းများကို ကျင့်သုံးပါ</string>
+    <string name="setting_screen_on">'မျက်နှာပြင် လင်းနေစဉ်' စည်းမျဉ်းများကို ကျင့်သုံးပါ</string>
     <string name="setting_auto">%1$s မိနစ်အကြာတွင် အလိုအလျောက် ပြန်ဖွင့်ပါ</string>
     <string name="setting_delay">မျက်နှာပြင်မှိတ်ရန် %1$s မိနစ် ဆိုင်းငံ့ပါ</string>
     <string name="setting_update">အပ်ဒိတ်များကို စစ်ဆေးပါ</string>
@@ -283,7 +283,7 @@
     <string name="summary_filter">VPN မှ ထွက်လာသော IP ပက်ကတ်များကို စစ်ထုတ်ပါ။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
     <string name="summary_track_usage">အက်ပ်နှင့် လိပ်စာတစ်ခုစီအတွက် ပေးပို့လက်ခံသည့် ပမာဏကို ခြေရာခံပါ။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
     <string name="summary_block_domains">ပိတ်ဆို့ထားသော ဒိုမိန်းများအတွက် သတ်မှတ်ထားသော DNS တုံ့ပြန်မှုကုဒ်ဖြင့် တုံ့ပြန်ပါ။ Hosts ဖိုင်မရှိပါက ဤခလုတ်ကို ပိတ်ထားမည်ဖြစ်သည်။</string>
-    <string name="summary_rcode">နဂိုမူလ တန်ဖိုးမှာ 3 (NXDOMAIN) ဖြစ်ပြီး \'ဒိုမိန်းမရှိပါ\' ဟု အဓိပ္ပာယ်ရသည်။</string>
+    <string name="summary_rcode">နဂိုမူလ တန်ဖိုးမှာ 3 (NXDOMAIN) ဖြစ်ပြီး 'ဒိုမိန်းမရှိပါ' ဟု အဓိပ္ပာယ်ရသည်။</string>
     <string name="summary_validate">Port 443 (https) တွင် အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးရန် အသုံးပြုသော ဒိုမိန်းအမည်။</string>
     <string name="summary_socks5_enabled">TCP ဒေတာများကိုသာ ပရောက်စီ ဆာဗာသို့ ပေးပို့မည်ဖြစ်သည်</string>
     <string name="summary_watchdog">QuietGuard လည်ပတ်နေဆဲဖြစ်မဖြစ် အခါအားလျော်စွာ စစ်ဆေးပါ (ဤအင်္ဂါရပ်ကို ပိတ်ရန် သုည ထည့်ပါ)။ ၎င်းသည် ဘက်ထရီ အသုံးပြုမှု ပိုများစေနိုင်ပါသည်။</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">QuietGuard ပိတ်ထားသည်၊ ပြန်ဖွင့်ရန် အပေါ်မှခလုတ်ကို သုံးပါ</string>
     <string name="msg_notifications">အသိပေးချက် ခွင့်ပြုချက်များပေးရန် နှိပ်ပါ (အသုံးပြုမှုကြိုးပမ်းချက်များ၊ အမှားသတင်းစကားများ စသည်တို့အတွက်)</string>
     <string name="msg_revoked">QuietGuard ပိတ်သွားပါသည်၊ အခြား VPN အက်ပ်တစ်ခုခု သုံးနေခြင်းကြောင့် ဖြစ်နိုင်ပါသည်</string>
-    <string name="msg_installed">\'%1$s\' ထည့်သွင်းပြီးပါပြီ</string>
+    <string name="msg_installed">'%1$s' ထည့်သွင်းပြီးပါပြီ</string>
     <string name="msg_installed_n">ထည့်သွင်းပြီးပါပြီ</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s မှ အင်တာနက် အသုံးပြုရန် ကြိုးပမ်းသည်</string>
     <string name="msg_access_n">အင်တာနက် အသုံးပြုရန် ကြိုးပမ်းသည်</string>
     <string name="msg_completed">လုပ်ဆောင်ချက် ပြီးမြောက်ပါပြီ</string>
@@ -312,7 +312,7 @@
 ထို့ကြောင့် နောက်ဒိုင်ယာလော့ဂ်တွင် VPN ချိတ်ဆက်မှုကို ခွင့်ပြုပေးပါ။
 သင်၏ အင်တာနက်ဒေတာများကို အခြား VPN ဆာဗာများဆီသို့ ပေးပို့မည် မဟုတ်ပါ။</string>
     <string name="msg_autostart">QuietGuard အလိုအလျောက် မပွင့်နိုင်ပါ။ ၎င်းသည် သင်၏ Android ဗားရှင်းရှိ ဘဂ်တစ်ခုကြောင့် ဖြစ်နိုင်ပါသည်။</string>
-    <string name="msg_error">မမျှော်လင့်ထားသော အမှားတစ်ခု ဖြစ်ပွားခဲ့သည် - \'%s\'</string>
+    <string name="msg_error">မမျှော်လင့်ထားသော အမှားတစ်ခု ဖြစ်ပွားခဲ့သည် - '%s'</string>
     <string name="msg_start_failed">Android မှ ဤအချိန်တွင် VPN ဝန်ဆောင်မှုကို စတင်ရန် ငြင်းဆိုခဲ့သည်။ ၎င်းသည် သင်၏ Android ဗားရှင်းရှိ ဘဂ်တစ်ခုကြောင့် ဖြစ်နိုင်ပါသည်။</string>
     <string name="msg_try">QuietGuard ကို စမ်းသုံးကြည့်ပါ</string>
     <string name="msg_terms">လှူဒါန်းခြင်းဖြင့် သင်သည် <a href="http://www.netguard.me/#terms">စည်းကမ်းသတ်မှတ်ချက်များ</a> ကို သဘောတူပြီး ဖြစ်သည်</string>
@@ -325,7 +325,7 @@
     <string name="msg_gb">%1$7.3f&#9650; %2$7.3f&#9660; GB</string>
     <string name="msg_count">%dx</string>
     <string name="msg_doze">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် QuietGuard အတွက် Android ဘက်ထရီ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
-\n\nနောက်ဒိုင်ယာလော့ဂ်တွင် အပေါ်မှ \"All apps\" ကိုရွေးပါ၊ စာရင်းထဲရှိ QuietGuard ကိုနှိပ်ပြီး \"Don\'t optimize\" ကိုရွေး၍ အတည်ပြုပါ။</string>
+\n\nနောက်ဒိုင်ယာလော့ဂ်တွင် အပေါ်မှ \"All apps\" ကိုရွေးပါ၊ စာရင်းထဲရှိ QuietGuard ကိုနှိပ်ပြီး \"Don't optimize\" ကိုရွေး၍ အတည်ပြုပါ။</string>
     <string name="msg_datasaving">မှန်ကန်သော လုပ်ဆောင်ချက်များအတွက် QuietGuard အတွက် Android ဒေတာ ချွေတာမှုစနစ်ကို ပိတ်ထားသင့်သည်။
 \n\nနောက်ဒိုင်ယာလော့ဂ်တွင် \"Background data\" နှင့် \"Unrestricted data usage\" တို့ကို ဖွင့်ပေးပါ။</string>
     <string name="msg_filter">စစ်ထုတ်ခြင်းကို အသုံးပြုပါက Android သည် ဒေတာနှင့် ပါဝါအသုံးပြုမှုကို မူလအက်ပ်များအစား QuietGuard တွင် ဖော်ပြပေးမည်ဖြစ်သည်။</string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">ဒေါင်းလုဒ်လုပ်နေသည်\n%1s</string>
     <string name="msg_downloaded">Hosts ဖိုင် ဒေါင်းလုဒ်ပြီးပါပြီ</string>
     <string name="msg_download_last">နောက်ဆုံး ဒေါင်းလုဒ် - %s</string>
-    <string name="msg_start_forward">%1$s ပေါ့တ် %2$d မှ \'%5$s\' ၏ %3$s:%4$d သို့ လက်ဆင့်ကမ်းခြင်းကို စတင်မလား။</string>
+    <string name="msg_start_forward">%1$s ပေါ့တ် %2$d မှ '%5$s' ၏ %3$s:%4$d သို့ လက်ဆင့်ကမ်းခြင်းကို စတင်မလား။</string>
     <string name="msg_stop_forward">%1$s ပေါ့တ် %2$d ၏ လက်ဆင့်ကမ်းခြင်းကို ရပ်မလား။</string>
     <string name="msg_metered">ကွန်ယက်မှာ ကန့်သတ်ထားသော ကွန်ယက်ဖြစ်သည်</string>
     <string name="msg_inactive">အင်တာနက် ချိတ်ဆက်ထားခြင်း မရှိပါ</string>

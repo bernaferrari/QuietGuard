@@ -38,7 +38,6 @@ enum class SettingsSection {
     Hosts,
     Network,
     Background,
-    Diagnostics,
     About,
 }
 

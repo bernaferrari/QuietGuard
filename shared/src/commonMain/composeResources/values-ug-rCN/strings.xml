@@ -4,7 +4,7 @@
     <string name="app_description">روتسىز تورنى توسۇشقا بولىدۇ. wifi ۋە سىمسىز تورنى باشقۇرغىلى بولىدۇ.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard ئۈچۈن Android 5.1 ياكى ئۇنىڭدىن يۇقىرى نەشرى كېرەك</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">مەخپىيەتلىك تۈزۈمى</a></string>
     <string name="app_first">QuietGuard نى تەرەققىي قىلدۇرۇش ۋە سىناق قىلىشقا ئىنتايىن ئەھمىيەت بېرىلدى، ئەمما QuietGuard نىڭ ھەر بىر ئۈسكۈنىدە نورمال ئىشلىشىگە كاپالەتلىك قىلغىلى بولمايدۇ.</string>
     <string name="app_agree">قوشۇلىمەن</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">ئورنى</string>
     <string name="title_rport">چىقىرىش ئورنى</string>
     <string name="title_ruid">نىشانلىق ئەپ</string>
-    <string name="title_external">سىرتقى مۇلازىمىترغا تاللاش \'nobody\'</string>
+    <string name="title_external">سىرتقى مۇلازىمىترغا تاللاش 'nobody'</string>
 
     <string name="setting_defaults">سۈكۈتتىكى (ئاق/قارا تىزىملىك)</string>
     <string name="setting_whitelist_wifi">توسۇش Wi-Fi</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">قاراڭغۇ</string>
     <string name="theme_dynamic">ھەرىكەتچان</string>
     <string name="setting_install">يېڭى قاچىلاشتا ئۇقتۇرۇش</string>
-    <string name="setting_screen_on">\'ئېكران ئوچۇق\' قائىدىسنى ئىشلىتىش</string>
+    <string name="setting_screen_on">'ئېكران ئوچۇق' قائىدىسنى ئىشلىتىش</string>
     <string name="setting_auto">ئاپتۇماتىك يول قويۇش %1$s مىنۇتتىن كېيىن</string>
     <string name="setting_delay">ئېكران ئۆچۈش %1$s مىنۇت كىچكىش</string>
     <string name="setting_update">يېڭىلانمىنى تەكشۈرۈش</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">QuietGuard توسۇلدى، ئۈستىدىن قوزغىتىڭ</string>
     <string name="msg_notifications">ئۇقتۇرۇش ھوقۇقى بېرىش ئۈچۈن بېسىڭ (زىيارەت سىناش، خاتالىق ئۇچۇرلىرى قاتارلىقلار ئۈچۈن)</string>
     <string name="msg_revoked">QuietGuard چەكلەندى، بەلكىم باشقا بىر ئەپ تەرپىدىن بولغان</string>
-    <string name="msg_installed">\'%1$s\' قاچىلاندى</string>
+    <string name="msg_installed">'%1$s' قاچىلاندى</string>
     <string name="msg_installed_n">قاچىلانغان</string>
-    <string name="msg_malware">ئېھتىماللىق بار زىيانلىق يۇمشاق دېتال: \'%1$s\'</string>
+    <string name="msg_malware">ئېھتىماللىق بار زىيانلىق يۇمشاق دېتال: '%1$s'</string>
     <string name="msg_access">%1$s تور چىقىشنى سىناش</string>
     <string name="msg_access_n">تور چىقىشنى سىناش</string>
     <string name="msg_completed">تامام</string>
@@ -312,7 +312,7 @@
 شۇڭلاشقا كېيىنكى سۆھبەت كۆزنىكىدە VPN ئۇلىنىشىغا يول قويۇڭ.
 تور ئېقىمىڭىز يىراقتىكى VPN مۇلازىمېتىرىغا ئەۋەتىلمەيدۇ.</string>
     <string name="msg_autostart">QuietGuard ئاپتۇماتىك قوزغىلالمىدى، سىزنىڭ تېلېىفونىڭىزنىڭ نەشردىكى مەسلىسى بولشى مومكىن.</string>
-    <string name="msg_error">ئويلىمغان خاتالىق: \'%s\'</string>
+    <string name="msg_error">ئويلىمغان خاتالىق: '%s'</string>
     <string name="msg_start_failed">VPN مۇلازىمتىنى رەت قىلدى، سىزنىڭ تېلېىفونىڭىزنىڭ نەشردىكى مەسلىسى بولشى مومكىن.</string>
     <string name="msg_try">سىناش QuietGuard</string>
     <string name="msg_terms">قوشۇلسىڭىز <a href="http://www.netguard.me/#terms">شەرتلەر ۋە بەلگىلىمىلەر</a></string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">چۈشۈرۋاتىدۇ\n%1s</string>
     <string name="msg_downloaded">Hosts ھۆججىتى چۈشۈرۈلدى</string>
     <string name="msg_download_last">يېقىندا چۈشۈرگىنى: %s</string>
-    <string name="msg_start_forward">%1$s نىڭ %2$d ئېغىزىدىن %3$s:%4$d گە \'%5$s\' ئۈچۈن يۆتكەشنى باشلامسىز؟</string>
+    <string name="msg_start_forward">%1$s نىڭ %2$d ئېغىزىدىن %3$s:%4$d گە '%5$s' ئۈچۈن يۆتكەشنى باشلامسىز؟</string>
     <string name="msg_stop_forward">%1$s نىڭ %2$d ئېغىزىدىكى يۆتكەشنى توختىتامسىز؟</string>
     <string name="msg_metered">تور ئۆلچەشلىك</string>
     <string name="msg_inactive">ئاكتىپ تور ئۇلىنىشى يوق</string>

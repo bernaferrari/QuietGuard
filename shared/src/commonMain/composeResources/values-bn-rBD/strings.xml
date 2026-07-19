@@ -4,7 +4,7 @@
     <string name="app_description">নেটগার্ড ইন্টারনেটে অ্যাক্সেস ব্লক করার সহজ এবং উন্নত উপায় প্রোভাইড করে - কোনও রুট করার প্রয়োজন হয় না। প্রতিটি অ্যাপ্লিকেশন এবং ওয়েব এড্রেসগুলোকে পৃথকভাবে আপনার ওয়াইফাই এবং / অথবা মোবাইল সংযোগ অ্যাক্সেসের অনুমতি দেয় বা বিরত রাখে।</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">নেটগার্ডের জন্য অ্যান্ড্রয়েড 5.1 বা তার পরের কোনো ভার্সন প্রয়োজন পরে।</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">গোপনীয়তা নীতি</a></string>
     <string name="app_first">নেটগার্ড ডেভেলপ এবং টেস্ট করার জন্য যথেষ্ট সতর্কতা অবলম্বন করা হয়েছে, তবে নেটগার্ড প্রতিটি ডিভাইসে সঠিকভাবে কাজ করবে এমন গ্যারান্টি দেওয়া অসম্ভব।</string>
     <string name="app_agree">আমি সম্মতি দিচ্ছি</string>
@@ -147,7 +147,7 @@
     <string name="title_raddr">গন্তব্যস্থানের ঠিকানা</string>
     <string name="title_rport">গন্তব্যস্থানের পোর্ট</string>
     <string name="title_ruid">গন্তব্য অ্যাপ</string>
-    <string name="title_external">এক্সটার্নাল সার্ভারের জন্য \'nobody\' বেছে নিন</string>
+    <string name="title_external">এক্সটার্নাল সার্ভারের জন্য 'nobody' বেছে নিন</string>
 
     <string name="setting_defaults">ডিফল্ট (সাদা/কালো তালিকা)</string>
     <string name="setting_whitelist_wifi">ওয়াইফাই ব্লক করুন</string>
@@ -170,7 +170,7 @@
     <string name="setting_appearance_dark">ডার্ক</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">নতুন ইনস্টল হলে বিজ্ঞপ্তি দিন</string>
-    <string name="setting_screen_on">\'স্ক্রিন অন থাকাকালীন\' নিয়মগুলি প্রয়োগ করুন</string>
+    <string name="setting_screen_on">'স্ক্রিন অন থাকাকালীন' নিয়মগুলি প্রয়োগ করুন</string>
     <string name="setting_auto">%1$s মিনিট পর স্বয়ংক্রিয় সক্রিয় হবে</string>
     <string name="setting_delay">স্ক্রিন বন্ধের পর %1$s মিনিট নিয়ম বজায় রাখুন</string>
     <string name="setting_update">আপডেটের জন্য চেক করুন</string>
@@ -260,7 +260,7 @@
 
     <string name="summary_install">নতুন ইনস্টল করা অ্যাপগুলি সরাসরি কনফিগার করতে স্ট্যাটাস বার বিজ্ঞপ্তি দেখান (প্রো বৈশিষ্ট্য)</string>
     <string name="summary_auto">উইজেট ব্যবহার করে নিষ্ক্রিয় করার পরে, নির্বাচিত সংখ্যক মিনিট পরে স্বয়ংক্রিয়ভাবে নেটগার্ড আবার সক্ষম হবে (নিষ্ক্রিয় করতে শূন্য লিখুন)</string>
-    <string name="summary_delay">স্ক্রিন বন্ধ করার পরে, নির্বাচিত সংখ্যক মিনিটের জন্য \'স্ক্রিন অন\' নিয়মগুলি সক্রিয় রাখুন (নিষ্ক্রিয় করতে শূন্য লিখুন)</string>
+    <string name="summary_delay">স্ক্রিন বন্ধ করার পরে, নির্বাচিত সংখ্যক মিনিটের জন্য 'স্ক্রিন অন' নিয়মগুলি সক্রিয় রাখুন (নিষ্ক্রিয় করতে শূন্য লিখুন)</string>
     <string name="summary_update">গিটহাবে দিনে দুবার নতুন রিলিজ চেক করুন</string>
 
     <string name="summary_tethering">অ্যান্ড্রয়েড ভার্সনের ওপর নির্ভর করে, টিথারিং কাজ করতে পারে বা নাও করতে পারে। টিথার্ড ট্রাফিক ফিল্টার করা যায় না।</string>
@@ -283,7 +283,7 @@
     <string name="summary_filter">VPN টানেল থেকে বেরিয়ে আসা IP প্যাকেটগুলি ফিল্টার করুন। এতে অতিরিক্ত ব্যাটারি খরচ হতে পারে।</string>
     <string name="summary_track_usage">প্রতিটি অ্যাপ এবং ঠিকানার জন্য পাঠানো এবং প্রাপ্ত বাইটের সংখ্যা ট্র্যাক করুন। এতে অতিরিক্ত ব্যাটারি খরচ হতে পারে।</string>
     <string name="summary_block_domains">অবরুদ্ধ ডোমেইন নামের জন্য কনফিগার করা DNS প্রতিক্রিয়া কোড দিয়ে সাড়া দিন। কোনো hosts ফাইল উপলব্ধ না থাকলে এই সুইচটি নিষ্ক্রিয় থাকে।</string>
-    <string name="summary_rcode">ডিফল্ট মান হল 3 (NXDOMAIN), যার অর্থ \'অস্তিত্বহীন ডোমেইন\'।</string>
+    <string name="summary_rcode">ডিফল্ট মান হল 3 (NXDOMAIN), যার অর্থ 'অস্তিত্বহীন ডোমেইন'।</string>
     <string name="summary_validate">পোর্ট ৪৪৩ (https)-এ ইন্টারনেট কানেকশন যাচাই করতে ব্যবহৃত ডোমেইন নাম।</string>
     <string name="summary_socks5_enabled">শুধুমাত্র TCP ট্রাফিক প্রক্সি সার্ভারে পাঠানো হবে</string>
     <string name="summary_watchdog">নেটগার্ড এখনও চলছে কিনা তা পর্যায়ক্রমে পরীক্ষা করুন (নিষ্ক্রিয় করতে শূন্য লিখুন)। এতে অতিরিক্ত ব্যাটারি খরচ হতে পারে।</string>
@@ -300,9 +300,9 @@
     <string name="msg_disabled">নেটগার্ড নিষ্ক্রিয়, নেটগার্ড সক্ষম করতে উপরের সুইচটি ব্যবহার করুন</string>
     <string name="msg_notifications">বিজ্ঞপ্তি অনুমতি দেওয়ার জন্য ট্যাপ করুন (অ্যাক্সেস চেষ্টার বিজ্ঞপ্তি, ত্রুটি বার্তা ইত্যাদির জন্য)</string>
     <string name="msg_revoked">নেটগার্ড নিষ্ক্রিয় করা হয়েছে, সম্ভবত অন্য কোনো VPN ভিত্তিক অ্যাপ ব্যবহারের কারণে</string>
-    <string name="msg_installed">\'%1$s\' ইনস্টল করা হয়েছে</string>
+    <string name="msg_installed">'%1$s' ইনস্টল করা হয়েছে</string>
     <string name="msg_installed_n">ইনস্টল করা হয়েছে</string>
-    <string name="msg_malware" translatable="false">সম্ভাব্য ম্যালওয়্যার: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">সম্ভাব্য ম্যালওয়্যার: '%1$s'</string>
     <string name="msg_access">%1$s ইন্টারনেট অ্যাক্সেসের চেষ্টা করেছে</string>
     <string name="msg_access_n">ইন্টারনেট অ্যাক্সেসের চেষ্টা করা হয়েছে</string>
     <string name="msg_completed">অ্যাকশন সম্পন্ন হয়েছে</string>
@@ -312,7 +312,7 @@
 এই কারণে, দয়া করে পরবর্তী ডায়ালগে একটি VPN কানেকশন অনুমতি দিন।
 আপনার ইন্টারনেট ট্রাফিক কোনো রিমোট VPN সার্ভারে পাঠানো হচ্ছে না।</string>
     <string name="msg_autostart">নেটগার্ড স্বয়ংক্রিয়ভাবে শুরু হতে পারেনি। এটি সম্ভবত আপনার অ্যান্ড্রয়েড ভার্সনের একটি বাগের কারণে হয়েছে।</string>
-    <string name="msg_error">একটি অপ্রত্যাশিত ত্রুটি ঘটেছে: \'%s\'</string>
+    <string name="msg_error">একটি অপ্রত্যাশিত ত্রুটি ঘটেছে: '%s'</string>
     <string name="msg_start_failed">অ্যান্ড্রয়েড এই মুহূর্তে VPN পরিষেবা শুরু করতে অস্বীকার করেছে। এটি সম্ভবত আপনার অ্যান্ড্রয়েড ভার্সনের একটি বাগের কারণে হয়েছে।</string>
     <string name="msg_try">নেটগার্ড ট্রাই করুন</string>
     <string name="msg_terms">ডোনেট করার মাধ্যমে আপনি <a href="http://www.netguard.me/#terms">শর্তাবলীর</a> সাথে সম্মত হন</string>
@@ -337,7 +337,7 @@
     <string name="msg_downloading">ডাউনলোড হচ্ছে\n%1s</string>
     <string name="msg_downloaded">hosts ফাইল ডাউনলোড হয়েছে</string>
     <string name="msg_download_last">শেষ ডাউনলোড: %s</string>
-    <string name="msg_start_forward">%1$s পোর্ট %2$d থেকে \'%5$s\' এর %3$s:%4$d-এ ফরোয়ার্ডিং শুরু করবেন?</string>
+    <string name="msg_start_forward">%1$s পোর্ট %2$d থেকে '%5$s' এর %3$s:%4$d-এ ফরোয়ার্ডিং শুরু করবেন?</string>
     <string name="msg_stop_forward">%1$s পোর্ট %2$d এর ফরোয়ার্ডিং বন্ধ করবেন?</string>
     <string name="msg_metered">নেটওয়ার্ক লিমিটেড</string>
     <string name="msg_inactive">কোনো সক্রিয় ইন্টারনেট কানেকশন নেই</string>

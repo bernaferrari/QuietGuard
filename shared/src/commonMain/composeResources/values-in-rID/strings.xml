@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard menyediakan cara sederhana dan canggih untuk memblokir akses internet — root tidak dibutuhkan. Izinkan atau tolak koneksi Wi-Fi dan/atau seluler untuk setiap apl dan alamat situs.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard membutuhkan Android 5.1 atau lebih baru</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Kebijakan privasi</a></string>
     <string name="app_first">QuietGuard dikembangkan dan diuji coba dengan sangat hati-hati, meskipun demikian, tidak mungkin menjamin QuietGuard akan bekerja dengan benar pada setiap perangkat.</string>
     <string name="app_agree">Setuju</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Alamat tujuan</string>
     <string name="title_rport">Port tujuan</string>
     <string name="title_ruid">Apl tujuan</string>
-    <string name="title_external">Untuk server eksternal pilih \'tidak ada\'</string>
+    <string name="title_external">Untuk server eksternal pilih 'tidak ada'</string>
 
     <string name="setting_defaults">Bawaan (daftar putih/hitam)</string>
     <string name="setting_whitelist_wifi">Blokir Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Gelap</string>
     <string name="theme_dynamic">Dinamis</string>
     <string name="setting_install">Beritahu pada pemasangan baru</string>
-    <string name="setting_screen_on">Terapkan aturan \'ketika layar menyala\'</string>
+    <string name="setting_screen_on">Terapkan aturan 'ketika layar menyala'</string>
     <string name="setting_auto">Otomatis aktif setelah %1$s menit</string>
     <string name="setting_delay">Tundaan layar mati %1$s menit</string>
     <string name="setting_update">Periksa pembaruan</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filter paket IP yang keluar dari terowongan VPN. Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
     <string name="summary_track_usage">Lacak jumlah bita yang dikirim dan diterima untuk setiap apl dan alamat. Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
     <string name="summary_block_domains">Tanggapi dengan kode respons DNS yang dikonfigurasi untuk nama domain yang diblokir. Sakelar ini dinonaktifkan jika tidak ada berkas host.</string>
-    <string name="summary_rcode">Nilai bawaannya adalah 3 (NXDOMAIN), yang berarti \'domain tidak ada\'.</string>
+    <string name="summary_rcode">Nilai bawaannya adalah 3 (NXDOMAIN), yang berarti 'domain tidak ada'.</string>
     <string name="summary_validate">Nama domain yang digunakan untuk memvalidasi koneksi internet pada port 443 (https).</string>
     <string name="summary_socks5_enabled">Hanya lalu lintas TCP yang akan dikirim ke server proksi</string>
     <string name="summary_watchdog">Periksa secara berkala apakah QuietGuard masih berjalan (masukkan nol untuk menonaktifkan opsi ini). Hal ini mungkin menyebabkan penggunaan baterai ekstra.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard dinonaktifkan, gunakan sakelar di atas untuk mengaktifkan QuietGuard</string>
     <string name="msg_notifications">Ketuk untuk memberikan izin notifikasi (untuk notifikasi upaya akses, pesan kesalahan, dll.)</string>
     <string name="msg_revoked">QuietGuard telah dinonaktifkan, kemungkinan karena menggunakan apl berbasis VPN lainnya</string>
-    <string name="msg_installed">\'%1$s\' terpasang</string>
+    <string name="msg_installed">'%1$s' terpasang</string>
     <string name="msg_installed_n">Telah terpasang</string>
-    <string name="msg_malware">Kemungkinan malware: \'%1$s\'</string>
+    <string name="msg_malware">Kemungkinan malware: '%1$s'</string>
     <string name="msg_access">%1$s mencoba akses internet</string>
     <string name="msg_access_n">Mencoba akses internet</string>
     <string name="msg_completed">Tindakan selesai</string>
@@ -313,7 +313,7 @@
 Oleh karena itu, harap izinkan koneksi VPN di dialog berikutnya.
 Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
     <string name="msg_autostart">QuietGuard tidak dapat memulai secara otomatis. Hal ini mungkin karena bug di versi Android Anda.</string>
-    <string name="msg_error">Terjadi kesalahan tak terduga: \'%s\'</string>
+    <string name="msg_error">Terjadi kesalahan tak terduga: '%s'</string>
     <string name="msg_start_failed">Android menolak untuk memulai layanan VPN saat ini. Hal ini mungkin karena bug di versi Android Anda.</string>
     <string name="msg_try">Coba QuietGuard</string>
     <string name="msg_terms">Dengan menyumbang Anda setuju dengan <a href="http://www.netguard.me/#terms">syarat &amp; ketentuan</a></string>
@@ -338,7 +338,7 @@ Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
     <string name="msg_downloading">Mengunduh\n%1s</string>
     <string name="msg_downloaded">Berkas host diunduh</string>
     <string name="msg_download_last">Unduhan terakhir: %s</string>
-    <string name="msg_start_forward">Mulai teruskan dari %1$s port %2$d ke %3$s:%4$d dari \'%5$s\'?</string>
+    <string name="msg_start_forward">Mulai teruskan dari %1$s port %2$d ke %3$s:%4$d dari '%5$s'?</string>
     <string name="msg_stop_forward">Hentikan penerusan %1$s port %2$d?</string>
     <string name="msg_metered">Jaringan dibatasi</string>
     <string name="msg_inactive">Tidak ada koneksi internet aktif</string>

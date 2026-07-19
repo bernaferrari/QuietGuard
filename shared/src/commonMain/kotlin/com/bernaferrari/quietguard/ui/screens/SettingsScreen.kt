@@ -106,12 +106,12 @@ import com.bernaferrari.quietguard.generated.resources.settings_advanced_summary
 import com.bernaferrari.quietguard.generated.resources.settings_hosts_summary
 import com.bernaferrari.quietguard.generated.resources.settings_network_summary
 import com.bernaferrari.quietguard.generated.resources.settings_background_summary
-import com.bernaferrari.quietguard.generated.resources.settings_diagnostics_summary
 import com.bernaferrari.quietguard.generated.resources.settings_about_summary
 import com.bernaferrari.quietguard.generated.resources.about_tagline
 import com.bernaferrari.quietguard.generated.resources.about_source_title
 import com.bernaferrari.quietguard.generated.resources.about_source_summary
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -119,6 +119,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -127,6 +128,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -186,6 +188,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -197,6 +200,10 @@ import com.bernaferrari.quietguard.ui.SettingsSection
 import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferrari.quietguard.ui.components.ExpandableContent
 import com.bernaferrari.quietguard.ui.components.FirewallTile
+import com.bernaferrari.quietguard.ui.components.GroupInnerCorner
+import com.bernaferrari.quietguard.ui.components.GroupOuterCorner
+import com.bernaferrari.quietguard.ui.components.groupItemShape
+import com.bernaferrari.quietguard.ui.components.groupPairTileShape
 import com.bernaferrari.quietguard.ui.theme.AmberPrimary
 import com.bernaferrari.quietguard.ui.theme.BluePrimary
 import com.bernaferrari.quietguard.ui.theme.CyanPrimary
@@ -214,10 +221,6 @@ import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
 
 private const val PROJECT_GITHUB_URL = "https://github.com/bernaferrari/QuietGuard"
-
-// M3 Expressive grouped-list corners: large radius on group edges, small between items.
-private val GroupOuterCorner = 24.dp
-private val GroupInnerCorner = 6.dp
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -300,7 +303,6 @@ fun SettingsScreen(
             SettingsSection.Hosts -> stringResource(Res.string.setting_section_hosts)
             SettingsSection.Network -> stringResource(Res.string.setting_section_network)
             SettingsSection.Background -> stringResource(Res.string.setting_section_background)
-            SettingsSection.Diagnostics -> stringResource(Res.string.setting_section_diagnostics)
             SettingsSection.About -> stringResource(Res.string.menu_about)
         }
 
@@ -505,7 +507,7 @@ fun SettingsScreen(
                                         reload = true,
                                     )
                                 },
-                                shape = settingPairTileShape(
+                                shape = groupPairTileShape(
                                     isLeadingTile = true,
                                     isFirst = first,
                                     isLast = last,
@@ -524,7 +526,7 @@ fun SettingsScreen(
                                         reload = true,
                                     )
                                 },
-                                shape = settingPairTileShape(
+                                shape = groupPairTileShape(
                                     isLeadingTile = false,
                                     isFirst = first,
                                     isLast = last,
@@ -1191,11 +1193,9 @@ fun SettingsScreen(
                         }
                     }
                 }
-            }
 
-            // Diagnostics Section
-            if (section == SettingsSection.Diagnostics) {
-                SettingsGroup {
+                // Diagnostics (merged into Background)
+                SettingsGroup(title = stringResource(Res.string.setting_section_diagnostics)) {
                     item { first, last ->
                         SettingToggleRowWithTooltip(
                             title = stringResource(Res.string.setting_pcap),
@@ -1297,26 +1297,6 @@ private fun SettingsSubheader(title: String) {
     )
 }
 
-private fun settingItemShape(isFirst: Boolean, isLast: Boolean): RoundedCornerShape =
-    RoundedCornerShape(
-        topStart = if (isFirst) GroupOuterCorner else GroupInnerCorner,
-        topEnd = if (isFirst) GroupOuterCorner else GroupInnerCorner,
-        bottomEnd = if (isLast) GroupOuterCorner else GroupInnerCorner,
-        bottomStart = if (isLast) GroupOuterCorner else GroupInnerCorner,
-    )
-
-private fun settingPairTileShape(
-    isLeadingTile: Boolean,
-    isFirst: Boolean,
-    isLast: Boolean,
-): RoundedCornerShape =
-    RoundedCornerShape(
-        topStart = if (isLeadingTile && isFirst) GroupOuterCorner else GroupInnerCorner,
-        topEnd = if (!isLeadingTile && isFirst) GroupOuterCorner else GroupInnerCorner,
-        bottomEnd = if (!isLeadingTile && isLast) GroupOuterCorner else GroupInnerCorner,
-        bottomStart = if (isLeadingTile && isLast) GroupOuterCorner else GroupInnerCorner,
-    )
-
 @Composable
 private fun QuickFirewallControls(
     wifiAllowed: Boolean,
@@ -1337,7 +1317,7 @@ private fun QuickFirewallControls(
                 label = stringResource(Res.string.title_wifi),
                 allowed = wifiAllowed,
                 onToggle = onToggleWifi,
-                shape = settingPairTileShape(
+                shape = groupPairTileShape(
                     isLeadingTile = true,
                     isFirst = true,
                     isLast = true,
@@ -1350,7 +1330,7 @@ private fun QuickFirewallControls(
                 label = stringResource(Res.string.title_mobile),
                 allowed = mobileAllowed,
                 onToggle = onToggleMobile,
-                shape = settingPairTileShape(
+                shape = groupPairTileShape(
                     isLeadingTile = false,
                     isFirst = true,
                     isLast = true,
@@ -1369,7 +1349,8 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.setting_section_firewall),
                 subtitle = stringResource(Res.string.settings_firewall_summary),
                 icon = MaterialSymbols.Outlined.Shield,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.Firewall) },
             )
         }
@@ -1378,7 +1359,8 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.setting_section_advanced),
                 subtitle = stringResource(Res.string.settings_advanced_summary),
                 icon = MaterialSymbols.Filled.Tune,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.Advanced) },
             )
         }
@@ -1387,7 +1369,8 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.setting_section_hosts),
                 subtitle = stringResource(Res.string.settings_hosts_summary),
                 icon = MaterialSymbols.Filled.Download,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.Hosts) },
             )
         }
@@ -1396,7 +1379,8 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.setting_section_network),
                 subtitle = stringResource(Res.string.settings_network_summary),
                 icon = MaterialSymbols.Filled.Public,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.Network) },
             )
         }
@@ -1405,17 +1389,9 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.setting_section_background),
                 subtitle = stringResource(Res.string.settings_background_summary),
                 icon = MaterialSymbols.Filled.Refresh,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.Background) },
-            )
-        }
-        item { first, last ->
-            SettingsDestinationRow(
-                title = stringResource(Res.string.setting_section_diagnostics),
-                subtitle = stringResource(Res.string.settings_diagnostics_summary),
-                icon = MaterialSymbols.Outlined.Info,
-                shape = settingItemShape(first, last),
-                onClick = { onOpenSection(SettingsSection.Diagnostics) },
             )
         }
         item { first, last ->
@@ -1423,7 +1399,8 @@ private fun SettingsDirectory(onOpenSection: (SettingsSection) -> Unit) {
                 title = stringResource(Res.string.menu_about),
                 subtitle = stringResource(Res.string.settings_about_summary),
                 icon = MaterialSymbols.Filled.Code,
-                shape = settingItemShape(first, last),
+                isFirst = first,
+                isLast = last,
                 onClick = { onOpenSection(SettingsSection.About) },
             )
         }
@@ -1436,16 +1413,45 @@ private fun SettingsDestinationRow(
     subtitle: String,
     icon: MaterialIcon,
     trailingIcon: MaterialIcon = MaterialSymbols.Filled.ChevronRight,
-    shape: Shape = RoundedCornerShape(GroupOuterCorner),
+    isFirst: Boolean = true,
+    isLast: Boolean = true,
     onClick: () -> Unit,
 ) {
     val spacing = MaterialTheme.spacing
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    // M3 Expressive press feedback: the row squeezes and morphs to fully rounded.
+    val pressScale by animateFloatAsState(
+        targetValue = if (pressed) 0.97f else 1f,
+        animationSpec = spring(dampingRatio = 0.6f, stiffness = 700f),
+        label = "destPressScale",
+    )
+    val topCorner by animateDpAsState(
+        targetValue = if (pressed || isFirst) GroupOuterCorner else GroupInnerCorner,
+        animationSpec = spring(stiffness = 700f),
+        label = "destTopCorner",
+    )
+    val bottomCorner by animateDpAsState(
+        targetValue = if (pressed || isLast) GroupOuterCorner else GroupInnerCorner,
+        animationSpec = spring(stiffness = 700f),
+        label = "destBottomCorner",
+    )
     Surface(
         onClick = onClick,
+        interactionSource = interactionSource,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 80.dp),
-        shape = shape,
+            .heightIn(min = 80.dp)
+            .graphicsLayer {
+                scaleX = pressScale
+                scaleY = pressScale
+            },
+        shape = RoundedCornerShape(
+            topStart = topCorner,
+            topEnd = topCorner,
+            bottomEnd = bottomCorner,
+            bottomStart = bottomCorner,
+        ),
         color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
         Row(
@@ -1710,7 +1716,7 @@ private fun SettingToggleRow(
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceContainerLow,
-        shape = settingItemShape(isFirst, isLast),
+        shape = groupItemShape(isFirst, isLast),
     ) {
         Row(
             modifier = Modifier
@@ -1778,7 +1784,7 @@ private fun SettingToggleRowWithTooltip(
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceContainerLow,
-        shape = settingItemShape(isFirst, isLast),
+        shape = groupItemShape(isFirst, isLast),
     ) {
         Column {
             Row(
@@ -1858,12 +1864,29 @@ private fun SettingTextRow(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = settingFieldLabel(title, value)) },
+        label = { SettingFieldLabelText(settingFieldLabel(title, value)) },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        modifier = Modifier.fillMaxWidth(),
-        shape = settingItemShape(isFirst, isLast),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(SettingFieldHeight),
+        shape = groupItemShape(isFirst, isLast),
         singleLine = true,
         colors = settingTextFieldColors(),
+    )
+}
+
+/**
+ * Fixed field height so focusing an empty field (label floating up) never
+ * changes the row's size mid-animation; matches the 64dp toggle rows.
+ */
+private val SettingFieldHeight = 64.dp
+
+@Composable
+private fun SettingFieldLabelText(text: String) {
+    Text(
+        text = text,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
@@ -1881,7 +1904,9 @@ private fun settingFieldLabel(title: String, value: String): String {
         if (value.isNotEmpty() && title.endsWith(value)) title.dropLast(value.length) else title
     return withoutValue
         .replace("%s", "")
+        .replace(Regex("\\s+"), " ")
         .trim()
+        .trimEnd(':', '-', ' ')
         .trimEnd(':')
         .trim()
 }
@@ -1902,15 +1927,17 @@ private fun SettingTextRowWithTooltip(
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceContainerLow,
-        shape = settingItemShape(isFirst, isLast),
+        shape = groupItemShape(isFirst, isLast),
     ) {
         Column {
             TextField(
                 value = value,
                 onValueChange = onValueChange,
-                label = { Text(text = settingFieldLabel(title, value)) },
+                label = { SettingFieldLabelText(settingFieldLabel(title, value)) },
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(SettingFieldHeight),
                 singleLine = true,
                 colors = settingTextFieldColors(),
                 trailingIcon = {
@@ -1967,7 +1994,7 @@ private fun SettingTogglePairRow(
             title = firstTitle,
             checked = firstChecked,
             onCheckedChange = onFirstCheckedChange,
-            shape = settingPairTileShape(
+            shape = groupPairTileShape(
                 isLeadingTile = true,
                 isFirst = isFirst,
                 isLast = isLast,
@@ -1978,7 +2005,7 @@ private fun SettingTogglePairRow(
             title = secondTitle,
             checked = secondChecked,
             onCheckedChange = onSecondCheckedChange,
-            shape = settingPairTileShape(
+            shape = groupPairTileShape(
                 isLeadingTile = false,
                 isFirst = isFirst,
                 isLast = isLast,

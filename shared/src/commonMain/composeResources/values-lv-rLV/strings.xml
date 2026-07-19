@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard nodrošina vienkāršu un uzlabotu veidu, kā bloķēt piekļuvi internetam. Lietotnēm un adresēm var individuāli atļaut vai aizliegt piekļuvi internetam caur Wi-Fi un/vai mobilo datu savienojumu.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard nepieciešams Android 5.1 vai jaunāks</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Privātuma politika</a></string>
     <string name="app_first">Liels darbs ir ieguldīts QuietGuard izstrādē un testēšanā. Tai pat laikā nav iespējams garantēt, ka QuietGuard darbosies korekti pilnīgi visās ierīcēs.</string>
     <string name="app_agree">Es piekrītu</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Mērķa adrese</string>
     <string name="title_rport">Mērķa ports</string>
     <string name="title_ruid">Mērķa lietotne</string>
-    <string name="title_external">Ārējam serverim izvēlieties \'neviens\'</string>
+    <string name="title_external">Ārējam serverim izvēlieties 'neviens'</string>
 
     <string name="setting_defaults">Noklusējumi (baltais/melnais saraksts)</string>
     <string name="setting_whitelist_wifi">Bloķēt Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Tumšs</string>
     <string name="theme_dynamic" translatable="false">Dynamic</string>
     <string name="setting_install">Paziņot par jaunu instalāciju</string>
-    <string name="setting_screen_on">Piemērot \'kad ekrāns ieslēgts\' noteikumus</string>
+    <string name="setting_screen_on">Piemērot 'kad ekrāns ieslēgts' noteikumus</string>
     <string name="setting_auto">Automātiski iespējot pēc %1$s minūtēm</string>
     <string name="setting_delay">Aizturēt ekrāna izslēgšanu %1$s minūtes</string>
     <string name="setting_update">Pārbaudīt atjauninājumus</string>
@@ -261,7 +261,7 @@
 
     <string name="summary_install">Rādīt statusa joslas paziņojumu, lai tieši konfigurētu jauninstalētās lietotnes (pro funkcija)</string>
     <string name="summary_auto">Pēc atspējošanas ar logrīku, automātiski atkal iespējot QuietGuard pēc izvēlētā minūšu skaita (ievadiet nulli, lai atspējotu)</string>
-    <string name="summary_delay">Pēc ekrāna izslēgšanas paturēt \'kad ekrāns ieslēgts\' noteikumus aktīvus izvēlēto minūšu skaitu (ievadiet nulli, lai atspējotu)</string>
+    <string name="summary_delay">Pēc ekrāna izslēgšanas paturēt 'kad ekrāns ieslēgts' noteikumus aktīvus izvēlēto minūšu skaitu (ievadiet nulli, lai atspējotu)</string>
     <string name="summary_update">Divreiz dienā pārbaudīt jaunas versijas GitHub</string>
 
     <string name="summary_tethering">Atkarībā no Android versijas, tīklājs var darboties vai nedarboties. Tīklāja trafiku nevar filtrēt.</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Filtrēt IP paketes, kas iziet no VPN tuneļa. Tas var palielināt akumulatora lietojumu.</string>
     <string name="summary_track_usage">Izsekot nosūtīto un saņemto baitu skaitu katrai lietotnei un adresei. Tas var palielināt akumulatora lietojumu.</string>
     <string name="summary_block_domains">Atbildēt ar konfigurēto DNS atbildes kodu bloķētiem domēna vārdiem. Šis slēdzis ir atspējots, ja nav pieejams hosts fails.</string>
-    <string name="summary_rcode">Noklusētā vērtība ir 3 (NXDOMAIN), kas nozīmē \'neeksistējošs domēns\'.</string>
+    <string name="summary_rcode">Noklusētā vērtība ir 3 (NXDOMAIN), kas nozīmē 'neeksistējošs domēns'.</string>
     <string name="summary_validate">Domēna vārds, ko izmanto, lai validētu interneta savienojumu 443. portā (https).</string>
     <string name="summary_socks5_enabled">Tikai TCP trafiks tiks nosūtīts uz starpniekserveri</string>
     <string name="summary_watchdog">Periodiski pārbaudīt, vai QuietGuard joprojām darbojas (ievadiet nulli, lai atspējotu). Tas var palielināt akumulatora lietojumu.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">QuietGuard ir atspējots, izmantojiet slēdzi augšpusē, lai iespējotu QuietGuard</string>
     <string name="msg_notifications">Pieskarieties, lai piešķirtu paziņojumu atļaujas (piekļuves mēģinājumu paziņojumiem, kļūdu ziņojumiem utt.)</string>
     <string name="msg_revoked">QuietGuard ir atspējots, iespējams, izmantojot citu VPN lietotni</string>
-    <string name="msg_installed">\'%1$s\' instalēta</string>
+    <string name="msg_installed">'%1$s' instalēta</string>
     <string name="msg_installed_n">Ir instalēta</string>
-    <string name="msg_malware" translatable="false">Possible malware: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Possible malware: '%1$s'</string>
     <string name="msg_access">%1$s mēģināja piekļūt internetam</string>
     <string name="msg_access_n">Mēģināta interneta piekļuve</string>
     <string name="msg_completed">Darbība pabeigta</string>
@@ -313,7 +313,7 @@
 Šī iemesla dēļ, lūdzu, atļaujiet VPN savienojumu nākamajā dialogā.
 Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
     <string name="msg_autostart">QuietGuard nevarēja startēties automātiski. Tas, iespējams, ir Android versijas kļūdas dēļ.</string>
-    <string name="msg_error">Radusies neparedzēta kļūda: \'%s\'</string>
+    <string name="msg_error">Radusies neparedzēta kļūda: '%s'</string>
     <string name="msg_start_failed">Android šobrīd atteicās palaist VPN pakalpojumu. Tas, iespējams, ir Android versijas kļūdas dēļ.</string>
     <string name="msg_try">Izmēģini QuietGuard</string>
     <string name="msg_terms">Ziedojot Jūs piekrītat <a href="http://www.netguard.me/#terms">noteikumiem un nosacījumiem</a></string>
@@ -338,7 +338,7 @@ Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
     <string name="msg_downloading">Lejupielādē\n%1s</string>
     <string name="msg_downloaded">Hosts fails lejupielādēts</string>
     <string name="msg_download_last">Pēdējā lejupielāde: %s</string>
-    <string name="msg_start_forward">Sākt pāradresāciju no %1$s porta %2$d uz %3$s:%4$d no \'%5$s\'?</string>
+    <string name="msg_start_forward">Sākt pāradresāciju no %1$s porta %2$d uz %3$s:%4$d no '%5$s'?</string>
     <string name="msg_stop_forward">Apturēt %1$s porta %2$d pāradresāciju?</string>
     <string name="msg_metered">Tīkls ir mērīts</string>
     <string name="msg_inactive">Nav aktīva interneta savienojuma</string>

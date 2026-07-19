@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard предоставя прост, а също така и по-задълбочен начини за блокиране достъпа до интернет - без нужда от ROOT права. Достъпът на приложенията и адресите чрез Wi-Fi или мобилни данни, могат да се разрешават и забраняват по отделно.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">QuietGuard изисква Android 5.1 или по-нова версия</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Политика за личните данни</a></string>
     <string name="app_first">QuietGuard се разраборва и изпитва с голямо внимание, но е невъзможно да бъде дадена гаранция, че ще функционира правилно на всяко устройство.</string>
     <string name="app_agree">Съгласявам се</string>
@@ -146,7 +146,7 @@
     <string name="title_raddr">Отдалечен адрес</string>
     <string name="title_rport">Отдалечен порт</string>
     <string name="title_ruid">Текущо приложение</string>
-    <string name="title_external">За външен сървър изберете \'nobody\'</string>
+    <string name="title_external">За външен сървър изберете 'nobody'</string>
 
     <string name="setting_defaults">По подразбиране</string>
     <string name="setting_whitelist_wifi">Блокиране на Wi-Fi</string>
@@ -301,7 +301,7 @@
     <string name="msg_revoked">QuietGuard се изключи, най-вероятно използвате друго VPN базирано приложение</string>
     <string name="msg_installed">\"%1$s\" инсталирани</string>
     <string name="msg_installed_n">Е инсталиран</string>
-    <string name="msg_malware" translatable="false">Възможен злонамерен софтуер: \'%1$s\'</string>
+    <string name="msg_malware" translatable="false">Възможен злонамерен софтуер: '%1$s'</string>
     <string name="msg_access">%1$s опита за достъп до интернет</string>
     <string name="msg_access_n">Опитвал достъп до интернет</string>
     <string name="msg_completed">Действието е завършено</string>

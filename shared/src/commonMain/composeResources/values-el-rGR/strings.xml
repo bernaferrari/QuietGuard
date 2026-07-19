@@ -4,7 +4,7 @@
     <string name="app_description">Το QuietGuard παρέχει απλούς και σύνθετους τρόπους αποκλεισμού της πρόσβασης στο διαδίκτυο - δεν απαιτείται root. Η πρόσβαση εφαρμογών και διευθύνσεων στο Wi-Fi ή/και στη σύνδεση κινητής τηλεφωνίας μπορεί να επιτρέπεται ή να απαγορεύεται μεμονωμένα.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">Το QuietGuard απαιτεί Android 5.1 ή μεταγενέστερη έκδοση</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Πολιτική απορρήτου</a></string>
     <string name="app_first">Έχει δοθεί μεγάλη προσοχή στην ανάπτυξη και τη δοκιμή του QuietGuard, ωστόσο είναι αδύνατο να εγγυηθεί κανείς ότι το QuietGuard θα λειτουργεί σωστά σε κάθε συσκευή.</string>
     <string name="app_agree">Συμφωνώ</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Διεύθυνση προορισμού</string>
     <string name="title_rport">Θύρα προορισμού</string>
     <string name="title_ruid">Εφαρμογή προορισμού</string>
-    <string name="title_external">Για έναν εξωτερικό διακομιστή επιλέξτε \'nobody\'</string>
+    <string name="title_external">Για έναν εξωτερικό διακομιστή επιλέξτε 'nobody'</string>
 
     <string name="setting_defaults">Προεπιλογές (λευκή/μαύρη λίστα)</string>
     <string name="setting_whitelist_wifi">Αποκλεισμός Wi-Fi</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Σκοτεινό</string>
     <string name="theme_dynamic">Δυναμικό</string>
     <string name="setting_install">Ειδοποίηση σε νέα εγκατάσταση</string>
-    <string name="setting_screen_on">Εφαρμογή κανόνων \'όταν η οθόνη είναι ανοιχτή\'</string>
+    <string name="setting_screen_on">Εφαρμογή κανόνων 'όταν η οθόνη είναι ανοιχτή'</string>
     <string name="setting_auto">Αυτόματη ενεργοποίηση μετά από %1$s λεπτά</string>
     <string name="setting_delay">Καθυστέρηση απενεργοποίησης οθόνης %1$s λεπτά</string>
     <string name="setting_update">Έλεγχος για ενημερώσεις</string>
@@ -261,7 +261,7 @@
 
     <string name="summary_install">Εμφάνιση ειδοποίησης στη γραμμή κατάστασης για απευθείας διαμόρφωση των πρόσφατα εγκατεστημένων εφαρμογών (λειτουργία pro)</string>
     <string name="summary_auto">Μετά την απενεργοποίηση χρησιμοποιώντας το γραφικό στοιχείο, ενεργοποιήστε ξανά αυτόματα το QuietGuard μετά τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
-    <string name="summary_delay">Μετά την απενεργοποίηση της οθόνης, διατηρήστε τους κανόνες \'όταν η οθόνη είναι ανοιχτή\' ενεργούς για τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
+    <string name="summary_delay">Μετά την απενεργοποίηση της οθόνης, διατηρήστε τους κανόνες 'όταν η οθόνη είναι ανοιχτή' ενεργούς για τον επιλεγμένο αριθμό λεπτών (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή)</string>
     <string name="summary_update">Έλεγχος για νέες εκδόσεις στο GitHub δύο φορές την ημέρα</string>
 
     <string name="summary_tethering">Ανάλογα με την έκδοση του Android, το tethering μπορεί να λειτουργήσει ή να μην λειτουργήσει. Η κίνηση μέσω tethering δεν μπορεί να φιλτραριστεί.</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">Φιλτράρισμα πακέτων IP που εξέρχονται από τη σήραγγα VPN. Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
     <string name="summary_track_usage">Παρακολούθηση του αριθμού των απεσταλμένων και ληφθέντων byte για κάθε εφαρμογή και διεύθυνση. Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
     <string name="summary_block_domains">Απάντηση με τον διαμορφωμένο κωδικό απόκρισης DNS για αποκλεισμένα ονόματα τομέα. Αυτός ο διακόπτης είναι απενεργοποιημένος όταν δεν υπάρχει διαθέσιμο αρχείο hosts.</string>
-    <string name="summary_rcode">Η προεπιλεγμένη τιμή είναι 3 (NXDOMAIN), που σημαίνει \'ανύπαρκτος τομέας\'.</string>
+    <string name="summary_rcode">Η προεπιλεγμένη τιμή είναι 3 (NXDOMAIN), που σημαίνει 'ανύπαρκτος τομέας'.</string>
     <string name="summary_validate">Όνομα τομέα που χρησιμοποιείται για την επικύρωση της σύνδεσης στο διαδίκτυο στη θύρα 443 (https).</string>
     <string name="summary_socks5_enabled">Μόνο η κίνηση TCP θα αποστέλλεται στον διακομιστή μεσολάβησης</string>
     <string name="summary_watchdog">Περιοδικός έλεγχος εάν το QuietGuard εξακολουθεί να εκτελείται (εισάγετε μηδέν για να απενεργοποιήσετε αυτήν την επιλογή). Αυτό μπορεί να οδηγήσει σε επιπλέον χρήση μπαταρίας.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">Το QuietGuard είναι απενεργοποιημένο, χρησιμοποιήστε τον παραπάνω διακόπτη για να ενεργοποιήσετε το QuietGuard</string>
     <string name="msg_notifications">Πατήστε για να παραχωρήσετε άδειες ειδοποιήσεων (για ειδοποιήσεις προσπάθειας πρόσβασης, μηνύματα σφάλματος κ.λπ.)</string>
     <string name="msg_revoked">Το QuietGuard έχει απενεργοποιηθεί, πιθανότατα από τη χρήση άλλης εφαρμογής που βασίζεται σε VPN</string>
-    <string name="msg_installed">Το \'%1$s\' εγκαταστάθηκε</string>
+    <string name="msg_installed">Το '%1$s' εγκαταστάθηκε</string>
     <string name="msg_installed_n">Έχει εγκατασταθεί</string>
-    <string name="msg_malware">Πιθανό κακόβουλο λογισμικό: \'%1$s\'</string>
+    <string name="msg_malware">Πιθανό κακόβουλο λογισμικό: '%1$s'</string>
     <string name="msg_access">Ο %1$s προσπάθησε να αποκτήσει πρόσβαση στο διαδίκτυο</string>
     <string name="msg_access_n">Προσπάθησε να αποκτήσει πρόσβαση στο διαδίκτυο</string>
     <string name="msg_completed">Η ενέργεια ολοκληρώθηκε</string>
@@ -313,7 +313,7 @@
 Για το λόγο αυτό, επιτρέψτε μια σύνδεση VPN στον επόμενο διάλογο.
 Η κίνησή σας στο διαδίκτυο δεν αποστέλλεται σε απομακρυσμένο διακομιστή VPN.</string>
     <string name="msg_autostart">Το QuietGuard δεν μπόρεσε να ξεκινήσει αυτόματα. Αυτό πιθανότατα οφείλεται σε σφάλμα στην έκδοση Android σας.</string>
-    <string name="msg_error">Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα: \'%s\'</string>
+    <string name="msg_error">Παρουσιάστηκε ένα μη αναμενόμενο σφάλμα: '%s'</string>
     <string name="msg_start_failed">Το Android αρνήθηκε να ξεκινήσει την υπηρεσία VPN αυτή τη στιγμή. Αυτό πιθανότατα οφείλεται σε σφάλμα στην έκδοση Android σας.</string>
     <string name="msg_try">Δοκιμάστε το QuietGuard</string>
     <string name="msg_terms">Κάνοντας δωρεά συμφωνείτε με τους <a href="http://www.netguard.me/#terms">όρους &amp; προϋποθέσεις</a></string>
@@ -338,7 +338,7 @@
     <string name="msg_downloading">Λήψη\n%1s</string>
     <string name="msg_downloaded">Το αρχείο hosts λήφθηκε</string>
     <string name="msg_download_last">Τελευταία λήψη: %s</string>
-    <string name="msg_start_forward">Έναρξη προώθησης από τη θύρα %2$d του %1$s στο %3$s:%4$d του \'%5$s\';</string>
+    <string name="msg_start_forward">Έναρξη προώθησης από τη θύρα %2$d του %1$s στο %3$s:%4$d του '%5$s';</string>
     <string name="msg_stop_forward">Διακοπή προώθησης της θύρας %2$d του %1$s;</string>
     <string name="msg_metered">Το δίκτυο έχει χρέωση</string>
     <string name="msg_inactive">Δεν υπάρχει ενεργή σύνδεση στο διαδίκτυο</string>

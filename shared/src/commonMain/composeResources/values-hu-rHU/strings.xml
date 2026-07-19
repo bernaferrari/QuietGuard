@@ -4,7 +4,7 @@
     <string name="app_description">QuietGuard egyszerűen és speciálisan blokkolja az internet hozzáférést - nem szükséges root jogosultság hozzá. Az alkalmazásokat és a címeket külön-külön lehet engedélyezni vagy letiltani a Wi-Fi és/vagy a mobil kapcsolatokon.</string>
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">A QuietGuard használatához Android 5.1 vagy újabb szükséges</string>
-    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR \'\'AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
+    <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
     <string name="app_privacy"><a href="https://www.netguard.me/privacy/">Adatvédelmi irányelvek</a></string>
     <string name="app_first">Nagy figyelmet fordítanak arra, hogy fejlesszék és teszteljék QuietGuard-ot, de arra lehetetlen garanciát vállalni, hogy a QuietGuard minden eszközön jól fog működni.</string>
     <string name="app_agree">Elfogadom</string>
@@ -148,7 +148,7 @@
     <string name="title_raddr">Cél cím</string>
     <string name="title_rport">Cél port</string>
     <string name="title_ruid">Cél alkalmazás</string>
-    <string name="title_external">Külső szerver esetén válassza a \'senki\' lehetőséget</string>
+    <string name="title_external">Külső szerver esetén válassza a 'senki' lehetőséget</string>
 
     <string name="setting_defaults">Alapértelmezések (fehér/fekete lista)</string>
     <string name="setting_whitelist_wifi">Wi-Fi letiltása</string>
@@ -171,7 +171,7 @@
     <string name="setting_appearance_dark">Sötét</string>
     <string name="theme_dynamic">Dinamikus</string>
     <string name="setting_install">Értesítés új telepítéskor</string>
-    <string name="setting_screen_on">\'Képernyő bekapcsolva\' szabályok alkalmazása</string>
+    <string name="setting_screen_on">'Képernyő bekapcsolva' szabályok alkalmazása</string>
     <string name="setting_auto">Auto engedélyezés %1$s perc után</string>
     <string name="setting_delay">Képernyő kikapcsolás késleltetése %1$s perc</string>
     <string name="setting_update">Frissítések ellenőrzése</string>
@@ -261,7 +261,7 @@
 
     <string name="summary_install">Értesítési sávon megjelenő értesítés az újonnan telepített alkalmazások közvetlen konfigurálásához (pro funkció)</string>
     <string name="summary_auto">A widgettel történő letiltás után a QuietGuard automatikusan újra engedélyezésre kerül a megadott percek után (0 a kikapcsoláshoz)</string>
-    <string name="summary_delay">A képernyő kikapcsolása után a \'képernyő be\' szabályok aktívak maradnak a megadott percekig (0 a kikapcsoláshoz)</string>
+    <string name="summary_delay">A képernyő kikapcsolása után a 'képernyő be' szabályok aktívak maradnak a megadott percekig (0 a kikapcsoláshoz)</string>
     <string name="summary_update">Naponta kétszer ellenőrzi az új verziókat a GitHubon</string>
 
     <string name="summary_tethering">Android verziótól függően a megosztás működhet vagy sem. A megosztott forgalom nem szűrhető.</string>
@@ -284,7 +284,7 @@
     <string name="summary_filter">A VPN csatornából kilépő IP csomagok szűrése. Növelheti az akkumulátorhasználatot.</string>
     <string name="summary_track_usage">Küldött és fogadott bájtok számának követése alkalmazásonként és címenként. Növelheti az akkumulátorhasználatot.</string>
     <string name="summary_block_domains">Válasz a beállított DNS kóddal a blokkolt domainek esetén. Letiltva, ha nincs hosts fájl.</string>
-    <string name="summary_rcode">Az alapértelmezett érték 3 (NXDOMAIN), ami azt jelenti: \'nem létező domain\'.</string>
+    <string name="summary_rcode">Az alapértelmezett érték 3 (NXDOMAIN), ami azt jelenti: 'nem létező domain'.</string>
     <string name="summary_validate">Domain név az internetkapcsolat érvényesítéséhez a 443-as (https) porton.</string>
     <string name="summary_socks5_enabled">Csak a TCP forgalom kerül továbbításra a proxy szerverre</string>
     <string name="summary_watchdog">Rendszeres ellenőrzés, hogy a QuietGuard fut-e (0 a kikapcsoláshoz). Növelheti az akkumulátorhasználatot.</string>
@@ -301,9 +301,9 @@
     <string name="msg_disabled">A QuietGuard le van tiltva, használja a fenti kapcsolót az engedélyezéshez</string>
     <string name="msg_notifications">Koppintson az értesítési engedélyek megadásához (hozzáférési kísérletekhez, hibaüzenetekhez stb.)</string>
     <string name="msg_revoked">A QuietGuard le lett tiltva, valószínűleg egy másik VPN alkalmazás miatt</string>
-    <string name="msg_installed">\'%1$s\' telepítve</string>
+    <string name="msg_installed">'%1$s' telepítve</string>
     <string name="msg_installed_n">Telepítve lett</string>
-    <string name="msg_malware">Lehetséges rosszindulatú szoftver: \'%1$s\'</string>
+    <string name="msg_malware">Lehetséges rosszindulatú szoftver: '%1$s'</string>
     <string name="msg_access">%1$s internet-hozzáférést kísérelt meg</string>
     <string name="msg_access_n">Internet-hozzáférés megkísérelve</string>
     <string name="msg_completed">Művelet befejezve</string>
@@ -313,7 +313,7 @@
 Ezért kérjük, engedélyezze a VPN kapcsolatot a következő ablakban.
 A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
     <string name="msg_autostart">A QuietGuard nem tudott automatikusan elindulni. Ez valószínűleg egy Android hiba miatt van.</string>
-    <string name="msg_error">Váratlan hiba történt: \'%s\'</string>
+    <string name="msg_error">Váratlan hiba történt: '%s'</string>
     <string name="msg_start_failed">Az Android megtagadta a VPN szolgáltatás indítását. Ez valószínűleg egy Android hiba miatt van.</string>
     <string name="msg_try">QuietGuard kipróbálása</string>
     <string name="msg_terms">A támogatással elfogadja a <a href="http://www.netguard.me/#terms">felhasználási feltételeket</a></string>
@@ -338,7 +338,7 @@ A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
     <string name="msg_downloading">Letöltés\n%1s</string>
     <string name="msg_downloaded">Hosts fájl letöltve</string>
     <string name="msg_download_last">Utolsó letöltés: %s</string>
-    <string name="msg_start_forward">Továbbítás indítása erről: %1$s port %2$d ide: %3$s:%4$d (\'%5$s\')?</string>
+    <string name="msg_start_forward">Továbbítás indítása erről: %1$s port %2$d ide: %3$s:%4$d ('%5$s')?</string>
     <string name="msg_stop_forward">Továbbítás leállítása erről: %1$s port %2$d?</string>
     <string name="msg_metered">A hálózat mért (korlátos)</string>
     <string name="msg_inactive">Nincs aktív internetkapcsolat</string>

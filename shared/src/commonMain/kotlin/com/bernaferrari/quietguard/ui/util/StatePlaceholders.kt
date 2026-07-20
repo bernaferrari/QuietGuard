@@ -78,6 +78,7 @@ fun StatePlaceholder(
     onSecondaryAction: (() -> Unit)? = null,
     isLoading: Boolean = false,
     tone: StatePlaceholderTone = StatePlaceholderTone.Neutral,
+    modifier: Modifier = Modifier,
 ) {
     val spacing = MaterialTheme.spacing
     val motion = LocalMotion.current
@@ -101,7 +102,7 @@ fun StatePlaceholder(
         }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = spacing.extraLarge, vertical = spacing.xxLarge),
         verticalArrangement = Arrangement.Center,

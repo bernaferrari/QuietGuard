@@ -9,13 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,7 +26,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -38,7 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -49,8 +46,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -85,7 +80,6 @@ import com.bernaferrari.quietguard.generated.resources.ui_filter_all
 import com.bernaferrari.quietguard.generated.resources.ui_forwarding_filter_empty
 import com.bernaferrari.quietguard.generated.resources.ui_forwarding_title
 import com.bernaferrari.quietguard.generated.resources.ui_loading
-import com.bernaferrari.quietguard.generated.resources.ui_logs_filter_protocol
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -104,12 +98,10 @@ fun ForwardingScreen(
     val protocolFilter = fwdUi.protocolFilter
     val showDialog = fwdUi.showAddDialog
     val filteredEntries = fwdUi.filtered
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            MediumFlexibleTopAppBar(
+            TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -118,33 +110,7 @@ fun ForwardingScreen(
                         )
                     }
                 },
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(spacing.small),
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.ui_forwarding_title),
-                            fontWeight = FontWeight.Bold,
-                        )
-                        if (!loading && filteredEntries.isNotEmpty()) {
-                            Surface(
-                                shape = MaterialTheme.shapes.extraLarge,
-                                color = MaterialTheme.colorScheme.secondaryContainer,
-                            ) {
-                                Text(
-                                    text = filteredEntries.size.toString(),
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier.padding(
-                                        horizontal = spacing.small,
-                                        vertical = 2.dp
-                                    ),
-                                )
-                            }
-                        }
-                    }
-                },
+                title = { Text(text = stringResource(Res.string.ui_forwarding_title)) },
                 actions = {
                     IconButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
@@ -153,47 +119,14 @@ fun ForwardingScreen(
                         )
                     }
                 },
-                scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(spacing.default),
-            verticalArrangement = Arrangement.spacedBy(spacing.medium),
+                .padding(padding),
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(spacing.small)) {
-                Text(
-                    text = stringResource(Res.string.ui_logs_filter_protocol),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(horizontal = spacing.default),
-                )
-                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                    val options = listOf(
-                        ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
-                        ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
-                        ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
-                    )
-                    options.forEachIndexed { index, (value, label) ->
-                        SegmentedButton(
-                            selected = protocolFilter == value,
-                            onClick = { viewModel.setProtocolFilter(value) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ),
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(text = label, maxLines = 1)
-                        }
-                    }
-                }
-            }
-
             when {
                 fwdUi.entries.hasFailed && entries.isEmpty() -> {
                     LoadErrorPlaceholder(
@@ -222,34 +155,21 @@ fun ForwardingScreen(
                 }
 
                 filteredEntries.isEmpty() -> {
-                    StatePlaceholder(
-                        title = stringResource(Res.string.ui_forwarding_title),
-                        message = stringResource(Res.string.ui_forwarding_filter_empty),
-                        icon = MaterialSymbols.AutoMirrored.Filled.Forward,
-                        actionLabel = stringResource(Res.string.ui_filter_all),
-                        onAction = { viewModel.setProtocolFilter(ForwardingListFilter.All) },
+                    ForwardingResults(
+                        entries = filteredEntries,
+                        protocolFilter = protocolFilter,
+                        onFilterChanged = viewModel::setProtocolFilter,
+                        onDelete = viewModel::deleteForward,
                     )
                 }
 
                 else -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
-                    ) {
-                        itemsIndexed(
-                            filteredEntries,
-                            key = { _, it -> "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" },
-                        ) { index, entry ->
-                            ForwardingEntryCard(
-                                entry = entry,
-                                shape = groupItemShape(
-                                    isFirst = index == 0,
-                                    isLast = index == filteredEntries.lastIndex,
-                                ),
-                                onDelete = { viewModel.deleteForward(entry) },
-                            )
-                        }
-                    }
+                    ForwardingResults(
+                        entries = filteredEntries,
+                        protocolFilter = protocolFilter,
+                        onFilterChanged = viewModel::setProtocolFilter,
+                        onDelete = viewModel::deleteForward,
+                    )
                 }
             }
         }
@@ -262,6 +182,76 @@ fun ForwardingScreen(
                 viewModel.addForward(protocol, dport, raddr, rport, ruid)
             },
         )
+    }
+}
+
+@Composable
+private fun ForwardingResults(
+    entries: List<ForwardingEntry>,
+    protocolFilter: ForwardingListFilter,
+    onFilterChanged: (ForwardingListFilter) -> Unit,
+    onDelete: (ForwardingEntry) -> Unit,
+) {
+    val spacing = MaterialTheme.spacing
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = spacing.default),
+        verticalArrangement = Arrangement.spacedBy(spacing.small),
+    ) {
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = spacing.small),
+        ) {
+            val options = listOf(
+                ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
+                ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
+                ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
+            )
+            options.forEachIndexed { index, (value, label) ->
+                SegmentedButton(
+                    selected = protocolFilter == value,
+                    onClick = { onFilterChanged(value) },
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text(text = label, maxLines = 1)
+                }
+            }
+        }
+
+        if (entries.isEmpty()) {
+            Box(modifier = Modifier.weight(1f)) {
+                StatePlaceholder(
+                    title = stringResource(Res.string.ui_forwarding_title),
+                    message = stringResource(Res.string.ui_forwarding_filter_empty),
+                    icon = MaterialSymbols.AutoMirrored.Filled.Forward,
+                    actionLabel = stringResource(Res.string.ui_filter_all),
+                    onAction = { onFilterChanged(ForwardingListFilter.All) },
+                )
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                itemsIndexed(
+                    entries,
+                    key = { _, it -> "${it.protocol}_${it.dport}_${it.raddr}_${it.rport}" },
+                ) { index, entry ->
+                    ForwardingEntryCard(
+                        entry = entry,
+                        shape = groupItemShape(
+                            isFirst = index == 0,
+                            isLast = index == entries.lastIndex,
+                        ),
+                        onDelete = { onDelete(entry) },
+                    )
+                }
+            }
+        }
     }
 }
 

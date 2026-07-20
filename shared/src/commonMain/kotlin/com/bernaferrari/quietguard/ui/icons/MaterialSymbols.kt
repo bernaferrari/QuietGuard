@@ -79,6 +79,7 @@ object MaterialSymbols {
         val Close: MaterialIcon get() = MaterialIcon(filledClose)
         val Public: MaterialIcon get() = MaterialIcon(filledPublic)
         val ContentCopy: MaterialIcon get() = MaterialIcon(filledContentCopy)
+        val MoreVert: MaterialIcon get() = MaterialIcon(filledMoreVert)
     }
 
     object Outlined {

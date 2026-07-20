@@ -12,6 +12,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.widthIn
@@ -24,6 +25,7 @@ import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigationsuite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -212,7 +214,7 @@ fun AppNavigation(
         }
     }
 
-    NavigationSuiteScaffold(
+    BoundedNavigationSuiteScaffold(
         navigationSuiteItems = {
             val currentKey = backStack.lastOrNull()
             val selectedTab = selectedTabFor(currentKey)
@@ -365,6 +367,37 @@ fun AppNavigation(
                             }
                         }
                     },
+            )
+        }
+    }
+}
+
+/**
+ * NavigationSuiteScaffold assumes both axes are bounded and subtracts the navigation component's
+ * size directly from the incoming maximum constraint. Web layout can briefly perform an unbounded,
+ * zero-width probe; subtracting the bottom bar height from Constraints.Infinity turns it
+ * into an unrepresentable finite value and aborts the whole Compose layout pass.
+ *
+ * Related upstream issue: https://youtrack.jetbrains.com/issue/CMP-8543
+ *
+ * Ignore that transient probe. ComposeViewport follows it with the real, bounded viewport measure.
+ */
+@Composable
+private fun BoundedNavigationSuiteScaffold(
+    navigationSuiteItems: NavigationSuiteScope.() -> Unit,
+    content: @Composable () -> Unit,
+) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        if (
+            constraints.hasBoundedWidth &&
+                constraints.hasBoundedHeight &&
+                constraints.maxWidth > 0 &&
+                constraints.maxHeight > 0
+        ) {
+            NavigationSuiteScaffold(
+                navigationSuiteItems = navigationSuiteItems,
+                modifier = Modifier.fillMaxSize(),
+                content = content,
             )
         }
     }

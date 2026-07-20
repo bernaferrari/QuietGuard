@@ -495,8 +495,9 @@ Your internet traffic is not being sent to a remote VPN server.</string>
     <string name="settings_background_summary">Watchdog, update checks and packet capture</string>
     <string name="settings_diagnostics_summary">Packet capture and troubleshooting options</string>
     <string name="settings_about_summary">Project information and source code</string>
-    <string name="about_tagline">Private by design. Open source by choice.</string>
+    <string name="about_version">1</string>
     <string name="about_source_title">Source code</string>
     <string name="about_source_summary">Explore the project, report issues, or contribute on GitHub</string>
+    <string name="about_social_title">Get in touch</string>
 
 </resources>

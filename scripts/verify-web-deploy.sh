@@ -48,9 +48,10 @@ fi
 echo "==> Staging Vercel config in dist"
 cp "$ROOT/webApp/vercel.json" "$DIST/vercel.json"
 cp "$ROOT/webApp/src/wasmJsMain/resources/social.png" "$DIST/social.png"
+cp "$ROOT/webApp/src/wasmJsMain/resources/opengraph-image.png" "$DIST/opengraph-image.png"
 
 echo "==> Verifying production artifacts"
-required_files=(index.html netguard.js social.png vercel.json sqlite-wasm-worker/worker.js)
+required_files=(index.html netguard.js social.png opengraph-image.png vercel.json sqlite-wasm-worker/worker.js)
 for file in "${required_files[@]}"; do
   if [[ ! -f "$DIST/$file" ]]; then
     echo "Missing required file: $DIST/$file" >&2

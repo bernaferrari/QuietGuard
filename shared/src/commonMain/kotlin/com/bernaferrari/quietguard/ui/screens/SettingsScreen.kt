@@ -107,7 +107,8 @@ import com.bernaferrari.quietguard.generated.resources.settings_hosts_summary
 import com.bernaferrari.quietguard.generated.resources.settings_network_summary
 import com.bernaferrari.quietguard.generated.resources.settings_background_summary
 import com.bernaferrari.quietguard.generated.resources.settings_about_summary
-import com.bernaferrari.quietguard.generated.resources.about_tagline
+import com.bernaferrari.quietguard.generated.resources.about_social_title
+import com.bernaferrari.quietguard.generated.resources.about_version
 import com.bernaferrari.quietguard.generated.resources.about_source_title
 import com.bernaferrari.quietguard.generated.resources.about_source_summary
 import androidx.compose.animation.animateColorAsState
@@ -1556,7 +1557,7 @@ private fun AboutContent(onOpenUrl: (String) -> Unit) {
                         fontWeight = FontWeight.Bold,
                     )
                     Text(
-                        text = stringResource(Res.string.about_tagline),
+                        text = stringResource(Res.string.about_version),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.82f),
                     )
@@ -1601,52 +1602,44 @@ private fun AboutSocialLinks(onOpenUrl: (String) -> Unit) {
         AboutSocialLink("Reddit", REDDIT_URL, badge = "r/"),
     )
 
-    Row(
+    Surface(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+        shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
-        links.forEach { link ->
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .clickable(role = Role.Button) { onOpenUrl(link.url) },
-                shape = MaterialTheme.shapes.large,
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-            ) {
-                Column(
-                    modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = MaterialTheme.spacing.medium, end = MaterialTheme.spacing.extraSmall),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmall),
+        ) {
+            Text(
+                text = stringResource(Res.string.about_social_title),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.weight(1f),
+            )
+            links.forEach { link ->
+                IconButton(
+                    onClick = { onOpenUrl(link.url) },
+                    modifier = Modifier.size(TouchTargets.minimum),
                 ) {
-                    Surface(
-                        modifier = Modifier.size(36.dp),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            if (link.icon != null) {
-                                Icon(
-                                    icon = link.icon,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                            } else {
-                                Text(
-                                    text = link.badge.orEmpty(),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                            }
-                        }
+                    if (link.icon != null) {
+                        Icon(
+                            icon = link.icon,
+                            contentDescription = link.name,
+                            modifier = Modifier.size(22.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    } else {
+                        Text(
+                            text = link.badge.orEmpty(),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     }
-                    Text(
-                        text = link.name,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                    )
                 }
             }
         }

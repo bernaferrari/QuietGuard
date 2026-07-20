@@ -36,7 +36,6 @@ import com.bernaferrari.quietguard.generated.resources.setting_wifi_home
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_auto
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_dark
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_light
-import com.bernaferrari.quietguard.generated.resources.setting_appearance_mode
 import com.bernaferrari.quietguard.generated.resources.setting_call
 import com.bernaferrari.quietguard.generated.resources.setting_eu_roaming
 import com.bernaferrari.quietguard.generated.resources.setting_filter
@@ -80,7 +79,6 @@ import com.bernaferrari.quietguard.generated.resources.setting_stats_top
 import com.bernaferrari.quietguard.generated.resources.setting_subnet
 import com.bernaferrari.quietguard.generated.resources.setting_system
 import com.bernaferrari.quietguard.generated.resources.setting_tethering
-import com.bernaferrari.quietguard.generated.resources.setting_theme_palette
 import com.bernaferrari.quietguard.generated.resources.setting_track_usage
 import com.bernaferrari.quietguard.generated.resources.setting_update
 import com.bernaferrari.quietguard.generated.resources.setting_update_checking
@@ -223,6 +221,7 @@ import com.bernaferrari.quietguard.ui.theme.TouchTargets
 import com.bernaferrari.quietguard.ui.theme.spacing
 
 import com.bernaferrari.quietguard.ui.icons.Icon
+import com.bernaferrari.quietguard.ui.icons.BrandIcons
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
 
 private const val PROJECT_GITHUB_URL = "https://github.com/bernaferrari/QuietGuard"
@@ -381,85 +380,77 @@ fun SettingsScreen(
                             shape = groupItemShape(first, last),
                             color = MaterialTheme.colorScheme.surfaceContainerLow,
                         ) {
-                            Column(
-                                modifier = Modifier.padding(spacing.default),
-                                verticalArrangement = Arrangement.spacedBy(spacing.small),
+                            val modeOptions = listOf(
+                                Triple(
+                                    "light",
+                                    stringResource(Res.string.setting_appearance_light),
+                                    MaterialSymbols.Outlined.LightMode,
+                                ),
+                                Triple(
+                                    "dark",
+                                    stringResource(Res.string.setting_appearance_dark),
+                                    MaterialSymbols.Outlined.DarkMode,
+                                ),
+                                Triple(
+                                    "auto",
+                                    stringResource(Res.string.setting_appearance_auto),
+                                    MaterialSymbols.Outlined.BrightnessAuto,
+                                ),
+                            )
+                            val selectedIndex =
+                                modeOptions.indexOfFirst { it.first == appearanceMode }
+                            FlowRow(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(spacing.default),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    ButtonGroupDefaults.ConnectedSpaceBetween,
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
                             ) {
-                                Text(
-                                    text = stringResource(Res.string.setting_appearance_mode),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.SemiBold,
-                                )
-                                val modeOptions = listOf(
-                                    Triple(
-                                        "light",
-                                        stringResource(Res.string.setting_appearance_light),
-                                        MaterialSymbols.Outlined.LightMode,
-                                    ),
-                                    Triple(
-                                        "dark",
-                                        stringResource(Res.string.setting_appearance_dark),
-                                        MaterialSymbols.Outlined.DarkMode,
-                                    ),
-                                    Triple(
-                                        "auto",
-                                        stringResource(Res.string.setting_appearance_auto),
-                                        MaterialSymbols.Outlined.BrightnessAuto,
-                                    ),
-                                )
-                                val selectedIndex =
-                                    modeOptions.indexOfFirst { it.first == appearanceMode }
-                                FlowRow(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(
-                                        ButtonGroupDefaults.ConnectedSpaceBetween,
-                                    ),
-                                    verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
-                                ) {
-                                    modeOptions.forEachIndexed { index, (mode, label, icon) ->
-                                        val selected = index == selectedIndex
-                                        ToggleButton(
-                                            checked = selected,
-                                            onCheckedChange = { isChecked ->
-                                                if (isChecked) updateAppearance(mode)
-                                            },
-                                            shapes = when (index) {
-                                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                                                modeOptions.lastIndex ->
-                                                    ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                modeOptions.forEachIndexed { index, (mode, label, icon) ->
+                                    val selected = index == selectedIndex
+                                    ToggleButton(
+                                        checked = selected,
+                                        onCheckedChange = { isChecked ->
+                                            if (isChecked) updateAppearance(mode)
+                                        },
+                                        shapes = when (index) {
+                                            0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                            modeOptions.lastIndex ->
+                                                ButtonGroupDefaults.connectedTrailingButtonShapes()
 
-                                                else ->
-                                                    ButtonGroupDefaults.connectedMiddleButtonShapes()
-                                            },
-                                            colors = ToggleButtonDefaults.toggleButtonColors(
-                                                checkedContainerColor =
-                                                    MaterialTheme.colorScheme.primaryContainer,
-                                                checkedContentColor =
-                                                    MaterialTheme.colorScheme.onPrimaryContainer,
-                                                containerColor =
-                                                    MaterialTheme.colorScheme.surfaceContainerHigh,
-                                                contentColor =
-                                                    MaterialTheme.colorScheme.onSurfaceVariant,
-                                            ),
-                                            modifier = Modifier.semantics {
-                                                role = Role.RadioButton
-                                            },
-                                        ) {
-                                            Icon(
-                                                icon =
-                                                    if (selected) MaterialSymbols.Filled.Check else icon,
-                                                contentDescription = null,
-                                                modifier = Modifier.size(ToggleButtonDefaults.IconSize),
-                                            )
-                                            Spacer(
-                                                modifier =
-                                                    Modifier.size(ToggleButtonDefaults.IconSpacing),
-                                            )
-                                            Text(
-                                                text = label,
-                                                style = MaterialTheme.typography.labelLarge,
-                                            )
-                                        }
+                                            else ->
+                                                ButtonGroupDefaults.connectedMiddleButtonShapes()
+                                        },
+                                        colors = ToggleButtonDefaults.toggleButtonColors(
+                                            checkedContainerColor =
+                                                MaterialTheme.colorScheme.primaryContainer,
+                                            checkedContentColor =
+                                                MaterialTheme.colorScheme.onPrimaryContainer,
+                                            containerColor =
+                                                MaterialTheme.colorScheme.surfaceContainerHigh,
+                                            contentColor =
+                                                MaterialTheme.colorScheme.onSurfaceVariant,
+                                        ),
+                                        modifier = Modifier.semantics {
+                                            role = Role.RadioButton
+                                        },
+                                    ) {
+                                        Icon(
+                                            icon =
+                                                if (selected) MaterialSymbols.Filled.Check else icon,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(ToggleButtonDefaults.IconSize),
+                                        )
+                                        Spacer(
+                                            modifier =
+                                                Modifier.size(ToggleButtonDefaults.IconSpacing),
+                                        )
+                                        Text(
+                                            text = label,
+                                            style = MaterialTheme.typography.labelLarge,
+                                        )
                                     }
                                 }
                             }
@@ -471,36 +462,28 @@ fun SettingsScreen(
                             shape = groupItemShape(first, last),
                             color = MaterialTheme.colorScheme.surfaceContainerLow,
                         ) {
-                            Column(
-                                modifier = Modifier.padding(spacing.default),
-                                verticalArrangement = Arrangement.spacedBy(spacing.small),
+                            FlowRow(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(spacing.default),
+                                horizontalArrangement = Arrangement.spacedBy(
+                                    0.dp,
+                                    Alignment.CenterHorizontally,
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(0.dp),
                             ) {
-                                Text(
-                                    text = stringResource(Res.string.setting_theme_palette),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.SemiBold,
-                                )
-                                FlowRow(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(
-                                        0.dp,
-                                        Alignment.CenterHorizontally,
-                                    ),
-                                    verticalArrangement = Arrangement.spacedBy(0.dp),
-                                ) {
-                                    themeChoices.forEach { (theme, seedColor) ->
-                                        ThemeSwatch(
-                                            theme = theme,
-                                            seedColor = seedColor,
-                                            isSelected = currentTheme == theme,
-                                            isEnabled = true,
-                                            dynamicColor = dynamicSwatchColor,
-                                            onClick = {
-                                                viewModel.putString("theme", theme)
-                                                NetGuardPlatform.widgets.updateAll()
-                                            },
-                                        )
-                                    }
+                                themeChoices.forEach { (theme, seedColor) ->
+                                    ThemeSwatch(
+                                        theme = theme,
+                                        seedColor = seedColor,
+                                        isSelected = currentTheme == theme,
+                                        isEnabled = true,
+                                        dynamicColor = dynamicSwatchColor,
+                                        onClick = {
+                                            viewModel.putString("theme", theme)
+                                            NetGuardPlatform.widgets.updateAll()
+                                        },
+                                    )
                                 }
                             }
                         }
@@ -1605,62 +1588,65 @@ private fun AboutContent(onOpenUrl: (String) -> Unit) {
 
 private data class AboutSocialLink(
     val name: String,
-    val badge: String,
     val url: String,
+    val badge: String? = null,
+    val icon: MaterialIcon? = null,
 )
 
 @Composable
 private fun AboutSocialLinks(onOpenUrl: (String) -> Unit) {
     val links = listOf(
-        AboutSocialLink("LinkedIn", "in", LINKEDIN_URL),
-        AboutSocialLink("X", "X", X_URL),
-        AboutSocialLink("Reddit", "r/", REDDIT_URL),
+        AboutSocialLink("LinkedIn", LINKEDIN_URL, badge = "in"),
+        AboutSocialLink("X", X_URL, icon = BrandIcons.X),
+        AboutSocialLink("Reddit", REDDIT_URL, badge = "r/"),
     )
 
-    Surface(
+    Row(
         modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(MaterialTheme.spacing.medium),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
-        ) {
-            links.forEach { link ->
-                Surface(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable(role = Role.Button) { onOpenUrl(link.url) },
-                    shape = MaterialTheme.shapes.large,
-                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                    contentColor = MaterialTheme.colorScheme.onSurface,
+        links.forEach { link ->
+            Surface(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(role = Role.Button) { onOpenUrl(link.url) },
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            ) {
+                Column(
+                    modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
-                    Column(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                    Surface(
+                        modifier = Modifier.size(36.dp),
+                        shape = MaterialTheme.shapes.medium,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     ) {
-                        Surface(
-                            modifier = Modifier.size(36.dp),
-                            shape = MaterialTheme.shapes.medium,
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
+                        Box(contentAlignment = Alignment.Center) {
+                            if (link.icon != null) {
+                                Icon(
+                                    icon = link.icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                            } else {
                                 Text(
-                                    text = link.badge,
+                                    text = link.badge.orEmpty(),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
                                 )
                             }
                         }
-                        Text(
-                            text = link.name,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                        )
                     }
+                    Text(
+                        text = link.name,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                    )
                 }
             }
         }

@@ -98,8 +98,13 @@ fun AppNavigation(
     // Root tabs are removed from the Navigation 3 back stack when switching tabs.
     // Keep logs at the app-navigation scope so a revisit can reuse its last real state.
     val logsViewModel: LogsViewModel = koinViewModel()
-    val startKey = remember(startRoute) { NavRoutes.fromRoute(startRoute) }
-    val backStack = rememberNavBackStack(appNavSavedStateConfiguration, startKey)
+    val startStack = remember(startRoute) {
+        canonicalStackFor(NavRoutes.fromRoute(startRoute))
+    }
+    val backStack = rememberNavBackStack(
+        appNavSavedStateConfiguration,
+        *startStack.toTypedArray(),
+    )
     val paneScaffoldDirective = calculatePaneScaffoldDirective(currentWindowAdaptiveInfoV2())
     val singlePaneLayout = paneScaffoldDirective.maxHorizontalPartitions == 1
     val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(
@@ -139,16 +144,7 @@ fun AppNavigation(
     }
 
     fun popBackStack() {
-        when {
-            backStack.size > 1 -> backStack.removeAt(backStack.lastIndex)
-            // At a single non-Home root, fall back to Home. At Home itself this is a
-            // no-op: popping the last entry would leave NavDisplay with an empty
-            // backstack, which throws.
-            backStack.lastOrNull() != Home -> {
-                backStack.clear()
-                backStack.add(Home)
-            }
-        }
+        if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
     }
 
     fun setStack(vararg keys: AppNavKey) {
@@ -156,17 +152,13 @@ fun AppNavigation(
         backStack.addAll(keys.toList())
     }
 
-    fun navigateTo(destination: AppNavKey) {
-        when (destination) {
-            Home -> setStack(Home)
-            Apps -> setStack(Home, Apps)
-            Logs -> setStack(Home, Logs)
-            Settings -> setStack(Home, Settings)
-            is SettingsDetail -> setStack(Home, Settings, destination)
-            Dns -> setStack(Home, Settings, Dns)
-            Forwarding -> setStack(Home, Settings, Forwarding)
-            Pro -> setStack(Home, Settings, Pro)
-            else -> setStack(destination)
+    fun selectRoot(destination: AppNavKey) {
+        setStack(*canonicalStackFor(destination).toTypedArray())
+    }
+
+    fun push(destination: AppNavKey) {
+        if (backStack.lastOrNull() != destination) {
+            backStack.add(destination)
         }
     }
 
@@ -212,7 +204,7 @@ fun AppNavigation(
 
     LaunchedEffect(pendingRoute) {
         if (!pendingRoute.isNullOrBlank()) {
-            navigateTo(NavRoutes.fromRoute(pendingRoute))
+            selectRoot(NavRoutes.fromRoute(pendingRoute))
             onRouteNavigated()
         }
     }
@@ -225,7 +217,7 @@ fun AppNavigation(
                 val selected = selectedTab == destination.key
                 item(
                     selected = selected,
-                    onClick = { navigateTo(destination.key) },
+                    onClick = { selectRoot(destination.key) },
                     icon = {
                         Icon(
                             icon =
@@ -258,10 +250,9 @@ fun AppNavigation(
 
         Box(modifier = Modifier.fillMaxSize()) {
             NavDisplay(
-                backStack = backStack.toList(),
+                backStack = backStack,
                 modifier = Modifier.fillMaxSize(),
                 sceneStrategies = listOf(listDetailStrategy),
-                onBack = { popBackStack() },
                 entryDecorators = listOf(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
@@ -338,9 +329,9 @@ fun AppNavigation(
                             CenteredScreen {
                                 SettingsScreen(
                                     section = null,
-                                    onOpenSection = { navigateTo(SettingsDetail(it)) },
-                                    onOpenDns = { navigateTo(Dns) },
-                                    onOpenForwarding = { navigateTo(Forwarding) },
+                                    onOpenSection = { push(SettingsDetail(it)) },
+                                    onOpenDns = { push(Dns) },
+                                    onOpenForwarding = { push(Forwarding) },
                                 )
                             }
                         }
@@ -349,9 +340,9 @@ fun AppNavigation(
                                 SettingsScreen(
                                     section = key.section,
                                     onBack = { popBackStack() },
-                                    onOpenSection = { navigateTo(SettingsDetail(it)) },
-                                    onOpenDns = { navigateTo(Dns) },
-                                    onOpenForwarding = { navigateTo(Forwarding) },
+                                    onOpenSection = { push(SettingsDetail(it)) },
+                                    onOpenDns = { push(Dns) },
+                                    onOpenForwarding = { push(Forwarding) },
                                 )
                             }
                         }
@@ -367,7 +358,7 @@ fun AppNavigation(
                         }
                         entry<Pro> {
                             CenteredScreen {
-                                ProScreen()
+                                ProScreen(onBack = { popBackStack() })
                             }
                         }
                     },
@@ -375,3 +366,16 @@ fun AppNavigation(
         }
     }
 }
+
+private fun canonicalStackFor(destination: AppNavKey): List<AppNavKey> =
+    when (destination) {
+        Home -> listOf(Home)
+        Apps -> listOf(Home, Apps)
+        Logs -> listOf(Home, Logs)
+        Settings -> listOf(Home, Settings)
+        is SettingsDetail -> listOf(Home, Settings, destination)
+        Dns -> listOf(Home, Settings, Dns)
+        Forwarding -> listOf(Home, Settings, Forwarding)
+        Pro -> listOf(Home, Settings, Pro)
+        is AppRuleDetail -> listOf(Home, Apps, destination)
+    }

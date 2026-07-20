@@ -47,7 +47,6 @@ import com.bernaferrari.quietguard.generated.resources.ui_log_details_app_id
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_destination
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_protocol
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_time
-import com.bernaferrari.quietguard.generated.resources.ui_log_details_title
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -1061,12 +1060,6 @@ private fun LogEntryDetailsSheet(
                 .padding(bottom = spacing.extraLarge),
             verticalArrangement = Arrangement.spacedBy(spacing.default),
         ) {
-            Text(
-                text = stringResource(Res.string.ui_log_details_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-            )
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,

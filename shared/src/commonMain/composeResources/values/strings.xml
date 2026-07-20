@@ -86,7 +86,6 @@
     <string name="ui_logs_group_timeline">Timeline</string>
     <string name="ui_logs_group_by_app">By app</string>
     <string name="ui_logs_unknown_source">Unknown source</string>
-    <string name="ui_log_details_title">Connection details</string>
     <string name="ui_log_details_destination">Destination</string>
     <string name="ui_log_details_address">Address</string>
     <string name="ui_log_details_port">Port</string>
@@ -95,6 +94,7 @@
     <string name="ui_log_details_app_id">App ID</string>
     <string name="action_close">Close</string>
     <string name="action_copy">Copy</string>
+    <string name="action_more_options">More options</string>
     <string name="status_copied">Copied</string>
     <string name="ui_settings_title">Settings</string>
     <string name="ui_dns_title">Resolved DNS</string>

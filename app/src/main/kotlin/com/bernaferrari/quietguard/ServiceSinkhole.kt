@@ -37,7 +37,6 @@ import android.os.ParcelFileDescriptor
 import android.os.PowerManager
 import android.os.Process
 import android.os.SystemClock
-import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
@@ -78,21 +77,12 @@ class ServiceSinkhole : VpnService() {
     private var registeredPackageChanged = false
 
     private var registeredInteractiveState = false
-    private var legacyCallStateToken: Any? = null
-    private var legacyDataConnectionToken: Any? = null
-    private var callStateCallback: TelephonyCallback? = null
-    private var dataConnectionCallback: TelephonyCallback? = null
-    private var lastGeneration: String? = null
 
     private var state = State.none
     private var userForeground = true
     private var lastConnected = false
     private var lastMetered = true
     private var lastInteractive = false
-
-    private var lastAllowed = -1
-    private var lastBlocked = -1
-    private var lastHosts = -1
 
     private var removePrefsListener: (() -> Unit)? = null
 
@@ -103,15 +93,34 @@ class ServiceSinkhole : VpnService() {
     private val networkMonitor by lazy {
         SinkholeNetworkMonitor(this, prefs) { reason -> reload(reason, this, false) }
     }
+    private val telephonyMonitor by lazy {
+        SinkholeTelephonyMonitor(
+            context = this,
+            isFirewallEnabled = { prefs.getBoolean("enabled", false) },
+            usesMeteredGenerationRules = {
+                prefs.getBoolean("unmetered_2g", false) ||
+                    prefs.getBoolean("unmetered_3g", false) ||
+                    prefs.getBoolean("unmetered_4g", false)
+            },
+            onReload = { reason -> reload(reason, this, false) },
+            onStart = { start("call state", this) },
+            onTemporaryStop = { stop("call state", this, true) },
+        )
+    }
+    private val foregroundNotifications by lazy {
+        SinkholeForegroundNotifications(
+            context = this,
+            prefs = prefs,
+            isLockedDown = { isLockedDown(lastMetered) },
+            enforcingNotificationId = NOTIFY_ENFORCING,
+        )
+    }
+    private val domainLists by lazy { SinkholeDomainLists(this, prefs) }
 
     private var lastBuilder: TrackingVpnBuilder? = null
     private var vpn: ParcelFileDescriptor? = null
     private var temporarilyStopped = false
 
-    private var lastHostsModified: Long = 0
-    private var lastMalwareModified: Long = 0
-    private val blockedHosts = HashSet<String>()
-    private val malwareHosts = HashSet<String>()
     private val allowedUids = HashSet<Int>()
     private val knownUids = HashSet<Int>()
     private val mapUidIPFilters = HashMap<IpRuleKey, MutableMap<InetAddress, IpRule>>()
@@ -227,12 +236,12 @@ class ServiceSinkhole : VpnService() {
             if (prefs.getBoolean("disable_on_call", false)) {
                 if (tm != null) {
                     Log.i(TAG, "Starting listening for call states")
-                    registerCallStateListener(tm)
+                    telephonyMonitor.setCallStateListening(tm, enabled = true)
                 }
             } else {
                 if (tm != null) {
                     Log.i(TAG, "Stopping listening for call states")
-                    unregisterCallStateListener(tm)
+                    telephonyMonitor.setCallStateListening(tm, enabled = false)
                 }
             }
 
@@ -325,7 +334,7 @@ class ServiceSinkhole : VpnService() {
                     Log.d(TAG, "Stop foreground state=$state")
                     stopForeground(STOP_FOREGROUND_REMOVE)
                 }
-                startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
+                startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
                 state = State.enforcing
                 Log.d(TAG, "Start foreground state=$state")
 
@@ -341,7 +350,11 @@ class ServiceSinkhole : VpnService() {
                 startNative(vpn!!, listAllowed, listRule)
 
                 removeWarningNotifications()
-                updateEnforcingNotification(listAllowed.size, listRule.size)
+                foregroundNotifications.updateEnforcing(
+                    listAllowed.size,
+                    listRule.size,
+                    domainLists.blockedCount(),
+                )
             }
         }
 
@@ -370,7 +383,7 @@ class ServiceSinkhole : VpnService() {
                     Log.d(TAG, "Stop foreground state=$state")
                     stopForeground(STOP_FOREGROUND_REMOVE)
                 }
-                startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
+                startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
                 state = State.enforcing
                 Log.d(TAG, "Start foreground state=$state")
             }
@@ -397,7 +410,11 @@ class ServiceSinkhole : VpnService() {
             startNative(vpn!!, listAllowed, listRule)
 
             removeWarningNotifications()
-            updateEnforcingNotification(listAllowed.size, listRule.size)
+            foregroundNotifications.updateEnforcing(
+                listAllowed.size,
+                listRule.size,
+                domainLists.blockedCount(),
+            )
         }
 
         private fun stop(temporary: Boolean) {
@@ -409,14 +426,12 @@ class ServiceSinkhole : VpnService() {
             }
             if (state == State.enforcing && !temporary) {
                 Log.d(TAG, "Stop foreground state=$state")
-                lastAllowed = -1
-                lastBlocked = -1
-                lastHosts = -1
+                foregroundNotifications.resetCounts()
 
                 stopForeground(STOP_FOREGROUND_REMOVE)
 
                                 if (prefs.getBoolean("show_stats", false)) {
-                    startForeground(NOTIFY_WAITING, getWaitingNotification())
+                    startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
                     state = State.waiting
                     Log.d(TAG, "Start foreground state=$state")
                 } else {
@@ -992,8 +1007,7 @@ class ServiceSinkhole : VpnService() {
             withPolicyWrite {
                 allowedUids.clear()
                 knownUids.clear()
-                blockedHosts.clear()
-                malwareHosts.clear()
+                domainLists.clear()
                 mapUidIPFilters.clear()
                 mapForward.clear()
             }
@@ -1037,12 +1051,11 @@ class ServiceSinkhole : VpnService() {
         withPolicyWrite {
             allowedUids.clear()
             knownUids.clear()
-            blockedHosts.clear()
-            malwareHosts.clear()
             mapUidIPFilters.clear()
             mapForward.clear()
             mapNotify.clear()
         }
+        domainLists.clear()
     }
 
     private fun prepareUidAllowed(listAllowed: List<Rule>, listRule: List<Rule>) {
@@ -1054,62 +1067,9 @@ class ServiceSinkhole : VpnService() {
         }
     }
 
-    private fun prepareHostsBlocked() {
-        val useHosts = prefs.getBoolean("filter", false) && prefs.getBoolean("use_hosts", false)
-        val hosts = File(filesDir, "hosts.txt")
-        if (!useHosts || !hosts.exists() || !hosts.canRead()) {
-            Log.i(TAG, "Hosts file use=$useHosts exists=${hosts.exists()}")
-            withPolicyWrite { blockedHosts.clear() }
-            return
-        }
+    private fun prepareHostsBlocked() = domainLists.refreshHosts()
 
-        val changed = hosts.lastModified() != lastHostsModified
-        if (!changed && blockedHosts.isNotEmpty()) {
-            Log.i(TAG, "Hosts file unchanged")
-            return
-        }
-        val domains = DomainListLoader.load(hosts, true) { line ->
-            Log.i(TAG, "Invalid hosts file line: $line")
-        } ?: run {
-            Log.e(TAG, "Unable to read hosts file")
-            return
-        }
-        withPolicyWrite {
-            blockedHosts.clear()
-            blockedHosts.addAll(domains)
-            blockedHosts.add("test.netguard.me")
-            lastHostsModified = hosts.lastModified()
-        }
-        Log.i(TAG, "${domains.size} hosts read")
-    }
-
-    private fun prepareMalwareList() {
-        val malware = prefs.getBoolean("filter", false) && prefs.getBoolean("malware", false)
-        val file = File(filesDir, "malware.txt")
-        if (!malware || !file.exists() || !file.canRead()) {
-            Log.i(TAG, "Malware use=$malware exists=${file.exists()}")
-            withPolicyWrite { malwareHosts.clear() }
-            return
-        }
-
-        val changed = file.lastModified() != lastMalwareModified
-        if (!changed && malwareHosts.isNotEmpty()) {
-            Log.i(TAG, "Malware unchanged")
-            return
-        }
-        val domains = DomainListLoader.load(file, false) { line ->
-            Log.i(TAG, "Invalid malware file line: $line")
-        } ?: run {
-            Log.e(TAG, "Unable to read malware file")
-            return
-        }
-        withPolicyWrite {
-            malwareHosts.clear()
-            malwareHosts.addAll(domains)
-            lastMalwareModified = file.lastModified()
-        }
-        Log.i(TAG, "${domains.size} malware read")
-    }
+    private fun prepareMalwareList() = domainLists.refreshMalware()
 
     private fun prepareUidIPFilters(dname: String?) {
         withPolicyWrite {
@@ -1363,7 +1323,7 @@ class ServiceSinkhole : VpnService() {
             prepareUidIPFilters(rr.QName)
         }
         if (rr.uid > 0 && !TextUtils.isEmpty(rr.AName)) {
-            val malware = withPolicyRead { rr.AName in malwareHosts }
+            val malware = domainLists.isMalware(requireNotNull(rr.AName))
 
             if (malware) {
                 val notified = prefs.getBoolean("malware.${rr.uid}", false)
@@ -1376,7 +1336,7 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun isDomainBlocked(name: String): Boolean {
-        return withPolicyRead { name in blockedHosts }
+        return domainLists.isBlocked(name)
     }
 
     @TargetApi(Build.VERSION_CODES.Q)
@@ -1618,152 +1578,11 @@ class ServiceSinkhole : VpnService() {
             }
         }
 
-    private fun handleDataConnectionStateChanged(state: Int) {
-        if (state == TelephonyManager.DATA_CONNECTED) {
-            val currentGeneration = Util.getNetworkGeneration(this)
-            Log.i(TAG, "Data connected generation=$currentGeneration")
-
-            if (lastGeneration == null || lastGeneration != currentGeneration) {
-                Log.i(TAG, "New network generation=$currentGeneration")
-                lastGeneration = currentGeneration
-
-                if (
-                    prefs.getBoolean("unmetered_2g", false) ||
-                    prefs.getBoolean("unmetered_3g", false) ||
-                    prefs.getBoolean("unmetered_4g", false)
-                ) {
-                    reload("data connection state changed", this, false)
-                }
-            }
-        }
-    }
-
-    private fun handleCallStateChanged(state: Int) {
-        Log.i(TAG, "New call state=$state")
-        if (prefs.getBoolean("enabled", false)) {
-            if (state == TelephonyManager.CALL_STATE_IDLE) {
-                start("call state", this)
-            } else {
-                stop("call state", this, true)
-            }
-        }
-    }
-
-    private fun registerCallStateListener(tm: TelephonyManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (callStateCallback == null) {
-                val callback =
-                    object : TelephonyCallback(), TelephonyCallback.CallStateListener {
-                        override fun onCallStateChanged(state: Int) {
-                            handleCallStateChanged(state)
-                        }
-                    }
-                tm.registerTelephonyCallback(ContextCompat.getMainExecutor(this), callback)
-                callStateCallback = callback
-            }
-        } else if (legacyCallStateToken == null && Util.hasPhoneStatePermission(this)) {
-            legacyCallStateToken = LegacyTelephony.registerCallState(tm) { state ->
-                handleCallStateChanged(state)
-            }
-        }
-    }
-
-    private fun unregisterCallStateListener(tm: TelephonyManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            callStateCallback?.let { tm.unregisterTelephonyCallback(it) }
-            callStateCallback = null
-        } else if (legacyCallStateToken != null) {
-            LegacyTelephony.unregisterCallState(tm, legacyCallStateToken)
-            legacyCallStateToken = null
-        }
-    }
-
-    private fun registerDataConnectionListener(tm: TelephonyManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (dataConnectionCallback == null) {
-                val callback =
-                    object : TelephonyCallback(), TelephonyCallback.DataConnectionStateListener {
-                        override fun onDataConnectionStateChanged(state: Int, networkType: Int) {
-                            handleDataConnectionStateChanged(state)
-                        }
-                    }
-                tm.registerTelephonyCallback(ContextCompat.getMainExecutor(this), callback)
-                dataConnectionCallback = callback
-            }
-        } else if (legacyDataConnectionToken == null) {
-            legacyDataConnectionToken = LegacyTelephony.registerDataConnection(tm) { state ->
-                handleDataConnectionStateChanged(state)
-            }
-        }
-    }
-
-    private fun unregisterDataConnectionListener(tm: TelephonyManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            dataConnectionCallback?.let { tm.unregisterTelephonyCallback(it) }
-            dataConnectionCallback = null
-        } else if (legacyDataConnectionToken != null) {
-            LegacyTelephony.unregisterDataConnection(tm, legacyDataConnectionToken)
-            legacyDataConnectionToken = null
-        }
-    }
-
-    private val packageChangedReceiver: BroadcastReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                Log.i(TAG, "Received $intent")
-                Util.logExtras(intent)
-
-                try {
-                    if (Intent.ACTION_PACKAGE_ADDED == intent.action) {
-                        Rule.clearCache(context)
-
-                        if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)) {
-                                                        if (IAB.isPurchased(
-                                    ActivityPro.SKU_NOTIFY,
-                                    context
-                                ) && prefs.getBoolean("install", true)
-                            ) {
-                                val uid = intent.getIntExtra(Intent.EXTRA_UID, -1)
-                                notifyNewApplication(uid, false)
-                            }
-                        }
-
-                        reload("package added", context, false)
-                    } else if (Intent.ACTION_PACKAGE_REMOVED == intent.action) {
-                        Rule.clearCache(context)
-
-                        if (intent.getBooleanExtra(Intent.EXTRA_DATA_REMOVED, false)) {
-                            val packageName = intent.data?.schemeSpecificPart ?: ""
-                            Log.i(TAG, "Deleting settings package=$packageName")
-                            prefs.remove(PreferencesRepository.namespaced("wifi", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("other", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("screen_wifi", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("screen_other", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("roaming", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("lockdown", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("apply", packageName))
-                            prefs.remove(PreferencesRepository.namespaced("notify", packageName))
-
-                            val uid = intent.getIntExtra(Intent.EXTRA_UID, 0)
-                            if (uid > 0) {
-                                val dh = DatabaseHelper.getInstance(context)
-                                dh.clearLog(uid)
-                                dh.clearAccess(uid, false)
-
-                                val notificationManager =
-                                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                                notificationManager.cancel(uid)
-                                notificationManager.cancel(uid + 10000)
-                            }
-                        }
-
-                        reload("package deleted", context, false)
-                    }
-                } catch (ex: Throwable) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                }
-            }
-        }
+    private val packageChangedReceiver = SinkholePackageChangeReceiver(
+        prefs = prefs,
+        onNewApplication = { uid -> notifyNewApplication(uid, false) },
+        onReload = { reason, context -> reload(reason, context, false) },
+    )
 
     fun notifyNewApplication(uid: Int, malware: Boolean) {
         if (uid < 0 || uid == Process.myUid()) {
@@ -1889,7 +1708,7 @@ class ServiceSinkhole : VpnService() {
             TAG,
             "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this)
         )
-        startForeground(NOTIFY_WAITING, getWaitingNotification())
+        startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
 
         
         nativeEngine = NativeVpnEngineController(Build.VERSION.SDK_INT, nativeCallbacks)
@@ -2004,7 +1823,7 @@ class ServiceSinkhole : VpnService() {
         Log.i(TAG, "Starting listening to service state changes")
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
         if (tm != null) {
-            registerDataConnectionListener(tm)
+            telephonyMonitor.startDataConnectionListener(tm)
         }
     }
 
@@ -2026,9 +1845,9 @@ class ServiceSinkhole : VpnService() {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             }
             if (state == State.enforcing) {
-                startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
+                startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
             } else if (state != State.none) {
-                startForeground(NOTIFY_WAITING, getWaitingNotification())
+                startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
             }
             Log.d(TAG, "Start foreground state=$state")
         }
@@ -2041,9 +1860,9 @@ class ServiceSinkhole : VpnService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (state == State.enforcing) {
-            startForeground(NOTIFY_ENFORCING, getEnforcingNotification(-1, -1, -1))
+            startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
         } else {
-            startForeground(NOTIFY_WAITING, getWaitingNotification())
+            startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
         }
 
         Log.i(TAG, "Received $intent")
@@ -2150,7 +1969,6 @@ class ServiceSinkhole : VpnService() {
                 registeredInteractiveState = false
             }
             val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            unregisterCallStateListener(tm)
 
             if (registeredUser) {
                 unregisterReceiver(userReceiver)
@@ -2171,7 +1989,7 @@ class ServiceSinkhole : VpnService() {
 
             networkMonitor.stop()
 
-            unregisterDataConnectionListener(tm)
+            telephonyMonitor.stop(tm)
 
             try {
                 if (vpn != null) {
@@ -2192,89 +2010,6 @@ class ServiceSinkhole : VpnService() {
         }
 
         super.onDestroy()
-    }
-
-    private fun getEnforcingNotification(allowed: Int, blocked: Int, hosts: Int): Notification {
-        val main = Intent(this, ActivityMain::class.java)
-        val pi = PendingIntentCompat.getActivity(this, 0, main, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val notificationColor = themePrimaryColor(prefs.getString("theme", THEME_DEFAULT))
-        val builder = Notification.Builder(this, Notifications.CHANNEL_FOREGROUND)
-        builder
-            .setSmallIcon(
-                if (isLockedDown(lastMetered)) {
-                    this.lockIcon()
-                } else {
-                    this.securityIcon()
-                },
-            )
-            .setContentIntent(pi)
-            .setColor(notificationColor)
-            .setOngoing(true)
-            .setAutoCancel(false)
-
-        builder.setContentTitle(getString(R.string.msg_started))
-            .setCategory(Notification.CATEGORY_STATUS)
-            .setVisibility(Notification.VISIBILITY_SECRET)
-
-        var allowedValue = allowed
-        var blockedValue = blocked
-        var hostsValue = hosts
-        if (allowedValue >= 0) {
-            lastAllowed = allowedValue
-        } else {
-            allowedValue = lastAllowed
-        }
-        if (blockedValue >= 0) {
-            lastBlocked = blockedValue
-        } else {
-            blockedValue = lastBlocked
-        }
-        if (hostsValue >= 0) {
-            lastHosts = hostsValue
-        } else {
-            hostsValue = lastHosts
-        }
-
-        if (allowedValue >= 0 || blockedValue >= 0 || hostsValue >= 0) {
-            builder.setContentText(
-                if (Util.isPlayStoreInstall(this)) {
-                    getString(R.string.msg_packages, allowedValue, blockedValue)
-                } else {
-                    getString(R.string.msg_hosts, allowedValue, blockedValue, hostsValue)
-                },
-            )
-            return builder.build()
-        }
-
-        return builder.build()
-    }
-
-    private fun updateEnforcingNotification(allowed: Int, total: Int) {
-        val notification = getEnforcingNotification(allowed, total - allowed, blockedHosts.size)
-        val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if (Util.canNotify(this)) {
-            nm.notify(NOTIFY_ENFORCING, notification)
-        }
-    }
-
-    private fun getWaitingNotification(): Notification {
-        val main = Intent(this, ActivityMain::class.java)
-        val pi = PendingIntentCompat.getActivity(this, 0, main, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val notificationColor = themePrimaryColor(prefs.getString("theme", THEME_DEFAULT))
-        val builder = Notification.Builder(this, Notifications.CHANNEL_FOREGROUND)
-        builder.setSmallIcon(this.securityIcon())
-            .setContentIntent(pi)
-            .setColor(notificationColor)
-            .setOngoing(true)
-            .setAutoCancel(false)
-
-        builder.setContentTitle(getString(R.string.msg_waiting))
-            .setCategory(Notification.CATEGORY_STATUS)
-            .setVisibility(Notification.VISIBILITY_SECRET)
-
-        return builder.build()
     }
 
     private fun showDisabledNotification() {
@@ -2464,111 +2199,7 @@ class ServiceSinkhole : VpnService() {
         }
 
         @JvmStatic
-        fun getDns(context: Context): List<InetAddress> {
-            val prefs = context.preferences()
-            val listDns = ArrayList<InetAddress>()
-            val sysDns = Util.getDefaultDNS(context)
-
-            val ip6 = prefs.getBoolean("ip6", true)
-            val filter = prefs.getBoolean("filter", false)
-            val vpnDns1 = prefs.getString("dns", null)
-            val vpnDns2 = prefs.getString("dns2", null)
-            Log.i(TAG, "DNS system=" + TextUtils.join(",", sysDns) + " config=$vpnDns1,$vpnDns2")
-
-            if (vpnDns1 != null) {
-                try {
-                    val dns = InetAddress.getByName(vpnDns1)
-                    if (!(dns.isLoopbackAddress || dns.isAnyLocalAddress) && (ip6 || dns is Inet4Address)) {
-                        listDns.add(dns)
-                    }
-                } catch (_: Throwable) {
-                }
-            }
-
-            if (vpnDns2 != null) {
-                try {
-                    val dns = InetAddress.getByName(vpnDns2)
-                    if (!(dns.isLoopbackAddress || dns.isAnyLocalAddress) && (ip6 || dns is Inet4Address)) {
-                        listDns.add(dns)
-                    }
-                } catch (ex: Throwable) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                }
-            }
-
-            if (listDns.size == 2) {
-                return listDns
-            }
-
-            for (defDns in sysDns) {
-                try {
-                    val ddns = InetAddress.getByName(defDns)
-                    if (!listDns.contains(ddns) &&
-                        !(ddns.isLoopbackAddress || ddns.isAnyLocalAddress) &&
-                        (ip6 || ddns is Inet4Address)
-                    ) {
-                        listDns.add(ddns)
-                    }
-                } catch (ex: Throwable) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                }
-            }
-
-            val count = listDns.size
-            val lan = prefs.getBoolean("lan", false)
-            val useHosts = prefs.getBoolean("use_hosts", false)
-            if (lan && useHosts && filter) {
-                try {
-                    val subnets = ArrayList<Pair<InetAddress, Int>>()
-                    subnets.add(Pair(InetAddress.getByName("10.0.0.0"), 8))
-                    subnets.add(Pair(InetAddress.getByName("172.16.0.0"), 12))
-                    subnets.add(Pair(InetAddress.getByName("192.168.0.0"), 16))
-
-                    for (subnet in subnets) {
-                        val hostAddress = subnet.first
-                        val host = BigInteger(1, hostAddress.address)
-
-                        val prefix = subnet.second
-                        val mask =
-                            BigInteger.valueOf(-1)
-                                .shiftLeft(hostAddress.address.size * 8 - prefix)
-
-                        for (dns in ArrayList(listDns)) {
-                            if (hostAddress.address.size == dns.address.size) {
-                                val ip = BigInteger(1, dns.address)
-
-                                if (host.and(mask) == ip.and(mask)) {
-                                    Log.i(
-                                        TAG,
-                                        "Local DNS server host=$hostAddress/$prefix dns=$dns"
-                                    )
-                                    listDns.remove(dns)
-                                }
-                            }
-                        }
-                    }
-                } catch (ex: Throwable) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                }
-            }
-
-            if (listDns.isEmpty() || listDns.size < count) {
-                try {
-                    listDns.add(InetAddress.getByName("8.8.8.8"))
-                    listDns.add(InetAddress.getByName("8.8.4.4"))
-                    if (ip6) {
-                        listDns.add(InetAddress.getByName("2001:4860:4860::8888"))
-                        listDns.add(InetAddress.getByName("2001:4860:4860::8844"))
-                    }
-                } catch (ex: Throwable) {
-                    Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                }
-            }
-
-            Log.i(TAG, "Get DNS=" + TextUtils.join(",", listDns))
-
-            return listDns
-        }
+        fun getDns(context: Context): List<InetAddress> = SinkholeDnsResolver.resolve(context)
 
         @JvmStatic
         fun run(reason: String, context: Context) {

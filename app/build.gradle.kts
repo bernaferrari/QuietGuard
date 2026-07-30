@@ -22,8 +22,9 @@ val rustDirectory = layout.projectDirectory.dir("src/main/rust")
 val uniffiOutputDirectory = layout.buildDirectory.dir("generated/source/uniffi")
 val hostRustTargetDirectory = layout.buildDirectory.dir("rustHost")
 val uniffiBindgenTargetDirectory = layout.buildDirectory.dir("rustBindgen")
+val androidRustTargetDirectory = layout.buildDirectory.dir("rustAndroid")
 val hostRustLibrary = hostRustTargetDirectory.map { it.file("release/${System.mapLibraryName("netguard")}") }
-val androidNdkVersion = "25.2.9519653"
+val androidNdkVersion = "28.2.13676358"
 val rustSources = fileTree(rustDirectory) {
     include("Cargo.toml", "Cargo.lock", "build.rs", "uniffi.toml", "src/**")
 }
@@ -203,12 +204,13 @@ val androidNdkToolchain = providers.provider {
 
 val buildRustLibraries = androidRustTargets.map { (abi, target) ->
     tasks.register<Exec>("buildRust${abi.replace("-", "").replaceFirstChar(Char::uppercase)}") {
-        val targetDirectory = layout.buildDirectory.dir("rust/$abi")
-        val library = targetDirectory.map { it.file("${target.cargoTarget}/release/libnetguard.so") }
+        val library = androidRustTargetDirectory.map {
+            it.file("${target.cargoTarget}/release/libnetguard.so")
+        }
         workingDir(rustDirectory)
         inputs.files(rustSources)
         outputs.file(library)
-        environment("CARGO_TARGET_DIR", targetDirectory.get().asFile)
+        environment("CARGO_TARGET_DIR", androidRustTargetDirectory.get().asFile)
         doFirst {
             environment(
                 "CARGO_TARGET_${target.cargoTarget.uppercase().replace('-', '_')}_LINKER",
@@ -222,7 +224,7 @@ val packageRustJni by tasks.registering(Sync::class) {
     dependsOn(buildRustLibraries)
     into(rustJniDirectory)
     androidRustTargets.forEach { (abi, target) ->
-        from(layout.buildDirectory.dir("rust/$abi/${target.cargoTarget}/release")) {
+        from(androidRustTargetDirectory.map { it.dir("${target.cargoTarget}/release") }) {
             include("libnetguard.so")
             into(abi)
         }

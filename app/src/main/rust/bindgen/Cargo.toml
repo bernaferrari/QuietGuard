@@ -8,4 +8,6 @@ publish = false
 uniffi = { version = "0.32.0", features = ["cli"] }
 
 [profile.dev]
-debug = 1
+# This crate is only a build-time code generator, so debug symbols just inflate
+# Gradle's disposable Cargo cache.
+debug = 0

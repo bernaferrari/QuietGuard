@@ -5,114 +5,143 @@
 </p>
 
 <p align="center">
-  <strong>A private, no-root firewall with clear per-app network controls.</strong><br>
-  Built with Kotlin Multiplatform, Compose, and Material 3.
+  <strong>A private, no-root Android firewall with clear per-app network controls.</strong><br>
+  Local <code>VpnService</code> sinkhole — Kotlin Multiplatform UI, Compose, and a Rust packet engine.
+</p>
+
+<p align="center">
+  <a href="https://github.com/bernaferrari/QuietGuard/actions/workflows/ci.yml"><img src="https://github.com/bernaferrari/QuietGuard/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/bernaferrari/QuietGuard/releases"><img src="https://img.shields.io/github/v/release/bernaferrari/QuietGuard?include_prereleases&label=release" alt="GitHub release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3"></a>
 </p>
 
 <p align="center">
   <a href="https://quietguard.vercel.app/"><strong>Try the Web Demo</strong></a>
+  ·
+  <a href="docs/ARCHITECTURE.md">Architecture</a>
+  ·
+  <a href="docs/THREAT-MODEL.md">Threat model</a>
+  ·
+  <a href="docs/PROVENANCE.md">What I wrote vs inherited</a>
 </p>
 
 ---
 
-QuietGuard lets you decide which Android apps can use Wi-Fi or mobile data. It runs entirely on your device through Android's VPN API: no root access, remote proxy, account, tracking, or analytics required.
+QuietGuard lets you decide which Android apps can use Wi-Fi or mobile data. Filtering runs on the device through Android’s VPN API: no QuietGuard account, remote QuietGuard proxy, tracking, or analytics are required for the core firewall loop.
 
-It is a modern Kotlin and Compose evolution of [NetGuard](https://github.com/M66B/NetGuard), with a redesigned interface and clearer workflows for rules, logs, and settings.
+This repository is a **GitHub fork** of [NetGuard](https://github.com/M66B/NetGuard). The git history still carries thousands of inherited commits. The product surface is a KMP / Compose / Rust rewrite — not a reskin of the original Java/C tree. Details: [docs/PROVENANCE.md](docs/PROVENANCE.md).
 
 ## Highlights
 
-- **On-device filtering:** Uses Android `VpnService`; your traffic is never sent through a QuietGuard server.
+- **On-device filtering:** Android `VpnService` sinkhole; traffic is not sent through a QuietGuard server.
 - **Per-app control:** Allow or block Wi-Fi and mobile data independently for each app.
-- **Readable activity logs:** Quickly understand what connected, what was blocked, and why.
-- **Modern adaptive UI:** A Compose and Material 3 interface designed for phones, tablets, and foldables.
-- **Local-first and open source:** No account, advertisements, tracking, or analytics.
-- **Web demo:** Explore the interface in a browser without installing the Android app.
+- **Readable activity logs:** See what connected, what was blocked, and related metadata stored locally.
+- **Modern adaptive UI:** Compose Multiplatform + Material 3 for phones, tablets, and foldables.
+- **Rust packet engine:** Local VPN path in `app/src/main/rust` (UniFFI → Kotlin on Android).
+- **Web demo:** [quietguard.vercel.app](https://quietguard.vercel.app/) explores the UI only — it does **not** filter device traffic.
 
 ## Screenshots
 
+| Home / overview | Firewall | Settings |
+|---|---|---|
+| ![Home](assets/home.png) | ![Firewall](assets/firewall.png) | ![Settings](assets/settings.png) |
+
 ![Comparison](assets/comparison.png)
 
-## What QuietGuard Changes
-
-If you're coming from the original NetGuard, here are the major differences you'll notice:
-
-- A complete Kotlin and Jetpack Compose rewrite.
-- A focused Material 3 interface with clearer controls and feedback.
-- Adaptive two-pane layouts for tablets and foldables.
-- Redesigned traffic logs that distinguish allowed and blocked connections at a glance.
-- Better-organized settings with less legacy clutter.
-- A smaller, more intentional feature set centered on the core firewall experience.
-
-## How It Works
-
-QuietGuard operates as a local-only application. It uses Android's built-in `VpnService` to route your device's traffic through a local sinkhole.
-
-Traffic stays on your device. QuietGuard evaluates outbound connection attempts and allows or drops them according to your per-app rules. The local VPN is the mechanism Android provides for filtering traffic without root; it is not a remote VPN service and does not change your public location.
-
-## Adaptive Layouts
-
-QuietGuard dynamically scales to take advantage of larger screens, offering a dedicated two-pane layout for comfortable viewing on tablets and foldables.
+<details>
+<summary>More screenshots</summary>
 
 <p align="center">
-  <img src="assets/foldable.png" alt="Foldable experience" width="980">
+  <img src="assets/details.png" alt="App details" width="320">
+  <img src="assets/social.png" alt="Social / sharing layout" width="320">
+  <img src="assets/foldable.png" alt="Foldable experience" width="640">
 </p>
 
-## Getting Started
+</details>
 
-### Prerequisites
+## QuietGuard vs NetGuard
 
-- **JDK 17** or higher.
-- **Android Studio** (current stable) with the Android SDK (API 26+ target).
+| | **QuietGuard** | **NetGuard** (upstream) |
+|--|----------------|-------------------------|
+| **Lineage** | Fork of NetGuard; GPLv3 | Original project by Marcel Bokhorst |
+| **UI** | Kotlin Multiplatform + Compose + Material 3 | Classic Android views |
+| **Packet engine** | Rust via UniFFI (`app/src/main/rust`) | C/JNI |
+| **Platforms** | Android + Wasm web demo | Android |
+| **Install** | [This repo’s Releases](https://github.com/bernaferrari/QuietGuard/releases) or build from source | [Upstream APKs](https://github.com/M66B/NetGuard/releases) |
+| **CI** | Web verify + host `cargo test` (no NDK) | Upstream’s own pipeline |
 
-### Build & Run
+QuietGuard does **not** ship NetGuard binaries under a new name. Full authorship split and how to re-verify: [docs/PROVENANCE.md](docs/PROVENANCE.md).
 
-#### Android
+## Architecture
+
+```text
+Compose screens → ViewModels → repositories / platform bridges
+        ↓                    ↓                     ↓
+   Android VpnService    Rust engine           Wasm demo (UI only)
+```
+
+Modules: `:app` (host), `:shared` (KMP UI + domain), `:webApp`, `:sqliteWasmWorker`.
+Rules and dependency direction: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Threat model (short)
+
+Local sinkhole, not a remote VPN or anonymity tool. In scope: per-app block/allow on device. Out of scope: root malware, hiding allowed traffic, treating the web demo as a firewall. Residual app HTTP (opt-in update check, user-triggered hosts download, optional SOCKS5) is documented in [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md).
+
+## Install
+
+### Prebuilt APK (QuietGuard)
+
+When a `v*` tag is pushed, GitHub Actions publishes a **debug-signed** arm64 QuietGuard APK on
+[Releases](https://github.com/bernaferrari/QuietGuard/releases/latest). That build is from **this** repo — not NetGuard.
+
+Until a tag exists, the Releases page is empty; use build-from-source below.
+
+Optional: add repo secrets (`SIGNING_STORE_BASE64`, `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS`, `SIGNING_KEY_PASSWORD`) to publish a **release-signed** APK instead. See [`.github/workflows/release.yml`](.github/workflows/release.yml).
+
+### Android from source
+
+Prerequisites: JDK 17+, Android SDK/NDK (`quietguard.ndkVersion` in `gradle.properties`), Rust/Cargo.
+
 ```bash
 ./gradlew :app:assembleDebug
 ./gradlew :app:installDebug
 ```
 
-You can also build a release variant configured for production checks and shrinker behavior by running `./gradlew :app:assembleRelease`.
+Local Android check (host tests + optional arm64 debug APK — **not** run on every GitHub push):
 
-#### Web (local dev server)
+```bash
+./scripts/verify-android-ci.sh
+```
+
+Do **not** install upstream NetGuard APKs and expect QuietGuard UI/engine behavior.
+
+### Web
 
 ```bash
 ./gradlew :webApp:wasmJsBrowserDevelopmentRun
+./scripts/simulate-web-ci.sh          # production Wasm bundle + checks
 ```
 
-Production wasm bundle:
+Deploy: [quietguard.vercel.app](https://quietguard.vercel.app/) (UI demo only).
 
-```bash
-./gradlew :webApp:wasmJsBrowserDistribution
-```
+## Continuous integration
 
-#### Web deploy (Vercel)
+Every push/PR runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml) — intentionally **not** a full Android/NDK assemble (that is slow on GitHub and is why the web job exists).
 
-Simulate the CI build locally:
+| Job | What it runs |
+|-----|----------------|
+| **KMP web** | `./scripts/verify-web-deploy.sh --ci --web-only` |
+| **Rust** | `cargo test --locked` in `app/src/main/rust` (host, no NDK) |
 
-```bash
-./scripts/simulate-web-ci.sh
-```
+Android host tests + arm64 APK: `./scripts/verify-android-ci.sh` locally, or the **Release** workflow on a `v*` tag. Not in CI: multi-ABI, emulator, Play packaging.
 
-Deploy manually (after `vercel login` or with a token):
+## Behavior notes
 
-```bash
-./scripts/verify-web-deploy.sh --ci
-VERCEL_TOKEN=... VERCEL_ORG_ID=... VERCEL_PROJECT_ID=... ./scripts/deploy-web-vercel.sh
-```
-
-Pushes and pull requests run the Android and web checks in GitHub Actions. The Vercel Git integration deploys previews from branches and deploys `main` to [quietguard.vercel.app](https://quietguard.vercel.app/). The verified bundle can also be deployed manually with `./scripts/deploy-web-vercel.sh`.
-
-## Behavior Notes
-
-- This app is local-first and does not proxy traffic through a third-party backend.
-- Some device manufacturers apply stricter VPN policies; behavior can vary.
-- Certain background/network capabilities depend on notification, battery optimization, and device permissions.
-
-## Credits and License
-
-- **Original Project:** [NetGuard](https://github.com/M66B/NetGuard) by Marcel Bokhorst.
-- **License:** GNU GPLv3. See [LICENSE](LICENSE) for details.
+- Local-first by default: filtering does not proxy through a QuietGuard backend.
+- Update checks are **opt-in** (`update_check` defaults off). Hosts download is user-triggered. SOCKS5 defaults off.
+- OEM VPN / battery policies can stop the tunnel; traffic is unfiltered when the service is down.
+- Credits: [NetGuard](https://github.com/M66B/NetGuard) by Marcel Bokhorst (concept, GPLv3, most git history); QuietGuard work as listed in [docs/PROVENANCE.md](docs/PROVENANCE.md).
+- License: GNU GPLv3 — [LICENSE](LICENSE).
 
 <p align="center">
   <img src="assets/more-dark.png" alt="QuietGuard Dark Mode variant" width="980">

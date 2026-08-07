@@ -9,6 +9,10 @@ object PreferenceKeys {
     const val THEME = "theme"
     const val AUTO_ENABLE = "auto_enable"
     const val LOG = "log"
+    const val UPDATE_CHECK = "update_check"
+
+    /** Opt-in GitHub Releases check. Off until the user enables it. */
+    const val UPDATE_CHECK_DEFAULT = false
 
     private val PER_APP_RULE_PREFIXES =
         listOf(

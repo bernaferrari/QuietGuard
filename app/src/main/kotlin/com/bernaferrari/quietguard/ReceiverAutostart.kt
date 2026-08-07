@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.data.preferences
 
@@ -89,7 +90,7 @@ open class ReceiverAutostart : BroadcastReceiver() {
                 }
 
                 if (Util.isPlayStoreInstall(context)) {
-                    context.preferences().remove("update_check")
+                    context.preferences().remove(PreferenceKeys.UPDATE_CHECK)
                     context.preferences().remove("use_hosts")
                     context.preferences().remove("hosts_url")
                 }

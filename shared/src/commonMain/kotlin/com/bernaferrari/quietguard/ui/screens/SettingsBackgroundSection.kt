@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.generated.resources.*
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
 import com.bernaferrari.quietguard.platform.PlatformContext
@@ -59,10 +60,10 @@ internal fun SettingsBackgroundSection(
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_update),
-                            checked = bool("update_check", true),
+                            checked = bool(PreferenceKeys.UPDATE_CHECK, PreferenceKeys.UPDATE_CHECK_DEFAULT),
                             isFirst = first,
                             isLast = last,
-                        ) { viewModel.putBoolean("update_check", it) }
+                        ) { viewModel.putBoolean(PreferenceKeys.UPDATE_CHECK, it) }
                     }
                 }
             }

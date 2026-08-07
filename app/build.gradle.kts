@@ -24,7 +24,9 @@ val hostRustTargetDirectory = layout.buildDirectory.dir("rustHost")
 val uniffiBindgenTargetDirectory = layout.buildDirectory.dir("rustBindgen")
 val androidRustTargetDirectory = layout.buildDirectory.dir("rustAndroid")
 val hostRustLibrary = hostRustTargetDirectory.map { it.file("release/${System.mapLibraryName("netguard")}") }
-val androidNdkVersion = "28.2.13676358"
+val androidNdkVersion =
+    (findProperty("quietguard.ndkVersion") as String?)
+        ?: error("Set quietguard.ndkVersion in gradle.properties")
 val rustSources = fileTree(rustDirectory) {
     include("Cargo.toml", "Cargo.lock", "build.rs", "uniffi.toml", "src/**")
 }
@@ -35,6 +37,21 @@ val androidRustTargets = mapOf(
     "x86" to AndroidRustTarget("i686-linux-android", "i686-linux-android"),
     "x86_64" to AndroidRustTarget("x86_64-linux-android", "x86_64-linux-android"),
 )
+// CI uses -Pquietguard.abis=arm64-v8a to skip unused NDK/Cargo targets.
+val selectedAndroidAbis: List<String> = run {
+    val raw = (findProperty("quietguard.abis") as String?)?.trim().orEmpty()
+    val requested = if (raw.isEmpty()) {
+        androidRustTargets.keys.toList()
+    } else {
+        raw.split(',').map { it.trim() }.filter { it.isNotEmpty() }
+    }
+    val unknown = requested.filter { it !in androidRustTargets }
+    require(unknown.isEmpty()) {
+        "Unknown quietguard.abis value(s): ${unknown.joinToString()}. " +
+            "Valid: ${androidRustTargets.keys.joinToString()}"
+    }
+    requested
+}
 val rustJniDirectory = layout.buildDirectory.dir("generated/rustJniLibs")
 val buildUniffiLibrary by tasks.registering(Exec::class) {
     workingDir(rustDirectory)
@@ -86,7 +103,7 @@ android {
 
         ndkVersion = androidNdkVersion
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            abiFilters += selectedAndroidAbis
         }
 
         packaging {
@@ -202,7 +219,8 @@ val androidNdkToolchain = providers.provider {
         ?: error("Android NDK LLVM toolchain is unavailable")
 }
 
-val buildRustLibraries = androidRustTargets.map { (abi, target) ->
+val buildRustLibraries = selectedAndroidAbis.map { abi ->
+    val target = androidRustTargets.getValue(abi)
     tasks.register<Exec>("buildRust${abi.replace("-", "").replaceFirstChar(Char::uppercase)}") {
         val library = androidRustTargetDirectory.map {
             it.file("${target.cargoTarget}/release/libnetguard.so")
@@ -223,7 +241,8 @@ val buildRustLibraries = androidRustTargets.map { (abi, target) ->
 val packageRustJni by tasks.registering(Sync::class) {
     dependsOn(buildRustLibraries)
     into(rustJniDirectory)
-    androidRustTargets.forEach { (abi, target) ->
+    selectedAndroidAbis.forEach { abi ->
+        val target = androidRustTargets.getValue(abi)
         from(androidRustTargetDirectory.map { it.dir("${target.cargoTarget}/release") }) {
             include("libnetguard.so")
             into(abi)

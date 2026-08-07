@@ -1,70 +1,148 @@
-# QuietGuard application architecture
+# QuietGuard architecture
 
-QuietGuard uses a unidirectional, feature-owned architecture in shared Kotlin code.
-The Android VPN/database engine remains platform-specific; Android and Wasm expose
-those capabilities through small `expect`/`actual` adapters.
+Related: [README](../README.md) · [Provenance](PROVENANCE.md) · [Threat model](THREAT-MODEL.md)
 
-## Dependency direction
+QuietGuard is a **local Android `VpnService` sinkhole**. Shared Kotlin Multiplatform
+owns UI, rules, and logs. Android owns the VPN process. Rust owns the packet hot path.
+Wasm reuses the UI with **no** device firewall.
+
+## Gradle modules
+
+| Module | Role |
+|--------|------|
+| `:shared` | Compose Multiplatform UI, ViewModels, repositories, Room/DataStore contracts, `expect`/`actual` + `NetGuardPlatform` bridges |
+| `:app` | Android host: `VpnService` (`ServiceSinkhole`), UniFFI glue, notifications, tiles, workers |
+| `:webApp` | Wasm shell that hosts the same `AppContent` |
+| `:sqliteWasmWorker` | Web Worker SQLite driver for the Wasm Room path |
+
+Source sets in `:shared`: `commonMain` (UI + domain), `storageMain` (Room), `androidMain`, `wasmJsMain`, `androidHostTest`.
+
+## Runtime shapes
+
+```text
+Android
+  ActivityMain → AppContent (shared Compose)
+       ↓
+  Feature ViewModels → repositories / DataStore / Room
+       ↓
+  NetGuardPlatform bridges (installed from :app)
+       ↓
+  ServiceSinkhole (VpnService) → NativeVpnEngineController
+       ↓
+  Rust crate app/src/main/rust (UniFFI NativeEngine, libnetguard.so)
+
+Wasm demo
+  webApp Main → AppContent (same Compose)
+       ↓
+  Wasm Room + demo seed data
+       ↓
+  NetGuardPlatform no-ops (firewall / hosts / watchdog do nothing)
+```
+
+Packet filtering exists **only** on Android while the VPN is up. The web demo is not a security boundary.
+
+## Shared Kotlin (canonical app logic)
+
+Dependency direction is downward only:
 
 ```text
 Compose screen
     ↓ immutable state / user events
 Feature ViewModel
-    ↓ application operations
+    ↓
 Repository or platform bridge
     ↓
-Room, DataStore, VPN service, or Wasm implementation
+Room, DataStore, Android VPN, or Wasm implementation
 ```
 
-Dependencies only point downward. Screens do not load data, register listeners, or
-coordinate persistence. Repositories do not know about Compose or screen models.
-Platform differences terminate at `platform` adapters and dependency injection.
+- Screens do not load data, register listeners, or coordinate persistence.
+- Repositories do not know about Compose.
+- Platform differences stop at `platform/` adapters, Koin `expect`/`actual` modules, and `NetGuardPlatform` (lateinit bridges installed by the host).
 
-## State ownership
+Packages worth knowing:
+
+- `ui/` screens, Navigation 3 (`AppNavigation`), theme, `UiAsyncState`
+- `data/` DataStore, `PreferenceKeys`, traffic + preferences repositories
+- `domain/` firewall rules repository
+- `platform/` `NetGuardPlatform` + `PlatformContext`
+
+## Android host
+
+`:app` is a NetGuard-descended VPN host, now Kotlin, wired to the Rust engine:
+
+- `ServiceSinkhole` — `VpnService`, tunnel lifecycle, housekeeping
+- `service/NativeVpnEngineController` — UniFFI `NativeEngine`
+- `platform/NetGuardPlatformBindings` — installs Android implementations of the shared bridges
+- Workers, tiles, widgets, IAB leftovers — host-only; not the shared UI architecture
+
+Native build: Cargo cross-compiles `libnetguard.so` per ABI; UniFFI generates Kotlin into
+`app/build/generated/source/uniffi`. Limit ABIs with `-Pquietguard.abis=arm64-v8a` (local/release).
+NDK version is **only** `quietguard.ndkVersion` in `gradle.properties`. The Release workflow
+installs that value via `scripts/quietguard-ndk-version.sh`; everyday CI does not touch the NDK.
+
+## Rust engine
+
+`app/src/main/rust` — packet parse, sessions, DNS/TLS helpers, SOCKS5 optional path, UniFFI API.
+`cargo test` covers this crate (CI **Rust** job). The old C/JNI tree is not maintained.
+
+## Wasm demo
+
+`wasmJsMain` reuses screens and storage contracts. Firewall/hosts/watchdog bridges are empty.
+SQLite runs in `:sqliteWasmWorker`. Treat this as a UI preview, not a product security surface.
+
+## UI conventions (still in force)
+
+These rules apply to shared Compose code; they are not the whole architecture.
+
+### State
 
 - A screen renders one immutable state stream from its feature ViewModel.
-- Durable application data lives in repositories; transient UI choices live in the
-  owning ViewModel or `rememberSaveable` when they are strictly presentational.
-- Root-tab ViewModels are created above Navigation 3 entries when their state must
-  survive tab replacement. Detail ViewModels remain entry-scoped.
+- Durable data lives in repositories; transient UI choices live in the ViewModel or
+  `rememberSaveable` when strictly presentational.
+- Root-tab ViewModels live above Navigation 3 entries when state must survive tab replacement.
+  Detail ViewModels stay entry-scoped.
 - Composables collect ViewModel state with lifecycle-aware collection.
 
-## Async resources
+### Async: `UiAsyncState<T>`
 
-`UiAsyncState<T>` is the canonical contract for asynchronous data:
+Canonical contract in `ui/util/UiAsyncState.kt`:
 
-- `hasReceived == false`: no authoritative result exists yet.
-- `isInitialLoading`: the first result is loading.
-- `isRefreshing`: previously received data remains usable while it refreshes.
-- `isReady`: the current result is authoritative.
-- `hasFailed`: loading failed; feature retry events restart the producer.
+- `hasReceived == false` — no authoritative result yet
+- `isInitialLoading` / `isRefreshing` / `isReady` / `hasFailed`
 
-An empty collection is an empty state only when the resource is ready. Existing
-data remains visible during refreshes. Screens must never infer readiness from
-`data.isEmpty()` alone.
+An empty collection is empty **only** when the resource is ready. Do not infer readiness from
+`data.isEmpty()`. Loading must not replace usable content.
 
-## Events and effects
+### Events
 
 - User actions call named ViewModel methods.
 - ViewModels coordinate repository writes and platform side effects.
-- Auto-updating database flows do not expose decorative refresh controls.
-- A visible refresh or retry control must restart real work.
+- Visible refresh/retry must restart real work.
 - Cancellation is rethrown; other failures become explicit resource state.
 
-## Presentation rules
+### Presentation
 
 - Initial loading, confirmed empty, filtered empty, content, and failure are distinct.
-- Loading does not replace usable content.
-- Navigation destinations always render a meaningful state; no blank panes.
-- Motion tokens honor the platform reduced-motion preference. Infinite decorative
-  motion is disabled when reduced motion is requested.
-- Icons inside labeled placeholders are decorative; interactive icons have content
-  descriptions and Material-sized touch targets.
+- Navigation destinations always render a meaningful state.
+- Motion honors reduced-motion; no infinite decorative motion when requested.
+- Decorative icons inside labeled placeholders stay unlabeled; interactive icons have
+  content descriptions and Material-sized targets.
 
-## Maintenance boundaries
+### Maintenance
 
-- Keep orchestration in ViewModels and rendering in screen/component files.
+- Orchestration in ViewModels; rendering in screen/component files.
 - Extract cohesive components before a screen reaches roughly 700–900 lines.
-- Prefer explicit feature models over adding another boolean branch to a screen.
-- Add host tests for state transitions and both Android and Wasm compile checks for
-  shared architectural changes.
+- Prefer explicit feature models over another boolean on a screen.
+- Host tests for state transitions (`:shared:testAndroidHostTest`); Android + Wasm compile
+  checks for shared architectural changes.
+
+## CI mapping
+
+Push/PR CI stays fast on purpose (KMP web was built so GitHub never has to NDK-cross every commit):
+
+| When | Proves |
+|------|--------|
+| Push/PR **KMP web** | Wasm distribution (`scripts/verify-web-deploy.sh`) |
+| Push/PR **Rust** | Host `cargo test` in `app/src/main/rust` (no NDK) |
+| Local `scripts/verify-android-ci.sh` | Shared host tests + optional arm64 debug APK |
+| Tag `v*` **Release** | NDK + arm64 APK via `.github/actions/setup-android-ndk-rust` |

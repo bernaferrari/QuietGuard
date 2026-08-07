@@ -1,0 +1,48 @@
+name: Release APK
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quietguard-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  apk:
+    name: Build QuietGuard APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Android NDK + Rust
+        uses: ./.github/actions/setup-android-ndk-rust
+
+      - name: Assemble and stage APK
+        id: artifact
+        env:
+          SIGNING_STORE_BASE64: ${{ secrets.SIGNING_STORE_BASE64 }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: ./scripts/stage-release-apk.sh
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.name }}
+          path: ${{ steps.artifact.outputs.path }}
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/publish-github-release.sh "${{ steps.artifact.outputs.path }}"

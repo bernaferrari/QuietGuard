@@ -33,3 +33,25 @@ jobs:
 
       - name: Build and verify web distribution
         run: ./scripts/verify-web-deploy.sh --ci --web-only
+
+  rust:
+    name: Rust engine tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app/src/main/rust
+          shared-key: rust-host-test
+
+      - name: cargo test
+        working-directory: app/src/main/rust
+        run: cargo test --locked

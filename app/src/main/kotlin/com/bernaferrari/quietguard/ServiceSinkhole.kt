@@ -42,6 +42,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
 import androidx.core.content.ContextCompat
+import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.data.preferences
 import com.bernaferrari.quietguard.ui.theme.GraphGrayed
@@ -456,7 +457,7 @@ class ServiceSinkhole : VpnService() {
 
             if (
                 !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
-                prefs.getBoolean("update_check", true)
+                prefs.getBoolean(PreferenceKeys.UPDATE_CHECK, PreferenceKeys.UPDATE_CHECK_DEFAULT)
             ) {
                 checkUpdate()
             }

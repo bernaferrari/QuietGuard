@@ -113,38 +113,48 @@ fun AppNavigation(
         directive = paneScaffoldDirective,
     )
     val motion = LocalMotion.current
-    val detailTransitionMetadata = remember(motion) {
-        NavDisplay.transitionSpec {
-            ContentTransform(
-                targetContentEnter = slideInHorizontally(
-                    animationSpec = tween(
-                        durationMillis = if (motion.reducedMotion) 0 else 220,
-                        easing = motion.easingDecelerate,
-                    ),
-                    initialOffsetX = { fullWidth -> fullWidth },
+    // Global NavDisplay defaults (same motion as before). Detail entries no longer need
+    // per-route transition metadata — see navigation-3/animate-destinations.
+    val forwardTransition = remember(motion) {
+        ContentTransform(
+            targetContentEnter = slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = if (motion.reducedMotion) 0 else 220,
+                    easing = motion.easingDecelerate,
                 ),
-                initialContentExit = ExitTransition.None,
-            )
+                initialOffsetX = { fullWidth -> fullWidth },
+            ),
+            initialContentExit = ExitTransition.None,
+        )
+    }
+    val popTransition = remember(motion) {
+        ContentTransform(
+            targetContentEnter = EnterTransition.None,
+            initialContentExit = slideOutHorizontally(
+                animationSpec = tween(
+                    durationMillis = if (motion.reducedMotion) 0 else 180,
+                    easing = motion.easingAccelerate,
+                ),
+                targetOffsetX = { fullWidth -> fullWidth },
+            ),
+        )
+    }
+    // Dual-pane list/detail: keep the pane role, but suppress slide so selecting a row
+    // does not animate the detail pane like a full-screen push.
+    val dualPaneNoSlide = remember {
+        NavDisplay.transitionSpec {
+            ContentTransform(EnterTransition.None, ExitTransition.None)
         } +
             NavDisplay.popTransitionSpec {
-                ContentTransform(
-                    targetContentEnter = EnterTransition.None,
-                    initialContentExit = slideOutHorizontally(
-                        animationSpec = tween(
-                            durationMillis = if (motion.reducedMotion) 0 else 180,
-                            easing = motion.easingAccelerate,
-                        ),
-                        targetOffsetX = { fullWidth -> fullWidth },
-                    ),
-                )
+                ContentTransform(EnterTransition.None, ExitTransition.None)
             }
     }
-    val appDetailMetadata = remember(singlePaneLayout, detailTransitionMetadata) {
+    val appDetailMetadata = remember(singlePaneLayout, dualPaneNoSlide) {
         val paneMetadata = ListDetailSceneStrategy.detailPane()
         if (!singlePaneLayout) {
-            paneMetadata
+            paneMetadata + dualPaneNoSlide
         } else {
-            paneMetadata + detailTransitionMetadata
+            paneMetadata
         }
     }
 
@@ -262,6 +272,9 @@ fun AppNavigation(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
                 ),
+                transitionSpec = { forwardTransition },
+                popTransitionSpec = { popTransition },
+                predictivePopTransitionSpec = { popTransition },
                 entryProvider =
                     entryProvider {
                         entry<Home> {
@@ -340,7 +353,7 @@ fun AppNavigation(
                                 )
                             }
                         }
-                        entry<SettingsDetail>(metadata = detailTransitionMetadata) { key ->
+                        entry<SettingsDetail> { key ->
                             CenteredScreen {
                                 SettingsScreen(
                                     section = key.section,
@@ -351,17 +364,17 @@ fun AppNavigation(
                                 )
                             }
                         }
-                        entry<Dns>(metadata = detailTransitionMetadata) {
+                        entry<Dns> {
                             CenteredScreen {
                                 DnsScreen(onBack = { popBackStack() })
                             }
                         }
-                        entry<Forwarding>(metadata = detailTransitionMetadata) {
+                        entry<Forwarding> {
                             CenteredScreen {
                                 ForwardingScreen(onBack = { popBackStack() })
                             }
                         }
-                        entry<Pro>(metadata = detailTransitionMetadata) {
+                        entry<Pro> {
                             CenteredScreen {
                                 ProScreen(onBack = { popBackStack() })
                             }

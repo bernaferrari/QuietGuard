@@ -31,15 +31,29 @@ if [[ ! -f "$DIST/index.html" || ! -f "$DIST/netguard.js" ]]; then
   exit 1
 fi
 
+# Never upload or promote a distribution that has changed since its last build.
+# In particular, this catches netguard.js referencing a new content-hashed Wasm
+# file that is missing from a stale deployment directory.
+"$ROOT/scripts/verify-web-deploy.sh" --ci --skip-build
+
 PROJECT_JSON="$ROOT/webApp/.vercel/project.json"
+REPO_JSON="$ROOT/.vercel/repo.json"
 if [[ -z "${VERCEL_ORG_ID:-}" && -f "$PROJECT_JSON" ]]; then
-  VERCEL_ORG_ID="$(python3 -c "import json; print(json.load(open('$PROJECT_JSON'))['orgId'])")"
-  export VERCEL_ORG_ID
+  VERCEL_ORG_ID="$(jq -er '.orgId' "$PROJECT_JSON" 2>/dev/null || true)"
 fi
 if [[ -z "${VERCEL_PROJECT_ID:-}" && -f "$PROJECT_JSON" ]]; then
-  VERCEL_PROJECT_ID="$(python3 -c "import json; print(json.load(open('$PROJECT_JSON'))['projectId'])")"
-  export VERCEL_PROJECT_ID
+  VERCEL_PROJECT_ID="$(jq -er '.projectId' "$PROJECT_JSON" 2>/dev/null || true)"
 fi
+
+# Newer Vercel CLI versions may store monorepo links in .vercel/repo.json rather
+# than a project.json inside the deployment directory.
+if [[ -z "${VERCEL_ORG_ID:-}" && -f "$REPO_JSON" ]]; then
+  VERCEL_ORG_ID="$(jq -er '.projects[] | select(.directory == ".") | .orgId' "$REPO_JSON" 2>/dev/null | head -n 1 || true)"
+fi
+if [[ -z "${VERCEL_PROJECT_ID:-}" && -f "$REPO_JSON" ]]; then
+  VERCEL_PROJECT_ID="$(jq -er '.projects[] | select(.directory == ".") | .id' "$REPO_JSON" 2>/dev/null | head -n 1 || true)"
+fi
+export VERCEL_ORG_ID VERCEL_PROJECT_ID
 
 if [[ -z "${VERCEL_TOKEN:-}" && -f "$HOME/Library/Application Support/com.vercel.cli/auth.json" ]]; then
   VERCEL_TOKEN="$(python3 -c "import json; print(json.load(open('$HOME/Library/Application Support/com.vercel.cli/auth.json'))['token'])")"
@@ -57,7 +71,9 @@ cd "$DIST"
 # generated files to exhaust Vercel's per-file upload quota without an archive.
 args=(deploy --yes --archive=tgz --token "$VERCEL_TOKEN")
 if [[ "$PREVIEW" == false ]]; then
-  args+=(--prod)
+  # Build against the production target but do not move any public domain until
+  # the immutable deployment URL passes the Wasm integrity checks below.
+  args+=(--prod --skip-domain)
 fi
 
 echo "==> Deploying $(basename "$DIST") to Vercel"
@@ -84,10 +100,44 @@ fi
 echo "    deployment: $deployment_url"
 
 if [[ "$PREVIEW" == false ]]; then
-  # quietguard.vercel.app predates the current project configuration and is a
-  # manually assigned alias. Vercel's --prod flag updates generated production
-  # aliases but does not move manual aliases, so promote it explicitly only
-  # after the verified production deployment succeeds.
+  echo "==> Verifying deployed JavaScript -> Wasm asset references"
+  remote_check_dir="$(mktemp -d)"
+  cleanup_remote_check() {
+    rm -rf "$remote_check_dir"
+  }
+  trap cleanup_remote_check EXIT
+
+  curl --fail --silent --show-error \
+    "$deployment_url/netguard.js" \
+    --output "$remote_check_dir/netguard.js"
+  curl --fail --silent --show-error \
+    "$deployment_url/sqlite-wasm-worker/worker.js" \
+    --output "$remote_check_dir/sqlite-worker.js"
+
+  remote_wasm_references="$({
+    grep -ahoE '[0-9a-f]{20}\.wasm' \
+      "$remote_check_dir/netguard.js" \
+      "$remote_check_dir/sqlite-worker.js" \
+      | sort -u
+  } || true)"
+  if [[ -z "$remote_wasm_references" ]]; then
+    echo "Deployed JavaScript contains no content-hashed Wasm references" >&2
+    exit 1
+  fi
+
+  while IFS= read -r wasm_asset; do
+    curl --fail --silent --show-error \
+      "$deployment_url/$wasm_asset" \
+      --output "$remote_check_dir/$wasm_asset"
+    if [[ "$(od -An -tx1 -N4 "$remote_check_dir/$wasm_asset" | tr -d '[:space:]')" != "0061736d" ]]; then
+      echo "Deployed asset is not a valid Wasm binary: $wasm_asset" >&2
+      exit 1
+    fi
+    echo "    ok: $wasm_asset"
+  done <<< "$remote_wasm_references"
+
+  # Promote the stable domain only after the candidate deployment is proven to
+  # contain every Wasm binary referenced by its JavaScript loaders.
   echo "==> Promoting $deployment_url to quietguard.vercel.app"
   vercel alias set "$deployment_url" quietguard.vercel.app --token "$VERCEL_TOKEN"
 fi

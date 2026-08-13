@@ -65,6 +65,30 @@ if [[ "$wasm_count" -lt 1 ]]; then
   exit 1
 fi
 
+# Webpack content-hashes Wasm assets and writes those names into the emitted JS.
+# Counting Wasm files is not enough: a stale/prebuilt directory can contain some
+# Wasm files while omitting the exact hash requested by netguard.js or the SQLite
+# worker, which only fails after deployment with an opaque WebAssembly 404.
+echo "==> Verifying JavaScript -> Wasm asset references"
+wasm_references="$({
+  find "$DIST" -type f -name '*.js' -print0 \
+    | xargs -0 grep -ahoE '[0-9a-f]{20}\.wasm' \
+    | sort -u
+} || true)"
+
+if [[ -z "$wasm_references" ]]; then
+  echo "No content-hashed Wasm references found in emitted JavaScript" >&2
+  exit 1
+fi
+
+while IFS= read -r wasm_asset; do
+  if [[ ! -f "$DIST/$wasm_asset" ]]; then
+    echo "JavaScript references missing Wasm asset: $wasm_asset" >&2
+    exit 1
+  fi
+  echo "    ok: $wasm_asset"
+done <<< "$wasm_references"
+
 if ! grep -q 'base href="/"' "$DIST/index.html"; then
   echo 'index.html must use base href="/" for Vercel root deployment' >&2
   exit 1

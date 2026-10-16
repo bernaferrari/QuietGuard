@@ -40,6 +40,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bernaferrari.quietguard.generated.resources.Res
+import com.bernaferrari.quietguard.generated.resources.ui_apps_filter_empty_title
+import com.bernaferrari.quietguard.generated.resources.ui_show_all
 import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.action_more_options
 import com.bernaferrari.quietguard.generated.resources.label_dns_summary
@@ -296,10 +298,10 @@ private fun DnsResults(
         if (filteredEntries.isEmpty()) {
             Box(modifier = Modifier.weight(1f)) {
                 StatePlaceholder(
-                    title = stringResource(Res.string.ui_dns_title),
+                    title = stringResource(Res.string.ui_apps_filter_empty_title),
                     message = stringResource(Res.string.ui_dns_filter_empty),
                     icon = MaterialSymbols.Filled.Dns,
-                    actionLabel = stringResource(Res.string.ui_filter_all),
+                    actionLabel = stringResource(Res.string.ui_show_all),
                     onAction = { onFilterChanged(DnsListFilter.All) },
                 )
             }

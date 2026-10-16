@@ -6,6 +6,7 @@ import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
 
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -67,6 +69,8 @@ import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.platform.loadAppDisplayInfo
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
+import com.bernaferrari.quietguard.generated.resources.ui_apps_filter_empty_title
+import com.bernaferrari.quietguard.generated.resources.ui_show_all
 import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.menu_add
 import com.bernaferrari.quietguard.generated.resources.menu_cancel
@@ -126,15 +130,15 @@ fun ForwardingScreen(
                         fontWeight = FontWeight.Bold,
                     )
                 },
-                actions = {
-                    IconButton(onClick = { viewModel.setShowAddDialog(true) }) {
-                        Icon(
-                            icon = MaterialSymbols.Filled.Add,
-                            contentDescription = stringResource(Res.string.menu_add),
-                        )
-                    }
-                },
                 scrollBehavior = scrollBehavior,
+            )
+        },
+        // Adding a rule is this screen's primary action, so it gets the FAB.
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = { viewModel.setShowAddDialog(true) },
+                icon = { Icon(icon = MaterialSymbols.Filled.Add, contentDescription = null) },
+                text = { Text(text = stringResource(Res.string.menu_add)) },
             )
         },
     ) { padding ->
@@ -233,16 +237,18 @@ private fun ForwardingResults(
         if (entries.isEmpty()) {
             Box(modifier = Modifier.weight(1f)) {
                 StatePlaceholder(
-                    title = stringResource(Res.string.ui_forwarding_title),
+                    title = stringResource(Res.string.ui_apps_filter_empty_title),
                     message = stringResource(Res.string.ui_forwarding_filter_empty),
                     icon = MaterialSymbols.AutoMirrored.Filled.Forward,
-                    actionLabel = stringResource(Res.string.ui_filter_all),
+                    actionLabel = stringResource(Res.string.ui_show_all),
                     onAction = { onFilterChanged(ForwardingListFilter.All) },
                 )
             }
         } else {
             LazyColumn(
                 modifier = Modifier.weight(1f),
+                // Room below the last rule so the FAB never covers its delete button.
+                contentPadding = PaddingValues(bottom = 96.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 itemsIndexed(

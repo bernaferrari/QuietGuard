@@ -10,6 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -109,9 +110,12 @@ fun NetGuardTheme(
             specVersion = ColorSpec.SpecVersion.SPEC_2025,
         )
 
+    val status = remember(darkTheme) { statusColors(darkTheme) }
+
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),
         LocalMotion provides Motion(reducedMotion = PlatformContext.prefersReducedMotion()),
+        LocalStatusColors provides status,
     ) {
         MaterialExpressiveTheme(
             colorScheme = colorScheme,

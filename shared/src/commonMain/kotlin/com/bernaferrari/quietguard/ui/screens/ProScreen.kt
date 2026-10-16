@@ -38,7 +38,8 @@ fun ProScreen(onBack: () -> Unit = {}) {
                         )
                     }
                 },
-                title = { Text(text = stringResource(Res.string.title_pro)) },
+                // The placeholder below already carries the "Pro" heading.
+                title = {},
             )
         },
     ) { contentPadding ->

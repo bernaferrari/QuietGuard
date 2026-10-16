@@ -109,6 +109,15 @@
     <string name="ui_rule_custom">Custom</string>
     <string name="ui_dns_expired">Expired</string>
     <string name="ui_filter_all">All</string>
+    <string name="ui_multicast_all_nodes">All nodes (IPv6 multicast)</string>
+    <string name="ui_multicast_all_routers">All routers (IPv6 multicast)</string>
+    <string name="ui_multicast_local_ipv6">Local network multicast (IPv6)</string>
+    <string name="ui_multicast_ipv6">Multicast traffic (IPv6)</string>
+    <string name="ui_multicast_ipv4">Multicast traffic (IPv4)</string>
+    <string name="ui_show_all">Show all</string>
+    <string name="action_close_search">Close search</string>
+    <string name="ui_apps_detail_placeholder_title">Select an app</string>
+    <string name="ui_apps_detail_placeholder_body">Choose an app from the list to see and change its rules.</string>
     <string name="ui_filter_empty">No apps match this filter.</string>
     <string name="ui_apps_search_empty">No apps match this search.</string>
     <string name="ui_learn_more">Learn more</string>
@@ -159,6 +168,7 @@
     <string name="menu_clear">Clear</string>
     <string name="action_clear_access_history">Clear access history</string>
     <string name="section_access_history">Access history</string>
+    <string name="ui_access_history_empty">No connection attempts recorded yet.</string>
     <string name="menu_export">Export</string>
     <string name="menu_reset">Reset</string>
     <string name="setting_reset_to_default">Reset to default</string>

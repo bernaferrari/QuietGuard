@@ -23,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -70,6 +71,7 @@ import com.bernaferrari.quietguard.ui.screens.vm.DnsViewModel
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
+import com.bernaferrari.quietguard.platform.loadAppDisplayInfo
 import com.bernaferrari.quietguard.ui.util.ConfirmDestructiveDialog
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import org.jetbrains.compose.resources.stringResource
@@ -347,8 +349,10 @@ private fun DnsEntryCard(
     val alias = entry.aname.trim().takeIf { it.isNotEmpty() && it != entry.qname }
     val headline = if (alias == null) entry.qname else "${entry.qname} → $alias"
     val ttl = stringResource(Res.string.label_ttl, (entry.ttl / 1000).toString())
+    // Show which app asked, falling back to the raw UID when it can't be resolved.
     val uid = entry.uid.takeIf { it > 0 }?.let {
-        stringResource(Res.string.label_uid, it.toString())
+        val fallback = stringResource(Res.string.label_uid, it.toString())
+        remember(it, fallback) { loadAppDisplayInfo(it, fallback).label }
     }
     val metadata = listOfNotNull(entry.resource.takeIf(String::isNotBlank), ttl, uid).joinToString(" • ")
 
@@ -370,20 +374,26 @@ private fun DnsEntryCard(
                     text = headline,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
+                    color = if (expired) {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    } else {
+                        MaterialTheme.colorScheme.onSurface
+                    },
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
                 )
                 if (expired) {
+                    // Expiry is routine cache aging, not an error: keep the chip neutral.
                     Surface(
-                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.72f),
-                        contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                        shape = MaterialTheme.shapes.extraSmall,
+                        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        shape = CircleShape,
                     ) {
                         Text(
                             text = stringResource(Res.string.ui_dns_expired),
                             style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
                         )
                     }
                 }

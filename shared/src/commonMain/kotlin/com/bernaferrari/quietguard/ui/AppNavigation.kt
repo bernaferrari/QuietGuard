@@ -365,7 +365,10 @@ fun AppNavigation(
                         }
                         entry<Logs> {
                             CenteredScreen {
-                                LogsScreen(viewModel = logsViewModel)
+                                LogsScreen(
+                                    viewModel = logsViewModel,
+                                    onOpenAppRules = ::openFirewallDetail,
+                                )
                             }
                         }
                         entry<Settings> {

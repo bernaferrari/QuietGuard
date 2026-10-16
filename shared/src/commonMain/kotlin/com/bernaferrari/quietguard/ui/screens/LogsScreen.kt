@@ -45,6 +45,7 @@ import com.bernaferrari.quietguard.generated.resources.ui_log_details_app_id
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_destination
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_protocol
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_time
+import com.bernaferrari.quietguard.generated.resources.ui_log_open_app_rules
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -74,6 +75,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -81,6 +83,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -150,7 +154,10 @@ private data class AppPickerOption(
     ExperimentalMaterial3ExpressiveApi::class,
 )
 @Composable
-fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
+fun LogsScreen(
+    viewModel: LogsViewModel = koinViewModel(),
+    onOpenAppRules: (uid: Int) -> Unit = {},
+) {
     val spacing = MaterialTheme.spacing
     val logsUi by viewModel.uiState.collectAsStateWithLifecycle()
     val hasLog = remember { viewModel.hasLogPro() }
@@ -496,6 +503,14 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
             appName = display.label,
             packageName = display.packageName,
             onDismiss = { selectedLogEntry = null },
+            onOpenAppRules = if (entry.uid > 0) {
+                {
+                    selectedLogEntry = null
+                    onOpenAppRules(entry.uid)
+                }
+            } else {
+                null
+            },
         )
     }
 }
@@ -950,6 +965,7 @@ private fun LogEntryDetailsSheet(
     appName: String,
     packageName: String?,
     onDismiss: () -> Unit,
+    onOpenAppRules: (() -> Unit)?,
 ) {
     val spacing = MaterialTheme.spacing
     val clipboardManager = LocalClipboardManager.current
@@ -1083,6 +1099,18 @@ private fun LogEntryDetailsSheet(
                 }
             }
 
+            // The usual next step after inspecting a connection is changing that app's rule.
+            onOpenAppRules?.let { openRules ->
+                FilledTonalButton(
+                    onClick = openRules,
+                    shapes = ButtonDefaults.shapes(),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Icon(icon = MaterialSymbols.Outlined.AppBlocking, contentDescription = null)
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(text = stringResource(Res.string.ui_log_open_app_rules))
+                }
+            }
         }
     }
 }

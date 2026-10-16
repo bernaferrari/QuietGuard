@@ -9,9 +9,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -49,7 +47,6 @@ import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
-import com.bernaferrari.quietguard.generated.resources.app_name
 import com.bernaferrari.quietguard.generated.resources.home_status_off_body
 import com.bernaferrari.quietguard.generated.resources.home_status_on_body
 import com.bernaferrari.quietguard.generated.resources.menu_firewall
@@ -110,15 +107,6 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(40.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // The status copy under the hero explains the state, so the header stays a name.
-                Text(
-                    text = stringResource(Res.string.app_name),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-
                 StatusCard(
                     enabled = enabled,
                     onToggle = onToggleEnabled,
@@ -145,7 +133,7 @@ private fun StatusCard(
     val colors = MaterialTheme.colorScheme
 
     val containerColor by animateColorAsState(
-        targetValue = if (enabled) colors.primary else colors.surfaceContainerHighest,
+        targetValue = if (enabled) colors.primary else colors.surfaceContainerHigh,
         animationSpec = effectsSpec(),
         label = "heroContainer",
     )
@@ -154,10 +142,15 @@ private fun StatusCard(
         animationSpec = effectsSpec(),
         label = "heroIcon",
     )
-    val ringColor by animateColorAsState(
-        targetValue = if (enabled) colors.tertiary else colors.outlineVariant,
-        animationSpec = effectsSpec(),
-        label = "heroRing",
+    // Halos bloom out from behind the core when protection turns on and fold back in when off.
+    val haloProgress by animateFloatAsState(
+        targetValue = if (enabled) 1f else 0f,
+        animationSpec = if (motion.reducedMotion) {
+            tween(0)
+        } else {
+            spring(dampingRatio = 0.55f, stiffness = Spring.StiffnessLow)
+        },
+        label = "heroHalo",
     )
     val morphProgress by animateFloatAsState(
         targetValue = if (enabled) 1f else 0f,
@@ -203,7 +196,11 @@ private fun StatusCard(
         }
     }
     val rotation = carrierRotation.value
-    val heroShape = rememberStatusBadgeShape(morphProgress)
+    val coreShape = rememberHeroCoreShape(morphProgress)
+    val innerHaloShape = rememberHeroInnerHaloShape()
+    val outerHaloShape = rememberHeroOuterHaloShape()
+    val innerHaloColor = colors.primaryContainer
+    val outerHaloColor = colors.tertiaryContainer
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -236,26 +233,49 @@ private fun StatusCard(
     ) {
         Box(
             modifier = Modifier
-                .size(232.dp)
+                .size(244.dp)
                 .graphicsLayer {
                     scaleX = pressScale
                     scaleY = pressScale
                 },
             contentAlignment = Alignment.Center,
         ) {
-            // Outer ring rotates with the shape; inner fill counter-rotates slightly for depth.
+            // Layered tonal shapes instead of an outline: the outer halo turns one way, the
+            // inner one the other, and the core drifts between them.
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .graphicsLayer { rotationZ = rotation }
-                    .border(BorderStroke(2.dp, ringColor.copy(alpha = 0.5f)), heroShape),
+                    .graphicsLayer {
+                        val scale = 0.72f + 0.28f * haloProgress
+                        scaleX = scale
+                        scaleY = scale
+                        alpha = haloProgress.coerceIn(0f, 1f) * 0.5f
+                        rotationZ = -rotation * 0.5f
+                        shape = outerHaloShape
+                        clip = true
+                    }
+                    .background(outerHaloColor),
             )
             Box(
                 modifier = Modifier
-                    .size(196.dp)
+                    .size(198.dp)
                     .graphicsLayer {
-                        rotationZ = rotation * 0.72f
-                        shape = heroShape
+                        val scale = 0.78f + 0.22f * haloProgress
+                        scaleX = scale
+                        scaleY = scale
+                        alpha = haloProgress.coerceIn(0f, 1f)
+                        rotationZ = rotation
+                        shape = innerHaloShape
+                        clip = true
+                    }
+                    .background(innerHaloColor),
+            )
+            Box(
+                modifier = Modifier
+                    .size(150.dp)
+                    .graphicsLayer {
+                        rotationZ = rotation * 0.4f
+                        shape = coreShape
                         clip = true
                     }
                     .background(containerColor)
@@ -267,8 +287,8 @@ private fun StatusCard(
                     contentDescription = null,
                     tint = iconTint,
                     modifier = Modifier
-                        .size(72.dp)
-                        .graphicsLayer { rotationZ = -(rotation * 0.72f) },
+                        .size(56.dp)
+                        .graphicsLayer { rotationZ = -(rotation * 0.4f) },
                 )
             }
         }

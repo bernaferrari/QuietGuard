@@ -12,6 +12,9 @@ import com.bernaferrari.quietguard.generated.resources.action_clear_access_histo
 import com.bernaferrari.quietguard.generated.resources.section_access_history
 import com.bernaferrari.quietguard.generated.resources.menu_launch
 import com.bernaferrari.quietguard.generated.resources.menu_app_info
+import com.bernaferrari.quietguard.generated.resources.ui_access_history_empty
+import com.bernaferrari.quietguard.generated.resources.menu_traffic_blocked
+import com.bernaferrari.quietguard.generated.resources.menu_traffic_allowed
 import com.bernaferrari.quietguard.generated.resources.menu_clear
 import com.bernaferrari.quietguard.ui.util.ConfirmDestructiveDialog
 import com.bernaferrari.quietguard.generated.resources.setting_options
@@ -55,7 +58,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -98,7 +101,9 @@ import com.bernaferrari.quietguard.ui.components.AppIcon
 import com.bernaferrari.quietguard.ui.components.FirewallTile
 import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.ui.components.groupPairTileShape
+import com.bernaferrari.quietguard.ui.components.GroupOuterCorner
 import com.bernaferrari.quietguard.ui.theme.spacing
+import com.bernaferrari.quietguard.ui.theme.statusColors
 
 import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
@@ -133,18 +138,13 @@ fun AppRuleDetailScreen(
     val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
     val iconTileSize = lerp(48.dp, 32.dp, collapsedFraction)
     val iconCorner = lerp(16.dp, 10.dp, collapsedFraction)
-    val titleSize = lerp(
-        MaterialTheme.typography.headlineMedium.fontSize,
-        MaterialTheme.typography.titleLarge.fontSize,
-        collapsedFraction,
-    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
-            LargeTopAppBar(
+            LargeFlexibleTopAppBar(
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -159,10 +159,15 @@ fun AppRuleDetailScreen(
                         )
                         Text(
                             text = appName,
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontSize = titleSize,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                },
+                subtitle = rule.packageName?.takeIf { it != appName }?.let { packageName ->
+                    {
+                        Text(
+                            text = packageName,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
@@ -583,19 +588,31 @@ private fun AccessLogSection(
     accessEntries: List<AccessEntry>,
     loading: Boolean,
 ) {
-    if (loading || accessEntries.isEmpty()) return
+    // Skip only the brief first load; an empty history still shows the section so
+    // people learn that attempts will be recorded here.
+    if (loading) return
 
     DetailSection(
         title = stringResource(Res.string.section_access_history),
     ) {
         Surface(
-            shape = RoundedCornerShape(24.dp),
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(GroupOuterCorner),
             color = MaterialTheme.colorScheme.surfaceContainer,
         ) {
+            if (accessEntries.isEmpty()) {
+                Text(
+                    text = stringResource(Res.string.ui_access_history_empty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                )
+                return@Surface
+            }
             Column(modifier = Modifier.padding(vertical = 8.dp)) {
                 accessEntries.forEachIndexed { index, entry ->
                     val isAllowed = entry.allowed > 0
-                    val statusColor = if (isAllowed) MaterialTheme.colorScheme.primary
+                    val statusColor = if (isAllowed) MaterialTheme.statusColors.allowed
                     else MaterialTheme.colorScheme.error
 
                     Row(
@@ -605,13 +622,21 @@ private fun AccessLogSection(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
+                        // allowed: 1 = allowed, 0 = blocked, negative = not decided yet.
+                        val isUnknown = entry.allowed < 0
                         Icon(
-                            icon = if (isAllowed) MaterialSymbols.Outlined.CheckCircle
-                            else MaterialSymbols.Filled.Block,
-                            contentDescription = null,
+                            icon = when {
+                                isUnknown -> MaterialSymbols.Outlined.Info
+                                isAllowed -> MaterialSymbols.Outlined.CheckCircle
+                                else -> MaterialSymbols.Filled.Block
+                            },
+                            contentDescription = when {
+                                isUnknown -> null
+                                isAllowed -> stringResource(Res.string.menu_traffic_allowed)
+                                else -> stringResource(Res.string.menu_traffic_blocked)
+                            },
                             modifier = Modifier.size(16.dp),
-                            tint = if (entry.allowed >= 0) statusColor
-                            else MaterialTheme.colorScheme.outlineVariant,
+                            tint = if (isUnknown) MaterialTheme.colorScheme.outline else statusColor,
                         )
                         Text(
                             text = entry.timeText,

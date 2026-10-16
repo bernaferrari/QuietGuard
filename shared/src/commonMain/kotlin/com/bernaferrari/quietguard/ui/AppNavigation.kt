@@ -58,12 +58,13 @@ import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
+import com.bernaferrari.quietguard.generated.resources.ui_apps_detail_placeholder_body
+import com.bernaferrari.quietguard.generated.resources.ui_apps_detail_placeholder_title
 import com.bernaferrari.quietguard.generated.resources.home_apps_hint
 import com.bernaferrari.quietguard.generated.resources.menu_firewall
 import com.bernaferrari.quietguard.generated.resources.menu_home
 import com.bernaferrari.quietguard.generated.resources.menu_log
 import com.bernaferrari.quietguard.generated.resources.menu_settings
-import com.bernaferrari.quietguard.generated.resources.ui_apps_title
 import com.bernaferrari.quietguard.generated.resources.ui_loading
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -262,7 +263,8 @@ fun AppNavigation(
                         Icon(
                             icon =
                                 if (selected) destination.selectedIcon else destination.unselectedIcon,
-                            contentDescription = stringResource(destination.labelRes),
+                            // The visible label already names the destination.
+                            contentDescription = null,
                         )
                     },
                     label = { Text(stringResource(destination.labelRes)) },
@@ -313,8 +315,8 @@ fun AppNavigation(
                                 ListDetailSceneStrategy.listPane(
                                     detailPlaceholder = {
                                         StatePlaceholder(
-                                            title = stringResource(Res.string.ui_apps_title),
-                                            message = stringResource(Res.string.home_apps_hint),
+                                            title = stringResource(Res.string.ui_apps_detail_placeholder_title),
+                                            message = stringResource(Res.string.ui_apps_detail_placeholder_body),
                                             icon = MaterialSymbols.Outlined.AppBlocking,
                                         )
                                     },

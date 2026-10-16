@@ -87,9 +87,6 @@ internal fun SettingToggleRow(
     isLast: Boolean = true,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    val localizedState = stringResource(
-        if (checked) Res.string.setting_value_on else Res.string.setting_value_off,
-    )
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     val onToggle = { newValue: Boolean ->
@@ -136,12 +133,10 @@ internal fun SettingToggleRow(
                     )
                 }
             }
+            // The row is the toggle and already merges the title, so the Switch stays silent.
             Switch(
                 checked = checked,
                 onCheckedChange = null,
-                modifier = Modifier.semantics {
-                    contentDescription = "$title: $localizedState"
-                },
             )
         }
     }
@@ -156,9 +151,6 @@ internal fun SettingToggleRowWithTooltip(
     isLast: Boolean = true,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    val localizedState = stringResource(
-        if (checked) Res.string.setting_value_on else Res.string.setting_value_off,
-    )
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     var showTooltip by remember { mutableStateOf(false) }
@@ -221,15 +213,13 @@ internal fun SettingToggleRowWithTooltip(
                             role = Role.Switch,
                             onValueChange = onToggle,
                         )
+                        .semantics { contentDescription = title }
                         .padding(horizontal = spacing.default),
                     contentAlignment = Alignment.Center,
                 ) {
                     Switch(
                         checked = checked,
                         onCheckedChange = null,
-                        modifier = Modifier.semantics {
-                            contentDescription = "$title: $localizedState"
-                        },
                     )
                 }
             }
@@ -447,13 +437,16 @@ private fun CompactSettingToggleTile(
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     Surface(
-        onClick = {
+        checked = checked,
+        onCheckedChange = { newValue ->
             haptic.performHapticFeedback(
-                if (!checked) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff,
+                if (newValue) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff,
             )
-            onCheckedChange(!checked)
+            onCheckedChange(newValue)
         },
-        modifier = modifier.heightIn(min = 72.dp),
+        modifier = modifier
+            .heightIn(min = 72.dp)
+            .semantics { role = Role.Switch },
         shape = shape,
         color = settingRowContainerColor(checked),
     ) {

@@ -45,7 +45,13 @@ import com.bernaferrari.quietguard.generated.resources.ui_log_details_app_id
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_destination
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_protocol
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_time
+import com.bernaferrari.quietguard.generated.resources.ui_learn_more
 import com.bernaferrari.quietguard.generated.resources.ui_log_open_app_rules
+import com.bernaferrari.quietguard.generated.resources.ui_multicast_all_nodes
+import com.bernaferrari.quietguard.generated.resources.ui_multicast_all_routers
+import com.bernaferrari.quietguard.generated.resources.ui_multicast_local_ipv6
+import com.bernaferrari.quietguard.generated.resources.ui_multicast_ipv6
+import com.bernaferrari.quietguard.generated.resources.ui_multicast_ipv4
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -114,7 +120,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -129,6 +134,7 @@ import com.bernaferrari.quietguard.ui.components.GroupPosition
 import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
+import com.bernaferrari.quietguard.ui.theme.statusColors
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
 import com.bernaferrari.quietguard.ui.icons.Icon
@@ -137,8 +143,14 @@ import kotlinx.coroutines.delay
 import com.bernaferrari.quietguard.ui.theme.effectsSpec
 import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
 import com.bernaferrari.quietguard.ui.theme.spatialSpec
-private val AllowedStatusContentLight = Color(0xFF1B5E20)
-private val AllowedStatusContentDark = Color(0xFFA5D6A7)
+/** Container and content colors for the Allowed/Blocked badge. */
+@Composable
+private fun logStatusColors(isAllowed: Boolean): Pair<Color, Color> =
+    if (isAllowed) {
+        MaterialTheme.statusColors.allowedContainer to MaterialTheme.statusColors.onAllowedContainer
+    } else {
+        MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
+    }
 
 
 private data class AppPickerOption(
@@ -213,6 +225,13 @@ fun LogsScreen(
         }
     }
 
+    // The title count follows the app picker in "By app" view.
+    val visibleCount = if (groupMode == LogsGroupMode.ByApp && selectedAppUid != null) {
+        filteredGroupedEntries.sumOf { (_, appEntries) -> appEntries.size }
+    } else {
+        entries.size
+    }
+
     // Count active filter overrides to show a badge on the filter button
     val activeFilterCount = remember(outcomeFilter, protocolFilter, groupMode) {
         listOf(
@@ -243,7 +262,7 @@ fun LogsScreen(
                                 color = MaterialTheme.colorScheme.secondaryContainer,
                             ) {
                                 Text(
-                                    text = entries.size.toString(),
+                                    text = visibleCount.toString(),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier.padding(
@@ -256,25 +275,28 @@ fun LogsScreen(
                     }
                 },
                 actions = {
-                    // Filter toggle: tonal fill while the panel is open, count badge when active.
-                    BadgedBox(
-                        badge = {
-                            if (activeFilterCount > 0) {
-                                Badge(
-                                    modifier = Modifier.offset(x = (-6).dp, y = 6.dp),
-                                ) { Text(activeFilterCount.toString()) }
-                            }
-                        },
-                    ) {
-                        FilledTonalIconToggleButton(
-                            checked = filtersExpanded,
-                            onCheckedChange = { viewModel.setFiltersExpanded(it) },
-                            shapes = IconButtonDefaults.toggleableShapes(),
+                    // Filters only make sense once there is a log to filter.
+                    if (hasLog && loggingEnabled) {
+                        // Filter toggle: tonal fill while the panel is open, count badge when active.
+                        BadgedBox(
+                            badge = {
+                                if (activeFilterCount > 0) {
+                                    Badge(
+                                        modifier = Modifier.offset(x = (-6).dp, y = 6.dp),
+                                    ) { Text(activeFilterCount.toString()) }
+                                }
+                            },
                         ) {
-                            Icon(
-                                icon = MaterialSymbols.Filled.FilterList,
-                                contentDescription = stringResource(Res.string.ui_logs_filters),
-                            )
+                            FilledTonalIconToggleButton(
+                                checked = filtersExpanded,
+                                onCheckedChange = { viewModel.setFiltersExpanded(it) },
+                                shapes = IconButtonDefaults.toggleableShapes(),
+                            ) {
+                                Icon(
+                                    icon = MaterialSymbols.Filled.FilterList,
+                                    contentDescription = stringResource(Res.string.ui_logs_filters),
+                                )
+                            }
                         }
                     }
                 },
@@ -289,7 +311,7 @@ fun LogsScreen(
         ) {
             // Collapsible filter panel — slides in/out below the TopAppBar
             AnimatedVisibility(
-                visible = filtersExpanded,
+                visible = filtersExpanded && hasLog && loggingEnabled,
                 enter = expandVertically(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
@@ -321,7 +343,7 @@ fun LogsScreen(
                     title = stringResource(Res.string.title_pro),
                     message = stringResource(Res.string.msg_log_disabled),
                     icon = MaterialSymbols.Filled.Inbox,
-                    actionLabel = stringResource(Res.string.title_pro),
+                    actionLabel = stringResource(Res.string.ui_learn_more),
                     onAction = viewModel::openPro,
                 )
                 return@Column
@@ -860,25 +882,14 @@ private fun LogEntryCard(
     modifier: Modifier = Modifier,
 ) {
     val isAllowed = entry.allowed > 0
-    val isDarkSurface = MaterialTheme.colorScheme.surface.luminance() < 0.5f
-    val allowedStatusContentColor =
-        if (isDarkSurface) AllowedStatusContentDark else AllowedStatusContentLight
-
-    val statusContainerColor = if (isAllowed) {
-        allowedStatusContentColor.copy(alpha = if (isDarkSurface) 0.24f else 0.16f)
-    } else {
-        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.7f)
-    }
-    val statusContentColor = if (isAllowed) {
-        allowedStatusContentColor
-    } else {
-        MaterialTheme.colorScheme.onErrorContainer
-    }
-    val destinationPresentation = remember(entry.daddr, entry.dport, entry.dname) {
+    val (statusContainerColor, statusContentColor) = logStatusColors(isAllowed)
+    val multicast = multicastLabels()
+    val destinationPresentation = remember(entry.daddr, entry.dport, entry.dname, multicast) {
         buildDestinationPresentation(
             address = entry.daddr,
             port = entry.dport,
             domain = entry.dname,
+            multicast = multicast,
         )
     }
     val fallbackAppIcon = if (entry.uid > 0) MaterialSymbols.Filled.Apps else MaterialSymbols.Filled.Public
@@ -971,25 +982,13 @@ private fun LogEntryDetailsSheet(
     val clipboardManager = LocalClipboardManager.current
     var copiedField by remember(entry) { mutableStateOf<String?>(null) }
     val isAllowed = entry.allowed > 0
-    val isDarkSurface = MaterialTheme.colorScheme.surface.luminance() < 0.5f
-    val allowedStatusContentColor =
-        if (isDarkSurface) AllowedStatusContentDark else AllowedStatusContentLight
-    val statusContainerColor = if (isAllowed) {
-        allowedStatusContentColor.copy(alpha = if (isDarkSurface) 0.24f else 0.16f)
-    } else {
-        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.7f)
-    }
-    val statusContentColor = if (isAllowed) {
-        allowedStatusContentColor
-    } else {
-        MaterialTheme.colorScheme.onErrorContainer
-    }
+    val (statusContainerColor, statusContentColor) = logStatusColors(isAllowed)
     val statusLabel = if (isAllowed) {
         stringResource(Res.string.menu_traffic_allowed)
     } else {
         stringResource(Res.string.menu_traffic_blocked)
     }
-    val destination = buildDestinationPresentation(entry.daddr, entry.dport, entry.dname)
+    val destination = buildDestinationPresentation(entry.daddr, entry.dport, entry.dname, multicastLabels())
     val fallbackAppIcon = if (entry.uid > 0) {
         MaterialSymbols.Filled.Apps
     } else {
@@ -1261,10 +1260,28 @@ private data class DestinationPresentation(
     val detail: String?,
 )
 
+private data class MulticastLabels(
+    val allNodes: String,
+    val allRouters: String,
+    val localIpv6: String,
+    val ipv6: String,
+    val ipv4: String,
+)
+
+@Composable
+private fun multicastLabels() = MulticastLabels(
+    allNodes = stringResource(Res.string.ui_multicast_all_nodes),
+    allRouters = stringResource(Res.string.ui_multicast_all_routers),
+    localIpv6 = stringResource(Res.string.ui_multicast_local_ipv6),
+    ipv6 = stringResource(Res.string.ui_multicast_ipv6),
+    ipv4 = stringResource(Res.string.ui_multicast_ipv4),
+)
+
 private fun buildDestinationPresentation(
     address: String,
     port: Int,
     domain: String?,
+    multicast: MulticastLabels,
 ): DestinationPresentation {
     val formattedAddress = formatDestinationAddress(address, port)
     val domainText = domain?.trim().orEmpty()
@@ -1277,11 +1294,11 @@ private fun buildDestinationPresentation(
 
     val normalized = address.trim().lowercase()
     val multicastHeadline = when {
-        normalized == "ff02::1" -> "All nodes (IPv6 multicast)"
-        normalized == "ff02::2" -> "All routers (IPv6 multicast)"
-        normalized.startsWith("ff02::") -> "Local network multicast (IPv6)"
-        normalized.startsWith("ff") -> "Multicast traffic (IPv6)"
-        isIpv4MulticastAddress(normalized) -> "Multicast traffic (IPv4)"
+        normalized == "ff02::1" -> multicast.allNodes
+        normalized == "ff02::2" -> multicast.allRouters
+        normalized.startsWith("ff02::") -> multicast.localIpv6
+        normalized.startsWith("ff") -> multicast.ipv6
+        isIpv4MulticastAddress(normalized) -> multicast.ipv4
         else -> null
     }
     return if (multicastHeadline == null) {

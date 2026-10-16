@@ -8,6 +8,8 @@ import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
 import org.jetbrains.compose.resources.stringResource
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.action_clear_search
+import com.bernaferrari.quietguard.generated.resources.action_close_search
+import com.bernaferrari.quietguard.generated.resources.ui_show_all
 import com.bernaferrari.quietguard.generated.resources.home_apps_hint
 import com.bernaferrari.quietguard.generated.resources.menu_refresh
 import com.bernaferrari.quietguard.generated.resources.menu_search
@@ -103,7 +105,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.unit.dp
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
 import com.bernaferrari.quietguard.ui.components.AppIcon
 import com.bernaferrari.quietguard.ui.components.ConnectedToggleButtonRow
 import com.bernaferrari.quietguard.ui.components.GroupPosition
@@ -278,7 +287,7 @@ fun AppsScreen(
                         Icon(
                             icon = if (isSearchOpen) MaterialSymbols.Filled.Close else MaterialSymbols.Filled.Search,
                             contentDescription = if (isSearchOpen) {
-                                stringResource(Res.string.action_clear_search)
+                                stringResource(Res.string.action_close_search)
                             } else {
                                 stringResource(Res.string.menu_search)
                             },
@@ -306,37 +315,12 @@ fun AppsScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            // Filter chips
-            val filterOptions = listOf(
-                FilterOption(
-                    AppsFilter.All,
-                    stringResource(Res.string.ui_filter_all),
-                    selectedIcon = MaterialSymbols.Filled.Public,
-                    unselectedIcon = MaterialSymbols.Outlined.Public,
-                ),
-                FilterOption(
-                    AppsFilter.Blocked,
-                    stringResource(Res.string.menu_traffic_blocked),
-                    selectedIcon = MaterialSymbols.Filled.Block,
-                    unselectedIcon = MaterialSymbols.Outlined.Block,
-                ),
-                FilterOption(
-                    AppsFilter.Allowed,
-                    stringResource(Res.string.menu_traffic_allowed),
-                    selectedIcon = MaterialSymbols.Filled.CheckCircle,
-                    unselectedIcon = MaterialSymbols.Outlined.CheckCircle,
-                ),
-            )
-            ConnectedToggleButtonRow(
-                options = filterOptions,
-                selected = filterOptions.first { it.option == filter },
-                onSelect = { filter = it.option },
-                label = { it.label },
-                icon = { item, checked -> if (checked) item.selectedIcon else item.unselectedIcon },
-                modifier = Modifier.padding(horizontal = spacing.default),
-            )
-
-            if (isSearchOpen) {
+            // Search sits right under the title, above the filters it narrows down.
+            AnimatedVisibility(
+                visible = isSearchOpen,
+                enter = expandVertically(spatialSpec()) + fadeIn(effectsSpec()),
+                exit = shrinkVertically(effectsSpec()) + fadeOut(fastEffectsSpec()),
+            ) {
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
@@ -369,6 +353,36 @@ fun AppsScreen(
                     ),
                 )
             }
+
+            // Filter chips
+            val filterOptions = listOf(
+                FilterOption(
+                    AppsFilter.All,
+                    stringResource(Res.string.ui_filter_all),
+                    selectedIcon = MaterialSymbols.Filled.Public,
+                    unselectedIcon = MaterialSymbols.Outlined.Public,
+                ),
+                FilterOption(
+                    AppsFilter.Blocked,
+                    stringResource(Res.string.menu_traffic_blocked),
+                    selectedIcon = MaterialSymbols.Filled.Block,
+                    unselectedIcon = MaterialSymbols.Outlined.Block,
+                ),
+                FilterOption(
+                    AppsFilter.Allowed,
+                    stringResource(Res.string.menu_traffic_allowed),
+                    selectedIcon = MaterialSymbols.Filled.CheckCircle,
+                    unselectedIcon = MaterialSymbols.Outlined.CheckCircle,
+                ),
+            )
+            ConnectedToggleButtonRow(
+                options = filterOptions,
+                selected = filterOptions.first { it.option == filter },
+                onSelect = { filter = it.option },
+                label = { it.label },
+                icon = { item, checked -> if (checked) item.selectedIcon else item.unselectedIcon },
+                modifier = Modifier.padding(horizontal = spacing.default),
+            )
 
             when {
                 rulesUiState.hasFailed && rules.isEmpty() -> {
@@ -412,7 +426,7 @@ fun AppsScreen(
                             title = stringResource(Res.string.ui_apps_filter_empty_title),
                             message = stringResource(Res.string.ui_filter_empty),
                             icon = MaterialSymbols.Filled.Apps,
-                            actionLabel = stringResource(Res.string.ui_filter_all),
+                            actionLabel = stringResource(Res.string.ui_show_all),
                             onAction = { filter = AppsFilter.All },
                         )
                     }
@@ -540,12 +554,9 @@ private fun RuleCard(
     // Keep the row's press/release interaction stable across selection changes.
     val interactionSource = remember { MutableInteractionSource() }
     val appName = rule.name ?: rule.packageName.orEmpty()
-    val wifiDescription = stringResource(Res.string.title_wifi) + " " +
-            if (rule.wifi_blocked) stringResource(Res.string.menu_traffic_blocked)
-            else stringResource(Res.string.menu_traffic_allowed)
-    val mobileDescription = stringResource(Res.string.title_mobile) + " " +
-            if (rule.other_blocked) stringResource(Res.string.menu_traffic_blocked)
-            else stringResource(Res.string.menu_traffic_allowed)
+    // The toggle's state ("Allowed"/"Blocked") is announced separately as its stateDescription.
+    val wifiDescription = stringResource(Res.string.title_wifi)
+    val mobileDescription = stringResource(Res.string.title_mobile)
     val highlightColor = MaterialTheme.colorScheme.primary
     val highlightedAppName = remember(appName, searchQuery, highlightColor) {
         buildMatchHighlightedText(
@@ -775,13 +786,21 @@ private fun NetworkToggleButton(
     }
     val blockedBackground = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.88f)
 
+    val stateLabel = stringResource(
+        if (blocked) Res.string.menu_traffic_blocked else Res.string.menu_traffic_allowed,
+    )
     Surface(
-        onClick = onToggle,
+        checked = !blocked,
+        onCheckedChange = { onToggle() },
         interactionSource = interactionSource,
         shape = CircleShape,
         color = Color.Transparent,
         modifier = Modifier
             .size(34.dp)
+            .semantics {
+                role = Role.Switch
+                stateDescription = stateLabel
+            }
             .graphicsLayer {
                 scaleX = pressScale
                 scaleY = pressScale

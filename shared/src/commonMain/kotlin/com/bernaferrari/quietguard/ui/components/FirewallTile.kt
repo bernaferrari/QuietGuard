@@ -36,8 +36,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.generated.resources.Res
+import com.bernaferrari.quietguard.generated.resources.menu_traffic_allowed
+import com.bernaferrari.quietguard.generated.resources.menu_traffic_blocked
 import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import org.jetbrains.compose.resources.stringResource
 import com.bernaferrari.quietguard.ui.theme.spatialSpec
 
 /**
@@ -114,15 +123,19 @@ fun FirewallTile(
         MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     }
 
+    // Announced as a switch that is on when the network is allowed.
     Surface(
-        onClick = onToggle,
-        modifier = modifier.height(72.dp),
+        checked = !blocked,
+        onCheckedChange = { onToggle() },
+        modifier = modifier
+            .heightIn(min = 72.dp)
+            .semantics { role = Role.Switch },
         shape = animatedShape,
         color = containerColor,
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -168,7 +181,9 @@ fun FirewallTile(
                     label = "statusTextAnim",
                 ) { isBlocked ->
                     Text(
-                        text = if (isBlocked) "Blocked" else "Allowed",
+                        text = stringResource(
+                            if (isBlocked) Res.string.menu_traffic_blocked else Res.string.menu_traffic_allowed,
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold,
                         color = secondaryColor,

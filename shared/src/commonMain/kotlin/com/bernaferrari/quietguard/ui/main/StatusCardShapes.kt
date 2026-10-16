@@ -15,11 +15,28 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.graphics.shapes.Morph
 
+/** Hero core: a calm faceted Gem when off that blooms into a 9-sided cookie when on. */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-internal fun rememberStatusBadgeShape(progress: Float): Shape {
-    val morph = remember { Morph(start = MaterialShapes.Square, end = MaterialShapes.Cookie9Sided) }
+internal fun rememberHeroCoreShape(progress: Float): Shape {
+    val morph = remember { Morph(start = MaterialShapes.Gem, end = MaterialShapes.Cookie9Sided) }
     return rememberMorphShape(morph = morph, progress = progress)
+}
+
+/** Inner halo behind the core while protection is on. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+internal fun rememberHeroInnerHaloShape(): Shape {
+    val morph = remember { Morph(start = MaterialShapes.Sunny, end = MaterialShapes.Sunny) }
+    return rememberMorphShape(morph = morph, progress = 0f)
+}
+
+/** Outer, wider-scalloped halo; counter-rotates against the inner one. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+internal fun rememberHeroOuterHaloShape(): Shape {
+    val morph = remember { Morph(start = MaterialShapes.Cookie12Sided, end = MaterialShapes.Cookie12Sided) }
+    return rememberMorphShape(morph = morph, progress = 0f)
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

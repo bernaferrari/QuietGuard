@@ -365,7 +365,7 @@ fun SettingsScreen(
                                             else ->
                                                 ButtonGroupDefaults.connectedMiddleButtonShapes()
                                         },
-                                        colors = ToggleButtonDefaults.toggleButtonColors(
+                                        colors = ToggleButtonDefaults.colors(
                                             checkedContainerColor =
                                                 MaterialTheme.colorScheme.primaryContainer,
                                             checkedContentColor =

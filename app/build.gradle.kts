@@ -66,7 +66,8 @@ val generateUniffiKotlin by tasks.registering(Exec::class) {
     inputs.file(hostRustLibrary)
     inputs.files(fileTree(rustDirectory.dir("bindgen")) { include("Cargo.toml", "Cargo.lock", "src/**") })
     outputs.dir(uniffiOutputDirectory)
-    doFirst { uniffiOutputDirectory.get().asFile.mkdirs() }
+    val outputDirectory = uniffiOutputDirectory.get().asFile
+    doFirst { outputDirectory.mkdirs() }
     environment("CARGO_TARGET_DIR", uniffiBindgenTargetDirectory.get().asFile)
     commandLine(
         "cargo",
@@ -86,13 +87,18 @@ val generateUniffiKotlin by tasks.registering(Exec::class) {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    dependsOn(generateUniffiKotlin)
-    source(file("build/generated/source/uniffi"))
+    // Bindings belong to production compilations, not the empty app test source sets.
+    if (!name.contains("Test")) {
+        dependsOn(generateUniffiKotlin)
+        source(uniffiOutputDirectory)
+    }
 }
 
 android {
     namespace = "com.bernaferrari.quietguard"
-    compileSdk = 37
+    compileSdk {
+        version = release(37) { minorApiLevel = 2 }
+    }
 
     defaultConfig {
         applicationId = "com.bernaferrari.quietguard"
@@ -262,7 +268,7 @@ dependencies {
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.appfunctions)
     implementation(libs.androidx.appfunctions.service)
-    implementation("net.java.dev.jna:jna:5.18.1@aar")
+    implementation("net.java.dev.jna:jna:5.19.1@aar")
     ksp(libs.androidx.appfunctions.compiler)
 
     debugImplementation(libs.androidx.compose.ui.tooling)

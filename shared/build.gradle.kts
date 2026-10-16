@@ -20,7 +20,9 @@ compose.resources {
 kotlin {
     androidLibrary {
         namespace = "com.bernaferrari.quietguard.shared"
-        compileSdk = 37
+        compileSdk {
+            version = release(37) { minorApiLevel = 2 }
+        }
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }

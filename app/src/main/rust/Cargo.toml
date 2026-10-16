@@ -26,10 +26,10 @@ debug = 1
 debug = 1
 
 [dependencies]
-libc = "0.2.177"
-socket2 = "0.6.1"
-thiserror = "2.0.17"
-uniffi = "0.32.0"
+libc = "0.2.190"
+socket2 = "0.6.5"
+thiserror = "2.0.21"
+uniffi = "0.32.2"
 
 [lints.clippy]
 all = { level = "warn", priority = -1 }
@@ -38,4 +38,4 @@ unwrap_used = "deny"
 expect_used = "deny"
 
 [dev-dependencies]
-proptest = "1.11.0"
+proptest = "1.12.0"

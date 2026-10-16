@@ -2,6 +2,7 @@ package com.bernaferrari.quietguard.appfunctions
 
 import android.app.PendingIntent
 import android.net.VpnService
+import android.annotation.SuppressLint
 import androidx.appfunctions.AppFunctionContext
 import androidx.appfunctions.AppFunctionElementNotFoundException
 import androidx.appfunctions.AppFunctionInvalidArgumentException
@@ -25,6 +26,8 @@ import android.content.Context as AndroidContext
  * Exposes NetGuard firewall controls to the Android intelligence system.
  */
 @Single
+// AppFunctions compiler alpha13 still requires this restricted context (b/500281348).
+@SuppressLint("RestrictedApi")
 class AppFunctions(
     private val context: AndroidContext,
 ) {

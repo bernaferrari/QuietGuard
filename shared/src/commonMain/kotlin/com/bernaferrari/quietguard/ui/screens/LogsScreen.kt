@@ -28,8 +28,6 @@ import com.bernaferrari.quietguard.generated.resources.summary_log_app
 import com.bernaferrari.quietguard.generated.resources.title_enable_filtering
 import com.bernaferrari.quietguard.generated.resources.title_enable_help2
 import com.bernaferrari.quietguard.generated.resources.title_pro
-import com.bernaferrari.quietguard.generated.resources.ui_apps_search_empty
-import com.bernaferrari.quietguard.generated.resources.ui_empty_apps_title
 import com.bernaferrari.quietguard.generated.resources.ui_empty_logs_body
 import com.bernaferrari.quietguard.generated.resources.ui_empty_logs_title
 import com.bernaferrari.quietguard.generated.resources.ui_filter_all
@@ -49,11 +47,9 @@ import com.bernaferrari.quietguard.generated.resources.ui_log_details_protocol
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_time
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -76,29 +72,31 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconToggleButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -109,8 +107,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -118,9 +116,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bernaferrari.quietguard.ui.components.AppIcon
+import com.bernaferrari.quietguard.ui.components.ConnectedToggleButtonRow
+import com.bernaferrari.quietguard.ui.components.GroupPosition
+import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
@@ -128,15 +130,11 @@ import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
 import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
 import kotlinx.coroutines.delay
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
+import com.bernaferrari.quietguard.ui.theme.spatialSpec
 private val AllowedStatusContentLight = Color(0xFF1B5E20)
 private val AllowedStatusContentDark = Color(0xFFA5D6A7)
-
-private enum class LogCardPosition {
-    First,
-    Middle,
-    Last,
-    Single,
-}
 
 
 private data class AppPickerOption(
@@ -146,11 +144,14 @@ private data class AppPickerOption(
     val packageName: String?,
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3ExpressiveApi::class,
+)
 @Composable
 fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
     val spacing = MaterialTheme.spacing
-    val motion = LocalMotion.current
     val logsUi by viewModel.uiState.collectAsStateWithLifecycle()
     val hasLog = remember { viewModel.hasLogPro() }
     val unknownSourceLabel = stringResource(Res.string.ui_logs_unknown_source)
@@ -214,18 +215,12 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
         ).count { it }
     }
 
-    val filterIconTint by animateColorAsState(
-        targetValue = if (filtersExpanded || activeFilterCount > 0)
-            MaterialTheme.colorScheme.primary
-        else
-            MaterialTheme.colorScheme.onSurfaceVariant,
-        animationSpec = tween(motion.durationFast),
-        label = "filterTint",
-    )
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            LargeFlexibleTopAppBar(
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -254,33 +249,29 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                     }
                 },
                 actions = {
-                    // Filter toggle button — shows a dot badge when filters are active
-                    Box {
-                        IconButton(onClick = { viewModel.setFiltersExpanded(!filtersExpanded) }) {
+                    // Filter toggle: tonal fill while the panel is open, count badge when active.
+                    BadgedBox(
+                        badge = {
+                            if (activeFilterCount > 0) {
+                                Badge(
+                                    modifier = Modifier.offset(x = (-6).dp, y = 6.dp),
+                                ) { Text(activeFilterCount.toString()) }
+                            }
+                        },
+                    ) {
+                        FilledTonalIconToggleButton(
+                            checked = filtersExpanded,
+                            onCheckedChange = { viewModel.setFiltersExpanded(it) },
+                            shapes = IconButtonDefaults.toggleableShapes(),
+                        ) {
                             Icon(
-                                icon = MaterialSymbols.Filled.Tune,
+                                icon = MaterialSymbols.Filled.FilterList,
                                 contentDescription = stringResource(Res.string.ui_logs_filters),
-                                tint = filterIconTint,
-                            )
-                        }
-                        // Active filter dot badge
-                        if (activeFilterCount > 0) {
-                            Box(
-                                modifier = Modifier
-                                    .size(8.dp)
-                                    .align(Alignment.TopEnd)
-                                    .padding(top = 10.dp, end = 10.dp)
-                                    .background(
-                                        color = MaterialTheme.colorScheme.primary,
-                                        shape = MaterialTheme.shapes.extraLarge,
-                                    ),
                             )
                         }
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
@@ -298,11 +289,11 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                         stiffness = Spring.StiffnessMediumLow,
                     ),
                     expandFrom = Alignment.Top,
-                ) + fadeIn(tween(motion.durationFast)),
+                ) + fadeIn(fastEffectsSpec()),
                 exit = shrinkVertically(
                     animationSpec = spring(stiffness = Spring.StiffnessMedium),
                     shrinkTowards = Alignment.Top,
-                ) + fadeOut(tween(motion.durationFast)),
+                ) + fadeOut(fastEffectsSpec()),
             ) {
                 LogsFilterPanel(
                     outcomeFilter = outcomeFilter,
@@ -388,34 +379,14 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                 }
 
                 else -> {
+                    val modeFadeSpec = fastEffectsSpec<Float>()
+                    val modeSlideSpec = spatialSpec<IntOffset>()
                     AnimatedContent(
                         targetState = groupMode,
                         transitionSpec = {
-                            (fadeIn(
-                                animationSpec = tween(
-                                    motion.durationFast,
-                                    easing = motion.easingDecelerate
-                                )
-                            ) +
-                                    slideInVertically(
-                                        animationSpec = tween(
-                                            motion.durationMedium,
-                                            easing = motion.easingDecelerate
-                                        ),
-                                    ) { it / 8 })
+                            (fadeIn(modeFadeSpec) + slideInVertically(modeSlideSpec) { it / 8 })
                                 .togetherWith(
-                                    fadeOut(
-                                        animationSpec = tween(
-                                            motion.durationFast,
-                                            easing = motion.easingAccelerate
-                                        )
-                                    ) +
-                                            slideOutVertically(
-                                                animationSpec = tween(
-                                                    motion.durationFast,
-                                                    easing = motion.easingAccelerate
-                                                ),
-                                            ) { -it / 12 },
+                                    fadeOut(modeFadeSpec) + slideOutVertically(modeSlideSpec) { -it / 12 },
                                 )
                         },
                         label = "logsModeSwitch",
@@ -440,7 +411,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                                             appName = display.label,
                                             packageName = display.packageName,
                                             showAppName = true,
-                                            position = cardPositionFor(index, entries.size),
+                                            position = GroupPosition.of(index, entries.size),
                                             onClick = { selectedLogEntry = entry },
                                             modifier = Modifier,
                                         )
@@ -464,8 +435,8 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
 
                                     if (filteredGroupedEntries.isEmpty()) {
                                         StatePlaceholder(
-                                            title = stringResource(Res.string.ui_empty_apps_title),
-                                            message = stringResource(Res.string.ui_apps_search_empty),
+                                            title = stringResource(Res.string.ui_empty_logs_title),
+                                            message = stringResource(Res.string.ui_empty_logs_body),
                                             icon = MaterialSymbols.Filled.Apps,
                                         )
                                     } else {
@@ -498,7 +469,7 @@ fun LogsScreen(viewModel: LogsViewModel = koinViewModel()) {
                                                         appName = display.label,
                                                         packageName = display.packageName,
                                                         showAppName = false,
-                                                        position = cardPositionFor(
+                                                        position = GroupPosition.of(
                                                             index,
                                                             appEntries.size
                                                         ),
@@ -561,6 +532,7 @@ private fun EnableFilteringBanner(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppPickerField(
     options: List<AppPickerOption>,
@@ -573,7 +545,9 @@ private fun AppPickerField(
     var searchQuery by remember { mutableStateOf("") }
     val allAppsLabel = stringResource(Res.string.ui_filter_all)
 
-    val selectedLabel = options.firstOrNull { it.uid == selectedUid }?.label ?: allAppsLabel
+    val selectedOption = options.firstOrNull { it.uid == selectedUid }
+    val selectedLabel = selectedOption?.label ?: allAppsLabel
+    val totalCount = remember(options) { options.sumOf { it.count } }
     val filteredOptions = remember(options, searchQuery) {
         val query = searchQuery.trim()
         if (query.isBlank()) options
@@ -608,7 +582,7 @@ private fun AppPickerField(
                     modifier = Modifier.weight(1f),
                 )
                 Text(
-                    text = options.size.toString(),
+                    text = (selectedOption?.count ?: totalCount).toString(),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -620,33 +594,22 @@ private fun AppPickerField(
             }
         }
 
-        AnimatedVisibility(
-            visible = expanded,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 56.dp),
-            enter = fadeIn(tween(120)),
-            exit = fadeOut(tween(90)),
-        ) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(8.dp, RoundedCornerShape(20.dp))
-                    .widthIn(min = 280.dp, max = 520.dp),
-                color = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(20.dp),
-                tonalElevation = 2.dp,
-            ) {
+        if (expanded) {
+            val dismiss = {
+                expanded = false
+                searchQuery = ""
+            }
+            ModalBottomSheet(onDismissRequest = dismiss) {
                 Column(
-                    modifier = Modifier.padding(spacing.small),
-                    verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
+                    modifier = Modifier.padding(horizontal = spacing.default),
+                    verticalArrangement = Arrangement.spacedBy(spacing.small),
                 ) {
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
-                        shape = RoundedCornerShape(20.dp),
+                        shape = MaterialTheme.shapes.extraLarge,
                         placeholder = { Text(text = stringResource(Res.string.menu_search)) },
                         leadingIcon = {
                             Icon(
@@ -669,23 +632,23 @@ private fun AppPickerField(
                     )
 
                     LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(max = 320.dp),
-                        verticalArrangement = Arrangement.spacedBy(1.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        contentPadding = PaddingValues(bottom = spacing.large),
+                        verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
-                        item(key = "all_apps_option") {
-                            AppPickerRow(
-                                label = allAppsLabel,
-                                count = options.size,
-                                packageName = null,
-                                selected = selectedUid == null,
-                                onClick = {
-                                    onSelectUid(null)
-                                    expanded = false
-                                    searchQuery = ""
-                                },
-                            )
+                        if (searchQuery.isBlank()) {
+                            item(key = "all_apps_option") {
+                                AppPickerRow(
+                                    label = allAppsLabel,
+                                    count = totalCount,
+                                    packageName = null,
+                                    selected = selectedUid == null,
+                                    onClick = {
+                                        onSelectUid(null)
+                                        dismiss()
+                                    },
+                                )
+                            }
                         }
                         items(
                             items = filteredOptions,
@@ -698,8 +661,7 @@ private fun AppPickerField(
                                 selected = selectedUid == option.uid,
                                 onClick = {
                                     onSelectUid(option.uid)
-                                    expanded = false
-                                    searchQuery = ""
+                                    dismiss()
                                 },
                             )
                         }
@@ -736,14 +698,16 @@ private fun AppPickerRow(
         modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 9.dp),
+            modifier = Modifier
+                .heightIn(min = 56.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            AppIcon(packageName = packageName, size = 20.dp, cornerRadius = 7.dp)
+            AppIcon(packageName = packageName, size = 32.dp, cornerRadius = 10.dp)
             Text(
                 text = label,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = textColor,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -774,7 +738,7 @@ private fun LogsFilterPanel(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
     ) {
-        SegmentedFilterRow(
+        ToggleFilterRow(
             title = stringResource(Res.string.ui_logs_filter_status),
             options = listOf(
                 LogsOutcomeFilter.All to stringResource(Res.string.ui_filter_all),
@@ -785,7 +749,7 @@ private fun LogsFilterPanel(
             onSelect = onOutcomeFilterChange,
         )
 
-        SegmentedFilterRow(
+        ToggleFilterRow(
             title = stringResource(Res.string.ui_logs_filter_protocol),
             options = listOf(
                 LogsProtocolFilter.All to stringResource(Res.string.ui_filter_all),
@@ -797,7 +761,7 @@ private fun LogsFilterPanel(
             onSelect = onProtocolFilterChange,
         )
 
-        SegmentedFilterRow(
+        ToggleFilterRow(
             title = stringResource(Res.string.ui_logs_filter_view),
             options = listOf(
                 LogsGroupMode.Timeline to stringResource(Res.string.ui_logs_group_timeline),
@@ -810,7 +774,7 @@ private fun LogsFilterPanel(
 }
 
 @Composable
-private fun <T> SegmentedFilterRow(
+private fun <T> ToggleFilterRow(
     title: String,
     options: List<Pair<T, String>>,
     selected: T,
@@ -828,24 +792,13 @@ private fun <T> SegmentedFilterRow(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            options.forEachIndexed { index, (value, label) ->
-                SegmentedButton(
-                    selected = selected == value,
-                    onClick = { onSelect(value) },
-                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Text(
-                        text = label,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            }
-        }
+        ConnectedToggleButtonRow(
+            options = options,
+            selected = options.first { it.first == selected },
+            onSelect = { onSelect(it.first) },
+            label = { it.second },
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        )
     }
 }
 
@@ -887,7 +840,7 @@ private fun LogEntryCard(
     appName: String,
     packageName: String?,
     showAppName: Boolean,
-    position: LogCardPosition,
+    position: GroupPosition,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -926,24 +879,7 @@ private fun LogEntryCard(
             append(it)
         }
     }
-    val shape = when (position) {
-        LogCardPosition.Single -> RoundedCornerShape(16.dp)
-        LogCardPosition.First -> RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp,
-            bottomStart = 4.dp,
-            bottomEnd = 4.dp
-        )
-
-        LogCardPosition.Last -> RoundedCornerShape(
-            topStart = 4.dp,
-            topEnd = 4.dp,
-            bottomStart = 16.dp,
-            bottomEnd = 16.dp
-        )
-
-        LogCardPosition.Middle -> RoundedCornerShape(4.dp)
-    }
+    val shape = groupItemShape(position)
 
     Surface(
         onClick = onClick,
@@ -1203,35 +1139,16 @@ private fun LogDetailRow(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                     )
+                    val copiedFadeSpec = fastEffectsSpec<Float>()
+                    val copiedScaleSpec = spatialSpec<Float>()
                     AnimatedContent(
                         targetState = copied,
                         transitionSpec = {
                             val initialScale = if (motion.reducedMotion) 1f else 0.7f
-                            (fadeIn(
-                                animationSpec = tween(
-                                    durationMillis = motion.durationFast,
-                                    easing = motion.easingDecelerate,
-                                ),
-                            ) + scaleIn(
-                                animationSpec = tween(
-                                    durationMillis = motion.durationFast,
-                                    easing = motion.easingDecelerate,
-                                ),
-                                initialScale = initialScale,
-                            )).togetherWith(
-                                fadeOut(
-                                    animationSpec = tween(
-                                        durationMillis = motion.durationFast,
-                                        easing = motion.easingAccelerate,
-                                    ),
-                                ) + scaleOut(
-                                    animationSpec = tween(
-                                        durationMillis = motion.durationFast,
-                                        easing = motion.easingAccelerate,
-                                    ),
-                                    targetScale = initialScale,
-                                ),
-                            )
+                            (fadeIn(copiedFadeSpec) + scaleIn(copiedScaleSpec, initialScale))
+                                .togetherWith(
+                                    fadeOut(copiedFadeSpec) + scaleOut(copiedFadeSpec, initialScale),
+                                )
                         },
                         label = "copyStatusIcon",
                     ) { isCopied ->
@@ -1357,11 +1274,3 @@ private fun isIpv4MulticastAddress(address: String): Boolean {
     return firstOctet in 224..239
 }
 
-private fun cardPositionFor(index: Int, totalCount: Int): LogCardPosition {
-    return when {
-        totalCount <= 1 -> LogCardPosition.Single
-        index == 0 -> LogCardPosition.First
-        index == totalCount - 1 -> LogCardPosition.Last
-        else -> LogCardPosition.Middle
-    }
-}

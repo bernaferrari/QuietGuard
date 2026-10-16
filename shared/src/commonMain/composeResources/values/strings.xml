@@ -38,6 +38,7 @@
     <string name="menu_launch">Launch app</string>
     <string name="menu_log">Log</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_app_info">App info</string>
     <string name="menu_home">Home</string>
     <string name="menu_invite">Invite</string>
     <string name="menu_legend">Legend</string>
@@ -47,6 +48,8 @@
     <string name="menu_firewall">Firewall</string>
     <string name="status_enabled">Firewall enabled</string>
     <string name="status_disabled">Firewall disabled</string>
+    <string name="home_status_on_body">Apps connect only the way you allow.</string>
+    <string name="home_status_off_body">Every app has unrestricted internet access.</string>
     <string name="demo_mode_banner">Web demo — firewall and VPN are simulated</string>
     <string name="status_enabled_demo">Firewall enabled (demo)</string>
     <string name="demo_mode_hint">No real VPN is running. Install the Android app for actual protection.</string>
@@ -273,6 +276,9 @@
     <string name="setting_hosts">Import hosts file</string>
     <string name="setting_hosts_append">Import hosts file (append)</string>
     <string name="setting_hosts_url">Hosts file download URL</string>
+    <string name="hosts_import_action">Import file</string>
+    <string name="hosts_import_done">Hosts file imported</string>
+    <string name="hosts_import_failed">Couldn’t import that file. Make sure it’s a plain-text hosts file.</string>
     <string name="setting_hosts_download">Download hosts file</string>
     <string name="setting_use_hosts">Use hosts file</string>
 
@@ -487,6 +493,7 @@ Your internet traffic is not being sent to a remote VPN server.</string>
     <string name="label_dns_summary">%1$d entries • %2$d expired</string>
 
     <string name="settings_quick_controls">Quick controls</string>
+    <string name="settings_quick_controls_summary">Default access for apps without their own rule</string>
     <string name="settings_more">More settings</string>
     <string name="settings_firewall_summary">Roaming, metered networks, screen behavior, and local access</string>
     <string name="settings_advanced_summary">Filtering, lockdown, logging, malware blocking, and statistics</string>

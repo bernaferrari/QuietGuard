@@ -1,8 +1,6 @@
 package com.bernaferrari.quietguard.ui.screens
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,6 +53,7 @@ import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
 import com.bernaferrari.quietguard.ui.theme.TouchTargets
 import com.bernaferrari.quietguard.ui.theme.spacing
 import org.jetbrains.compose.resources.stringResource
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
 
 
 /**
@@ -71,7 +70,7 @@ private fun settingRowContainerColor(checked: Boolean): Color {
     }
     val color by animateColorAsState(
         targetValue = target,
-        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
+        animationSpec = effectsSpec(),
         label = "settingRowBg",
     )
     return color
@@ -92,7 +91,9 @@ internal fun SettingToggleRow(
     val spacing = MaterialTheme.spacing
     val haptic = LocalHapticFeedback.current
     val onToggle = { newValue: Boolean ->
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        haptic.performHapticFeedback(
+            if (newValue) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff,
+        )
         onCheckedChange(newValue)
     }
 
@@ -160,7 +161,9 @@ internal fun SettingToggleRowWithTooltip(
     val haptic = LocalHapticFeedback.current
     var showTooltip by remember { mutableStateOf(false) }
     val onToggle = { newValue: Boolean ->
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        haptic.performHapticFeedback(
+            if (newValue) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff,
+        )
         onCheckedChange(newValue)
     }
 
@@ -260,7 +263,7 @@ internal fun SettingTextRow(
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         modifier = Modifier
             .fillMaxWidth()
-            .height(SettingFieldHeight),
+            .heightIn(min = SettingFieldHeight),
         shape = groupItemShape(isFirst, isLast),
         singleLine = true,
         colors = settingTextFieldColors(),
@@ -329,7 +332,7 @@ internal fun SettingTextRowWithTooltip(
                 keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(SettingFieldHeight),
+                    .heightIn(min = SettingFieldHeight),
                 singleLine = true,
                 colors = settingTextFieldColors(),
                 trailingIcon = {
@@ -418,7 +421,9 @@ private fun CompactSettingToggleTile(
     val haptic = LocalHapticFeedback.current
     Surface(
         onClick = {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            haptic.performHapticFeedback(
+                if (!checked) HapticFeedbackType.ToggleOn else HapticFeedbackType.ToggleOff,
+            )
             onCheckedChange(!checked)
         },
         modifier = modifier.heightIn(min = 72.dp),

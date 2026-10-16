@@ -70,7 +70,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -83,6 +83,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -104,6 +105,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bernaferrari.quietguard.ui.components.AppIcon
+import com.bernaferrari.quietguard.ui.components.ConnectedToggleButtonRow
+import com.bernaferrari.quietguard.ui.components.GroupPosition
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bernaferrari.quietguard.domain.FirewallRule
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
@@ -117,6 +120,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 
 import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import com.bernaferrari.quietguard.ui.theme.spatialSpec
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMaterial3ExpressiveApi::class,
@@ -187,7 +192,7 @@ fun AppsScreen(
                 items.add(AppListItem.Header(section))
                 lastLetter = section
             }
-            items.add(AppListItem.App(rule, position = CardPosition.Middle))
+            items.add(AppListItem.App(rule, position = GroupPosition.Middle))
         }
         // Assign positions within each section
         var i = 0
@@ -198,12 +203,7 @@ fun AppsScreen(
                 while (sectionEnd < items.size && items[sectionEnd] is AppListItem.App) sectionEnd++
                 val count = sectionEnd - sectionStart
                 for (j in sectionStart until sectionEnd) {
-                    val pos = when {
-                        count == 1 -> CardPosition.Single
-                        j == sectionStart -> CardPosition.First
-                        j == sectionEnd - 1 -> CardPosition.Last
-                        else -> CardPosition.Middle
-                    }
+                    val pos = GroupPosition.of(j - sectionStart, count)
                     items[j] = (items[j] as AppListItem.App).copy(position = pos)
                 }
                 i = sectionEnd
@@ -214,11 +214,13 @@ fun AppsScreen(
         items
     }
     val showFastScroller = filteredRules.size >= 24
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
-            TopAppBar(
+            LargeFlexibleTopAppBar(
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -295,9 +297,7 @@ fun AppsScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
@@ -327,46 +327,14 @@ fun AppsScreen(
                     unselectedIcon = MaterialSymbols.Outlined.CheckCircle,
                 ),
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = spacing.default),
-                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
-            ) {
-                filterOptions.forEachIndexed { index, item ->
-                    val isSelected = filter == item.option
-                    ToggleButton(
-                        checked = isSelected,
-                        onCheckedChange = { checked ->
-                            if (checked) {
-                                filter = item.option
-                            }
-                        },
-                        shapes =
-                            when (index) {
-                                0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                                filterOptions.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
-                                else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
-                            },
-                        colors = ToggleButtonDefaults.colors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            checkedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                        ),
-                        modifier = Modifier
-                            .weight(1f)
-                            .semantics { role = Role.RadioButton },
-                    ) {
-                        Icon(
-                            icon = if (isSelected) item.selectedIcon else item.unselectedIcon,
-                            contentDescription = null,
-                        )
-                        Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
-                        Text(text = item.label, maxLines = 1)
-                    }
-                }
-            }
+            ConnectedToggleButtonRow(
+                options = filterOptions,
+                selected = filterOptions.first { it.option == filter },
+                onSelect = { filter = it.option },
+                label = { it.label },
+                icon = { item, checked -> if (checked) item.selectedIcon else item.unselectedIcon },
+                modifier = Modifier.padding(horizontal = spacing.default),
+            )
 
             if (isSearchOpen) {
                 OutlinedTextField(
@@ -536,20 +504,9 @@ private data class FilterOption(
     val unselectedIcon: MaterialIcon,
 )
 
-private enum class CardPosition {
-    First, Middle, Last, Single
-}
-
-private data class CornerRadii(
-    val topStart: Dp,
-    val topEnd: Dp,
-    val bottomEnd: Dp,
-    val bottomStart: Dp,
-)
-
 private sealed interface AppListItem {
     data class Header(val letter: String) : AppListItem
-    data class App(val rule: FirewallRule, val position: CardPosition) : AppListItem
+    data class App(val rule: FirewallRule, val position: GroupPosition) : AppListItem
 }
 
 @Composable
@@ -574,7 +531,7 @@ private fun SectionHeader(letter: String) {
 private fun RuleCard(
     rule: FirewallRule,
     isSelected: Boolean = false,
-    position: CardPosition,
+    position: GroupPosition,
     searchQuery: String,
     onToggleWifi: () -> Unit,
     onToggleMobile: () -> Unit,
@@ -582,7 +539,6 @@ private fun RuleCard(
 ) {
     // Keep the row's press/release interaction stable across selection changes.
     val interactionSource = remember { MutableInteractionSource() }
-    val motion = LocalMotion.current
     val appName = rule.name ?: rule.packageName.orEmpty()
     val wifiDescription = stringResource(Res.string.title_wifi) + " " +
             if (rule.wifi_blocked) stringResource(Res.string.menu_traffic_blocked)
@@ -599,48 +555,36 @@ private fun RuleCard(
         )
     }
 
-    val baseCornerRadii = when (position) {
-        CardPosition.Single -> CornerRadii(16.dp, 16.dp, 16.dp, 16.dp)
-        CardPosition.First -> CornerRadii(16.dp, 16.dp, 4.dp, 4.dp)
-        CardPosition.Last -> CornerRadii(4.dp, 4.dp, 16.dp, 16.dp)
-        CardPosition.Middle -> CornerRadii(4.dp, 4.dp, 4.dp, 4.dp)
-    }
     val selectionTransition = updateTransition(
         targetState = isSelected,
         label = "ruleCardSelection",
     )
-    val selectionAnimationSpec = tween<Dp>(
-        durationMillis = motion.durationMedium,
-        easing = motion.easingStandard,
-    )
-    val selectionColorAnimationSpec = tween<Color>(
-        durationMillis = motion.durationMedium,
-        easing = motion.easingStandard,
-    )
-    val selectedRadius = 20.dp
+    val selectionAnimationSpec = spatialSpec<Dp>()
+    val selectionColorAnimationSpec = effectsSpec<Color>()
+    val selectedRadius = 28.dp
     val topStart by selectionTransition.animateDp(
         transitionSpec = { selectionAnimationSpec },
         label = "ruleCardTopStartRadius",
     ) { selected ->
-        if (selected) selectedRadius else baseCornerRadii.topStart
+        if (selected) selectedRadius else position.topCorner
     }
     val topEnd by selectionTransition.animateDp(
         transitionSpec = { selectionAnimationSpec },
         label = "ruleCardTopEndRadius",
     ) { selected ->
-        if (selected) selectedRadius else baseCornerRadii.topEnd
+        if (selected) selectedRadius else position.topCorner
     }
     val bottomEnd by selectionTransition.animateDp(
         transitionSpec = { selectionAnimationSpec },
         label = "ruleCardBottomEndRadius",
     ) { selected ->
-        if (selected) selectedRadius else baseCornerRadii.bottomEnd
+        if (selected) selectedRadius else position.bottomCorner
     }
     val bottomStart by selectionTransition.animateDp(
         transitionSpec = { selectionAnimationSpec },
         label = "ruleCardBottomStartRadius",
     ) { selected ->
-        if (selected) selectedRadius else baseCornerRadii.bottomStart
+        if (selected) selectedRadius else position.bottomCorner
     }
     val cardShape = RoundedCornerShape(topStart, topEnd, bottomEnd, bottomStart)
     val selectedCardColor = MaterialTheme.colorScheme.secondaryContainer
@@ -684,7 +628,7 @@ private fun RuleCard(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .padding(
-                top = if (position == CardPosition.First || position == CardPosition.Single) 0.dp else 2.dp,
+                top = if (position == GroupPosition.First || position == GroupPosition.Single) 0.dp else 2.dp,
             )
             .semantics { selected = isSelected },
     ) {

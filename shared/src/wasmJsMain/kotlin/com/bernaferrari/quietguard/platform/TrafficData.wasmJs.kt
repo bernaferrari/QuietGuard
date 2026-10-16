@@ -165,10 +165,6 @@ actual fun exportDnsToFile(onComplete: (success: Boolean, error: String?) -> Uni
     onComplete(false, null)
 }
 
-actual fun importHostsFromFile(onComplete: (success: Boolean) -> Unit) {
-    onComplete(false)
-}
-
 actual suspend fun loadAccessEntries(uid: Int): List<AccessEntry> =
     dao().getAccessForUid(uid).map { it.toAccessEntry() }
 

@@ -4,7 +4,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bernaferrari.quietguard.data.PreferencesRepository
-import com.bernaferrari.quietguard.platform.importHostsFromFile
 import com.bernaferrari.quietguard.platform.registerUpdateCheckListener
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +42,4 @@ class SettingsViewModel(
 
     fun registerUpdateCheck(onResult: (String?, String?) -> Unit): () -> Unit =
         registerUpdateCheckListener(onResult)
-
-    fun importHosts(onComplete: (Boolean) -> Unit) = importHostsFromFile(onComplete)
 }

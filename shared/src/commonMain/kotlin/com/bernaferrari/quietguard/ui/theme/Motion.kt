@@ -1,8 +1,13 @@
 package com.bernaferrari.quietguard.ui.theme
 
 import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
@@ -32,6 +37,27 @@ data class Motion(
 )
 
 val LocalMotion = staticCompositionLocalOf { Motion() }
+
+// MotionScheme-backed specs. Prefer these over hand-tuned tween()s: they follow the
+// theme's expressive springs and snap when the user has reduced motion enabled.
+
+/** Non-overshooting spec for color, alpha and progress values. */
+@Composable
+@ReadOnlyComposable
+fun <T> effectsSpec(): FiniteAnimationSpec<T> =
+    if (LocalMotion.current.reducedMotion) snap() else MaterialTheme.motionScheme.defaultEffectsSpec()
+
+/** Quicker [effectsSpec] for small, immediate feedback (fades, tints). */
+@Composable
+@ReadOnlyComposable
+fun <T> fastEffectsSpec(): FiniteAnimationSpec<T> =
+    if (LocalMotion.current.reducedMotion) snap() else MaterialTheme.motionScheme.fastEffectsSpec()
+
+/** Spatial spec (may overshoot) for sizes, offsets and corner radii. */
+@Composable
+@ReadOnlyComposable
+fun <T> spatialSpec(): FiniteAnimationSpec<T> =
+    if (LocalMotion.current.reducedMotion) snap() else MaterialTheme.motionScheme.defaultSpatialSpec()
 
 // Extension functions for common animation specs
 

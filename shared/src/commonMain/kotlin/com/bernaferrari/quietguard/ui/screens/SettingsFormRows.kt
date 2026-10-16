@@ -39,6 +39,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bernaferrari.quietguard.generated.resources.Res
@@ -256,11 +258,17 @@ internal fun SettingTextRow(
     isLast: Boolean = true,
     onValueChange: (String) -> Unit,
 ) {
+    val fieldLabel = settingFieldLabel(title, value)
     TextField(
         value = value,
         onValueChange = onValueChange,
-        label = { SettingFieldLabelText(settingFieldLabel(title, value)) },
+        label = { SettingFieldLabelText(fieldLabel.text) },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        visualTransformation = if (keyboardType == KeyboardType.Password) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = SettingFieldHeight),
@@ -294,16 +302,34 @@ private fun settingTextFieldColors() = TextFieldDefaults.colors(
     disabledIndicatorColor = Color.Transparent,
 )
 
-private fun settingFieldLabel(title: String, value: String): String {
+/** Pass this as the format argument of a "%1$s minutes"-style title to get label + unit. */
+internal const val SettingValuePlaceholder = "\u2026"
+
+private data class SettingFieldLabel(val label: String, val unit: String?) {
+    /** "Delay screen off (minutes)": the unit stays visible whether or not the field has focus. */
+    val text: String get() = if (unit != null) "$label ($unit)" else label
+}
+
+/**
+ * Legacy titles embed the value ("Auto enable after %1$s minutes"). Split them at the
+ * placeholder: the text before becomes the field label and the text after its unit,
+ * which works for translations that put the number anywhere.
+ */
+private fun settingFieldLabel(title: String, value: String): SettingFieldLabel {
+    fun String.clean() = replace(Regex("\\s+"), " ").trim().trimEnd(':', '-').trim()
+    val index = title.indexOf(SettingValuePlaceholder)
+    if (index >= 0) {
+        val before = title.substring(0, index).clean()
+        val after = title.substring(index + SettingValuePlaceholder.length).clean()
+        return if (before.isNotEmpty()) {
+            SettingFieldLabel(before, after.ifEmpty { null })
+        } else {
+            SettingFieldLabel(after, null)
+        }
+    }
     val withoutValue =
         if (value.isNotEmpty() && title.endsWith(value)) title.dropLast(value.length) else title
-    return withoutValue
-        .replace("%s", "")
-        .replace(Regex("\\s+"), " ")
-        .trim()
-        .trimEnd(':', '-', ' ')
-        .trimEnd(':')
-        .trim()
+    return SettingFieldLabel(withoutValue.replace("%s", "").clean(), null)
 }
 
 @Composable
@@ -318,6 +344,7 @@ internal fun SettingTextRowWithTooltip(
 ) {
     val spacing = MaterialTheme.spacing
     var showTooltip by remember { mutableStateOf(false) }
+    val fieldLabel = settingFieldLabel(title, value)
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -328,8 +355,8 @@ internal fun SettingTextRowWithTooltip(
             TextField(
                 value = value,
                 onValueChange = onValueChange,
-                label = { SettingFieldLabelText(settingFieldLabel(title, value)) },
-                keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+                label = { SettingFieldLabelText(fieldLabel.text) },
+                        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = SettingFieldHeight),
@@ -344,7 +371,7 @@ internal fun SettingTextRowWithTooltip(
                             icon = MaterialSymbols.Outlined.Info,
                             contentDescription = stringResource(
                                 Res.string.content_desc_show_info,
-                                title,
+                                fieldLabel.label,
                             ),
                             modifier = Modifier.size(18.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,

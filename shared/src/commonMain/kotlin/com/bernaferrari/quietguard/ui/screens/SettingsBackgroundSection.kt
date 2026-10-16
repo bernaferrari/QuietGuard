@@ -38,10 +38,10 @@ internal fun SettingsBackgroundSection(
     val spacing = MaterialTheme.spacing
         // Background Section
         if (section == SettingsSection.Background) {
-            SettingsGroup {
+            SettingsGroup(title = stringResource(Res.string.settings_group_maintenance)) {
                 item { first, last ->
                     SettingTextRow(
-                        title = stringResource(Res.string.setting_watchdog, "…"),
+                        title = stringResource(Res.string.setting_watchdog, SettingValuePlaceholder),
                         value = str("watchdog", "0"),
                         keyboardType = KeyboardType.Number,
                         isFirst = first,
@@ -133,7 +133,7 @@ internal fun SettingsBackgroundSection(
                 }
                 item { first, last ->
                     SettingTextRow(
-                        title = stringResource(Res.string.setting_pcap_record_size, "…"),
+                        title = stringResource(Res.string.setting_pcap_record_size, SettingValuePlaceholder),
                         value = str("pcap_record_size", "64"),
                         keyboardType = KeyboardType.Number,
                         isFirst = first,
@@ -145,7 +145,7 @@ internal fun SettingsBackgroundSection(
                 }
                 item { first, last ->
                     SettingTextRow(
-                        title = stringResource(Res.string.setting_pcap_file_size, "…"),
+                        title = stringResource(Res.string.setting_pcap_file_size, SettingValuePlaceholder),
                         value = str("pcap_file_size", "2"),
                         keyboardType = KeyboardType.Number,
                         isFirst = first,

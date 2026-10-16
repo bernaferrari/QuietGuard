@@ -94,6 +94,7 @@
     <string name="ui_log_details_port">Port</string>
     <string name="ui_log_details_protocol">Protocol</string>
     <string name="ui_log_details_time">Recorded</string>
+    <string name="ui_log_open_app_rules">Edit app rules</string>
     <string name="ui_log_details_app_id">App ID</string>
     <string name="action_close">Close</string>
     <string name="action_copy">Copy</string>
@@ -492,6 +493,16 @@ Your internet traffic is not being sent to a remote VPN server.</string>
 
     <string name="label_dns_summary">%1$d entries • %2$d expired</string>
 
+    <string name="settings_group_mobile">Mobile data</string>
+    <string name="settings_group_screen">Screen</string>
+    <string name="settings_group_local_network">Local network</string>
+    <string name="settings_group_automation">Automation</string>
+    <string name="settings_group_metered">Metered networks</string>
+    <string name="settings_group_logging">Logging &amp; notifications</string>
+    <string name="settings_group_filtering">Filtering</string>
+    <string name="settings_group_protection">Protection</string>
+    <string name="settings_group_statistics">Speed &amp; statistics</string>
+    <string name="settings_group_maintenance">Maintenance</string>
     <string name="settings_quick_controls">Quick controls</string>
     <string name="settings_quick_controls_summary">Default access for apps without their own rule</string>
     <string name="settings_more">More settings</string>

@@ -28,6 +28,15 @@ import com.bernaferrari.quietguard.generated.resources.setting_vpn4
 import com.bernaferrari.quietguard.generated.resources.setting_vpn6
 import com.bernaferrari.quietguard.generated.resources.setting_watchdog
 import com.bernaferrari.quietguard.generated.resources.setting_wifi_home
+import com.bernaferrari.quietguard.generated.resources.settings_group_mobile
+import com.bernaferrari.quietguard.generated.resources.settings_group_screen
+import com.bernaferrari.quietguard.generated.resources.settings_group_local_network
+import com.bernaferrari.quietguard.generated.resources.settings_group_automation
+import com.bernaferrari.quietguard.generated.resources.settings_group_metered
+import com.bernaferrari.quietguard.generated.resources.settings_group_logging
+import com.bernaferrari.quietguard.generated.resources.settings_group_filtering
+import com.bernaferrari.quietguard.generated.resources.settings_group_protection
+import com.bernaferrari.quietguard.generated.resources.settings_group_statistics
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_auto
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_dark
 import com.bernaferrari.quietguard.generated.resources.setting_appearance_light
@@ -445,7 +454,7 @@ fun SettingsScreen(
 
             // Firewall Section
             if (section == SettingsSection.Firewall) {
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_mobile)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_whitelist_roaming),
@@ -456,7 +465,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_screen)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_screen_on),
@@ -479,7 +488,7 @@ fun SettingsScreen(
                     }
                     item { first, last ->
                         SettingTextRow(
-                            title = stringResource(Res.string.setting_delay, "…"),
+                            title = stringResource(Res.string.setting_delay, SettingValuePlaceholder),
                             value = str("screen_delay", "0"),
                             keyboardType = KeyboardType.Number,
                             isFirst = first,
@@ -489,7 +498,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_local_network)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_subnet),
@@ -524,10 +533,10 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_automation)) {
                     item { first, last ->
                         SettingTextRow(
-                            title = stringResource(Res.string.setting_auto, "…"),
+                            title = stringResource(Res.string.setting_auto, SettingValuePlaceholder),
                             value = str("auto_enable", "0"),
                             keyboardType = KeyboardType.Number,
                             isFirst = first,
@@ -536,13 +545,18 @@ fun SettingsScreen(
                         )
                     }
                     item { first, last ->
-                        val homes = strSet("wifi_homes", emptySet()).joinToString(",")
+                        // Keep the raw text locally: re-deriving it from the saved set would
+                        // strip a trailing comma and make it impossible to type a second SSID.
+                        var homesText by remember {
+                            mutableStateOf(strSet("wifi_homes", emptySet()).joinToString(", "))
+                        }
                         SettingTextRow(
-                            title = stringResource(Res.string.setting_wifi_home, homes.ifEmpty { "-" }),
-                            value = homes,
+                            title = stringResource(Res.string.setting_wifi_home, SettingValuePlaceholder),
+                            value = homesText,
                             isFirst = first,
                             isLast = last,
                             onValueChange = { value ->
+                                homesText = value
                                 val set =
                                     value.split(",").map { it.trim() }
                                         .filter { it.isNotEmpty() }.toSet()
@@ -552,7 +566,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_metered)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_metered),
@@ -610,7 +624,7 @@ fun SettingsScreen(
 
             // Advanced Section
             if (section == SettingsSection.Advanced) {
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_logging)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_system),
@@ -659,7 +673,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_filtering)) {
                     item { first, last ->
                         SettingToggleRowWithTooltip(
                             title = stringResource(Res.string.setting_filter),
@@ -709,7 +723,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_protection)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_malware),
@@ -728,7 +742,7 @@ fun SettingsScreen(
                     }
                 }
 
-                SettingsGroup {
+                SettingsGroup(title = stringResource(Res.string.settings_group_statistics)) {
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_stats),
@@ -747,7 +761,7 @@ fun SettingsScreen(
                     }
                     item { first, last ->
                         SettingTextRow(
-                            title = stringResource(Res.string.setting_stats_frequency, "…"),
+                            title = stringResource(Res.string.setting_stats_frequency, SettingValuePlaceholder),
                             value = str("stats_frequency", "1000"),
                             keyboardType = KeyboardType.Number,
                             isFirst = first,
@@ -761,7 +775,7 @@ fun SettingsScreen(
                         SettingTextRow(
                             title = stringResource(
                                 Res.string.setting_stats_samples,
-                                str("stats_samples", "10"),
+                                SettingValuePlaceholder,
                             ),
                             value = str("stats_samples", "10"),
                             keyboardType = KeyboardType.Number,

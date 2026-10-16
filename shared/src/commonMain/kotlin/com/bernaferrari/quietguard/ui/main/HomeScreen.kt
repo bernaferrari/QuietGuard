@@ -1,10 +1,6 @@
 package com.bernaferrari.quietguard.ui.main
 
 import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
-
-
-
-
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -14,6 +10,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -26,10 +25,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -39,7 +36,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.Role
@@ -54,6 +50,8 @@ import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.app_name
+import com.bernaferrari.quietguard.generated.resources.home_status_off_body
+import com.bernaferrari.quietguard.generated.resources.home_status_on_body
 import com.bernaferrari.quietguard.generated.resources.menu_firewall
 import com.bernaferrari.quietguard.generated.resources.status_disabled
 import com.bernaferrari.quietguard.generated.resources.status_enabled
@@ -62,6 +60,7 @@ import com.bernaferrari.quietguard.generated.resources.ui_loading
 import org.jetbrains.compose.resources.stringResource
 
 import com.bernaferrari.quietguard.ui.icons.Icon
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
 @Composable
 fun HomeScreen(
     viewModel: MainViewModel,
@@ -108,26 +107,17 @@ fun HomeScreen(
                     .padding(horizontal = 24.dp, vertical = 32.dp)
                     .widthIn(max = 560.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
+                verticalArrangement = Arrangement.spacedBy(40.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = stringResource(Res.string.app_name),
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-                    Text(
-                        text = stringResource(Res.string.ui_home_hint),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                // The status copy under the hero explains the state, so the header stays a name.
+                Text(
+                    text = stringResource(Res.string.app_name),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
 
                 StatusCard(
                     enabled = enabled,
@@ -139,7 +129,11 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+/**
+ * Home hero: one large square toggle whose shape morphs from a soft square (off) to a
+ * rotating 9-sided cookie (on). The morph needs a square box — stretching a 1:1 polygon
+ * across a wide card distorts it into a lens.
+ */
 @Composable
 private fun StatusCard(
     enabled: Boolean,
@@ -148,69 +142,40 @@ private fun StatusCard(
 ) {
     val motion = LocalMotion.current
     val spacing = MaterialTheme.spacing
+    val colors = MaterialTheme.colorScheme
 
     val containerColor by animateColorAsState(
-        targetValue = if (enabled) {
-            MaterialTheme.colorScheme.secondaryContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceContainerLow
-        },
-        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
-        label = "containerColor",
-    )
-    val iconContainerColor by animateColorAsState(
-        targetValue = if (enabled) MaterialTheme.colorScheme.primary
-        else MaterialTheme.colorScheme.errorContainer,
-        animationSpec = tween(motion.durationMedium),
-        label = "iconBg",
+        targetValue = if (enabled) colors.primary else colors.surfaceContainerHighest,
+        animationSpec = effectsSpec(),
+        label = "heroContainer",
     )
     val iconTint by animateColorAsState(
-        targetValue = if (enabled) MaterialTheme.colorScheme.onPrimary
-        else MaterialTheme.colorScheme.error,
-        animationSpec = tween(motion.durationMedium),
-        label = "iconTint",
+        targetValue = if (enabled) colors.onPrimary else colors.onSurfaceVariant,
+        animationSpec = effectsSpec(),
+        label = "heroIcon",
     )
-    val iconRingColor by animateColorAsState(
-        targetValue = if (enabled) {
-            MaterialTheme.colorScheme.tertiary
-        } else {
-            MaterialTheme.colorScheme.outline
-        },
-        animationSpec = tween(motion.durationMedium),
-        label = "iconRingColor",
+    val ringColor by animateColorAsState(
+        targetValue = if (enabled) colors.tertiary else colors.outlineVariant,
+        animationSpec = effectsSpec(),
+        label = "heroRing",
     )
-    val ringRevealProgress by animateFloatAsState(
-        targetValue = if (enabled) 1f else 0f,
-        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
-        label = "ringRevealProgress",
-    )
-    val iconRingAlpha = 0.03f + (0.29f * ringRevealProgress)
     val morphProgress by animateFloatAsState(
         targetValue = if (enabled) 1f else 0f,
-        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
-        label = "badgeMorph",
-    )
-    val cardMorphProgress by animateFloatAsState(
-        targetValue = if (enabled) 1f else 0f,
-        animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
-        label = "cardMorph",
-    )
-    val iconBadgeScale by animateFloatAsState(
-        targetValue = if (enabled) 1f else 0.98f,
-        animationSpec = spring(
-            stiffness = Spring.StiffnessMediumLow,
-            dampingRatio = Spring.DampingRatioNoBouncy
-        ),
-        label = "iconBadgeScale",
+        animationSpec = if (motion.reducedMotion) {
+            tween(0)
+        } else {
+            spring(dampingRatio = 0.7f, stiffness = Spring.StiffnessMediumLow)
+        },
+        label = "heroMorph",
     )
     val carrierRotation = remember { Animatable(0f) }
-    LaunchedEffect(enabled, motion.durationSlow, motion.durationMedium) {
+    LaunchedEffect(enabled, motion.reducedMotion) {
         if (enabled && !motion.reducedMotion) {
             while (true) {
                 carrierRotation.animateTo(
                     targetValue = carrierRotation.value + 360f,
                     animationSpec = tween(
-                        durationMillis = motion.durationSlow * 18,
+                        durationMillis = motion.durationSlow * 24,
                         easing = LinearEasing,
                     ),
                 )
@@ -219,135 +184,116 @@ private fun StatusCard(
                 }
             }
         } else {
+            // Settle on the nearest upright angle so the off state is never tilted.
             val normalized = ((carrierRotation.value % 360f) + 360f) % 360f
             val settleTarget = if (normalized > 180f) {
                 carrierRotation.value + (360f - normalized)
             } else {
                 carrierRotation.value - normalized
             }
-            carrierRotation.animateTo(
-                targetValue = settleTarget,
-                animationSpec = tween(
-                    durationMillis = motion.durationMedium,
-                    easing = FastOutSlowInEasing,
-                ),
-            )
+            if (motion.reducedMotion) {
+                carrierRotation.snapTo(settleTarget)
+            } else {
+                carrierRotation.animateTo(
+                    targetValue = settleTarget,
+                    animationSpec = tween(motion.durationMedium, easing = FastOutSlowInEasing),
+                )
+            }
             carrierRotation.snapTo(0f)
         }
     }
-    val sharedRotation = carrierRotation.value
-    val badgeShape = rememberStatusBadgeShape(morphProgress)
-    val cardShape = rememberStatusCardShape(cardMorphProgress)
+    val rotation = carrierRotation.value
+    val heroShape = rememberStatusBadgeShape(morphProgress)
+
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.97f else 1f,
-        animationSpec = spring(stiffness = Spring.StiffnessHigh),
-        label = "pressScale",
+    val pressScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.94f else 1f,
+        animationSpec = spring(dampingRatio = 0.6f, stiffness = Spring.StiffnessMedium),
+        label = "heroPress",
     )
 
-    val enabledLabel =
-        if (enabled) {
-            stringResource(Res.string.status_enabled)
-        } else {
-            stringResource(Res.string.status_disabled)
-        }
+    val statusLabel = stringResource(if (enabled) Res.string.status_enabled else Res.string.status_disabled)
+    val statusBody = stringResource(if (enabled) Res.string.home_status_on_body else Res.string.home_status_off_body)
     val firewallLabel = stringResource(Res.string.menu_firewall)
 
-    Surface(
-        shape = cardShape,
+    // The whole hero (shape, text, switch) is one toggle so screen readers hear a single control.
+    Column(
         modifier = modifier
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-                shape = cardShape
-                clip = true
-            }
             .toggleable(
                 value = enabled,
                 interactionSource = interactionSource,
-                indication = ripple(),
+                indication = null,
                 role = Role.Switch,
                 onValueChange = onToggle,
             )
             .semantics {
                 contentDescription = firewallLabel
-                stateDescription = enabledLabel
+                stateDescription = statusLabel
             },
-        color = containerColor,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(spacing.large),
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .size(232.dp)
+                .graphicsLayer {
+                    scaleX = pressScale
+                    scaleY = pressScale
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            // Outer ring rotates with the shape; inner fill counter-rotates slightly for depth.
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = spacing.extraLarge, vertical = spacing.large),
+                    .fillMaxSize()
+                    .graphicsLayer { rotationZ = rotation }
+                    .border(BorderStroke(2.dp, ringColor.copy(alpha = 0.5f)), heroShape),
+            )
+            Box(
+                modifier = Modifier
+                    .size(196.dp)
+                    .graphicsLayer {
+                        rotationZ = rotation * 0.72f
+                        shape = heroShape
+                        clip = true
+                    }
+                    .background(containerColor)
+                    .indication(interactionSource, ripple()),
                 contentAlignment = Alignment.Center,
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(spacing.medium),
-                ) {
-                    Box(
-                        modifier = Modifier.size(72.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Surface(
-                            shape = badgeShape,
-                            color = Color.Transparent,
-                            border = BorderStroke(
-                                1.5.dp,
-                                iconRingColor.copy(alpha = iconRingAlpha)
-                            ),
-                            modifier = Modifier
-                                .size(72.dp)
-                                .graphicsLayer {
-                                    rotationZ = sharedRotation
-                                    shape = badgeShape
-                                    clip = true
-                                },
-                        ) {}
-
-                        Surface(
-                            shape = badgeShape,
-                            color = iconContainerColor,
-                            modifier = Modifier
-                                .size(60.dp)
-                                .graphicsLayer {
-                                    scaleX = iconBadgeScale
-                                    scaleY = iconBadgeScale
-                                    rotationZ = sharedRotation * 0.72f
-                                    shape = badgeShape
-                                    clip = true
-                                },
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(
-                                    icon =
-                                        if (enabled) MaterialSymbols.Filled.Shield else MaterialSymbols.Outlined.Shield,
-                                    contentDescription = null,
-                                    tint = iconTint,
-                                    modifier = Modifier
-                                        .size(30.dp)
-                                        .graphicsLayer { rotationZ = -(sharedRotation * 0.72f) },
-                                )
-                            }
-                        }
-                    }
-
-                    Text(
-                        text = enabledLabel,
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-
-                    // Switch
-                    Switch(
-                        checked = enabled,
-                        onCheckedChange = null,
-                    )
-                }
+                Icon(
+                    icon = if (enabled) MaterialSymbols.Filled.GppGood else MaterialSymbols.Outlined.Shield,
+                    contentDescription = null,
+                    tint = iconTint,
+                    modifier = Modifier
+                        .size(72.dp)
+                        .graphicsLayer { rotationZ = -(rotation * 0.72f) },
+                )
             }
         }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            Text(
+                text = statusLabel,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                text = statusBody,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
+        }
+
+        Switch(
+            checked = enabled,
+            onCheckedChange = null,
+        )
     }
 }

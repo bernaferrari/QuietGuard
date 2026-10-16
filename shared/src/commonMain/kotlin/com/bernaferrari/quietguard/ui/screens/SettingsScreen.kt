@@ -38,6 +38,10 @@ import com.bernaferrari.quietguard.generated.resources.setting_filter_udp
 import com.bernaferrari.quietguard.generated.resources.setting_forwarding
 import com.bernaferrari.quietguard.generated.resources.setting_hosts
 import com.bernaferrari.quietguard.generated.resources.setting_hosts_append
+import com.bernaferrari.quietguard.generated.resources.hosts_import_action
+import com.bernaferrari.quietguard.generated.resources.hosts_import_done
+import com.bernaferrari.quietguard.generated.resources.hosts_import_failed
+import com.bernaferrari.quietguard.platform.rememberHostsFileImporter
 import com.bernaferrari.quietguard.generated.resources.setting_hosts_download
 import com.bernaferrari.quietguard.generated.resources.setting_hosts_url
 import com.bernaferrari.quietguard.generated.resources.setting_ip6
@@ -86,8 +90,6 @@ import com.bernaferrari.quietguard.generated.resources.setting_use_hosts
 import com.bernaferrari.quietguard.generated.resources.setting_whitelist_roaming
 import com.bernaferrari.quietguard.generated.resources.summary_block_domains
 import com.bernaferrari.quietguard.generated.resources.summary_log_retention_days
-import com.bernaferrari.quietguard.generated.resources.title_mobile
-import com.bernaferrari.quietguard.generated.resources.title_wifi
 import com.bernaferrari.quietguard.generated.resources.tooltip_filter
 import com.bernaferrari.quietguard.generated.resources.tooltip_lockdown
 import com.bernaferrari.quietguard.generated.resources.tooltip_pcap
@@ -108,6 +110,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -119,6 +122,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeFlexibleTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumFlexibleTopAppBar
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -143,30 +147,23 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
-import com.bernaferrari.quietguard.platform.PlatformContext
 import com.bernaferrari.quietguard.ui.screens.vm.SettingsViewModel
 import com.bernaferrari.quietguard.ui.SettingsSection
 import org.koin.compose.viewmodel.koinViewModel
-import com.bernaferrari.quietguard.ui.components.FirewallTile
 import com.bernaferrari.quietguard.ui.components.groupItemShape
-import com.bernaferrari.quietguard.ui.components.groupPairTileShape
-import com.bernaferrari.quietguard.ui.theme.AmberPrimary
-import com.bernaferrari.quietguard.ui.theme.BluePrimary
-import com.bernaferrari.quietguard.ui.theme.CyanPrimary
-import com.bernaferrari.quietguard.ui.theme.GreenPrimary
-import com.bernaferrari.quietguard.ui.theme.IndigoPrimary
-import com.bernaferrari.quietguard.ui.theme.LimePrimary
-import com.bernaferrari.quietguard.ui.theme.OrangePrimary
-import com.bernaferrari.quietguard.ui.theme.PinkPrimary
-import com.bernaferrari.quietguard.ui.theme.PurplePrimary
-import com.bernaferrari.quietguard.ui.theme.Teal500
+import com.bernaferrari.quietguard.ui.theme.DynamicThemeSwatchColor
+import com.bernaferrari.quietguard.ui.theme.THEME_DEFAULT
+import com.bernaferrari.quietguard.ui.theme.platformDynamicColorScheme
+import com.bernaferrari.quietguard.ui.theme.resolveThemeName
 import com.bernaferrari.quietguard.ui.theme.spacing
+import com.bernaferrari.quietguard.ui.theme.themeSwatchOptions
 
 import com.bernaferrari.quietguard.ui.icons.Icon
 import androidx.compose.material3.Icon as Material3Icon
@@ -207,7 +204,8 @@ fun SettingsScreen(
         updateWidgets?.invoke()
     }
 
-    var showHostImportHint by remember { mutableStateOf(false) }
+    var hostImportResult by remember { mutableStateOf<Boolean?>(null) }
+    val importHostsFile = rememberHostsFileImporter { hostImportResult = it }
     var updateCheckInProgress by remember { mutableStateOf(false) }
     var updateCheckStatus by remember { mutableStateOf<String?>(null) }
     var updateCheckVersion by remember { mutableStateOf<String?>(null) }
@@ -299,21 +297,31 @@ fun SettingsScreen(
         ) {
 
             if (section == null) {
-                val currentTheme = str("theme", "teal")
-                val dynamicSwatchColor = Teal500
-                val themeChoices = buildList {
-                    if (PlatformContext.isAndroid()) add(Pair("dynamic", null as Color?))
-                    add(Pair("teal", Teal500 as Color?))
-                    add(Pair("cyan", CyanPrimary as Color?))
-                    add(Pair("blue", BluePrimary as Color?))
-                    add(Pair("indigo", IndigoPrimary as Color?))
-                    add(Pair("purple", PurplePrimary as Color?))
-                    add(Pair("pink", PinkPrimary as Color?))
-                    add(Pair("orange", OrangePrimary as Color?))
-                    add(Pair("amber", AmberPrimary as Color?))
-                    add(Pair("lime", LimePrimary as Color?))
-                    add(Pair("green", GreenPrimary as Color?))
-                }
+                val currentTheme = resolveThemeName(str("theme", THEME_DEFAULT))
+                val themeChoices = themeSwatchOptions()
+                val dynamicSwatchColor =
+                    platformDynamicColorScheme(isDark = false)?.primary ?: DynamicThemeSwatchColor
+
+                QuickFirewallControls(
+                    wifiAllowed = !bool("whitelist_wifi", true),
+                    mobileAllowed = !bool("whitelist_other", true),
+                    onToggleWifi = {
+                        updateFlag(
+                            "whitelist_wifi",
+                            !bool("whitelist_wifi", true),
+                            reload = true,
+                        )
+                    },
+                    onToggleMobile = {
+                        updateFlag(
+                            "whitelist_other",
+                            !bool("whitelist_other", true),
+                            reload = true,
+                        )
+                    },
+                )
+
+                SettingsDirectory(onOpenSection = onOpenSection)
 
                 SettingsGroup(title = stringResource(Res.string.setting_section_appearance)) {
                     item { first, last ->
@@ -341,14 +349,13 @@ fun SettingsScreen(
                             )
                             val selectedIndex =
                                 modeOptions.indexOfFirst { it.first == appearanceMode }
-                            FlowRow(
+                            Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(spacing.default),
                                 horizontalArrangement = Arrangement.spacedBy(
                                     ButtonGroupDefaults.ConnectedSpaceBetween,
                                 ),
-                                verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
                             ) {
                                 modeOptions.forEachIndexed { index, (mode, label, icon) ->
                                     val selected = index == selectedIndex
@@ -375,9 +382,9 @@ fun SettingsScreen(
                                             contentColor =
                                                 MaterialTheme.colorScheme.onSurfaceVariant,
                                         ),
-                                        modifier = Modifier.semantics {
-                                            role = Role.RadioButton
-                                        },
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .semantics { role = Role.RadioButton },
                                     ) {
                                         Icon(
                                             icon =
@@ -392,6 +399,8 @@ fun SettingsScreen(
                                         Text(
                                             text = label,
                                             style = MaterialTheme.typography.labelLarge,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
                                         )
                                     }
                                 }
@@ -414,10 +423,11 @@ fun SettingsScreen(
                                 ),
                                 verticalArrangement = Arrangement.spacedBy(0.dp),
                             ) {
-                                themeChoices.forEach { (theme, seedColor) ->
+                                themeChoices.forEach { option ->
+                                    val theme = option.id
                                     ThemeSwatch(
                                         theme = theme,
-                                        seedColor = seedColor,
+                                        seedColor = option.seedColor,
                                         isSelected = currentTheme == theme,
                                         isEnabled = true,
                                         dynamicColor = dynamicSwatchColor,
@@ -431,77 +441,11 @@ fun SettingsScreen(
                         }
                     }
                 }
-
-                QuickFirewallControls(
-                    wifiAllowed = !bool("whitelist_wifi", true),
-                    mobileAllowed = !bool("whitelist_other", true),
-                    onToggleWifi = {
-                        updateFlag(
-                            "whitelist_wifi",
-                            !bool("whitelist_wifi", true),
-                            reload = true,
-                        )
-                    },
-                    onToggleMobile = {
-                        updateFlag(
-                            "whitelist_other",
-                            !bool("whitelist_other", true),
-                            reload = true,
-                        )
-                    },
-                )
-
-                SettingsDirectory(onOpenSection = onOpenSection)
             }
 
             // Firewall Section
             if (section == SettingsSection.Firewall) {
                 SettingsGroup {
-                    item { first, last ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(2.dp),
-                        ) {
-                            FirewallTile(
-                                allowedIcon = MaterialSymbols.Filled.Wifi,
-                                blockedIcon = MaterialSymbols.Filled.WifiOff,
-                                label = stringResource(Res.string.title_wifi),
-                                allowed = !bool("whitelist_wifi", true),
-                                onToggle = {
-                                    updateFlag(
-                                        "whitelist_wifi",
-                                        !bool("whitelist_wifi", true),
-                                        reload = true,
-                                    )
-                                },
-                                shape = groupPairTileShape(
-                                    isLeadingTile = true,
-                                    isFirst = first,
-                                    isLast = last,
-                                ),
-                                modifier = Modifier.weight(1f),
-                            )
-                            FirewallTile(
-                                allowedIcon = MaterialSymbols.Outlined.MobiledataArrows,
-                                blockedIcon = MaterialSymbols.Outlined.MobiledataOff,
-                                label = stringResource(Res.string.title_mobile),
-                                allowed = !bool("whitelist_other", true),
-                                onToggle = {
-                                    updateFlag(
-                                        "whitelist_other",
-                                        !bool("whitelist_other", true),
-                                        reload = true,
-                                    )
-                                },
-                                shape = groupPairTileShape(
-                                    isLeadingTile = false,
-                                    isFirst = first,
-                                    isLast = last,
-                                ),
-                                modifier = Modifier.weight(1f),
-                            )
-                        }
-                    }
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_whitelist_roaming),
@@ -851,59 +795,61 @@ fun SettingsScreen(
                     }
                 }
 
-                // Single button with dropdown for hosts file operations
-                Box {
-                    var showHostsMenu by remember { mutableStateOf(false) }
+                // Download is the primary action; importing a local file is Android-only.
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                ) {
                     FilledTonalButton(
-                        onClick = { showHostsMenu = true },
+                        onClick = { NetGuardPlatform.hosts.startHostsDownload() },
+                        shapes = ButtonDefaults.shapes(),
+                        modifier = Modifier.weight(1f),
                     ) {
                         Icon(icon = MaterialSymbols.Filled.Download, contentDescription = null)
                         Spacer(modifier = Modifier.width(spacing.small))
-                        Text(text = stringResource(Res.string.setting_section_hosts))
+                        Text(
+                            text = stringResource(Res.string.setting_hosts_download),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
-                    DropdownMenu(
-                        expanded = showHostsMenu,
-                        onDismissRequest = { showHostsMenu = false },
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(Res.string.setting_hosts)) },
-                            leadingIcon = {
-                                Icon(
-                                    MaterialSymbols.Filled.Download,
-                                    contentDescription = null,
+                    if (importHostsFile != null) {
+                        Box {
+                            var showImportMenu by remember { mutableStateOf(false) }
+                            OutlinedButton(
+                                onClick = { showImportMenu = true },
+                                shapes = ButtonDefaults.shapes(),
+                            ) {
+                                Icon(icon = MaterialSymbols.Filled.UploadFile, contentDescription = null)
+                                Spacer(modifier = Modifier.width(spacing.small))
+                                Text(text = stringResource(Res.string.hosts_import_action))
+                            }
+                            DropdownMenu(
+                                expanded = showImportMenu,
+                                onDismissRequest = { showImportMenu = false },
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(Res.string.setting_hosts)) },
+                                    leadingIcon = {
+                                        Icon(MaterialSymbols.Filled.UploadFile, contentDescription = null)
+                                    },
+                                    onClick = {
+                                        showImportMenu = false
+                                        importHostsFile(false)
+                                    },
                                 )
-                            },
-                            onClick = {
-                                showHostsMenu = false
-                                viewModel.importHosts { showHostImportHint = it }
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(Res.string.setting_hosts_append)) },
-                            leadingIcon = {
-                                Icon(
-                                    MaterialSymbols.Filled.Download,
-                                    contentDescription = null,
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(Res.string.setting_hosts_append)) },
+                                    leadingIcon = {
+                                        Icon(MaterialSymbols.Filled.PlaylistAdd, contentDescription = null)
+                                    },
+                                    onClick = {
+                                        showImportMenu = false
+                                        importHostsFile(true)
+                                    },
                                 )
-                            },
-                            onClick = {
-                                showHostsMenu = false
-                                viewModel.importHosts { showHostImportHint = it }
-                            },
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(Res.string.setting_hosts_download)) },
-                            leadingIcon = {
-                                Icon(
-                                    MaterialSymbols.Filled.Download,
-                                    contentDescription = null,
-                                )
-                            },
-                            onClick = {
-                                showHostsMenu = false
-                                NetGuardPlatform.hosts.startHostsDownload()
-                            },
-                        )
+                            }
+                        }
                     }
                 }
             }
@@ -939,16 +885,26 @@ fun SettingsScreen(
         }
     } // end Scaffold
 
-    if (showHostImportHint) {
+    hostImportResult?.let { success ->
         AlertDialog(
-            onDismissRequest = { showHostImportHint = false },
+            onDismissRequest = { hostImportResult = null },
             confirmButton = {
-                TextButton(onClick = { showHostImportHint = false }) {
+                TextButton(onClick = { hostImportResult = null }) {
                     Text(text = stringResource(Res.string.menu_ok))
                 }
             },
-            title = { Text(text = stringResource(Res.string.setting_hosts)) },
-            text = { Text(text = stringResource(Res.string.summary_block_domains)) },
+            title = {
+                Text(
+                    text = stringResource(
+                        if (success) Res.string.hosts_import_done else Res.string.hosts_import_failed,
+                    ),
+                )
+            },
+            text = if (success) {
+                { Text(text = stringResource(Res.string.summary_block_domains)) }
+            } else {
+                null
+            },
         )
     }
 }

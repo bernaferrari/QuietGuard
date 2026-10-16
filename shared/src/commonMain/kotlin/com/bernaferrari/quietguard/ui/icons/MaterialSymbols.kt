@@ -80,6 +80,16 @@ object MaterialSymbols {
         val Public: MaterialIcon get() = MaterialIcon(filledPublic)
         val ContentCopy: MaterialIcon get() = MaterialIcon(filledContentCopy)
         val MoreVert: MaterialIcon get() = MaterialIcon(filledMoreVert)
+        val AppBlocking: MaterialIcon get() = MaterialIcon(filledAppBlocking)
+        val ReceiptLong: MaterialIcon get() = MaterialIcon(filledReceiptLong)
+        val Rule: MaterialIcon get() = MaterialIcon(filledRule)
+        val Schedule: MaterialIcon get() = MaterialIcon(filledSchedule)
+        val DeleteSweep: MaterialIcon get() = MaterialIcon(filledDeleteSweep)
+        val UploadFile: MaterialIcon get() = MaterialIcon(filledUploadFile)
+        val PlaylistAdd: MaterialIcon get() = MaterialIcon(filledPlaylistAdd)
+        val ArrowForward: MaterialIcon get() = MaterialIcon(filledArrowForward)
+        val GppGood: MaterialIcon get() = MaterialIcon(filledGppGood)
+        val Router: MaterialIcon get() = MaterialIcon(filledRouter)
     }
 
     object Outlined {
@@ -100,6 +110,8 @@ object MaterialSymbols {
         val Lock: MaterialIcon get() = MaterialIcon(outlinedLock)
         val Notifications: MaterialIcon get() = MaterialIcon(outlinedNotifications)
         val ContentCopy: MaterialIcon get() = MaterialIcon(outlinedContentCopy)
+        val AppBlocking: MaterialIcon get() = MaterialIcon(outlinedAppBlocking)
+        val ReceiptLong: MaterialIcon get() = MaterialIcon(outlinedReceiptLong)
     }
 
     object AutoMirrored {
@@ -112,6 +124,7 @@ object MaterialSymbols {
             val OpenInNew: MaterialIcon get() = MaterialIcon(filledOpenInNew, autoMirror = true)
             val Send: MaterialIcon get() = MaterialIcon(filledSend, autoMirror = true)
             val Undo: MaterialIcon get() = MaterialIcon(filledUndo, autoMirror = true)
+            val ArrowForward: MaterialIcon get() = MaterialIcon(filledArrowForward, autoMirror = true)
         }
     }
 }

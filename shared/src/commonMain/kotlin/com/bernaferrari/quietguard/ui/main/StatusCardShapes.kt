@@ -24,13 +24,6 @@ internal fun rememberStatusBadgeShape(progress: Float): Shape {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-internal fun rememberStatusCardShape(progress: Float): Shape {
-    val morph = remember { Morph(start = MaterialShapes.Square, end = MaterialShapes.Gem) }
-    return rememberMorphShape(morph = morph, progress = progress)
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
 private fun rememberMorphShape(
     morph: Morph,
     progress: Float,

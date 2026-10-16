@@ -11,7 +11,9 @@ import com.bernaferrari.quietguard.generated.resources.action_back
 import com.bernaferrari.quietguard.generated.resources.action_clear_access_history
 import com.bernaferrari.quietguard.generated.resources.section_access_history
 import com.bernaferrari.quietguard.generated.resources.menu_launch
-import com.bernaferrari.quietguard.generated.resources.menu_settings
+import com.bernaferrari.quietguard.generated.resources.menu_app_info
+import com.bernaferrari.quietguard.generated.resources.menu_clear
+import com.bernaferrari.quietguard.ui.util.ConfirmDestructiveDialog
 import com.bernaferrari.quietguard.generated.resources.setting_options
 import com.bernaferrari.quietguard.generated.resources.setting_reset_to_value
 import com.bernaferrari.quietguard.generated.resources.setting_section_advanced
@@ -33,7 +35,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,6 +65,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -77,6 +81,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
+import com.bernaferrari.quietguard.ui.theme.spatialSpec
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.IntOffset
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.unit.lerp
 import com.bernaferrari.quietguard.domain.FirewallRule
@@ -88,8 +96,9 @@ import com.bernaferrari.quietguard.platform.launchApp
 import com.bernaferrari.quietguard.platform.openAppDetails
 import com.bernaferrari.quietguard.ui.components.AppIcon
 import com.bernaferrari.quietguard.ui.components.FirewallTile
+import com.bernaferrari.quietguard.ui.components.groupItemShape
+import com.bernaferrari.quietguard.ui.components.groupPairTileShape
 import com.bernaferrari.quietguard.ui.theme.spacing
-import com.bernaferrari.quietguard.ui.theme.LocalMotion
 
 import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialIcon
@@ -113,9 +122,10 @@ fun AppRuleDetailScreen(
     }
 
     val appName = rule.name ?: rule.packageName.orEmpty()
+    var confirmClearAccess by remember { mutableStateOf(false) }
     val canLaunch = PlatformContext.isAndroid() && rule.packageName != null
     val updateRule: ((FirewallRule) -> FirewallRule) -> Unit = { transform ->
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
         onUpdateRule(transform)
     }
 
@@ -205,11 +215,10 @@ fun AppRuleDetailScreen(
                                 current.copy(wifi_blocked = !current.wifi_blocked)
                             }
                         },
-                        shape = detailPairTileShape(
+                        shape = groupPairTileShape(
                             isLeadingTile = true,
-                            isFirstRow = true,
-                            isLastRow = true,
-                            baseShape = MaterialTheme.shapes.small,
+                            isFirst = true,
+                            isLast = true,
                         ),
                         modifier = Modifier.weight(1f),
                     )
@@ -223,11 +232,10 @@ fun AppRuleDetailScreen(
                                 current.copy(other_blocked = !current.other_blocked)
                             }
                         },
-                        shape = detailPairTileShape(
+                        shape = groupPairTileShape(
                             isLeadingTile = false,
-                            isFirstRow = true,
-                            isLastRow = true,
-                            baseShape = MaterialTheme.shapes.small,
+                            isFirst = true,
+                            isLast = true,
                         ),
                         modifier = Modifier.weight(1f),
                     )
@@ -339,34 +347,46 @@ fun AppRuleDetailScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     ActionRow(
                         icon = MaterialSymbols.Filled.Info,
-                        label = stringResource(Res.string.menu_settings),
+                        label = stringResource(Res.string.menu_app_info),
                         isFirst = true,
+                        isLast = !canLaunch && !hasAccessHistory,
                         onClick = {
                             rule.packageName?.let { openAppDetails(it) }
                         },
                     )
-                    ActionRow(
-                        icon = MaterialSymbols.AutoMirrored.Filled.Launch,
-                        label = stringResource(Res.string.menu_launch),
-                        enabled = canLaunch,
-                        isLast = !hasAccessHistory,
-                        onClick = { rule.packageName?.let { launchApp(it) } },
-                    )
+                    if (canLaunch) {
+                        ActionRow(
+                            icon = MaterialSymbols.AutoMirrored.Filled.Launch,
+                            label = stringResource(Res.string.menu_launch),
+                            isLast = !hasAccessHistory,
+                            onClick = { rule.packageName?.let { launchApp(it) } },
+                        )
+                    }
                     if (hasAccessHistory) {
                         ActionRow(
                             icon = MaterialSymbols.Filled.Delete,
                             label = stringResource(Res.string.action_clear_access_history),
                             isLast = true,
                             tint = MaterialTheme.colorScheme.error,
-                            onClick = {
-                                detailViewModel.clearAccess(rule.uid)
-                            },
+                            showChevron = false,
+                            onClick = { confirmClearAccess = true },
                         )
                     }
                 }
             }
 
         }
+    }
+
+    if (confirmClearAccess) {
+        ConfirmDestructiveDialog(
+            title = stringResource(Res.string.action_clear_access_history),
+            confirmLabel = stringResource(Res.string.menu_clear),
+            icon = MaterialSymbols.Filled.DeleteSweep,
+            message = appName,
+            onConfirm = { detailViewModel.clearAccess(rule.uid) },
+            onDismiss = { confirmClearAccess = false },
+        )
     }
 }
 
@@ -382,13 +402,8 @@ private fun ToggleRow(
     onReset: () -> Unit,
     onCheckedChange: (Boolean) -> Unit,
 ) {
-    val motion = LocalMotion.current
     val isCustomized = checked != defaultChecked
-    val shape = detailSettingsItemShape(
-        isFirst = isFirst,
-        isLast = isLast,
-        baseShape = MaterialTheme.shapes.small,
-    )
+    val shape = groupItemShape(isFirst, isLast)
     val containerColor =
         if (checked) MaterialTheme.colorScheme.primaryContainer
         else MaterialTheme.colorScheme.surfaceContainerLow
@@ -432,7 +447,7 @@ private fun ToggleRow(
                     style = MaterialTheme.typography.bodyLarge,
                     color = labelColor,
                     modifier = Modifier.weight(1f),
-                    maxLines = 1,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Switch(
@@ -441,44 +456,18 @@ private fun ToggleRow(
                 )
             }
         }
+        val enterSpec = spatialSpec<IntSize>()
+        val enterOffsetSpec = spatialSpec<IntOffset>()
+        val exitSpec = fastEffectsSpec<IntSize>()
+        val exitOffsetSpec = fastEffectsSpec<IntOffset>()
         AnimatedVisibility(
             visible = isCustomized,
-            enter = expandHorizontally(
-                animationSpec = tween(
-                    durationMillis = motion.durationMedium,
-                    easing = motion.easingDecelerate,
-                ),
-                expandFrom = Alignment.End,
-            ) + slideInHorizontally(
-                animationSpec = tween(
-                    durationMillis = motion.durationMedium,
-                    easing = motion.easingDecelerate,
-                ),
-                initialOffsetX = { width -> width / 3 },
-            ) + fadeIn(
-                animationSpec = tween(
-                    durationMillis = motion.durationFast,
-                    easing = motion.easingDecelerate,
-                ),
-            ),
-            exit = shrinkHorizontally(
-                animationSpec = tween(
-                    durationMillis = motion.durationFast,
-                    easing = motion.easingAccelerate,
-                ),
-                shrinkTowards = Alignment.End,
-            ) + slideOutHorizontally(
-                animationSpec = tween(
-                    durationMillis = motion.durationFast,
-                    easing = motion.easingAccelerate,
-                ),
-                targetOffsetX = { width -> width / 3 },
-            ) + fadeOut(
-                animationSpec = tween(
-                    durationMillis = motion.durationFast,
-                    easing = motion.easingAccelerate,
-                ),
-            ),
+            enter = expandHorizontally(enterSpec, expandFrom = Alignment.End) +
+                slideInHorizontally(enterOffsetSpec) { width -> width / 3 } +
+                fadeIn(fastEffectsSpec()),
+            exit = shrinkHorizontally(exitSpec, shrinkTowards = Alignment.End) +
+                slideOutHorizontally(exitOffsetSpec) { width -> width / 3 } +
+                fadeOut(fastEffectsSpec()),
         ) {
             Row {
                 Spacer(modifier = Modifier.size(4.dp))
@@ -519,18 +508,14 @@ private fun ActionRow(
     isFirst: Boolean = false,
     isLast: Boolean = false,
     enabled: Boolean = true,
+    showChevron: Boolean = true,
     tint: Color = MaterialTheme.colorScheme.primary,
 ) {
-    val shape = detailSettingsItemShape(
-        isFirst = isFirst,
-        isLast = isLast,
-        baseShape = MaterialTheme.shapes.small,
-    )
+    val shape = groupItemShape(isFirst, isLast)
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = shape,
-        color = if (enabled) MaterialTheme.colorScheme.surfaceContainerLow
-        else MaterialTheme.colorScheme.surfaceContainerLowest,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
         Row(
             modifier = Modifier
@@ -556,54 +541,17 @@ private fun ActionRow(
                 else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
                 modifier = Modifier.weight(1f),
             )
-            Icon(
-                icon = MaterialSymbols.Filled.ChevronRight,
-                contentDescription = null,
-                tint = if (enabled) MaterialTheme.colorScheme.onSurfaceVariant
-                else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
-                modifier = Modifier.size(20.dp),
-            )
+            if (showChevron) {
+                Icon(
+                    icon = MaterialSymbols.Filled.ChevronRight,
+                    contentDescription = null,
+                    tint = if (enabled) MaterialTheme.colorScheme.onSurfaceVariant
+                    else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
+                    modifier = Modifier.size(20.dp),
+                )
+            }
         }
     }
-}
-
-@Composable
-private fun detailSettingsItemShape(
-    isFirst: Boolean,
-    isLast: Boolean,
-    baseShape: Shape,
-): Shape {
-    if (!isFirst && !isLast) {
-        return baseShape
-    }
-    val base = baseShape as? RoundedCornerShape ?: return baseShape
-    val emphasis = MaterialTheme.shapes.large as? RoundedCornerShape ?: return baseShape
-    return RoundedCornerShape(
-        topStart = if (isFirst) emphasis.topStart else base.topStart,
-        topEnd = if (isFirst) emphasis.topEnd else base.topEnd,
-        bottomEnd = if (isLast) emphasis.bottomEnd else base.bottomEnd,
-        bottomStart = if (isLast) emphasis.bottomStart else base.bottomStart,
-    )
-}
-
-@Composable
-private fun detailPairTileShape(
-    isLeadingTile: Boolean,
-    isFirstRow: Boolean,
-    isLastRow: Boolean,
-    baseShape: Shape,
-): Shape {
-    if (!isFirstRow && !isLastRow) {
-        return baseShape
-    }
-    val base = baseShape as? RoundedCornerShape ?: return baseShape
-    val emphasis = MaterialTheme.shapes.large as? RoundedCornerShape ?: return baseShape
-    return RoundedCornerShape(
-        topStart = if (isLeadingTile && isFirstRow) emphasis.topStart else base.topStart,
-        topEnd = if (!isLeadingTile && isFirstRow) emphasis.topEnd else base.topEnd,
-        bottomEnd = if (!isLeadingTile && isLastRow) emphasis.bottomEnd else base.bottomEnd,
-        bottomStart = if (isLeadingTile && isLastRow) emphasis.bottomStart else base.bottomStart,
-    )
 }
 
 @Composable

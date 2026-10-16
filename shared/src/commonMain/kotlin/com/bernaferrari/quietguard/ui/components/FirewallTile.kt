@@ -4,8 +4,6 @@ import com.bernaferrari.quietguard.ui.icons.MaterialIcon
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -39,6 +37,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import com.bernaferrari.quietguard.ui.theme.spatialSpec
 
 /**
  * A beautiful, compact tappable tile for firewall allow/block rules.
@@ -77,25 +77,25 @@ fun FirewallTile(
     val containerColor by animateColorAsState(
         targetValue = if (blocked) MaterialTheme.colorScheme.errorContainer
         else MaterialTheme.colorScheme.surfaceContainerLow,
-        animationSpec = tween(400, easing = FastOutSlowInEasing),
+        animationSpec = effectsSpec(),
         label = "ftBg",
     )
     val contentColor by animateColorAsState(
         targetValue = if (blocked) MaterialTheme.colorScheme.onErrorContainer
         else MaterialTheme.colorScheme.onSurface,
-        animationSpec = tween(400),
+        animationSpec = effectsSpec(),
         label = "ftTitle",
     )
     val secondaryColor by animateColorAsState(
         targetValue = if (blocked) MaterialTheme.colorScheme.error
         else MaterialTheme.colorScheme.onSurfaceVariant,
-        animationSpec = tween(400),
+        animationSpec = effectsSpec(),
         label = "ftDetail",
     )
     val iconContainerColor by animateColorAsState(
         targetValue = if (blocked) MaterialTheme.colorScheme.error.copy(alpha = 0.2f)
         else MaterialTheme.colorScheme.surfaceContainerHigh,
-        animationSpec = tween(400),
+        animationSpec = effectsSpec(),
         label = "ftIconBg",
     )
     val iconColor = if (blocked) {
@@ -195,7 +195,7 @@ private fun animateCorner(
 
     val currentDp by androidx.compose.animation.core.animateDpAsState(
         targetValue = if (blocked) targetDp else baseDp,
-        animationSpec = tween(400, easing = FastOutSlowInEasing),
+        animationSpec = spatialSpec(),
         label = "cornerAnim"
     )
     return CornerSize(currentDp)

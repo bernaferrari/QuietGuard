@@ -19,12 +19,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MediumFlexibleTopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -62,6 +61,7 @@ import com.bernaferrari.quietguard.generated.resources.ui_filter_all
 import com.bernaferrari.quietguard.generated.resources.ui_loading
 import com.bernaferrari.quietguard.platform.DnsEntry
 import com.bernaferrari.quietguard.platform.showToast
+import com.bernaferrari.quietguard.ui.components.ConnectedToggleButtonRow
 import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.ui.icons.Icon
 import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
@@ -70,6 +70,7 @@ import com.bernaferrari.quietguard.ui.screens.vm.DnsViewModel
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
 import com.bernaferrari.quietguard.ui.theme.spacing
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
+import com.bernaferrari.quietguard.ui.util.ConfirmDestructiveDialog
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -88,6 +89,7 @@ fun DnsScreen(
     val completedMessage = stringResource(Res.string.msg_completed)
     val invalidMessage = stringResource(Res.string.msg_invalid)
     var showActions by remember { mutableStateOf(false) }
+    var confirmClear by remember { mutableStateOf(false) }
     var refreshTurns by remember { mutableIntStateOf(0) }
     var refreshAnimating by remember { mutableStateOf(false) }
     val refreshRotation by animateFloatAsState(
@@ -107,9 +109,12 @@ fun DnsScreen(
         viewModel.refresh()
     }
 
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            MediumFlexibleTopAppBar(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -151,7 +156,7 @@ fun DnsScreen(
                                     DropdownMenuItem(
                                         text = { Text(stringResource(Res.string.menu_cleanup)) },
                                         leadingIcon = {
-                                            Icon(icon = MaterialSymbols.Filled.Tune, contentDescription = null)
+                                            Icon(icon = MaterialSymbols.Filled.DeleteSweep, contentDescription = null)
                                         },
                                         onClick = {
                                             showActions = false
@@ -189,13 +194,14 @@ fun DnsScreen(
                                     },
                                     onClick = {
                                         showActions = false
-                                        viewModel.clearAll()
+                                        confirmClear = true
                                     },
                                 )
                             }
                         }
                     }
                 },
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { contentPadding ->
@@ -244,6 +250,16 @@ fun DnsScreen(
             }
         }
     }
+
+    if (confirmClear) {
+        ConfirmDestructiveDialog(
+            title = stringResource(Res.string.ui_dns_title),
+            confirmLabel = stringResource(Res.string.menu_clear),
+            icon = MaterialSymbols.Filled.DeleteSweep,
+            onConfirm = viewModel::clearAll,
+            onDismiss = { confirmClear = false },
+        )
+    }
 }
 
 @Composable
@@ -262,27 +278,18 @@ private fun DnsResults(
             .padding(horizontal = spacing.default),
         verticalArrangement = Arrangement.spacedBy(spacing.small),
     ) {
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = spacing.small),
-        ) {
-            val options = listOf(
-                DnsListFilter.All to stringResource(Res.string.ui_filter_all),
-                DnsListFilter.Active to stringResource(Res.string.ui_dns_active),
-                DnsListFilter.Expired to stringResource(Res.string.ui_dns_expired),
-            )
-            options.forEachIndexed { index, (value, label) ->
-                SegmentedButton(
-                    selected = filter == value,
-                    onClick = { onFilterChanged(value) },
-                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Text(text = label, maxLines = 1)
-                }
-            }
-        }
+        val options = listOf(
+            DnsListFilter.All to stringResource(Res.string.ui_filter_all),
+            DnsListFilter.Active to stringResource(Res.string.ui_dns_active),
+            DnsListFilter.Expired to stringResource(Res.string.ui_dns_expired),
+        )
+        ConnectedToggleButtonRow(
+            options = options,
+            selected = options.first { it.first == filter },
+            onSelect = { onFilterChanged(it.first) },
+            label = { it.second },
+            modifier = Modifier.padding(top = spacing.small),
+        )
 
         if (filteredEntries.isEmpty()) {
             Box(modifier = Modifier.weight(1f)) {

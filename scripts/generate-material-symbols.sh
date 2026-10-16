@@ -21,16 +21,18 @@ readonly FILLED_ICONS=(
   arrow_back smartphone block chevron_right undo shield cloud settings equalizer
   delete play_arrow brightness_auto camera_alt email dark_mode signal_cellular_alt
   headset close public content_copy more_vert
+  app_blocking receipt_long rule schedule delete_sweep upload_file playlist_add
+  arrow_forward gpp_good router
 )
 
 readonly OUTLINED_ICONS=(
   light_mode check_circle info block shield settings brightness_auto dark_mode public
   mobiledata_arrows mobiledata_off wifi smartphone signal_cellular_alt lock notifications
-  content_copy
+  content_copy app_blocking receipt_long
 )
 
 readonly AUTO_MIRRORED_FILLED_ICONS=(
-  arrow_back chat forward launch list open_in_new send undo
+  arrow_back chat forward launch list open_in_new send undo arrow_forward
 )
 
 CHECK_ONLY=0

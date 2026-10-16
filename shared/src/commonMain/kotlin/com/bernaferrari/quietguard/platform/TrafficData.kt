@@ -92,7 +92,6 @@ expect fun registerUpdateCheckListener(onResult: (status: String?, version: Stri
 
 expect fun exportDnsToFile(onComplete: (success: Boolean, error: String?) -> Unit)
 
-expect fun importHostsFromFile(onComplete: (success: Boolean) -> Unit)
 
 data class AccessEntry(
     val time: Long,

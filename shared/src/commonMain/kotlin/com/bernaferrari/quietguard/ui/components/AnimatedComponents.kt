@@ -6,7 +6,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,7 +21,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import com.bernaferrari.quietguard.ui.theme.LocalMotion
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
+import com.bernaferrari.quietguard.ui.theme.spatialSpec
 
 /**
  * Animated expand/collapse container for collapsible sections.
@@ -34,20 +35,15 @@ fun ExpandableContent(
     modifier: Modifier = Modifier,
     content: @Composable AnimatedVisibilityScope.() -> Unit,
 ) {
-    val motion = LocalMotion.current
     AnimatedVisibility(
         visible = expanded,
         modifier = modifier,
-        enter = fadeIn(
-            animationSpec = tween(motion.durationMedium, easing = motion.easingStandard)
-        ) + expandVertically(
-            animationSpec = tween(motion.durationMedium, easing = motion.easingEmphasized),
+        enter = fadeIn(animationSpec = effectsSpec()) + expandVertically(
+            animationSpec = spatialSpec(),
             expandFrom = Alignment.Top
         ),
-        exit = fadeOut(
-            animationSpec = tween(motion.durationFast, easing = motion.easingAccelerate)
-        ) + shrinkVertically(
-            animationSpec = tween(motion.durationMedium, easing = motion.easingStandard),
+        exit = fadeOut(animationSpec = fastEffectsSpec()) + shrinkVertically(
+            animationSpec = effectsSpec(),
             shrinkTowards = Alignment.Top
         ),
         content = content,
@@ -63,12 +59,11 @@ fun FadeInContent(
     modifier: Modifier = Modifier,
     content: @Composable AnimatedVisibilityScope.() -> Unit,
 ) {
-    val motion = LocalMotion.current
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
-        enter = fadeIn(tween(motion.durationMedium, easing = motion.easingDecelerate)),
-        exit = fadeOut(tween(motion.durationFast, easing = motion.easingAccelerate)),
+        enter = fadeIn(effectsSpec()),
+        exit = fadeOut(fastEffectsSpec()),
         content = content,
     )
 }
@@ -127,10 +122,9 @@ fun Modifier.animateContentHeight(): Modifier = this.animateContentSize(
  */
 @Composable
 fun animatedRotation(expanded: Boolean): Float {
-    val motion = LocalMotion.current
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
-        animationSpec = tween(motion.durationMedium, easing = motion.easingStandard),
+        animationSpec = spatialSpec(),
         label = "iconRotation"
     )
     return rotation

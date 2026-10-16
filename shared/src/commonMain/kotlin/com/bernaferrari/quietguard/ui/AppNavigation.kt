@@ -9,6 +9,8 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Box
@@ -29,7 +31,9 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -74,8 +78,8 @@ private enum class NavDestination(
     val unselectedIcon: MaterialIcon = selectedIcon,
 ) {
     HomeTab(Home, Res.string.menu_home, MaterialSymbols.Filled.Shield, MaterialSymbols.Outlined.Shield),
-    AppsTab(Apps, Res.string.menu_firewall, MaterialSymbols.Filled.Tune),
-    LogsTab(Logs, Res.string.menu_log, MaterialSymbols.AutoMirrored.Filled.List),
+    AppsTab(Apps, Res.string.menu_firewall, MaterialSymbols.Filled.AppBlocking, MaterialSymbols.Outlined.AppBlocking),
+    LogsTab(Logs, Res.string.menu_log, MaterialSymbols.Filled.ReceiptLong, MaterialSymbols.Outlined.ReceiptLong),
     SettingsTab(
         Settings,
         Res.string.menu_settings,
@@ -113,8 +117,21 @@ fun AppNavigation(
         directive = paneScaffoldDirective,
     )
     val motion = LocalMotion.current
-    // Global NavDisplay defaults (same motion as before). Detail entries no longer need
-    // per-route transition metadata — see navigation-3/animate-destinations.
+    // Tab bar switches replace the stack; they must not inherit the detail slide.
+    var tabTransition by remember { mutableStateOf(false) }
+    // Global NavDisplay defaults. Detail entries no longer need per-route transition
+    // metadata — see navigation-3/animate-destinations. Root tabs cross-fade.
+    val fadeMillis = if (motion.reducedMotion) 0 else motion.durationFast
+    val fadeTransition = remember(motion) {
+        ContentTransform(
+            targetContentEnter = fadeIn(
+                animationSpec = tween(durationMillis = fadeMillis, easing = motion.easingDecelerate),
+            ),
+            initialContentExit = fadeOut(
+                animationSpec = tween(durationMillis = fadeMillis, easing = motion.easingStandard),
+            ),
+        )
+    }
     val forwardTransition = remember(motion) {
         ContentTransform(
             targetContentEnter = slideInHorizontally(
@@ -159,6 +176,7 @@ fun AppNavigation(
     }
 
     fun popBackStack() {
+        tabTransition = false
         if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
     }
 
@@ -167,17 +185,33 @@ fun AppNavigation(
         backStack.addAll(keys.toList())
     }
 
+    fun selectedTabFor(current: NavKey?): AppNavKey? {
+        val appKey = current as? AppNavKey ?: return null
+        return when (appKey) {
+            is AppRuleDetail -> Apps
+            Dns, Forwarding, Pro, is SettingsDetail -> Settings
+            else -> appKey
+        }
+    }
+
     fun selectRoot(destination: AppNavKey) {
+        val current = backStack.lastOrNull() as? AppNavKey
+        val currentTab = selectedTabFor(current)
+        val nextTab = selectedTabFor(destination)
+        if (current == destination && currentTab == nextTab) return
+        tabTransition = currentTab != nextTab
         setStack(*canonicalStackFor(destination).toTypedArray())
     }
 
     fun push(destination: AppNavKey) {
+        tabTransition = false
         if (backStack.lastOrNull() != destination) {
             backStack.add(destination)
         }
     }
 
     fun openFirewallDetail(uid: Int) {
+        tabTransition = false
         val currentDetail = backStack.lastOrNull() as? AppRuleDetail
         if (currentDetail?.uid == uid) {
             return
@@ -190,15 +224,6 @@ fun AppNavigation(
             setStack(Home, Apps)
         }
         backStack.add(AppRuleDetail(uid))
-    }
-
-    fun selectedTabFor(current: NavKey?): AppNavKey? {
-        val appKey = current as? AppNavKey ?: return null
-        return when (appKey) {
-            is AppRuleDetail -> Apps
-            Dns, Forwarding, Pro, is SettingsDetail -> Settings
-            else -> appKey
-        }
     }
 
     @Composable
@@ -272,9 +297,9 @@ fun AppNavigation(
                     rememberSaveableStateHolderNavEntryDecorator(),
                     rememberViewModelStoreNavEntryDecorator(),
                 ),
-                transitionSpec = { forwardTransition },
-                popTransitionSpec = { popTransition },
-                predictivePopTransitionSpec = { popTransition },
+                transitionSpec = { if (tabTransition) fadeTransition else forwardTransition },
+                popTransitionSpec = { if (tabTransition) fadeTransition else popTransition },
+                predictivePopTransitionSpec = { if (tabTransition) fadeTransition else popTransition },
                 entryProvider =
                     entryProvider {
                         entry<Home> {
@@ -290,7 +315,7 @@ fun AppNavigation(
                                         StatePlaceholder(
                                             title = stringResource(Res.string.ui_apps_title),
                                             message = stringResource(Res.string.home_apps_hint),
-                                            icon = MaterialSymbols.Filled.Tune,
+                                            icon = MaterialSymbols.Outlined.AppBlocking,
                                         )
                                     },
                                 ),

@@ -1,10 +1,5 @@
 package com.bernaferrari.quietguard.ui.util
 
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,16 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
@@ -63,8 +58,9 @@ fun LoadErrorPlaceholder(
 
 /**
  * A reusable placeholder component for empty, loading, and error states.
- * Features subtle pulse animation during loading for a professional feel.
+ * Uses the expressive shape-morphing [LoadingIndicator] while loading.
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun StatePlaceholder(
     title: String,
@@ -83,24 +79,6 @@ fun StatePlaceholder(
     val spacing = MaterialTheme.spacing
     val motion = LocalMotion.current
 
-    // Subtle pulse animation for loading state only.
-    val pulseAlpha =
-        if (isLoading && !motion.reducedMotion) {
-            val infiniteTransition = rememberInfiniteTransition(label = "loadingPulse")
-            val animatedAlpha by infiniteTransition.animateFloat(
-                initialValue = 0.6f,
-                targetValue = 1f,
-                animationSpec = infiniteRepeatable(
-                    animation = tween(motion.durationSlow, easing = motion.easingStandard),
-                    repeatMode = RepeatMode.Reverse,
-                ),
-                label = "pulseAlpha",
-            )
-            animatedAlpha
-        } else {
-            1f
-        }
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -118,12 +96,14 @@ fun StatePlaceholder(
                     modifier = Modifier.size(64.dp),
                     contentAlignment = Alignment.Center,
                 ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(34.dp)
-                            .alpha(pulseAlpha),
-                        strokeWidth = 3.dp,
-                    )
+                    if (motion.reducedMotion) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(34.dp),
+                            strokeWidth = 3.dp,
+                        )
+                    } else {
+                        LoadingIndicator(modifier = Modifier.size(64.dp))
+                    }
                 }
             } else {
                 val iconContainerColor = when (tone) {

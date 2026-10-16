@@ -206,10 +206,6 @@ actual fun exportDnsToFile(onComplete: (success: Boolean, error: String?) -> Uni
     onComplete(false, "Export not available")
 }
 
-actual fun importHostsFromFile(onComplete: (success: Boolean) -> Unit) {
-    onComplete(false)
-}
-
 actual suspend fun loadAccessEntries(uid: Int): List<AccessEntry> =
     withContext(Dispatchers.IO) {
         val result = mutableListOf<AccessEntry>()

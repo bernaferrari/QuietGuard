@@ -24,18 +24,18 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.MediumFlexibleTopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,12 +44,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bernaferrari.quietguard.ui.components.ConnectedToggleButtonRow
 import com.bernaferrari.quietguard.ui.components.groupItemShape
 import com.bernaferrari.quietguard.ui.components.AppIcon
 import com.bernaferrari.quietguard.domain.FirewallRule
@@ -59,7 +62,9 @@ import com.bernaferrari.quietguard.platform.loadAllRulesForPicker
 import com.bernaferrari.quietguard.ui.screens.vm.ForwardingListFilter
 import com.bernaferrari.quietguard.ui.screens.vm.ForwardingViewModel
 import com.bernaferrari.quietguard.ui.theme.spacing
+import com.bernaferrari.quietguard.ui.util.ConfirmDestructiveDialog
 import com.bernaferrari.quietguard.ui.util.StatePlaceholder
+import com.bernaferrari.quietguard.platform.loadAppDisplayInfo
 import com.bernaferrari.quietguard.ui.util.LoadErrorPlaceholder
 import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.action_back
@@ -99,10 +104,14 @@ fun ForwardingScreen(
     val protocolFilter = fwdUi.protocolFilter
     val showDialog = fwdUi.showAddDialog
     val filteredEntries = fwdUi.filtered
+    var pendingDelete by remember { mutableStateOf<ForwardingEntry?>(null) }
+
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            MediumFlexibleTopAppBar(
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -111,7 +120,12 @@ fun ForwardingScreen(
                         )
                     }
                 },
-                title = { Text(text = stringResource(Res.string.ui_forwarding_title)) },
+                title = {
+                    Text(
+                        text = stringResource(Res.string.ui_forwarding_title),
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
                 actions = {
                     IconButton(onClick = { viewModel.setShowAddDialog(true) }) {
                         Icon(
@@ -120,6 +134,7 @@ fun ForwardingScreen(
                         )
                     }
                 },
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { padding ->
@@ -155,25 +170,26 @@ fun ForwardingScreen(
                     )
                 }
 
-                filteredEntries.isEmpty() -> {
-                    ForwardingResults(
-                        entries = filteredEntries,
-                        protocolFilter = protocolFilter,
-                        onFilterChanged = viewModel::setProtocolFilter,
-                        onDelete = viewModel::deleteForward,
-                    )
-                }
-
                 else -> {
                     ForwardingResults(
                         entries = filteredEntries,
                         protocolFilter = protocolFilter,
                         onFilterChanged = viewModel::setProtocolFilter,
-                        onDelete = viewModel::deleteForward,
+                        onDelete = { pendingDelete = it },
                     )
                 }
             }
         }
+    }
+
+    pendingDelete?.let { entry ->
+        ConfirmDestructiveDialog(
+            title = "${entry.dport} → ${entry.raddr}:${entry.rport}",
+            confirmLabel = stringResource(Res.string.menu_delete),
+            icon = MaterialSymbols.Filled.Delete,
+            onConfirm = { viewModel.deleteForward(entry) },
+            onDismiss = { pendingDelete = null },
+        )
     }
 
     if (showDialog) {
@@ -201,27 +217,18 @@ private fun ForwardingResults(
             .padding(horizontal = spacing.default),
         verticalArrangement = Arrangement.spacedBy(spacing.small),
     ) {
-        SingleChoiceSegmentedButtonRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = spacing.small),
-        ) {
-            val options = listOf(
-                ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
-                ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
-                ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
-            )
-            options.forEachIndexed { index, (value, label) ->
-                SegmentedButton(
-                    selected = protocolFilter == value,
-                    onClick = { onFilterChanged(value) },
-                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Text(text = label, maxLines = 1)
-                }
-            }
-        }
+        val options = listOf(
+            ForwardingListFilter.All to stringResource(Res.string.ui_filter_all),
+            ForwardingListFilter.Udp to stringResource(Res.string.menu_protocol_udp),
+            ForwardingListFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
+        )
+        ConnectedToggleButtonRow(
+            options = options,
+            selected = options.first { it.first == protocolFilter },
+            onSelect = { onFilterChanged(it.first) },
+            label = { it.second },
+            modifier = Modifier.padding(top = spacing.small),
+        )
 
         if (entries.isEmpty()) {
             Box(modifier = Modifier.weight(1f)) {
@@ -264,6 +271,10 @@ private fun ForwardingEntryCard(
 ) {
     val spacing = MaterialTheme.spacing
     val protocolLabel = NetGuardPlatform.uiHelpers.getProtocolName(entry.protocol, 0, false)
+    val uidFallback = stringResource(Res.string.title_ruid) + ": ${entry.ruid}"
+    val appLabel = remember(entry.ruid, uidFallback) {
+        loadAppDisplayInfo(entry.ruid, uidFallback).label
+    }
 
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -316,7 +327,7 @@ private fun ForwardingEntryCard(
                         shape = MaterialTheme.shapes.extraLarge,
                     ) {
                         Text(
-                            text = stringResource(Res.string.title_ruid) + ": ${entry.ruid}",
+                            text = appLabel,
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(
                                 horizontal = spacing.small,
@@ -337,7 +348,7 @@ private fun ForwardingEntryCard(
                         maxLines = 1,
                     )
                     Icon(
-                        icon = MaterialSymbols.Filled.ChevronRight,
+                        icon = MaterialSymbols.AutoMirrored.Filled.ArrowForward,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(18.dp),
@@ -351,18 +362,18 @@ private fun ForwardingEntryCard(
                 }
             }
 
-            IconButton(onClick = onDelete) {
-                Surface(
-                    shape = MaterialTheme.shapes.small,
-                    color = MaterialTheme.colorScheme.errorContainer,
-                ) {
-                    Icon(
-                        icon = MaterialSymbols.Filled.Delete,
-                        contentDescription = stringResource(Res.string.menu_delete),
-                        tint = MaterialTheme.colorScheme.onErrorContainer,
-                        modifier = Modifier.padding(6.dp),
-                    )
-                }
+            FilledTonalIconButton(
+                onClick = onDelete,
+                shapes = IconButtonDefaults.shapes(),
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                ),
+            ) {
+                Icon(
+                    icon = MaterialSymbols.Filled.Delete,
+                    contentDescription = stringResource(Res.string.menu_delete),
+                )
             }
         }
     }
@@ -409,21 +420,13 @@ private fun ForwardingAddDialog(
         title = { Text(text = stringResource(Res.string.ui_forwarding_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(spacing.medium)) {
-                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                    protocolNames.forEachIndexed { index, name ->
-                        SegmentedButton(
-                            selected = protocolIndex == index,
-                            onClick = { protocolIndex = index },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = protocolNames.size,
-                            ),
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Text(text = name, maxLines = 1)
-                        }
-                    }
-                }
+                ConnectedToggleButtonRow(
+                    options = protocolNames.indices.toList(),
+                    selected = protocolIndex,
+                    onSelect = { protocolIndex = it },
+                    label = { protocolNames[it] },
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                )
 
                 TextField(
                     value = dport,

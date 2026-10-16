@@ -32,6 +32,7 @@ import com.bernaferrari.quietguard.generated.resources.settings_hosts_summary
 import com.bernaferrari.quietguard.generated.resources.settings_more
 import com.bernaferrari.quietguard.generated.resources.settings_network_summary
 import com.bernaferrari.quietguard.generated.resources.settings_quick_controls
+import com.bernaferrari.quietguard.generated.resources.settings_quick_controls_summary
 import com.bernaferrari.quietguard.generated.resources.settings_about_summary
 import com.bernaferrari.quietguard.generated.resources.setting_section_advanced
 import com.bernaferrari.quietguard.generated.resources.setting_section_background
@@ -61,7 +62,15 @@ internal fun QuickFirewallControls(
 ) {
     val spacing = MaterialTheme.spacing
     Column(verticalArrangement = Arrangement.spacedBy(spacing.small)) {
-        SettingsSubheader(stringResource(Res.string.settings_quick_controls))
+        Column {
+            SettingsSubheader(stringResource(Res.string.settings_quick_controls))
+            Text(
+                text = stringResource(Res.string.settings_quick_controls_summary),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = spacing.default),
+            )
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(2.dp),
@@ -116,7 +125,7 @@ private enum class SettingsDestination(
         SettingsSection.Firewall,
         Res.string.setting_section_firewall,
         Res.string.settings_firewall_summary,
-        MaterialSymbols.Outlined.Shield,
+        MaterialSymbols.Filled.Rule,
     ),
     Advanced(
         SettingsSection.Advanced,
@@ -128,25 +137,25 @@ private enum class SettingsDestination(
         SettingsSection.Hosts,
         Res.string.setting_section_hosts,
         Res.string.settings_hosts_summary,
-        MaterialSymbols.Filled.Download,
+        MaterialSymbols.Filled.Dns,
     ),
     Network(
         SettingsSection.Network,
         Res.string.setting_section_network,
         Res.string.settings_network_summary,
-        MaterialSymbols.Filled.Public,
+        MaterialSymbols.Filled.Router,
     ),
     Background(
         SettingsSection.Background,
         Res.string.setting_section_background,
         Res.string.settings_background_summary,
-        MaterialSymbols.Filled.Refresh,
+        MaterialSymbols.Filled.Schedule,
     ),
     About(
         SettingsSection.About,
         Res.string.menu_about,
         Res.string.settings_about_summary,
-        MaterialSymbols.Filled.Code,
+        MaterialSymbols.Outlined.Info,
     ),
 }
 

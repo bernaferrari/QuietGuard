@@ -99,22 +99,15 @@ fun NetGuardTheme(
     content: @Composable () -> Unit,
 ) {
     val seedColor = ThemeSeeds[themeName] ?: Teal500
+    val wallpaperScheme =
+        if (dynamicColor && themeName == "dynamic") platformDynamicColorScheme(darkTheme) else null
     val colorScheme =
-        if (dynamicColor && themeName == "dynamic") {
-            dynamicColorScheme(
-                seedColor = seedColor,
-                isDark = darkTheme,
-                style = PaletteStyle.TonalSpot,
-                specVersion = ColorSpec.SpecVersion.SPEC_2025,
-            )
-        } else {
-            dynamicColorScheme(
-                seedColor = seedColor,
-                isDark = darkTheme,
-                style = PaletteStyle.TonalSpot,
-                specVersion = ColorSpec.SpecVersion.SPEC_2025,
-            )
-        }
+        wallpaperScheme ?: dynamicColorScheme(
+            seedColor = seedColor,
+            isDark = darkTheme,
+            style = PaletteStyle.TonalSpot,
+            specVersion = ColorSpec.SpecVersion.SPEC_2025,
+        )
 
     CompositionLocalProvider(
         LocalSpacing provides Spacing(),

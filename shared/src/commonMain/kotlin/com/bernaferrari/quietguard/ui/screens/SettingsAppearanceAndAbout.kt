@@ -1,11 +1,10 @@
 package com.bernaferrari.quietguard.ui.screens
 
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -57,6 +56,8 @@ import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.ResourceItem
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import com.bernaferrari.quietguard.ui.theme.effectsSpec
+import com.bernaferrari.quietguard.ui.theme.fastEffectsSpec
 
 private const val PROJECT_GITHUB_URL = "https://github.com/bernaferrari/QuietGuard"
 private const val LINKEDIN_URL = "https://www.linkedin.com/in/bernaferrari"
@@ -249,12 +250,12 @@ internal fun ThemeSwatch(
     )
     val glowAlpha by animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,
-        animationSpec = tween(durationMillis = 240, easing = FastOutSlowInEasing),
+        animationSpec = effectsSpec(),
         label = "glow_$theme",
     )
     val iconAlpha by animateFloatAsState(
         targetValue = if (isSelected || isDynamic) 1f else 0f,
-        animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing),
+        animationSpec = fastEffectsSpec(),
         label = "icon_$theme",
     )
     val interactionSource = remember { MutableInteractionSource() }
@@ -264,17 +265,15 @@ internal fun ThemeSwatch(
         modifier = Modifier
             .size(tokenSize)
             .graphicsLayer { alpha = overallAlpha }
-            .clickable(
+            .selectable(
+                selected = isSelected,
                 enabled = isEnabled,
                 interactionSource = interactionSource,
                 indication = null,
+                role = Role.RadioButton,
                 onClick = onClick,
             )
-            .semantics {
-                role = Role.RadioButton
-                contentDescription =
-                    "$theme theme: ${if (isSelected) "selected" else "not selected"}"
-            },
+            .semantics { contentDescription = theme.replaceFirstChar { it.uppercase() } },
         contentAlignment = Alignment.Center,
     ) {
         Box(

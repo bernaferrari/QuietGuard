@@ -135,7 +135,7 @@ fun FirewallTile(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -169,7 +169,8 @@ fun FirewallTile(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = contentColor,
-                    maxLines = 1,
+                    // Two lines so a long "Mobile data" translation never truncates.
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
                 AnimatedContent(

@@ -1,1 +1,1 @@
-A simple way to block access to the internet per application
+Block Wi-Fi or mobile data app by app. No root, no account, no tracking.

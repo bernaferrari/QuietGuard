@@ -1,1 +1,1 @@
-Einfache Möglichkeit, pro Anwendung Zugriffe auf das Internet zu blockieren
+Wi-Fi oder mobile Daten pro App sperren. Ohne Root, Konto oder Tracking.

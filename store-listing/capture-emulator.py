@@ -173,10 +173,10 @@ try:
 
         go('Firewall')
         if profile == 'tablet10':
-            tap('Flashlight Plus')  # list and detail side by side
+            tap('Camera')  # list and detail side by side
         capture('02-firewall')
         if profile != 'tablet10':
-            tap('Flashlight Plus')
+            tap('Camera')
             capture('04-detail')
             adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
             time.sleep(1.2)
@@ -203,7 +203,7 @@ try:
         capture('09-home-dark')
         go('Firewall')
         if profile == 'tablet10':
-            tap('Flashlight Plus')
+            tap('Camera')
         capture('10-firewall-dark')
         night(False)
 finally:

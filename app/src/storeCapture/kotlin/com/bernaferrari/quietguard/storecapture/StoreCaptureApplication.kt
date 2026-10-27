@@ -9,16 +9,14 @@ import com.bernaferrari.quietguard.domain.RulesRepository
 import com.bernaferrari.quietguard.platform.FirewallBridge
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
 import com.bernaferrari.quietguard.platform.ProFeaturesBridge
-import com.bernaferrari.quietguard.platform.UiHelperBridge
 import com.bernaferrari.quietguard.platform.WidgetBridge
-import com.bernaferrari.quietguard.ui.components.AppIconOverrides
 import androidx.work.WorkManager
 import org.koin.android.ext.android.getKoin
 import org.koin.dsl.module
 import java.util.Calendar
 
 /**
- * Store-capture host: the real app UI over fictional apps and traffic. The firewall bridge is
+ * Store-capture host: the real app UI over the emulator's real apps, with seeded rules and traffic. The firewall bridge is
  * inert, so the VPN never starts; the app has no INTERNET permission in this build.
  */
 class StoreCaptureApplication : ApplicationEx() {
@@ -29,11 +27,10 @@ class StoreCaptureApplication : ApplicationEx() {
         val koin = getKoin()
         val preferences = koin.get<PreferencesRepository>()
         koin.loadModules(
-            listOf(module { single<RulesRepository> { FixtureRulesRepository() } }),
+            listOf(module { single<RulesRepository> { FixtureRulesRepository(installedFixtures()) } }),
             allowOverride = true,
         )
         installFixtureBridges()
-        AppIconOverrides.lookup = { fixtureByPackage[it]?.art }
 
         preferences.putBoolean("enabled", true)
         preferences.putBoolean("log", true)
@@ -46,7 +43,6 @@ class StoreCaptureApplication : ApplicationEx() {
     }
 
     private fun installFixtureBridges() {
-        val realHelpers = NetGuardPlatform.uiHelpers
         NetGuardPlatform.firewall =
             object : FirewallBridge {
                 override fun reload(reason: String, userInteraction: Boolean) {}
@@ -69,15 +65,13 @@ class StoreCaptureApplication : ApplicationEx() {
                 override fun isPurchased(sku: String) = true
                 override fun openProScreen() {}
             }
-        NetGuardPlatform.uiHelpers =
-            object : UiHelperBridge by realHelpers {
-                override fun getApplicationNames(uid: Int): List<String> =
-                    fixtureByUid[uid]?.let { listOf(it.name) } ?: realHelpers.getApplicationNames(uid)
-
-                override fun getPackageForUid(uid: Int): String? =
-                    fixtureByUid[uid]?.packageName ?: realHelpers.getPackageForUid(uid)
-            }
     }
+
+    /** The fixture apps installed on this device, with their real UIDs. */
+    private fun installedFixtures(): List<Pair<FixtureApp, Int>> =
+        fixtureApps.mapNotNull { app ->
+            runCatching { app to packageManager.getApplicationInfo(app.packageName, 0).uid }.getOrNull()
+        }
 
     /** Replaces the log and per-app access history with the fixture story, ending at 9:41 today. */
     private fun seedTraffic() {
@@ -91,7 +85,9 @@ class StoreCaptureApplication : ApplicationEx() {
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }.timeInMillis
+        val uids = installedFixtures().associate { (app, uid) -> app.packageName to uid }
         fixtureConnections.sortedByDescending { it.minutesAgo }.forEach { c ->
+            val uid = uids[c.packageName] ?: return@forEach
             val packet =
                 Packet(
                     time = end - (c.minutesAgo * 60_000).toLong(),
@@ -99,10 +95,10 @@ class StoreCaptureApplication : ApplicationEx() {
                     protocol = c.protocol,
                     flags = "S",
                     saddr = "10.1.10.1",
-                    sport = 40000 + c.uid % 1000,
+                    sport = 40000 + uid % 1000,
                     daddr = c.address,
                     dport = c.port,
-                    uid = c.uid,
+                    uid = uid,
                     allowed = c.allowed,
                 )
             db.insertLog(packet, c.domain, 1, false)
@@ -111,24 +107,24 @@ class StoreCaptureApplication : ApplicationEx() {
     }
 }
 
-private class FixtureRulesRepository : RulesRepository {
+private class FixtureRulesRepository(private val apps: List<Pair<FixtureApp, Int>>) : RulesRepository {
     private var rules: List<FirewallRule>? = null
 
     override suspend fun loadRules(refresh: Boolean): List<FirewallRule> =
-        rules ?: fixtureApps.map { app ->
+        rules ?: apps.map { (app, uid) ->
             FirewallRule(
-                uid = app.uid,
+                uid = uid,
                 packageName = app.packageName,
-                name = app.name,
+                name = NetGuardPlatform.uiHelpers.getApplicationNames(uid).firstOrNull() ?: app.packageName,
                 wifi_blocked = app.wifiBlocked,
                 other_blocked = app.mobileBlocked,
                 screen_wifi_default = false,
                 screen_other_default = false,
                 internet = true,
                 enabled = true,
-                system = app.system,
+                system = false,
             )
-        }.also { rules = it }
+        }.sortedBy { it.name?.lowercase() }.also { rules = it }
 
     override fun persistRule(rule: FirewallRule, allRules: List<FirewallRule>) {
         rules = allRules

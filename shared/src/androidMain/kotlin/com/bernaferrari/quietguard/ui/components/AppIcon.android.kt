@@ -34,11 +34,6 @@ actual fun AppIcon(
     contentDescription: String?,
     fallbackIcon: MaterialIcon?,
 ) {
-    val art = remember(packageName) { packageName?.let { AppIconOverrides.lookup?.invoke(it) } }
-    if (art != null) {
-        AppIconArtTile(art, size, cornerRadius, contentDescription, modifier)
-        return
-    }
     val context = LocalContext.current
     val shape = RoundedCornerShape(cornerRadius)
     val icon = fallbackIcon ?: MaterialSymbols.Filled.Apps

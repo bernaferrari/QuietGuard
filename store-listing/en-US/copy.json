@@ -12,12 +12,12 @@
   "log": {
     "title": "Every connection,\n*live.*",
     "body": "Which app reached which server,\nallowed or blocked.",
-    "alt": "The traffic log: a flashlight app and a game blocked from ad and tracking domains"
+    "alt": "The traffic log: Camera, Clock and Digital Wellbeing blocked from analytics domains while Gmail and Maps get through"
   },
   "detail": {
-    "title": "A flashlight\n*stays offline.*",
+    "title": "The camera\n*stays offline.*",
     "body": "Plus rules for screen-on,\nroaming and lockdown.",
-    "alt": "Flashlight Plus blocked on Wi-Fi and mobile data, with advanced rules and access history"
+    "alt": "Camera blocked on Wi-Fi and mobile data, with advanced rules and its blocked access history"
   },
   "rules": {
     "title": "Set it once.\n*Stay quiet.*",
@@ -45,7 +45,7 @@
   "tablet10/firewall": {
     "title": "Every app,\n*one tap away.*",
     "body": "The list and an app's rules,\nside by side.",
-    "alt": "QuietGuard on a landscape tablet: the app list beside Flashlight Plus, blocked on both networks"
+    "alt": "QuietGuard on a landscape tablet: the app list beside Camera, blocked on both networks"
   },
   "tablet10/appearance": {
     "alt": "Settings in light mode and the firewall in dark mode on a landscape tablet"

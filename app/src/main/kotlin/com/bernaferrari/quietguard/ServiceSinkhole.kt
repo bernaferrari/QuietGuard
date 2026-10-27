@@ -1579,11 +1579,16 @@ class ServiceSinkhole : VpnService() {
             }
         }
 
-    private val packageChangedReceiver = SinkholePackageChangeReceiver(
-        prefs = prefs,
-        onNewApplication = { uid -> notifyNewApplication(uid, false) },
-        onReload = { reason, context -> reload(reason, context, false) },
-    )
+    // Built on first registration, after the service has a Context; preferences are read per
+    // broadcast. Reading them while the service object is constructed throws, because
+    // applicationContext is still null then.
+    private val packageChangedReceiver by lazy {
+        SinkholePackageChangeReceiver(
+            preferences = { prefs },
+            onNewApplication = { uid -> notifyNewApplication(uid, false) },
+            onReload = { reason, context -> reload(reason, context, false) },
+        )
+    }
 
     fun notifyNewApplication(uid: Int, malware: Boolean) {
         if (uid < 0 || uid == Process.myUid()) {

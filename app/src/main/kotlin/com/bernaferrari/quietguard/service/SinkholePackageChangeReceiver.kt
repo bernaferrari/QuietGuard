@@ -12,9 +12,14 @@ import com.bernaferrari.quietguard.Rule
 import com.bernaferrari.quietguard.Util
 import com.bernaferrari.quietguard.data.PreferencesRepository
 
-/** Keeps package installation/removal cleanup separate from VPN lifecycle orchestration. */
+/**
+ * Keeps package installation/removal cleanup separate from VPN lifecycle orchestration.
+ *
+ * Preferences are read only when a broadcast arrives: the service creates this receiver
+ * before it has a Context, so touching preferences at construction time would crash.
+ */
 internal class SinkholePackageChangeReceiver(
-    private val prefs: PreferencesRepository,
+    private val preferences: () -> PreferencesRepository,
     private val onNewApplication: (uid: Int) -> Unit,
     private val onReload: (reason: String, context: Context) -> Unit,
 ) : BroadcastReceiver() {
@@ -36,7 +41,7 @@ internal class SinkholePackageChangeReceiver(
         Rule.clearCache(context)
         if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) &&
             IAB.isPurchased(ActivityPro.SKU_NOTIFY, context) &&
-            prefs.getBoolean("install", true)
+            preferences().getBoolean("install", true)
         ) {
             onNewApplication(intent.getIntExtra(Intent.EXTRA_UID, -1))
         }
@@ -54,6 +59,7 @@ internal class SinkholePackageChangeReceiver(
     private fun removePackageData(context: Context, intent: Intent) {
         val packageName = intent.data?.schemeSpecificPart.orEmpty()
         Log.i(TAG, "Deleting settings package=$packageName")
+        val prefs = preferences()
         PACKAGE_PREFERENCE_NAMES.forEach { name ->
             prefs.remove(PreferencesRepository.namespaced(name, packageName))
         }

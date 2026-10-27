@@ -7,3 +7,6 @@ actual fun supportsDynamicTheme(): Boolean = false
 
 @Composable
 actual fun platformDynamicColorScheme(isDark: Boolean): ColorScheme? = null
+
+@Composable
+actual fun SystemBarsAppearance(darkTheme: Boolean) {}

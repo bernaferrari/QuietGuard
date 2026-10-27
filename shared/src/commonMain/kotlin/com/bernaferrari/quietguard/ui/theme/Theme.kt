@@ -144,6 +144,7 @@ fun NetGuardAppTheme(content: @Composable () -> Unit) {
                 }
         }
     val themeName = resolveThemeName(prefs[stringPreferencesKey("theme")] ?: THEME_DEFAULT)
+    SystemBarsAppearance(darkTheme)
     NetGuardTheme(
         darkTheme = darkTheme,
         themeName = themeName,

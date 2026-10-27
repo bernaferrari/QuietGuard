@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tətbiqlərin\n*sakit rejimdə.*",
+    "body": "Android üçün şəxsi firewall.\nRoot tələb olunmur.",
+    "alt": "Firewall aktiv olan QuietGuard ana ekranı: tətbiqlər yalnız sənin icazə verdiyin kimi qoşulur"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi ya mobil,\n*hər tətbiqə.*",
+    "body": "Bir toxunuşla şəbəkəni blokla.",
+    "alt": "Firewall siyahısı: hər tətbiqin öz Wi-Fi və mobil internet açarı var, bəziləri bloklanıb"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hər bağlantı,\n*canlı.*",
+    "body": "Hansı tətbiq hansı serverə çatdı,\nicazəli və ya bloklanmış.",
+    "alt": "Trafik jurnalı: Kamera, Saat və Rəqəmsal Rifah analitika domenlərindən bloklanıb, Gmail və Maps isə keçir"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera\n*oflayn qalır.*",
+    "body": "Üstəlik ekran açıq, rouminq\nvə tam bağlama qaydaları.",
+    "alt": "Wi-Fi və mobil internetdə bloklanmış Kamera, qabaqcıl qaydalar və bloklanmış giriş tarixçəsi ilə"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Bir dəfə qur.\n*Sakit qal.*",
+    "body": "Yeni tətbiqlər üçün standartlar,\nrouminq, modem və LAN qaydaları.",
+    "alt": "Yeni tətbiqlər üçün standart giriş, rouminq və ekran üçün firewall qaydaları olan Ayarlar"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Yalnız vacib\n*olanı süz.*",
+    "body": "Yalnız bloklanmış bağlantılar,\ntətbiqlərə görə qruplaşdırılıb.",
+    "alt": "Bloklanmış bağlantılara görə süzülmüş və tətbiqlərə görə qruplaşdırılmış trafik jurnalı"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Gecə də, gündüz də\n*sakit.*",
+    "body": "İşıqlı, qaranlıq, öz rənglərin.",
+    "alt": "İşıqlı rejimdə Görünüş ayarları, yanında qaranlıq rejimdə ana ekran"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hər qayda üçün\n*yer var.*",
+    "body": "Siyahı və detallar yan-yana,\nplanşet və qatlanan cihazlarda.",
+    "alt": "Albom rejimində planşetdə QuietGuard: tətbiqlər siyahısı bir tətbiqin qaydaları ilə yan-yana, həmçinin telefon görünüşü"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "7 düymlük planşetdə işıqlı rejimdə Ayarlar, yanında qaranlıq rejimdə firewall siyahısı"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hər tətbiq\n*bir toxunuşda.*",
+    "body": "Siyahı və tətbiqin qaydaları\nyan-yana.",
+    "alt": "Albom rejimində planşetdə QuietGuard: tətbiqlər siyahısı, yanında hər iki şəbəkədə bloklanmış Kamera"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Albom rejimində planşetdə qaranlıq rejimdə firewall, qarşısında isə işıqlı rejimdə tema və rəng ayarlarını göstərən telefon"
   }
 }

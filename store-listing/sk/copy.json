@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vaše aplikácie\n*v tichosti.*",
+    "body": "Súkromný firewall pre Android.\nBez rootu.",
+    "alt": "Domovská obrazovka QuietGuard so zapnutým firewallom: aplikácie sa pripájajú len tak, ako povolíte"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi či dáta,\n*pre každú zvlášť.*",
+    "body": "Jedno ťuknutie zablokuje sieť.",
+    "alt": "Zoznam firewallu: každá aplikácia s vlastným prepínačom pre Wi-Fi a mobilné dáta, niektoré zablokované"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Každé pripojenie\n*naživo.*",
+    "body": "Ktorá aplikácia, aký server,\npovolené či zablokované.",
+    "alt": "Záznam prevádzky: Fotoaparát, Hodiny a Digitálna rovnováha zablokované pre analytické domény, zatiaľ čo Gmail a Maps prejdú"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Fotoaparát\n*zostane offline.*",
+    "body": "Plus pravidlá pre obrazovku,\nroaming a uzamknutie.",
+    "alt": "Fotoaparát zablokovaný na Wi-Fi aj mobilných dátach, s rozšírenými pravidlami a históriou zablokovaného prístupu"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Nastavte raz.\n*Majte pokoj.*",
+    "body": "Predvolené pre nové aplikácie,\nroaming, zdieľanie a LAN.",
+    "alt": "Nastavenia s predvoleným prístupom pre nové aplikácie a pravidlami firewallu pre roaming a obrazovku"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrujte to,\n*na čom záleží.*",
+    "body": "Len zablokované pripojenia,\nzoskupené podľa aplikácií.",
+    "alt": "Záznam prevádzky filtrovaný na zablokované pripojenia a zoskupený podľa aplikácií"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Pokoj vo dne\n*aj v noci.*",
+    "body": "Svetlý, tmavý a vaše farby.",
+    "alt": "Nastavenia vzhľadu vo svetlom režime vedľa domovskej obrazovky v tmavom režime"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Priestor pre\n*každé pravidlo.*",
+    "body": "Zoznam a detaily vedľa seba\nna tabletoch a skladacích.",
+    "alt": "QuietGuard na tablete na šírku so zoznamom aplikácií vedľa pravidiel aplikácie a rozložením na telefóne"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Nastavenia vo svetlom režime vedľa zoznamu firewallu v tmavom režime na 7-palcovom tablete"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Každá aplikácia\n*na jedno ťuknutie.*",
+    "body": "Zoznam a pravidlá aplikácie\nvedľa seba.",
+    "alt": "QuietGuard na tablete na šírku: zoznam aplikácií vedľa Fotoaparátu, zablokovaného v oboch sieťach"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Firewall v tmavom režime na tablete na šírku a pred ním telefón vo svetlom režime s nastaveniami motívu a farieb"
   }
 }

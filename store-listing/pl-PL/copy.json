@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Twoje aplikacje\n*w ciszy.*",
+    "body": "Prywatna zapora dla Androida.\nBez roota.",
+    "alt": "Ekran główny QuietGuard z włączoną zaporą: aplikacje łączą się tylko tak, jak na to pozwolisz"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi czy dane,\n*każda osobno.*",
+    "body": "Jedno dotknięcie blokuje sieć.",
+    "alt": "Lista zapory: każda aplikacja ma własny przełącznik Wi-Fi i danych mobilnych, niektóre są zablokowane"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Każde połączenie\n*na żywo.*",
+    "body": "Która aplikacja, z jakim serwerem,\ndozwolone czy zablokowane.",
+    "alt": "Dziennik ruchu: Aparat, Zegar i Cyfrowa równowaga zablokowane przy domenach analitycznych, a Gmail i Maps przechodzą"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Aparat\n*zostaje offline.*",
+    "body": "Do tego reguły dla ekranu,\nroamingu i blokady.",
+    "alt": "Aparat zablokowany przez Wi-Fi i dane mobilne, z zaawansowanymi regułami i historią zablokowanego dostępu"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ustaw raz.\n*Miej spokój.*",
+    "body": "Ustawienia dla nowych aplikacji,\nroaming, tethering i LAN.",
+    "alt": "Ustawienia z domyślnym dostępem dla nowych aplikacji oraz regułami zapory dla roamingu i ekranu"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtruj to,\n*co ważne.*",
+    "body": "Tylko zablokowane połączenia,\npogrupowane według aplikacji.",
+    "alt": "Dziennik ruchu przefiltrowany do zablokowanych połączeń i pogrupowany według aplikacji"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Spokój w dzień\n*i w nocy.*",
+    "body": "Jasny, ciemny i Twoje kolory.",
+    "alt": "Ustawienia wyglądu w trybie jasnym obok ekranu głównego w trybie ciemnym"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Miejsce na\n*każdą regułę.*",
+    "body": "Lista i szczegóły obok siebie\nna tabletach i składanych.",
+    "alt": "QuietGuard na tablecie w poziomie: lista aplikacji obok reguł aplikacji oraz układ na telefonie"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Ustawienia w trybie jasnym obok listy zapory w trybie ciemnym na 7-calowym tablecie"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Każda aplikacja\n*o dotknięcie.*",
+    "body": "Lista i reguły aplikacji\nobok siebie.",
+    "alt": "QuietGuard na tablecie w poziomie: lista aplikacji obok Aparatu, zablokowanego w obu sieciach"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Zapora w trybie ciemnym na tablecie w poziomie, a przed nim telefon w trybie jasnym z ustawieniami motywu i kolorów"
   }
 }

@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Dina appar,\n*i tystnad.*",
+    "body": "En privat brandvägg för Android.\nIngen root.",
+    "alt": "QuietGuards startskärm med brandväggen på: appar ansluter bara på det sätt du tillåter"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi eller mobil,\n*app för app.*",
+    "body": "Ett tryck blockerar ett nät.",
+    "alt": "Brandväggslistan: varje app med egen brytare för Wi-Fi och mobildata, några blockerade"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Varje anslutning,\n*live.*",
+    "body": "Vilken app nådde vilken server,\ntillåten eller blockerad.",
+    "alt": "Trafikloggen: Kamera, Klocka och Digitalt välmående blockerade från analysdomäner medan Gmail och Maps kommer igenom"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kameran\n*förblir offline.*",
+    "body": "Plus regler för skärm på,\nroaming och låsläge.",
+    "alt": "Kamera blockerad på Wi-Fi och mobildata, med avancerade regler och historik över blockerad åtkomst"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ställ in en gång.\n*Sen är det tyst.*",
+    "body": "Standardval för nya appar,\nroaming, internetdelning och LAN.",
+    "alt": "Inställningar med standardåtkomst för nya appar och brandväggsreglerna för roaming och skärm"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrera fram\n*det viktiga.*",
+    "body": "Bara blockerade anslutningar,\ngrupperade per app.",
+    "alt": "Trafikloggen filtrerad på blockerade anslutningar och grupperad per app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Lugn, dag\n*som natt.*",
+    "body": "Ljust, mörkt och dina färger.",
+    "alt": "Utseendeinställningar i ljust läge bredvid startskärmen i mörkt läge"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Plats för\n*varje regel.*",
+    "body": "Lista och detaljer sida vid sida\npå surfplattor och vikbara.",
+    "alt": "QuietGuard på en liggande surfplatta med applistan bredvid en apps regler, och telefonlayouten"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Inställningar i ljust läge bredvid brandväggslistan i mörkt läge på en 7-tums surfplatta"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Varje app,\n*ett tryck bort.*",
+    "body": "Listan och en apps regler,\nsida vid sida.",
+    "alt": "QuietGuard på en liggande surfplatta: applistan bredvid Kamera, blockerad på båda näten"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Brandväggen i mörkt läge på en liggande surfplatta, med en telefon i ljust läge framför som visar inställningarna för tema och färger"
   }
 }

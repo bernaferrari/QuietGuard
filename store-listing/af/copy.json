@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Jou apps,\n*op stil.*",
+    "body": "'n Private firewall vir Android.\nGeen root nodig nie.",
+    "alt": "QuietGuard se tuisskerm met die firewall aan: apps verbind net soos jy toelaat"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi of mobiel,\n*app vir app.*",
+    "body": "Een tik blokkeer enige netwerk.",
+    "alt": "Die firewall-lys: elke app met sy eie skakelaar vir Wi-Fi en mobiele data, sommige geblokkeer"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Elke verbinding,\n*regstreeks.*",
+    "body": "Watter app na watter bediener,\ntoegelaat of geblokkeer.",
+    "alt": "Die verkeerslog: Kamera, Horlosie en Digitale Welstand word van analisedomeine geblokkeer terwyl Gmail en Maps deurkom"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Die kamera\n*bly vanlyn.*",
+    "body": "Plus reëls vir skerm aan,\nswerwing en toesluit.",
+    "alt": "Kamera geblokkeer op Wi-Fi en mobiele data, met gevorderde reëls en sy geskiedenis van geblokkeerde toegang"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Stel dit een keer.\n*Bly stil.*",
+    "body": "Verstek vir nuwe apps, plus\nreëls vir swerwing, deel en LAN.",
+    "alt": "Instellings met verstektoegang vir nuwe apps, en die firewall-reëls vir swerwing en skerm"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtreer na\n*wat saak maak.*",
+    "body": "Net geblokkeerde verbindings,\ngegroepeer per app.",
+    "alt": "Die verkeerslog gefiltreer na geblokkeerde verbindings en gegroepeer per app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Rustig, dag\n*of nag.*",
+    "body": "Lig, donker, en jou kleure.",
+    "alt": "Voorkoms-instellings in ligte modus langs die tuisskerm in donker modus"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Plek vir\n*elke reël.*",
+    "body": "Lys en besonderhede langs mekaar\nop tablette en voubare toestelle.",
+    "alt": "QuietGuard op 'n tablet in landskap met die applys langs 'n app se reëls, en die foonuitleg"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Instellings in ligte modus langs die firewall-lys in donker modus op 'n 7-duim-tablet"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Elke app,\n*een tik weg.*",
+    "body": "Die lys en 'n app se reëls,\nlangs mekaar.",
+    "alt": "QuietGuard op 'n tablet in landskap: die applys langs Kamera, geblokkeer op albei netwerke"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Die firewall in donker modus op 'n tablet in landskap, met 'n foon in ligte modus voor wat die tema- en kleurinstellings wys"
   }
 }

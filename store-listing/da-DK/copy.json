@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Dine apps,\n*på lydløs.*",
+    "body": "En privat firewall til Android.\nKræver ikke root.",
+    "alt": "QuietGuards startskærm med firewallen slået til: apps opretter kun forbindelse, som du tillader"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi eller mobil,\n*app for app.*",
+    "body": "Ét tryk blokerer hvert netværk.",
+    "alt": "Firewall-listen: hver app med sin egen kontakt til Wi-Fi og mobildata, nogle blokeret"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hver forbindelse,\n*live.*",
+    "body": "Hvilken app nåede hvilken server,\ntilladt eller blokeret.",
+    "alt": "Trafikloggen: Kamera, Ur og Digital trivsel blokeret fra analysedomæner, mens Gmail og Maps slipper igennem"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kameraet\n*bliver offline.*",
+    "body": "Plus regler for tændt skærm,\nroaming og nedlukning.",
+    "alt": "Kamera blokeret på Wi-Fi og mobildata, med avancerede regler og historik over blokeret adgang"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Indstil én gang.\n*Hold ro på.*",
+    "body": "Standarder for nye apps og regler\nfor roaming, internetdeling og LAN.",
+    "alt": "Indstillinger med standardadgang for nye apps og firewallreglerne for roaming og skærm"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrer til\n*det vigtige.*",
+    "body": "Kun blokerede forbindelser,\ngrupperet efter app.",
+    "alt": "Trafikloggen filtreret på blokerede forbindelser og grupperet efter app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Rolig, dag\n*og nat.*",
+    "body": "Lyst, mørkt og dine farver.",
+    "alt": "Indstillinger for udseende i lys tilstand ved siden af startskærmen i mørk tilstand"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Plads til\n*alle regler.*",
+    "body": "Liste og detaljer side om side\npå tablets og foldbare telefoner.",
+    "alt": "QuietGuard på en tablet i liggende format med applisten ved siden af en apps regler og telefonlayoutet"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Indstillinger i lys tilstand ved siden af firewall-listen i mørk tilstand på en 7-tommers tablet"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hver app,\n*ét tryk væk.*",
+    "body": "Listen og en apps regler,\nside om side.",
+    "alt": "QuietGuard på en tablet i liggende format: applisten ved siden af Kamera, blokeret på begge netværk"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Firewallen i mørk tilstand på en tablet i liggende format med en telefon i lys tilstand foran, der viser indstillingerne for tema og farver"
   }
 }

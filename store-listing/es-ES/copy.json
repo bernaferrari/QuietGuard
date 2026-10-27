@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tus apps,\n*en silencio.*",
+    "body": "Un firewall privado para Android.\nSin root.",
+    "alt": "Inicio de QuietGuard con el firewall activado: las apps solo se conectan como tú permites"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi o móvil,\n*app por app.*",
+    "body": "Un toque bloquea cualquier red.",
+    "alt": "La lista del firewall: cada app con su propio interruptor de Wi-Fi y de datos móviles, algunas bloqueadas"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Cada conexión,\n*en directo.*",
+    "body": "Qué app llegó a qué servidor,\npermitida o bloqueada.",
+    "alt": "El registro de tráfico: Cámara, Reloj y Bienestar digital bloqueadas en dominios de analítica mientras Gmail y Maps pasan"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "La cámara\n*sigue sin red.*",
+    "body": "Y reglas para pantalla encendida,\nroaming y bloqueo total.",
+    "alt": "Cámara bloqueada en Wi-Fi y datos móviles, con reglas avanzadas y su historial de accesos bloqueados"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ajústalo una vez.\n*Y en silencio.*",
+    "body": "Valores para apps nuevas y reglas\nde roaming, anclaje de red y LAN.",
+    "alt": "Ajustes con el acceso por defecto para apps nuevas y las reglas del firewall para roaming y pantalla"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtra lo que\n*importa.*",
+    "body": "Solo conexiones bloqueadas,\nagrupadas por app.",
+    "alt": "El registro de tráfico filtrado por conexiones bloqueadas y agrupado por app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tranquila, de día\n*o de noche.*",
+    "body": "Claro, oscuro y tus colores.",
+    "alt": "Ajustes de apariencia en modo claro junto a la pantalla de inicio en modo oscuro"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Espacio para\n*cada regla.*",
+    "body": "Lista y detalles uno junto a otro\nen tablets y plegables.",
+    "alt": "QuietGuard en una tablet horizontal con la lista de apps junto a las reglas de una app, y el diseño del teléfono"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Ajustes en modo claro junto a la lista del firewall en modo oscuro en una tablet de 7 pulgadas"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Cada app,\n*a un toque.*",
+    "body": "La lista y las reglas de una app,\nuna junto a otra.",
+    "alt": "QuietGuard en una tablet horizontal: la lista de apps junto a Cámara, bloqueada en ambas redes"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "El firewall en modo oscuro en una tablet horizontal, con un teléfono en modo claro delante que muestra los ajustes de tema y color"
   }
 }

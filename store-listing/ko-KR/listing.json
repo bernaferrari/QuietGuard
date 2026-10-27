@@ -1,5 +1,5 @@
 {
-  "title": "",
-  "shortDescription": "",
-  "fullDescription": ""
+  "title": "QuietGuard: 루팅 없는 방화벽",
+  "shortDescription": "앱별로 Wi-Fi나 모바일 데이터를 차단하세요. 루팅, 계정, 추적 없이.",
+  "fullDescription": "<p><b>인터넷에 연결할 앱은 직접 정하세요.</b> QuietGuard는 루팅이 필요 없는 Android용 프라이빗 방화벽입니다. 앱마다 Wi-Fi와 모바일 데이터 스위치를 따로 두고, 누가 연결을 시도했는지 확인하고, 이 모든 것을 휴대전화 안에만 둘 수 있습니다.</p><p><b>앱마다 두 개의 스위치</b></p><ul><li>앱 목록에서 한 번 탭으로 Wi-Fi와 모바일 데이터를 각각 허용하거나 차단</li><li>동영상은 Wi-Fi를 기다리게 하고, 카메라나 키보드, 게임은 아예 연결되지 않게</li><li>목록을 검색하고, 차단된 앱이나 허용된 앱만 보고, 어떤 앱이든 열어 전체 규칙 확인</li></ul><p><b>읽기 쉬운 로그</b></p><ul><li>연결마다 앱, 도메인 또는 주소, 통과 여부를 표시</li><li>차단된 연결만 골라 앱별로 묶어 보면 몰래 외부로 통신하는 앱을 찾을 수 있습니다</li><li>새로 설치한 앱이 인터넷을 사용하려 하면 알림</li></ul><p><b>특별한 경우를 위한 규칙</b></p><ul><li>화면이 켜져 있을 때만 앱 허용</li><li>로밍 중에는 앱을 차단하거나, 믿을 수 있는 앱만 빼고 모두 잠그기</li><li>새 앱의 기본값과 시스템 앱, 테더링, 로컬 네트워크 처리 방식을 선택</li><li>광고 및 추적 도메인을 hosts 파일로 차단(선택 사항)</li></ul><p><b>낮에도 밤에도 차분하게</b></p><ul><li>라이트 또는 다크 모드의 깔끔한 Material 3 디자인, 배경화면 색상이나 직접 고른 팔레트 사용</li><li>태블릿과 폴더블 기기에서는 앱 목록과 앱 규칙을 나란히 표시</li></ul><p><b>설계부터 프라이빗</b></p><ul><li>루팅, 계정, 광고, 추적, 분석 없음</li><li>필터링은 Android의 VPN 서비스를 통해 휴대전화에서 이루어집니다. 트래픽은 QuietGuard 서버로 전송되지 않습니다</li><li>업데이트 확인은 직접 켜기 전까지 꺼져 있습니다</li></ul><p>QuietGuard는 로컬 방화벽이지 익명화 도구가 아닙니다. 어떤 앱이 연결할 수 있는지를 정할 뿐, 사용자의 위치를 숨기지는 않습니다. Android는 한 번에 하나의 VPN만 허용하므로 다른 VPN 앱과 함께 실행할 수 없습니다.</p><p>QuietGuard는 GPLv3 라이선스의 오픈소스이며, Marcel Bokhorst의 NetGuard를 기반으로 Kotlin과 Compose로 만든 새 인터페이스와 Rust로 만든 패킷 엔진을 갖추고 있습니다. 소스 코드, 위협 모델, 이슈 트래커: <a href='https://github.com/bernaferrari/QuietGuard'>github.com/bernaferrari/QuietGuard</a></p><p>Android 8.0 이상이 필요합니다.</p>"
 }

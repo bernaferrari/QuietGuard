@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Zure aplikazioak,\n*isilean.*",
+    "body": "Androiderako suhesi pribatua.\nEz du rootik behar.",
+    "alt": "QuietGuard-en hasiera suhesia aktibatuta: aplikazioak zuk baimentzen duzun moduan bakarrik konektatzen dira"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fia edo datuak,\n*aplikazioka.*",
+    "body": "Sakatu eta blokeatu sarea.",
+    "alt": "Suhesiaren zerrenda: aplikazio bakoitzak Wi-Fiaren eta datu mugikorren etengailu propioa du, batzuk blokeatuta"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Konexio guztiak,\n*zuzenean.*",
+    "body": "Zein aplikazio zein zerbitzarira,\nbaimenduta edo blokeatuta.",
+    "alt": "Trafikoaren erregistroa: Kamera, Erlojua eta Ongizate digitala blokeatuta daude analisi-domeinuetarako; Gmail eta Maps, berriz, pasatzen dira"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera\n*lineaz kanpo.*",
+    "body": "Gainera, pantaila, ibiltaritza\neta blokeo osoaren arauak.",
+    "alt": "Kamera blokeatuta Wi-Fian eta datu mugikorretan, arau aurreratuekin eta blokeatutako sarbideen historiarekin"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Konfiguratu behin.\n*Egon lasai.*",
+    "body": "Aplikazio berrien lehenespenak,\nibiltaritza, partekatzea eta LAN.",
+    "alt": "Ezarpenak, aplikazio berrientzako sarbide lehenetsiarekin eta ibiltaritzarako eta pantailarako suhesi-arauekin"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Iragazi\n*garrantzitsua.*",
+    "body": "Blokeatutako konexioak soilik,\naplikazioaren arabera taldekatuta.",
+    "alt": "Trafikoaren erregistroa, blokeatutako konexioetara iragazita eta aplikazioaren arabera taldekatuta"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Lasai, egunez\n*eta gauez.*",
+    "body": "Argia, iluna eta zure koloreak.",
+    "alt": "Itxuraren ezarpenak modu argian, hasierako pantailaren ondoan modu ilunean"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Lekua arau\n*guztientzat.*",
+    "body": "Zerrenda eta xehetasunak batera,\ntabletetan eta tolesgarrietan.",
+    "alt": "QuietGuard tableta horizontal batean, aplikazio-zerrenda aplikazio baten arauen ondoan, eta telefonoaren diseinua"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Ezarpenak modu argian, suhesiaren zerrendaren ondoan modu ilunean, 7 hazbeteko tableta batean"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Aplikazio guztiak,\n*sakatze batera.*",
+    "body": "Zerrenda eta aplikazioaren arauak,\nalboz albo.",
+    "alt": "QuietGuard tableta horizontal batean: aplikazio-zerrenda Kameraren ondoan, bi sareetan blokeatuta"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Suhesia modu ilunean tableta horizontal batean, eta aurrean telefono bat modu argian, gaiaren eta koloreen ezarpenak erakusten"
   }
 }

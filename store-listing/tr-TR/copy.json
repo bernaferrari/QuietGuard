@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Uygulamalarınız\n*artık sessiz.*",
+    "body": "Gizlilik odaklı güvenlik duvarı.\nRoot gerekmez.",
+    "alt": "Güvenlik duvarı açık QuietGuard ana ekranı: uygulamalar yalnızca izin verdiğiniz şekilde bağlanır"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi veya mobil,\n*uygulama bazında.*",
+    "body": "Tek dokunuşla ağı engelleyin.",
+    "alt": "Güvenlik duvarı listesi: her uygulamanın kendi Wi-Fi ve mobil veri anahtarı var, bazıları engellenmiş"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Her bağlantı,\n*canlı.*",
+    "body": "Hangi uygulama hangi sunucuya,\nizinli mi engelli mi.",
+    "alt": "Trafik kaydı: Kamera, Saat ve Dijital Denge analiz alan adlarında engellenirken Gmail ve Maps geçiyor"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera\n*çevrimdışı kalır.*",
+    "body": "Ekran, dolaşım ve kilitleme\niçin ek kurallar.",
+    "alt": "Wi-Fi ve mobil veride engellenmiş Kamera, gelişmiş kuralları ve engellenen erişim geçmişiyle"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Bir kez ayarlayın.\n*Rahat edin.*",
+    "body": "Yeni uygulama varsayılanları,\ndolaşım, paylaşım ve LAN.",
+    "alt": "Yeni uygulamalar için varsayılan erişimi ve dolaşım ile ekran için güvenlik duvarı kurallarını gösteren Ayarlar"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Önemli olanı\n*süzün.*",
+    "body": "Yalnızca engellenen bağlantılar,\nuygulamaya göre gruplu.",
+    "alt": "Engellenen bağlantılara göre filtrelenmiş ve uygulamaya göre gruplanmış trafik kaydı"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Gece gündüz\n*sakin.*",
+    "body": "Açık, koyu ve sizin renkleriniz.",
+    "alt": "Açık modda görünüm ayarları ve yanında koyu modda ana ekran"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Her kurala\n*yer var.*",
+    "body": "Tablet ve katlanabilirlerde\nliste ve ayrıntılar yan yana.",
+    "alt": "Yatay tablette QuietGuard: bir uygulamanın kurallarının yanında uygulama listesi ve telefon düzeni"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "7 inç tablette açık modda Ayarlar ve yanında koyu modda güvenlik duvarı listesi"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Her uygulama\n*bir dokunuş uzakta.*",
+    "body": "Liste ve uygulama kuralları\nyan yana.",
+    "alt": "Yatay tablette QuietGuard: uygulama listesi ve yanında iki ağda da engellenmiş Kamera"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Yatay tablette koyu modda güvenlik duvarı ve önünde tema ve renk ayarlarını gösteren açık modda bir telefon"
   }
 }

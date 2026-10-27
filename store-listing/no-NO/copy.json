@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Appene dine,\n*i ro.*",
+    "body": "En privat brannmur for Android.\nIngen root nødvendig.",
+    "alt": "QuietGuard-startsiden med brannmuren på: apper kobler seg bare til slik du tillater"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi eller mobil,\n*app for app.*",
+    "body": "Ett trykk blokkerer nettet du vil.",
+    "alt": "Brannmurlisten: hver app med sin egen bryter for Wi-Fi og mobildata, noen blokkert"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hver tilkobling,\n*live.*",
+    "body": "Hvilken app nådde hvilken server,\ntillatt eller blokkert.",
+    "alt": "Trafikkloggen: Kamera, Klokke og Digital balanse blokkert fra analysedomener, mens Gmail og Maps slipper gjennom"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kameraet\n*forblir offline.*",
+    "body": "Pluss regler for skjerm på,\nroaming og lockdown.",
+    "alt": "Kamera blokkert på Wi-Fi og mobildata, med avanserte regler og historikk over blokkert tilgang"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Still inn én gang.\n*Så er det stille.*",
+    "body": "Standard for nye apper, regler for\nroaming, internettdeling og LAN.",
+    "alt": "Innstillinger med standardtilgang for nye apper, og brannmurreglene for roaming og skjerm"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrer det\n*som teller.*",
+    "body": "Bare blokkerte tilkoblinger,\ngruppert etter app.",
+    "alt": "Trafikkloggen filtrert på blokkerte tilkoblinger og gruppert etter app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Rolig, dag\n*og natt.*",
+    "body": "Lyst, mørkt og dine farger.",
+    "alt": "Utseendeinnstillinger i lys modus ved siden av startsiden i mørk modus"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Plass til\n*hver regel.*",
+    "body": "Liste og detaljer side om side\npå nettbrett og sammenleggbare.",
+    "alt": "QuietGuard på et liggende nettbrett med applisten ved siden av reglene for en app, og telefonoppsettet"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Innstillinger i lys modus ved siden av brannmurlisten i mørk modus på et 7-tommers nettbrett"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hver app,\n*ett trykk unna.*",
+    "body": "Listen og reglene for en app,\nside om side.",
+    "alt": "QuietGuard på et liggende nettbrett: applisten ved siden av Kamera, blokkert på begge nett"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Brannmuren i mørk modus på et liggende nettbrett, med en telefon i lys modus foran som viser innstillingene for tema og farger"
   }
 }

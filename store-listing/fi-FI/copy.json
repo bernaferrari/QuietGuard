@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Sovelluksesi,\n*hiljaisella.*",
+    "body": "Yksityinen palomuuri Androidille.\nEi rootia.",
+    "alt": "QuietGuardin etusivu palomuuri päällä: sovellukset yhdistävät vain niin kuin sallit"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi vai mobiili,\n*sovelluksittain.*",
+    "body": "Yksi napautus estää verkon.",
+    "alt": "Palomuurilista: jokaisella sovelluksella oma Wi-Fi- ja mobiilidatakytkin, osa estetty"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Jokainen yhteys,\n*livenä.*",
+    "body": "Mikä sovellus mihin palvelimeen,\nsallittu vai estetty.",
+    "alt": "Liikenneloki: Kamera, Kello ja Digitaalinen hyvinvointi estetty analytiikkaverkkotunnuksista, kun taas Gmail ja Maps pääsevät läpi"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera pysyy\n*offline-tilassa.*",
+    "body": "Sekä säännöt näytölle,\nverkkovierailulle ja lukitukselle.",
+    "alt": "Kamera estetty Wi-Fissä ja mobiilidatassa, lisäsääntöjen ja estettyjen yhteyksien historian kanssa"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Aseta kerran.\n*Ja hiljaisuus.*",
+    "body": "Oletukset uusille sovelluksille,\nverkkovierailu, jaettu yhteys, LAN.",
+    "alt": "Asetukset, joissa uusien sovellusten oletuskäyttö ja palomuurisäännöt verkkovierailulle ja näytölle"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Suodata\n*olennainen.*",
+    "body": "Vain estetyt yhteydet,\nsovelluksittain ryhmiteltynä.",
+    "alt": "Liikenneloki suodatettuna estettyihin yhteyksiin ja ryhmiteltynä sovelluksittain"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Rauhallinen,\n*päivin ja öin.*",
+    "body": "Vaalea, tumma ja omat värisi.",
+    "alt": "Ulkoasuasetukset vaaleassa tilassa etusivun vieressä tummassa tilassa"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tilaa kaikille\n*säännöille.*",
+    "body": "Lista ja tiedot rinnakkain\ntableteilla ja taittuvilla.",
+    "alt": "QuietGuard vaakasuuntaisella tabletilla: sovelluslista sovelluksen sääntöjen vieressä sekä puhelimen asettelu"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Asetukset vaaleassa tilassa palomuurilistan vieressä tummassa tilassa 7 tuuman tabletilla"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Jokainen sovellus\n*napautuksen päässä.*",
+    "body": "Lista ja sovelluksen säännöt\nrinnakkain.",
+    "alt": "QuietGuard vaakasuuntaisella tabletilla: sovelluslista Kameran vieressä, estetty molemmissa verkoissa"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Palomuuri tummassa tilassa vaakasuuntaisella tabletilla ja sen edessä puhelin vaaleassa tilassa, jossa näkyvät teema- ja väriasetukset"
   }
 }

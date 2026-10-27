@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ứng dụng của bạn,\n*thật yên lặng.*",
+    "body": "Tường lửa riêng tư cho Android.\nKhông cần root.",
+    "alt": "Màn hình chính QuietGuard với tường lửa đang bật: ứng dụng chỉ kết nối theo cách bạn cho phép"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi hay di động,\n*từng ứng dụng.*",
+    "body": "Một chạm để chặn từng mạng.",
+    "alt": "Danh sách tường lửa: mỗi ứng dụng có công tắc Wi-Fi và dữ liệu di động riêng, một số đã bị chặn"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Mọi kết nối,\n*trực tiếp.*",
+    "body": "Ứng dụng nào đến máy chủ nào,\nđược phép hay bị chặn.",
+    "alt": "Nhật ký lưu lượng: Máy ảnh, Đồng hồ và Sức khỏe kỹ thuật số bị chặn khỏi các tên miền phân tích trong khi Gmail và Maps vẫn đi qua"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Máy ảnh\n*luôn ngoại tuyến.*",
+    "body": "Thêm quy tắc khi bật màn hình,\nchuyển vùng và khóa.",
+    "alt": "Máy ảnh bị chặn trên Wi-Fi và dữ liệu di động, kèm quy tắc nâng cao và lịch sử truy cập bị chặn"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Đặt một lần.\n*Yên tâm mãi.*",
+    "body": "Mặc định cho ứng dụng mới,\nchuyển vùng, chia sẻ kết nối, LAN.",
+    "alt": "Cài đặt với quyền truy cập mặc định cho ứng dụng mới và quy tắc tường lửa cho chuyển vùng và màn hình"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Lọc ra\n*điều quan trọng.*",
+    "body": "Chỉ kết nối bị chặn,\nnhóm theo ứng dụng.",
+    "alt": "Nhật ký lưu lượng được lọc theo kết nối bị chặn và nhóm theo ứng dụng"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Dịu mắt, ngày\n*lẫn đêm.*",
+    "body": "Sáng, tối và màu của bạn.",
+    "alt": "Cài đặt giao diện ở chế độ sáng bên cạnh màn hình chính ở chế độ tối"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Đủ chỗ cho\n*mọi quy tắc.*",
+    "body": "Danh sách và chi tiết cạnh nhau\ntrên máy tính bảng, máy gập.",
+    "alt": "QuietGuard trên máy tính bảng nằm ngang với danh sách ứng dụng cạnh quy tắc của một ứng dụng, và bố cục điện thoại"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Cài đặt ở chế độ sáng bên cạnh danh sách tường lửa ở chế độ tối trên máy tính bảng 7 inch"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Mọi ứng dụng,\n*chỉ một chạm.*",
+    "body": "Danh sách và quy tắc ứng dụng,\ncạnh nhau.",
+    "alt": "QuietGuard trên máy tính bảng nằm ngang: danh sách ứng dụng bên cạnh Máy ảnh, bị chặn trên cả hai mạng"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Tường lửa ở chế độ tối trên máy tính bảng nằm ngang, phía trước là điện thoại ở chế độ sáng hiển thị cài đặt chủ đề và màu sắc"
   }
 }

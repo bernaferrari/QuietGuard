@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Jūsu lietotnes,\n*klusumā.*",
+    "body": "Privāts ugunsmūris Android.\nBez root.",
+    "alt": "QuietGuard sākuma ekrāns ar ieslēgtu ugunsmūri: lietotnes izveido savienojumu tikai tā, kā jūs atļaujat"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi vai mobilie,\n*katrai lietotnei.*",
+    "body": "Viens pieskāriens bloķē tīklu.",
+    "alt": "Ugunsmūra saraksts: katrai lietotnei savs Wi-Fi un mobilo datu slēdzis, dažas bloķētas"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Katrs savienojums,\n*reāllaikā.*",
+    "body": "Kura lietotne, kurš serveris,\natļauts vai bloķēts.",
+    "alt": "Datplūsmas žurnāls: Kamera, Pulkstenis un Digitālā labklājība bloķētas analītikas domēniem, bet Gmail un Maps tiek cauri"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera paliek\n*bezsaistē.*",
+    "body": "Plus noteikumi ieslēgtam ekrānam,\nviesabonēšanai, bloķēšanai.",
+    "alt": "Kamera bloķēta Wi-Fi un mobilajos datos, ar papildu noteikumiem un bloķētās piekļuves vēsturi"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Iestatiet reizi.\n*Un baudiet mieru.*",
+    "body": "Jaunu lietotņu noklusējumi,\nviesabonēšana, piesaiste un LAN.",
+    "alt": "Iestatījumi ar noklusējuma piekļuvi jaunām lietotnēm un ugunsmūra noteikumiem viesabonēšanai un ekrānam"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrējiet\n*to, kas svarīgs.*",
+    "body": "Tikai bloķētie savienojumi,\ngrupēti pēc lietotnes.",
+    "alt": "Datplūsmas žurnāls, filtrēts uz bloķētajiem savienojumiem un grupēts pēc lietotnes"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Mierīgs dienā\n*un naktī.*",
+    "body": "Gaišs, tumšs un jūsu krāsas.",
+    "alt": "Izskata iestatījumi gaišajā režīmā blakus sākuma ekrānam tumšajā režīmā"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vieta\n*katram noteikumam.*",
+    "body": "Saraksts un detaļas blakus\nplanšetdatoros un salokāmajās.",
+    "alt": "QuietGuard ainavas režīma planšetdatorā ar lietotņu sarakstu blakus lietotnes noteikumiem, un tālruņa izkārtojums"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Iestatījumi gaišajā režīmā blakus ugunsmūra sarakstam tumšajā režīmā 7 collu planšetdatorā"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Katra lietotne\n*vienā pieskārienā.*",
+    "body": "Saraksts un lietotnes noteikumi,\nblakus.",
+    "alt": "QuietGuard ainavas režīma planšetdatorā: lietotņu saraksts blakus Kamerai, kas bloķēta abos tīklos"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Ugunsmūris tumšajā režīmā ainavas režīma planšetdatorā, un tā priekšā tālrunis gaišajā režīmā ar motīva un krāsu iestatījumiem"
   }
 }

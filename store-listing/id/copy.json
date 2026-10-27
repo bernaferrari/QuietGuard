@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Aplikasi Anda,\n*tetap tenang.*",
+    "body": "Firewall pribadi untuk Android.\nTanpa root.",
+    "alt": "Beranda QuietGuard dengan firewall aktif: aplikasi hanya terhubung sesuai izin Anda"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi atau seluler,\n*per aplikasi.*",
+    "body": "Sekali ketuk, jaringan diblokir.",
+    "alt": "Daftar firewall: setiap aplikasi punya tombol Wi-Fi dan data seluler sendiri, sebagian diblokir"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Setiap koneksi,\n*secara langsung.*",
+    "body": "Aplikasi mana ke server mana,\ndiizinkan atau diblokir.",
+    "alt": "Log lalu lintas: Kamera, Jam, dan Kesehatan Digital diblokir dari domain analitik, sementara Gmail dan Maps tetap lewat"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera tetap\n*offline.*",
+    "body": "Plus aturan layar menyala,\nroaming, dan lockdown.",
+    "alt": "Kamera diblokir di Wi-Fi dan data seluler, dengan aturan lanjutan dan riwayat akses yang diblokir"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Atur sekali.\n*Tetap tenang.*",
+    "body": "Default aplikasi baru, dan aturan\nroaming, tethering, serta LAN.",
+    "alt": "Setelan dengan akses default untuk aplikasi baru, serta aturan firewall untuk roaming dan layar"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filter yang\n*penting saja.*",
+    "body": "Hanya koneksi yang diblokir,\ndikelompokkan per aplikasi.",
+    "alt": "Log lalu lintas difilter ke koneksi yang diblokir dan dikelompokkan per aplikasi"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tenang, siang\n*maupun malam.*",
+    "body": "Terang, gelap, dan warna Anda.",
+    "alt": "Setelan tampilan dalam mode terang di samping layar Beranda dalam mode gelap"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ruang untuk\n*setiap aturan.*",
+    "body": "Daftar dan detail berdampingan\ndi tablet dan perangkat lipat.",
+    "alt": "QuietGuard di tablet lanskap dengan daftar aplikasi di samping aturan aplikasi, serta tata letak ponsel"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Setelan dalam mode terang di samping daftar firewall dalam mode gelap di tablet 7 inci"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Setiap aplikasi,\n*sekali ketuk.*",
+    "body": "Daftar dan aturan aplikasi,\nberdampingan.",
+    "alt": "QuietGuard di tablet lanskap: daftar aplikasi di samping Kamera, diblokir di kedua jaringan"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Firewall dalam mode gelap di tablet lanskap, dengan ponsel dalam mode terang di depannya yang menampilkan setelan tema dan warna"
   }
 }

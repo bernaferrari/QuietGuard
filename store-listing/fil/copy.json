@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ang apps mo,\n*tahimik na.*",
+    "body": "Pribadong firewall para sa Android.\nWalang root.",
+    "alt": "Home ng QuietGuard na naka-on ang firewall: kumokonekta lang ang apps sa paraang pinapayagan mo"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi o mobile,\n*kada app.*",
+    "body": "I-block ang network sa isang tap.",
+    "alt": "Ang listahan ng firewall: bawat app may sariling switch para sa Wi-Fi at mobile data, may ilang naka-block"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Bawat koneksyon,\n*live.*",
+    "body": "Aling app, aling server,\npinayagan o na-block.",
+    "alt": "Ang traffic log: naka-block ang Camera, Clock at Digital Wellbeing sa mga analytics domain habang nakakalusot ang Gmail at Maps"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ang camera,\n*laging offline.*",
+    "body": "Pati rules para sa screen-on,\nroaming at lockdown.",
+    "alt": "Naka-block ang Camera sa Wi-Fi at mobile data, kasama ang advanced rules at history ng na-block na access"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "I-set isang beses.\n*Tahimik na.*",
+    "body": "Default ng bagong apps, at rules\nsa roaming, tethering at LAN.",
+    "alt": "Settings na may default na access para sa bagong apps, at ang firewall rules para sa roaming at screen"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "I-filter ang\n*mahalaga.*",
+    "body": "Mga naka-block na koneksyon lang,\nnaka-grupo ayon sa app.",
+    "alt": "Ang traffic log na naka-filter sa mga naka-block na koneksyon at naka-grupo ayon sa app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kalmado, araw\n*man o gabi.*",
+    "body": "Light, dark, at ang kulay mo.",
+    "alt": "Appearance settings sa light mode katabi ng Home screen sa dark mode"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "May puwang\n*sa bawat rule.*",
+    "body": "Listahan at detalye magkatabi\nsa tablet at foldable.",
+    "alt": "QuietGuard sa landscape na tablet, katabi ng listahan ng apps ang rules ng isang app, at ang layout sa phone"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Settings sa light mode katabi ng listahan ng firewall sa dark mode sa 7-inch na tablet"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Bawat app,\n*isang tap lang.*",
+    "body": "Ang listahan at rules ng app,\nmagkatabi.",
+    "alt": "QuietGuard sa landscape na tablet: ang listahan ng apps katabi ng Camera, naka-block sa parehong network"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Ang firewall sa dark mode sa landscape na tablet, na may phone sa light mode sa harap na nagpapakita ng settings ng theme at kulay"
   }
 }

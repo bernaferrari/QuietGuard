@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Alkalmazásaid,\n*csendben.*",
+    "body": "Privát tűzfal Androidra.\nRoot nélkül.",
+    "alt": "A QuietGuard kezdőképernyője bekapcsolt tűzfallal: az alkalmazások csak úgy csatlakoznak, ahogy engeded"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi vagy mobil,\n*alkalmazásonként.*",
+    "body": "Egy koppintás tiltja bármelyiket.",
+    "alt": "A tűzfallista: minden alkalmazásnak saját Wi-Fi- és mobiladat-kapcsolója van, néhány tiltva"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Minden kapcsolat,\n*élőben.*",
+    "body": "Melyik alkalmazás melyik szervert\nérte el, engedve vagy tiltva.",
+    "alt": "A forgalmi napló: a Kamera, az Óra és a Digitális jóllét tiltva az analitikai domainek felé, míg a Gmail és a Maps átjut"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "A kamera\n*offline marad.*",
+    "body": "Plusz szabályok bekapcsolt\nképernyőre, roamingra, zárolásra.",
+    "alt": "A Kamera tiltva Wi-Fin és mobiladaton, a speciális szabályokkal és a tiltott hozzáférések előzményeivel"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Egyszer beállítod,\n*és csend van.*",
+    "body": "Alapok az új alkalmazásokhoz, és\nroaming, megosztás, LAN szabályai.",
+    "alt": "Beállítások az új alkalmazások alapértelmezett hozzáférésével, valamint a roaming és a képernyő tűzfalszabályaival"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Szűrj arra,\n*ami számít.*",
+    "body": "Csak a tiltott kapcsolatok,\nalkalmazás szerint csoportosítva.",
+    "alt": "A forgalmi napló a tiltott kapcsolatokra szűrve, alkalmazás szerint csoportosítva"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Nyugodt, nappal\n*és éjjel.*",
+    "body": "Világos, sötét és a te színeid.",
+    "alt": "Megjelenési beállítások világos módban a sötét módú kezdőképernyő mellett"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Hely minden\n*szabálynak.*",
+    "body": "Lista és részletek egymás mellett\ntableten és összehajthatón.",
+    "alt": "A QuietGuard fekvő tableten, az alkalmazáslista egy alkalmazás szabályai mellett, és a telefonos elrendezés"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Beállítások világos módban a sötét módú tűzfallista mellett egy 7 hüvelykes tableten"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Minden alkalmazás,\n*egy koppintásra.*",
+    "body": "A lista és egy alkalmazás\nszabályai egymás mellett.",
+    "alt": "A QuietGuard fekvő tableten: az alkalmazáslista mellett a Kamera, mindkét hálózaton tiltva"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "A tűzfal sötét módban egy fekvő tableten, előtte egy világos módú telefon a téma- és színbeállításokkal"
   }
 }

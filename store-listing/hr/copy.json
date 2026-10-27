@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vaše aplikacije,\n*u tišini.*",
+    "body": "Privatni vatrozid za Android.\nBez roota.",
+    "alt": "Početni zaslon QuietGuarda s uključenim vatrozidom: aplikacije se spajaju samo onako kako dopustite"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi ili mobilno,\n*za svaku zasebno.*",
+    "body": "Jednim dodirom blokirajte mrežu.",
+    "alt": "Popis vatrozida: svaka aplikacija s vlastitim prekidačem za Wi-Fi i mobilne podatke, neke blokirane"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Svaka veza,\n*uživo.*",
+    "body": "Koja aplikacija, koji poslužitelj,\ndopušteno ili blokirano.",
+    "alt": "Zapisnik prometa: Kamera, Sat i Digitalna dobrobit blokirani prema analitičkim domenama, dok Gmail i Maps prolaze"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera ostaje\n*izvan mreže.*",
+    "body": "Plus pravila za uključen zaslon,\nroaming i zaključavanje.",
+    "alt": "Kamera blokirana na Wi-Fi-ju i mobilnim podacima, s naprednim pravilima i poviješću blokiranih pristupa"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Postavite jednom.\n*Uživajte u miru.*",
+    "body": "Zadano za nove aplikacije, pravila\nza roaming, dijeljenje veze i LAN.",
+    "alt": "Postavke sa zadanim pristupom za nove aplikacije i pravilima vatrozida za roaming i zaslon"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrirajte\n*ono bitno.*",
+    "body": "Samo blokirane veze,\ngrupirane po aplikaciji.",
+    "alt": "Zapisnik prometa filtriran na blokirane veze i grupiran po aplikaciji"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Smireno, danju\n*i noću.*",
+    "body": "Svijetlo, tamno i vaše boje.",
+    "alt": "Postavke izgleda u svijetlom načinu uz početni zaslon u tamnom načinu"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Mjesta za\n*svako pravilo.*",
+    "body": "Popis i detalji jedno uz drugo\nna tabletu i preklopnom uređaju.",
+    "alt": "QuietGuard na tabletu u vodoravnom položaju s popisom aplikacija uz pravila aplikacije, i izgled za telefon"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Postavke u svijetlom načinu uz popis vatrozida u tamnom načinu na tabletu od 7 inča"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Svaka aplikacija,\n*na jedan dodir.*",
+    "body": "Popis i pravila aplikacije,\njedno uz drugo.",
+    "alt": "QuietGuard na tabletu u vodoravnom položaju: popis aplikacija uz Kameru, blokiranu na obje mreže"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Vatrozid u tamnom načinu na tabletu u vodoravnom položaju, a ispred njega telefon u svijetlom načinu s postavkama teme i boja"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "title": "",
-  "shortDescription": "",
-  "fullDescription": ""
+  "title": "QuietGuard: 免 root 防火墙",
+  "shortDescription": "按应用分别屏蔽 Wi-Fi 或移动数据。无需 root，无需账号，不追踪。",
+  "fullDescription": "<p><b>由你决定哪些应用可以联网。</b> QuietGuard 是一款无需 root 的 Android 隐私防火墙。为每个应用单独设置 Wi-Fi 和移动数据开关，查看谁曾尝试连接，所有数据都留在你的手机上。</p><p><b>每个应用两个开关</b></p><ul><li>在应用列表中轻点一下，即可分别允许或屏蔽 Wi-Fi 和移动数据</li><li>让视频等到连上 Wi-Fi 再加载，而相机、输入法或游戏则完全不联网</li><li>搜索列表，按已屏蔽或已允许筛选应用，打开任意应用查看全部规则</li></ul><p><b>一目了然的日志</b></p><ul><li>每条连接都显示应用、域名或地址，以及是否放行</li><li>只看被屏蔽的连接并按应用分组，找出谁在偷偷向外发送数据</li><li>新安装的应用想要联网时，你会收到通知</li></ul><p><b>应对特殊情况的规则</b></p><ul><li>仅在屏幕亮起时允许某个应用联网</li><li>漫游时屏蔽应用，或除了信任的应用外全部锁定</li><li>选择新应用的默认设置，以及系统应用、网络共享和本地网络的处理方式</li><li>可选的 hosts 文件屏蔽，拦截广告和跟踪域名</li></ul><p><b>日夜皆宁静</b></p><ul><li>简洁的 Material 3 设计，支持浅色或深色模式，可使用壁纸配色或自选调色板</li><li>在平板和折叠屏设备上，应用列表与应用规则并排显示</li></ul><p><b>隐私从设计开始</b></p><ul><li>无需 root，无需账号，无广告，不追踪，不做数据分析</li><li>过滤通过 Android 的 VPN 服务在你的手机上完成。你的流量不会发送到任何 QuietGuard 服务器</li><li>更新检查默认关闭，除非你手动开启</li></ul><p>QuietGuard 是本地防火墙，而不是匿名工具：它决定哪些应用可以连接，但不会隐藏你的位置。由于 Android 同一时间只允许一个 VPN，它无法与其他 VPN 应用同时运行。</p><p>QuietGuard 基于 GPLv3 开源，构建于 Marcel Bokhorst 的 NetGuard 之上，采用 Kotlin 和 Compose 编写的全新界面，以及 Rust 编写的数据包引擎。源代码、威胁模型和问题反馈：<a href='https://github.com/bernaferrari/QuietGuard'>github.com/bernaferrari/QuietGuard</a></p><p>需要 Android 8.0 或更高版本。</p>"
 }

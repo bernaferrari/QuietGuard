@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Jūsų programos,\n*tyliai.*",
+    "body": "Privati Android užkarda.\nNereikia root.",
+    "alt": "QuietGuard pradžios ekranas su įjungta užkarda: programos jungiasi tik taip, kaip leidžiate"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi ar mobilieji,\n*pagal programą.*",
+    "body": "Vienu palietimu blokuokite tinklą.",
+    "alt": "Užkardos sąrašas: kiekviena programa su savo Wi-Fi ir mobiliųjų duomenų jungikliu, kai kurios užblokuotos"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kiekvienas ryšys,\n*tiesiogiai.*",
+    "body": "Kuri programa, kuris serveris,\nleista ar užblokuota.",
+    "alt": "Srauto žurnalas: Kamera, Laikrodis ir Skaitmeninė gerovė užblokuotos analizės domenams, o Gmail ir Maps praeina"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kamera lieka\n*neprisijungusi.*",
+    "body": "Plius ekrano, tarptinklinio ryšio\nir užrakinimo taisyklės.",
+    "alt": "Kamera užblokuota per Wi-Fi ir mobiliuosius duomenis, su išplėstinėmis taisyklėmis ir užblokuotos prieigos istorija"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Nustatykite kartą.\n*Ir ilsėkitės.*",
+    "body": "Naujų programų nuostatos,\ntarptinklinis ryšys, modemas, LAN.",
+    "alt": "Nustatymai su numatytąja naujų programų prieiga ir užkardos taisyklėmis tarptinkliniam ryšiui bei ekranui"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtruokite\n*tai, kas svarbu.*",
+    "body": "Tik užblokuoti ryšiai,\nsugrupuoti pagal programą.",
+    "alt": "Srauto žurnalas, išfiltruotas iki užblokuotų ryšių ir sugrupuotas pagal programą"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ramu dieną\n*ir naktį.*",
+    "body": "Šviesu, tamsu ir jūsų spalvos.",
+    "alt": "Išvaizdos nustatymai šviesiu režimu šalia pradžios ekrano tamsiu režimu"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vieta kiekvienai\n*taisyklei.*",
+    "body": "Sąrašas ir detalės greta\nplanšetėse ir sulankstomuose.",
+    "alt": "QuietGuard gulsčioje planšetėje: programų sąrašas šalia programos taisyklių, ir telefono išdėstymas"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Nustatymai šviesiu režimu šalia užkardos sąrašo tamsiu režimu 7 colių planšetėje"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Kiekviena programa\n*vienu palietimu.*",
+    "body": "Sąrašas ir programos taisyklės,\ngreta.",
+    "alt": "QuietGuard gulsčioje planšetėje: programų sąrašas šalia Kameros, užblokuotos abiejuose tinkluose"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Užkarda tamsiu režimu gulsčioje planšetėje, o priekyje telefonas šviesiu režimu su temos ir spalvų nustatymais"
   }
 }

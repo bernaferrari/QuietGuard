@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Aplicațiile tale,\n*în liniște.*",
+    "body": "Un firewall privat pentru Android.\nFără root.",
+    "alt": "Ecranul principal QuietGuard cu firewallul activat: aplicațiile se conectează doar cum permiți tu"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi sau date,\n*pe aplicație.*",
+    "body": "O atingere blochează o rețea.",
+    "alt": "Lista firewallului: fiecare aplicație cu propriul comutator pentru Wi-Fi și date mobile, unele blocate"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Fiecare conexiune,\n*în direct.*",
+    "body": "Ce aplicație, ce server,\npermis sau blocat.",
+    "alt": "Jurnalul de trafic: Cameră, Ceas și Bunăstare digitală blocate la domenii de analiză, în timp ce Gmail și Maps trec"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Camera\n*rămâne offline.*",
+    "body": "Plus reguli pentru ecran pornit,\nroaming și blocare totală.",
+    "alt": "Cameră blocată pe Wi-Fi și date mobile, cu reguli avansate și istoricul accesului blocat"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Setezi o dată.\n*Stai liniștit.*",
+    "body": "Implicite pentru aplicații noi,\nroaming, tethering și LAN.",
+    "alt": "Setări cu accesul implicit pentru aplicațiile noi și regulile firewallului pentru roaming și ecran"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrează\n*ce contează.*",
+    "body": "Doar conexiunile blocate,\ngrupate pe aplicații.",
+    "alt": "Jurnalul de trafic filtrat la conexiunile blocate și grupat pe aplicații"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Calm, zi\n*și noapte.*",
+    "body": "Luminos, întunecat, culorile tale.",
+    "alt": "Setările de aspect în modul luminos lângă ecranul principal în modul întunecat"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Loc pentru\n*fiecare regulă.*",
+    "body": "Listă și detalii alăturate\npe tablete și pliabile.",
+    "alt": "QuietGuard pe o tabletă în modul peisaj, cu lista de aplicații lângă regulile unei aplicații, și aspectul de telefon"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Setări în modul luminos lângă lista firewallului în modul întunecat pe o tabletă de 7 inchi"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Orice aplicație,\n*la o atingere.*",
+    "body": "Lista și regulile aplicației,\nalăturate.",
+    "alt": "QuietGuard pe o tabletă în modul peisaj: lista de aplicații lângă Cameră, blocată pe ambele rețele"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Firewallul în modul întunecat pe o tabletă în modul peisaj, cu un telefon în modul luminos în față care afișează setările de temă și culori"
   }
 }

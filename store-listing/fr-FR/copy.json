@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vos apps,\n*en sourdine.*",
+    "body": "Un pare-feu privé pour Android.\nSans root.",
+    "alt": "Accueil de QuietGuard avec le pare-feu activé : les apps ne se connectent que comme vous l'autorisez"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi ou mobile,\n*app par app.*",
+    "body": "Un geste bloque l'un ou l'autre.",
+    "alt": "La liste du pare-feu : chaque app avec son propre interrupteur Wi-Fi et données mobiles, certaines bloquées"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Chaque connexion,\n*en direct.*",
+    "body": "Quelle app a joint quel serveur,\nautorisée ou bloquée.",
+    "alt": "Le journal du trafic : Appareil photo, Horloge et Bien-être numérique bloqués vers des domaines d'analyse, tandis que Gmail et Maps passent"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "L'appareil photo\n*reste hors ligne.*",
+    "body": "Et des règles écran allumé,\nitinérance et verrouillage.",
+    "alt": "Appareil photo bloqué en Wi-Fi et en données mobiles, avec les règles avancées et son historique d'accès bloqués"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Réglez une fois.\n*Restez serein.*",
+    "body": "Choix par défaut, itinérance,\npartage de connexion et LAN.",
+    "alt": "Paramètres avec l'accès par défaut des nouvelles apps, et les règles du pare-feu pour l'itinérance et l'écran"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrez\n*l'essentiel.*",
+    "body": "Les connexions bloquées,\nregroupées par app.",
+    "alt": "Le journal du trafic filtré sur les connexions bloquées et regroupé par app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Serein, de jour\n*comme de nuit.*",
+    "body": "Clair, sombre, et vos couleurs.",
+    "alt": "Paramètres d'apparence en mode clair à côté de l'écran d'accueil en mode sombre"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "De la place pour\n*chaque règle.*",
+    "body": "Liste et détails côte à côte\nsur tablettes et pliables.",
+    "alt": "QuietGuard sur une tablette en paysage, la liste des apps à côté des règles d'une app, et la mise en page téléphone"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Paramètres en mode clair à côté de la liste du pare-feu en mode sombre sur une tablette 7 pouces"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Chaque app,\n*à un geste.*",
+    "body": "La liste et les règles d'une app,\ncôte à côte.",
+    "alt": "QuietGuard sur une tablette en paysage : la liste des apps à côté d'Appareil photo, bloqué sur les deux réseaux"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Le pare-feu en mode sombre sur une tablette en paysage, avec devant un téléphone en mode clair affichant les paramètres de thème et de couleurs"
   }
 }

@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Les teves apps,\n*en silenci.*",
+    "body": "Un tallafoc privat per a Android.\nSense root.",
+    "alt": "Inici de QuietGuard amb el tallafoc activat: les apps només es connecten com tu permets"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi o mòbil,\n*app per app.*",
+    "body": "Un toc bloqueja qualsevol xarxa.",
+    "alt": "La llista del tallafoc: cada app amb el seu interruptor de Wi-Fi i de dades mòbils, algunes bloquejades"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Cada connexió,\n*en directe.*",
+    "body": "Quina app va a quin servidor,\npermesa o bloquejada.",
+    "alt": "El registre de trànsit: Càmera, Rellotge i Benestar digital bloquejades per a dominis d'analítica mentre Gmail i Maps passen"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "La càmera\n*no es connecta.*",
+    "body": "I regles per a pantalla encesa,\nitinerància i bloqueig total.",
+    "alt": "Càmera bloquejada a la Wi-Fi i a les dades mòbils, amb regles avançades i el seu historial d'accessos bloquejats"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Ajusta-ho un cop.\n*I en silenci.*",
+    "body": "Valors per a apps noves i regles\nd'itinerància, compartició i LAN.",
+    "alt": "Configuració amb l'accés per defecte per a apps noves i les regles del tallafoc per a itinerància i pantalla"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtra el que\n*importa.*",
+    "body": "Només connexions bloquejades,\nagrupades per app.",
+    "alt": "El registre de trànsit filtrat per connexions bloquejades i agrupat per app"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Tranquil·la,\n*de dia o de nit.*",
+    "body": "Clar, fosc i els teus colors.",
+    "alt": "Configuració d'aparença en mode clar al costat de la pantalla d'inici en mode fosc"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Espai per a\n*cada regla.*",
+    "body": "Llista i detalls alhora\nen tauletes i plegables.",
+    "alt": "QuietGuard en una tauleta horitzontal amb la llista d'apps al costat de les regles d'una app, i el disseny del telèfon"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Configuració en mode clar al costat de la llista del tallafoc en mode fosc en una tauleta de 7 polzades"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Cada app,\n*a un toc.*",
+    "body": "La llista i les regles d'una app,\nuna al costat de l'altra.",
+    "alt": "QuietGuard en una tauleta horitzontal: la llista d'apps al costat de Càmera, bloquejada a les dues xarxes"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "El tallafoc en mode fosc en una tauleta horitzontal, amb un telèfon en mode clar al davant que mostra la configuració del tema i els colors"
   }
 }

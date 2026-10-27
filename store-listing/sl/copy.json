@@ -1,53 +1,53 @@
 {
   "home": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vaše aplikacije\n*v tišini.*",
+    "body": "Zasebni požarni zid za Android.\nBrez roota.",
+    "alt": "Začetni zaslon QuietGuard z vklopljenim požarnim zidom: aplikacije se povezujejo le tako, kot dovolite"
   },
   "firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Wi-Fi ali podatki,\n*za vsako posebej.*",
+    "body": "En dotik blokira omrežje.",
+    "alt": "Seznam požarnega zidu: vsaka aplikacija s svojim stikalom za Wi-Fi in mobilne podatke, nekatere blokirane"
   },
   "log": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vsaka povezava\n*v živo.*",
+    "body": "Katera aplikacija, kam,\ndovoljeno ali blokirano.",
+    "alt": "Dnevnik prometa: Fotoaparat, Ura in Digitalno dobro počutje blokirani za analitične domene, Gmail in Maps pa prideta skozi"
   },
   "detail": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Fotoaparat\n*brez povezave.*",
+    "body": "Plus pravila za zaslon,\ngostovanje in zaklep.",
+    "alt": "Fotoaparat blokiran na Wi-Fi in mobilnih podatkih, z naprednimi pravili in zgodovino blokiranega dostopa"
   },
   "rules": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Nastavite enkrat.\n*Mirno spite.*",
+    "body": "Privzeto za nove aplikacije,\ngostovanje, deljenje in LAN.",
+    "alt": "Nastavitve s privzetim dostopom za nove aplikacije in pravili požarnega zidu za gostovanje in zaslon"
   },
   "filter": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Filtrirajte,\n*kar šteje.*",
+    "body": "Samo blokirane povezave,\nzdružene po aplikacijah.",
+    "alt": "Dnevnik prometa, filtriran na blokirane povezave in združen po aplikacijah"
   },
   "appearance": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Mirno podnevi\n*in ponoči.*",
+    "body": "Svetlo, temno in vaše barve.",
+    "alt": "Nastavitve videza v svetlem načinu ob začetnem zaslonu v temnem načinu"
   },
   "tablet": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Prostor za\n*vsako pravilo.*",
+    "body": "Seznam in podrobnosti skupaj\nna tablicah in pregibnih.",
+    "alt": "QuietGuard na ležeče obrnjeni tablici s seznamom aplikacij ob pravilih aplikacije ter postavitev na telefonu"
   },
   "tablet7/appearance": {
-    "alt": ""
+    "alt": "Nastavitve v svetlem načinu ob seznamu požarnega zidu v temnem načinu na 7-palčni tablici"
   },
   "tablet10/firewall": {
-    "title": "",
-    "body": "",
-    "alt": ""
+    "title": "Vsaka aplikacija\n*le dotik stran.*",
+    "body": "Seznam in pravila aplikacije,\ndrug ob drugem.",
+    "alt": "QuietGuard na ležeče obrnjeni tablici: seznam aplikacij ob Fotoaparatu, blokiranem v obeh omrežjih"
   },
   "tablet10/appearance": {
-    "alt": ""
+    "alt": "Požarni zid v temnem načinu na ležeče obrnjeni tablici, pred njo pa telefon v svetlem načinu z nastavitvami teme in barv"
   }
 }

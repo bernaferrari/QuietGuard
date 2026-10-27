@@ -75,6 +75,17 @@ export default {
     if (slide.layout === 'compare') {
       // Each name sits just under its screen.
       for (const label of devices[0].node.parentElement.querySelectorAll('.device-label')) label.style.setProperty('--h', `${devices[0].box.height}px`);
+      // A scalloped "New" sticker on the top corner of each new screen.
+      for (const {spec, box, node} of devices) {
+        if (!/after/.test(spec.role || '')) continue;
+        const sticker = document.createElement('div');
+        sticker.className = 'sticker';
+        sticker.dataset.checkBounds = '';
+        sticker.innerHTML = `<svg viewBox="0 0 150 150" width="150" height="150"><g fill="#7ff3d8">${shapes.cookie(75, 75, 72)}</g>` +
+          '<text x="75" y="88" text-anchor="middle" font-family="Quiet" font-weight="750" font-size="38" fill="#062a2a">New</text></svg>';
+        Object.assign(sticker.style, {left: `${box.left + box.width - 96}px`, top: `${box.top - 82}px`});
+        node.parentElement.append(sticker);
+      }
       return;
     }
     const stacked = /stack/.test(slide.layout || '');

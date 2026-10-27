@@ -30,9 +30,10 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .phone .stack .primary{left:220px;top:-800px;width:640px}
 .phone .stack .secondary{left:220px;top:1270px;width:640px}
 
-/* Light and dark, side by side and upright. */
-.phone .duo .primary{left:36px;top:600px;width:494px}
-.phone .duo .secondary{left:550px;top:720px;width:494px}
+/* Light and dark, upright and large. The dark Home sits behind on the left; the light settings step in front on
+   the right, so its theme chips and colour swatches stay fully visible. */
+.phone .duo .primary{left:500px;top:600px;width:556px;z-index:3}
+.phone .duo .secondary{left:24px;top:720px;width:556px}
 
 /* The tablet layout, with the phone in front of it. */
 .phone .room .primary{left:44px;top:600px;width:992px}
@@ -58,6 +59,9 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .tablet10 .big .primary{left:730px;top:240px;width:1110px}
 .tablet10 .duo .primary{left:720px;top:120px;width:840px}
 .tablet10 .duo .secondary{left:1010px;top:560px;width:840px}
+/* Appearance: the firewall large in dark on the tablet, with the light phone's colour picker in front. */
+.tablet10 .room .primary{left:700px;top:150px;width:1080px}
+.tablet10 .room .secondary{left:1470px;top:470px;width:400px;z-index:3}
 
 /* README art: wide, wordless, the same field and frames as the store cards. */
 .readme .hero .left{left:250px;top:330px;width:540px}

@@ -145,16 +145,17 @@
   },
   {
    "feature": "appearance",
-   "layout": "duo",
+   "layout": "room",
    "file": "tablet10/tablet10-05-appearance.jpg",
    "devices": [
     {
-     "raw": "tablet10/05-settings.png",
+     "raw": "tablet10/10-firewall-dark.png",
      "role": "primary"
     },
     {
-     "raw": "tablet10/10-firewall-dark.png",
-     "role": "secondary"
+     "raw": "phone/07-appearance.png",
+     "role": "secondary",
+     "frame": "phone"
     }
    ]
   }

@@ -66,7 +66,7 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 /* Before and after: the same phone and apps. No device frames, just the two real screens side by side,
    the same size, on one translucent sheet per pair, each named underneath. */
 .readme .compare .device{--bezel:0px;--radius:44px;width:450px;top:110px;background:none;
-  box-shadow:0 0 0 1px #ffffff1f,0 40px 70px -30px #00161cf0}
+  box-shadow:0 0 0 5px #cfeee7}
 .readme .compare .device .screen{border-radius:44px;overflow:hidden}
 .readme .compare .pair1.before{left:150px}
 .readme .compare .pair1.after{left:650px}

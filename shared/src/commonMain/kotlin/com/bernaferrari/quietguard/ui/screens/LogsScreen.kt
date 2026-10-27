@@ -87,7 +87,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FilledTonalIconToggleButton
+import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
@@ -263,12 +263,17 @@ fun LogsScreen(
                             selected = protocolFilter,
                             onSelect = { viewModel.setProtocolFilter(it) },
                         )
-                        FilledTonalIconToggleButton(
+                        FilledIconToggleButton(
                             checked = groupMode == LogsGroupMode.ByApp,
                             onCheckedChange = {
                                 viewModel.setGroupMode(if (it) LogsGroupMode.ByApp else LogsGroupMode.Timeline)
                             },
                             shapes = IconButtonDefaults.toggleableShapes(),
+                            // Plain while off, filled only while grouping by app, so it never reads as on by mistake.
+                            colors = IconButtonDefaults.filledIconToggleButtonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            ),
                         ) {
                             Icon(
                                 icon = MaterialSymbols.Filled.Apps,

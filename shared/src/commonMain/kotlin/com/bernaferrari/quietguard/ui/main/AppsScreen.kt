@@ -34,6 +34,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
@@ -54,7 +55,9 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -673,28 +676,45 @@ private fun RuleCard(
                 )
             }
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            // The pair reads as one connected control: both 48dp toggles sit on a shared
+            // tonal track, and a blocked network fills its half with the error container.
+            Box(
+                modifier = Modifier.width(NetworkTogglePairWidth),
+                contentAlignment = Alignment.Center,
             ) {
-                NetworkToggleButton(
-                    blocked = rule.wifi_blocked,
-                    allowedIcon = MaterialSymbols.Filled.Wifi,
-                    blockedIcon = MaterialSymbols.Filled.WifiOff,
-                    contentDescription = wifiDescription,
-                    onToggle = onToggleWifi,
+                Box(
+                    modifier = Modifier
+                        .width(NetworkTogglePairWidth - 4.dp)
+                        .height(NetworkToggleTrackHeight)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
                 )
-                NetworkToggleButton(
-                    blocked = rule.other_blocked,
-                    allowedIcon = MaterialSymbols.Outlined.MobiledataArrows,
-                    blockedIcon = MaterialSymbols.Outlined.MobiledataOff,
-                    contentDescription = mobileDescription,
-                    onToggle = onToggleMobile,
-                )
+                Box(modifier = Modifier.align(Alignment.CenterStart)) {
+                    NetworkToggleButton(
+                        blocked = rule.wifi_blocked,
+                        allowedIcon = MaterialSymbols.Filled.Wifi,
+                        blockedIcon = MaterialSymbols.Filled.WifiOff,
+                        contentDescription = wifiDescription,
+                        onToggle = onToggleWifi,
+                    )
+                }
+                Box(modifier = Modifier.align(Alignment.CenterEnd)) {
+                    NetworkToggleButton(
+                        blocked = rule.other_blocked,
+                        allowedIcon = MaterialSymbols.Outlined.MobiledataArrows,
+                        blockedIcon = MaterialSymbols.Outlined.MobiledataOff,
+                        contentDescription = mobileDescription,
+                        onToggle = onToggleMobile,
+                    )
+                }
             }
         }
     }
 }
+
+/** Two 48dp toggles whose bubbles sit 40dp apart center-to-center on one 84x38dp track. */
+private val NetworkTogglePairWidth = 88.dp
+private val NetworkToggleTrackHeight = 38.dp
 
 @Composable
 private fun NetworkToggleButton(
@@ -708,17 +728,23 @@ private fun NetworkToggleButton(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val pressScale by animateFloatAsState(
-        targetValue = if (isPressed) 0.92f else 1f,
-        animationSpec = spring(
-            stiffness = Spring.StiffnessHigh,
-            dampingRatio = Spring.DampingRatioNoBouncy
-        ),
+        targetValue = if (isPressed && !motion.reducedMotion) 0.96f else 1f,
+        animationSpec = if (motion.reducedMotion) {
+            snap()
+        } else {
+            spring(
+                stiffness = Spring.StiffnessHigh,
+                dampingRatio = Spring.DampingRatioNoBouncy,
+            )
+        },
         label = "networkTogglePressScale",
     )
     val stateTransition = updateTransition(targetState = blocked, label = "networkToggleState")
     val bubbleAlpha by stateTransition.animateFloat(
         transitionSpec = {
-            if (true isTransitioningTo false) {
+            if (motion.reducedMotion) {
+                snap()
+            } else if (true isTransitioningTo false) {
                 keyframes {
                     durationMillis = motion.durationFast + 100
                     1f at 0
@@ -739,7 +765,9 @@ private fun NetworkToggleButton(
     }
     val bubbleScale by stateTransition.animateFloat(
         transitionSpec = {
-            if (true isTransitioningTo false) {
+            if (motion.reducedMotion) {
+                snap()
+            } else if (true isTransitioningTo false) {
                 keyframes {
                     durationMillis = motion.durationFast + 100
                     1f at 0
@@ -768,23 +796,22 @@ private fun NetworkToggleButton(
     } else {
         MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.9f)
     }
-    val dividerTint = if (blocked) {
-        MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.76f)
-    } else {
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-    }
     val iconScale by stateTransition.animateFloat(
         transitionSpec = {
-            spring(
-                stiffness = Spring.StiffnessMediumLow,
-                dampingRatio = Spring.DampingRatioNoBouncy,
-            )
+            if (motion.reducedMotion) {
+                snap()
+            } else {
+                spring(
+                    stiffness = Spring.StiffnessMediumLow,
+                    dampingRatio = Spring.DampingRatioNoBouncy,
+                )
+            }
         },
         label = "networkToggleIconScale",
     ) { isBlocked ->
         if (isBlocked) 1f else 0.9f
     }
-    val blockedBackground = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.88f)
+    val blockedBackground = MaterialTheme.colorScheme.errorContainer
 
     val stateLabel = stringResource(
         if (blocked) Res.string.menu_traffic_blocked else Res.string.menu_traffic_allowed,
@@ -795,8 +822,9 @@ private fun NetworkToggleButton(
         interactionSource = interactionSource,
         shape = CircleShape,
         color = Color.Transparent,
+        // 48dp hit box; the visual bubble and icon stay 34 / 18dp so the pair reads as one pill.
         modifier = Modifier
-            .size(34.dp)
+            .size(48.dp)
             .semantics {
                 role = Role.Switch
                 stateDescription = stateLabel
@@ -809,7 +837,7 @@ private fun NetworkToggleButton(
         Box(contentAlignment = Alignment.Center) {
             Box(
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(34.dp)
                     .graphicsLayer {
                         alpha = bubbleAlpha
                         scaleX = bubbleScale

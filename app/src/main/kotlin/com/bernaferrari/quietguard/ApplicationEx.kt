@@ -23,7 +23,7 @@ import org.koin.core.annotation.KoinApplication
 import org.koin.plugin.module.dsl.startKoin
 
 @KoinApplication
-class ApplicationEx : Application(), AppFunctionConfiguration.Provider {
+open class ApplicationEx : Application(), AppFunctionConfiguration.Provider {
     override val appFunctionConfiguration: AppFunctionConfiguration
         get() {
             val appFunctions = getKoin().get<AppFunctions>()

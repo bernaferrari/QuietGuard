@@ -183,6 +183,16 @@ android {
                 "\"https://api.github.com/repos/bernaferrari/QuietGuard/releases/latest\"",
             )
         }
+        // Store screenshots only: fictional apps and traffic from src/storeCapture, no VPN, no network.
+        // Installs beside the real app; never built for release.
+        create("storeCapture") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".storecapture"
+            versionNameSuffix = "-storecapture"
+            matchingFallbacks += "debug"
+            buildConfigField("String", "HOSTS_FILE_URI", "\"\"")
+            buildConfigField("String", "GITHUB_LATEST_API", "\"\"")
+        }
     }
 
     compileOptions {

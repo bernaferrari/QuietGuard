@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Store screenshots seed fictional apps and traffic; this build never needs the network. -->
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        tools:node="remove" />
+
+    <application
+        android:name="com.bernaferrari.quietguard.storecapture.StoreCaptureApplication"
+        tools:replace="android:name">
+
+        <!-- No VPN, tiles, external control or boot start in the capture build. -->
+        <service android:name="com.bernaferrari.quietguard.ServiceSinkhole" tools:node="remove" />
+        <service android:name="com.bernaferrari.quietguard.ServiceExternal" tools:node="remove" />
+        <service android:name="com.bernaferrari.quietguard.ServiceTileMain" tools:node="remove" />
+        <service android:name="com.bernaferrari.quietguard.ServiceTileGraph" tools:node="remove" />
+        <service android:name="com.bernaferrari.quietguard.ServiceTileFilter" tools:node="remove" />
+        <service android:name="com.bernaferrari.quietguard.ServiceTileLockdown" tools:node="remove" />
+        <receiver android:name="com.bernaferrari.quietguard.ReceiverAutostart" tools:node="remove" />
+    </application>
+</manifest>

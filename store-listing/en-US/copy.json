@@ -1,0 +1,53 @@
+{
+  "home": {
+    "title": "Your apps,\n*on quiet.*",
+    "body": "A private firewall for Android.\nNo root needed.",
+    "alt": "QuietGuard Home with the firewall enabled: apps connect only the way you allow"
+  },
+  "firewall": {
+    "title": "Wi-Fi or mobile,\n*app by app.*",
+    "body": "One tap blocks either network.",
+    "alt": "The firewall list: each app with its own Wi-Fi and mobile data switch, some blocked"
+  },
+  "log": {
+    "title": "See who\n*calls home.*",
+    "body": "Every connection, allowed or blocked,\nas it happens.",
+    "alt": "The traffic log: a flashlight app and a game blocked from ad and tracking domains"
+  },
+  "detail": {
+    "title": "A flashlight\n*stays offline.*",
+    "body": "Plus rules for screen-on,\nroaming and lockdown.",
+    "alt": "Flashlight Plus blocked on Wi-Fi and mobile data, with advanced rules and access history"
+  },
+  "rules": {
+    "title": "Set it once.\n*Stay quiet.*",
+    "body": "Defaults for new apps, and rules\nfor roaming, tethering and LAN.",
+    "alt": "Settings with default access for new apps, and the firewall rules for roaming and screen"
+  },
+  "filter": {
+    "title": "Filter to\n*what matters.*",
+    "body": "Only blocked connections,\ngrouped by app.",
+    "alt": "The traffic log filtered to blocked connections and grouped by app"
+  },
+  "appearance": {
+    "title": "Calm, day\n*or night.*",
+    "body": "Light, dark, and your colours.",
+    "alt": "Appearance settings in light mode beside the Home screen in dark mode"
+  },
+  "tablet": {
+    "title": "Room for\n*every rule.*",
+    "body": "List and details side by side\non tablets and foldables.",
+    "alt": "QuietGuard on a landscape tablet with the app list beside an app's rules, and the phone layout"
+  },
+  "tablet7/appearance": {
+    "alt": "Settings in light mode beside the firewall list in dark mode on a 7-inch tablet"
+  },
+  "tablet10/firewall": {
+    "title": "Every app,\n*one tap away.*",
+    "body": "The list and an app's rules,\nside by side.",
+    "alt": "QuietGuard on a landscape tablet: the app list beside Flashlight Plus, blocked on both networks"
+  },
+  "tablet10/appearance": {
+    "alt": "Settings in light mode and the firewall in dark mode on a landscape tablet"
+  }
+}

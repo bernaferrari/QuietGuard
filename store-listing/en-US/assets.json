@@ -1,0 +1,213 @@
+{
+  "galleries": {
+    "phone": [
+      {
+        "file": "phone/phone-01-home.jpg",
+        "feature": "home",
+        "slide": 0,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 203588,
+        "sources": [
+          "raw/phone/01-home.png"
+        ]
+      },
+      {
+        "file": "phone/phone-02-firewall.jpg",
+        "feature": "firewall",
+        "slide": 1,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 193101,
+        "sources": [
+          "raw/phone/02-firewall.png"
+        ]
+      },
+      {
+        "file": "phone/phone-03-log.jpg",
+        "feature": "log",
+        "slide": 2,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 240282,
+        "sources": [
+          "raw/phone/03-log.png"
+        ]
+      },
+      {
+        "file": "phone/phone-04-detail.jpg",
+        "feature": "detail",
+        "slide": 3,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 234487,
+        "sources": [
+          "raw/phone/04-detail.png"
+        ]
+      },
+      {
+        "file": "phone/phone-05-rules.jpg",
+        "feature": "rules",
+        "slide": 4,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 226795,
+        "sources": [
+          "raw/phone/06-rules.png",
+          "raw/phone/05-settings.png"
+        ]
+      },
+      {
+        "file": "phone/phone-06-filter.jpg",
+        "feature": "filter",
+        "slide": 5,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 209217,
+        "sources": [
+          "raw/phone/08-blocked.png"
+        ]
+      },
+      {
+        "file": "phone/phone-07-appearance.jpg",
+        "feature": "appearance",
+        "slide": 6,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 263068,
+        "sources": [
+          "raw/phone/07-appearance.png",
+          "raw/phone/09-home-dark.png"
+        ]
+      },
+      {
+        "file": "phone/phone-08-tablet.jpg",
+        "feature": "tablet",
+        "slide": 7,
+        "width": 1080,
+        "height": 1920,
+        "bytes": 236220,
+        "sources": [
+          "raw/tablet10/02-firewall.png",
+          "raw/phone/02-firewall.png"
+        ]
+      }
+    ],
+    "tablet7": [
+      {
+        "file": "tablet7/tablet7-01-home.jpg",
+        "feature": "home",
+        "slide": 0,
+        "width": 1200,
+        "height": 1920,
+        "bytes": 223159,
+        "sources": [
+          "raw/tablet7/01-home.png"
+        ]
+      },
+      {
+        "file": "tablet7/tablet7-02-firewall.jpg",
+        "feature": "firewall",
+        "slide": 1,
+        "width": 1200,
+        "height": 1920,
+        "bytes": 213111,
+        "sources": [
+          "raw/tablet7/02-firewall.png"
+        ]
+      },
+      {
+        "file": "tablet7/tablet7-03-log.jpg",
+        "feature": "log",
+        "slide": 2,
+        "width": 1200,
+        "height": 1920,
+        "bytes": 253304,
+        "sources": [
+          "raw/tablet7/03-log.png"
+        ]
+      },
+      {
+        "file": "tablet7/tablet7-04-detail.jpg",
+        "feature": "detail",
+        "slide": 3,
+        "width": 1200,
+        "height": 1920,
+        "bytes": 246653,
+        "sources": [
+          "raw/tablet7/04-detail.png"
+        ]
+      },
+      {
+        "file": "tablet7/tablet7-05-appearance.jpg",
+        "feature": "appearance",
+        "slide": 4,
+        "width": 1200,
+        "height": 1920,
+        "bytes": 247191,
+        "sources": [
+          "raw/tablet7/05-settings.png",
+          "raw/tablet7/10-firewall-dark.png"
+        ]
+      }
+    ],
+    "tablet10": [
+      {
+        "file": "tablet10/tablet10-01-firewall.jpg",
+        "feature": "firewall",
+        "slide": 0,
+        "width": 1920,
+        "height": 1200,
+        "bytes": 225898,
+        "sources": [
+          "raw/tablet10/02-firewall.png"
+        ]
+      },
+      {
+        "file": "tablet10/tablet10-02-home.jpg",
+        "feature": "home",
+        "slide": 1,
+        "width": 1920,
+        "height": 1200,
+        "bytes": 241103,
+        "sources": [
+          "raw/tablet10/01-home.png"
+        ]
+      },
+      {
+        "file": "tablet10/tablet10-03-log.jpg",
+        "feature": "log",
+        "slide": 2,
+        "width": 1920,
+        "height": 1200,
+        "bytes": 188783,
+        "sources": [
+          "raw/tablet10/03-log.png"
+        ]
+      },
+      {
+        "file": "tablet10/tablet10-04-filter.jpg",
+        "feature": "filter",
+        "slide": 3,
+        "width": 1920,
+        "height": 1200,
+        "bytes": 177094,
+        "sources": [
+          "raw/tablet10/08-blocked.png"
+        ]
+      },
+      {
+        "file": "tablet10/tablet10-05-appearance.jpg",
+        "feature": "appearance",
+        "slide": 4,
+        "width": 1920,
+        "height": 1200,
+        "bytes": 216517,
+        "sources": [
+          "raw/tablet10/05-settings.png",
+          "raw/tablet10/10-firewall-dark.png"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "home": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "firewall": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "log": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "detail": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "rules": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "filter": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "appearance": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "tablet": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "tablet7/appearance": {
+    "alt": ""
+  },
+  "tablet10/firewall": {
+    "title": "",
+    "body": "",
+    "alt": ""
+  },
+  "tablet10/appearance": {
+    "alt": ""
+  }
+}

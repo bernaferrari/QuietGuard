@@ -148,7 +148,7 @@ def night(on):
 
 
 profiles = {name: (p['captureWidth'], p['captureHeight'], p['captureDensity'])
-            for name, p in json.loads((listing / 'profiles.json').read_text()).items()}
+            for name, p in json.loads((listing / 'profiles.json').read_text()).items() if 'captureWidth' in p}
 original = adb('shell', 'wm', 'size').decode() + adb('shell', 'wm', 'density').decode()
 assert 'Override' not in original, 'Reset wm size/density first (an interrupted run leaves overrides).'
 heads_up = adb('shell', 'settings', 'get', 'global', 'heads_up_notifications_enabled').decode().strip()

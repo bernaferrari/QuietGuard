@@ -1,31 +1,212 @@
 {
-  "phone": [
-    {"feature": "home", "layout": "big", "raw": "phone/01-home.png", "file": "phone/phone-01-home.jpg"},
-    {"feature": "firewall", "layout": "big", "raw": "phone/02-firewall.png", "file": "phone/phone-02-firewall.jpg"},
-    {"feature": "log", "layout": "big", "raw": "phone/03-log.png", "file": "phone/phone-03-log.jpg"},
-    {"feature": "detail", "layout": "big", "raw": "phone/04-detail.png", "file": "phone/phone-04-detail.jpg"},
-    {"feature": "rules", "layout": "stack", "file": "phone/phone-05-rules.jpg",
-     "devices": [{"raw": "phone/06-rules.png", "role": "primary"}, {"raw": "phone/05-settings.png", "role": "secondary"}]},
-    {"feature": "filter", "layout": "big", "raw": "phone/08-blocked.png", "file": "phone/phone-06-filter.jpg"},
-    {"feature": "appearance", "layout": "duo", "file": "phone/phone-07-appearance.jpg",
-     "devices": [{"raw": "phone/07-appearance.png", "role": "primary"}, {"raw": "phone/09-home-dark.png", "role": "secondary"}]},
-    {"feature": "tablet", "layout": "room", "file": "phone/phone-08-tablet.jpg",
-     "devices": [{"raw": "tablet10/02-firewall.png", "role": "primary", "frame": "tablet"}, {"raw": "phone/02-firewall.png", "role": "secondary"}]}
-  ],
-  "tablet7": [
-    {"feature": "home", "layout": "big", "raw": "tablet7/01-home.png", "file": "tablet7/tablet7-01-home.jpg"},
-    {"feature": "firewall", "layout": "big", "raw": "tablet7/02-firewall.png", "file": "tablet7/tablet7-02-firewall.jpg"},
-    {"feature": "log", "layout": "big", "raw": "tablet7/03-log.png", "file": "tablet7/tablet7-03-log.jpg"},
-    {"feature": "detail", "layout": "big", "raw": "tablet7/04-detail.png", "file": "tablet7/tablet7-04-detail.jpg"},
-    {"feature": "appearance", "layout": "duo", "file": "tablet7/tablet7-05-appearance.jpg",
-     "devices": [{"raw": "tablet7/05-settings.png", "role": "primary"}, {"raw": "tablet7/10-firewall-dark.png", "role": "secondary"}]}
-  ],
-  "tablet10": [
-    {"feature": "firewall", "layout": "big", "raw": "tablet10/02-firewall.png", "file": "tablet10/tablet10-01-firewall.jpg"},
-    {"feature": "home", "layout": "big", "raw": "tablet10/01-home.png", "file": "tablet10/tablet10-02-home.jpg"},
-    {"feature": "log", "layout": "big", "raw": "tablet10/03-log.png", "file": "tablet10/tablet10-03-log.jpg"},
-    {"feature": "filter", "layout": "big", "raw": "tablet10/08-blocked.png", "file": "tablet10/tablet10-04-filter.jpg"},
-    {"feature": "appearance", "layout": "duo", "file": "tablet10/tablet10-05-appearance.jpg",
-     "devices": [{"raw": "tablet10/05-settings.png", "role": "primary"}, {"raw": "tablet10/10-firewall-dark.png", "role": "secondary"}]}
-  ]
+ "phone": [
+  {
+   "feature": "home",
+   "layout": "big",
+   "raw": "phone/01-home.png",
+   "file": "phone/phone-01-home.jpg"
+  },
+  {
+   "feature": "firewall",
+   "layout": "big",
+   "raw": "phone/02-firewall.png",
+   "file": "phone/phone-02-firewall.jpg"
+  },
+  {
+   "feature": "log",
+   "layout": "big",
+   "raw": "phone/03-log.png",
+   "file": "phone/phone-03-log.jpg"
+  },
+  {
+   "feature": "detail",
+   "layout": "big",
+   "raw": "phone/04-detail.png",
+   "file": "phone/phone-04-detail.jpg"
+  },
+  {
+   "feature": "rules",
+   "layout": "stack",
+   "file": "phone/phone-05-rules.jpg",
+   "devices": [
+    {
+     "raw": "phone/06-rules.png",
+     "role": "primary"
+    },
+    {
+     "raw": "phone/05-settings.png",
+     "role": "secondary"
+    }
+   ]
+  },
+  {
+   "feature": "filter",
+   "layout": "big",
+   "raw": "phone/08-blocked.png",
+   "file": "phone/phone-06-filter.jpg"
+  },
+  {
+   "feature": "appearance",
+   "layout": "duo",
+   "file": "phone/phone-07-appearance.jpg",
+   "devices": [
+    {
+     "raw": "phone/07-appearance.png",
+     "role": "primary"
+    },
+    {
+     "raw": "phone/09-home-dark.png",
+     "role": "secondary"
+    }
+   ]
+  },
+  {
+   "feature": "tablet",
+   "layout": "room",
+   "file": "phone/phone-08-tablet.jpg",
+   "devices": [
+    {
+     "raw": "tablet10/02-firewall.png",
+     "role": "primary",
+     "frame": "tablet"
+    },
+    {
+     "raw": "phone/02-firewall.png",
+     "role": "secondary"
+    }
+   ]
+  }
+ ],
+ "tablet7": [
+  {
+   "feature": "home",
+   "layout": "big",
+   "raw": "tablet7/01-home.png",
+   "file": "tablet7/tablet7-01-home.jpg"
+  },
+  {
+   "feature": "firewall",
+   "layout": "big",
+   "raw": "tablet7/02-firewall.png",
+   "file": "tablet7/tablet7-02-firewall.jpg"
+  },
+  {
+   "feature": "log",
+   "layout": "big",
+   "raw": "tablet7/03-log.png",
+   "file": "tablet7/tablet7-03-log.jpg"
+  },
+  {
+   "feature": "detail",
+   "layout": "big",
+   "raw": "tablet7/04-detail.png",
+   "file": "tablet7/tablet7-04-detail.jpg"
+  },
+  {
+   "feature": "appearance",
+   "layout": "duo",
+   "file": "tablet7/tablet7-05-appearance.jpg",
+   "devices": [
+    {
+     "raw": "tablet7/05-settings.png",
+     "role": "primary"
+    },
+    {
+     "raw": "tablet7/10-firewall-dark.png",
+     "role": "secondary"
+    }
+   ]
+  }
+ ],
+ "tablet10": [
+  {
+   "feature": "firewall",
+   "layout": "big",
+   "raw": "tablet10/02-firewall.png",
+   "file": "tablet10/tablet10-01-firewall.jpg"
+  },
+  {
+   "feature": "home",
+   "layout": "big",
+   "raw": "tablet10/01-home.png",
+   "file": "tablet10/tablet10-02-home.jpg"
+  },
+  {
+   "feature": "log",
+   "layout": "big",
+   "raw": "tablet10/03-log.png",
+   "file": "tablet10/tablet10-03-log.jpg"
+  },
+  {
+   "feature": "filter",
+   "layout": "big",
+   "raw": "tablet10/08-blocked.png",
+   "file": "tablet10/tablet10-04-filter.jpg"
+  },
+  {
+   "feature": "appearance",
+   "layout": "duo",
+   "file": "tablet10/tablet10-05-appearance.jpg",
+   "devices": [
+    {
+     "raw": "tablet10/05-settings.png",
+     "role": "primary"
+    },
+    {
+     "raw": "tablet10/10-firewall-dark.png",
+     "role": "secondary"
+    }
+   ]
+  }
+ ],
+ "readme": [
+  {
+   "feature": "readme-hero",
+   "layout": "hero",
+   "file": "readme/hero.jpg",
+   "alt": "QuietGuard Home, the firewall list and the traffic log",
+   "devices": [
+    {
+     "raw": "phone/01-home.png",
+     "role": "left"
+    },
+    {
+     "raw": "phone/02-firewall.png",
+     "role": "center"
+    },
+    {
+     "raw": "phone/03-log.png",
+     "role": "right"
+    }
+   ]
+  },
+  {
+   "feature": "readme-compare",
+   "layout": "compare",
+   "file": "readme/before-after.jpg",
+   "alt": "The same phone and apps in NetGuard and in QuietGuard: the firewall list and the settings",
+   "devices": [
+    {
+     "raw": "compare/netguard-firewall.png",
+     "role": "before pair1",
+     "label": "NetGuard"
+    },
+    {
+     "raw": "compare/quietguard-firewall.png",
+     "role": "after pair1",
+     "label": "QuietGuard"
+    },
+    {
+     "raw": "compare/netguard-settings.png",
+     "role": "before pair2",
+     "label": "NetGuard"
+    },
+    {
+     "raw": "compare/quietguard-settings.png",
+     "role": "after pair2",
+     "label": "QuietGuard"
+    }
+   ]
+  }
+ ]
 }

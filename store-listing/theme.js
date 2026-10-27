@@ -46,8 +46,8 @@ function art(ctx) {
 export default {
   art,
 
-  compose({index, main}) {
-    if (index !== 0) return;
+  compose({index, main, kind}) {
+    if (index !== 0 || kind === 'readme') return;
     // The app opens the set; later cards carry only their headline.
     main.classList.add('first');
     const brand = document.createElement('div');
@@ -60,6 +60,7 @@ export default {
   /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */
   layout({main}) {
     for (const node of main.querySelectorAll('.device:not(.device-frame-none)')) {
+      if (main.classList.contains('compare')) break;
       const image = node.querySelector('img'), width = node.clientWidth;
       const landscape = image.naturalWidth > image.naturalHeight;
       const tablet = node.classList.contains('device-frame-tablet');
@@ -71,6 +72,11 @@ export default {
   // Screens may run off the bottom (or hang from the top on the stacked card), never off the sides,
   // and most of each screen stays in view.
   decorate({W, H, slide, devices}) {
+    if (slide.layout === 'compare') {
+      // Each name sits just under its screen.
+      for (const label of devices[0].node.parentElement.querySelectorAll('.device-label')) label.style.setProperty('--h', `${devices[0].box.height}px`);
+      return;
+    }
     const stacked = /stack/.test(slide.layout || '');
     for (const {box, spec} of devices) {
       if (box.left < 0 || box.left + box.width > W + 1) throw new Error(`Screen leaves the side of the card: ${spec.raw}`);

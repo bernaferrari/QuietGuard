@@ -183,7 +183,6 @@ try:
 
         go('Log')
         capture('03-log')
-        tap('Filters')
         tap('Blocked')
         tap('By app')
         capture('08-blocked')

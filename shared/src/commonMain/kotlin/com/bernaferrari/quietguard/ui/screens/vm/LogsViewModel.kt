@@ -33,7 +33,6 @@ data class LogsScreenState(
     val outcomeFilter: LogsOutcomeFilter,
     val protocolFilter: LogsProtocolFilter,
     val groupMode: LogsGroupMode = LogsGroupMode.Timeline,
-    val filtersExpanded: Boolean = false,
     val selectedAppUid: Int? = null,
     val logs: UiAsyncState<List<LogEntry>> = UiAsyncState(emptyList(), isLoading = true),
     val preferencesLoaded: Boolean = false,
@@ -50,7 +49,6 @@ class LogsViewModel(
     private val outcomeFilter = MutableStateFlow(defaultOutcomeFilterFromPrefs(preferencesRepository))
     private val protocolFilter = MutableStateFlow(defaultProtocolFilterFromPrefs(preferencesRepository))
     private val groupMode = MutableStateFlow(LogsGroupMode.Timeline)
-    private val filtersExpanded = MutableStateFlow(false)
     private val selectedAppUid = MutableStateFlow<Int?>(null)
     private val retryRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     private val isDemoMode = PlatformContext.isDemoMode()
@@ -96,14 +94,13 @@ class LogsViewModel(
             )
 
     private val filtersState =
-        combine(outcomeFilter, protocolFilter, groupMode, filtersExpanded, selectedAppUid) {
+        combine(outcomeFilter, protocolFilter, groupMode, selectedAppUid) {
                 outcome,
                 protocol,
                 group,
-                expanded,
                 selected,
             ->
-            FiltersSlice(outcome, protocol, group, expanded, selected)
+            FiltersSlice(outcome, protocol, group, selected)
         }
 
     val uiState: StateFlow<LogsScreenState> =
@@ -112,7 +109,6 @@ class LogsViewModel(
                 outcomeFilter = filters.outcome,
                 protocolFilter = filters.protocol,
                 groupMode = filters.group,
-                filtersExpanded = filters.expanded,
                 selectedAppUid = filters.selected,
                 logs = logs,
                 preferencesLoaded = flags.loaded,
@@ -143,10 +139,6 @@ class LogsViewModel(
     fun setGroupMode(mode: LogsGroupMode) {
         groupMode.value = mode
         if (mode != LogsGroupMode.ByApp) selectedAppUid.value = null
-    }
-
-    fun setFiltersExpanded(expanded: Boolean) {
-        filtersExpanded.value = expanded
     }
 
     fun selectAppUid(uid: Int?) {
@@ -185,7 +177,6 @@ class LogsViewModel(
         val outcome: LogsOutcomeFilter,
         val protocol: LogsProtocolFilter,
         val group: LogsGroupMode,
-        val expanded: Boolean,
         val selected: Int?,
     )
 

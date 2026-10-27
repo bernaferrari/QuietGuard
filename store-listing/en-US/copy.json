@@ -10,8 +10,8 @@
     "alt": "The firewall list: each app with its own Wi-Fi and mobile data switch, some blocked"
   },
   "log": {
-    "title": "See who\n*calls home.*",
-    "body": "Every connection, allowed or blocked,\nas it happens.",
+    "title": "Every connection,\n*live.*",
+    "body": "Which app reached which server,\nallowed or blocked.",
     "alt": "The traffic log: a flashlight app and a game blocked from ad and tracking domains"
   },
   "detail": {

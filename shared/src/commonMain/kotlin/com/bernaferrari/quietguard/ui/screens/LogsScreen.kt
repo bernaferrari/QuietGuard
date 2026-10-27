@@ -33,11 +33,7 @@ import com.bernaferrari.quietguard.generated.resources.ui_empty_logs_title
 import com.bernaferrari.quietguard.generated.resources.ui_filter_all
 import com.bernaferrari.quietguard.generated.resources.ui_loading
 import com.bernaferrari.quietguard.generated.resources.ui_logs_filter_protocol
-import com.bernaferrari.quietguard.generated.resources.ui_logs_filter_status
-import com.bernaferrari.quietguard.generated.resources.ui_logs_filter_view
-import com.bernaferrari.quietguard.generated.resources.ui_logs_filters
 import com.bernaferrari.quietguard.generated.resources.ui_logs_group_by_app
-import com.bernaferrari.quietguard.generated.resources.ui_logs_group_timeline
 import com.bernaferrari.quietguard.generated.resources.ui_logs_title
 import com.bernaferrari.quietguard.generated.resources.ui_logs_unknown_source
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_address
@@ -53,22 +49,16 @@ import com.bernaferrari.quietguard.generated.resources.ui_multicast_local_ipv6
 import com.bernaferrari.quietguard.generated.resources.ui_multicast_ipv6
 import com.bernaferrari.quietguard.generated.resources.ui_multicast_ipv4
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
@@ -92,6 +82,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Badge
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -179,7 +171,6 @@ fun LogsScreen(
     val outcomeFilter = logsUi.outcomeFilter
     val protocolFilter = logsUi.protocolFilter
     val groupMode = logsUi.groupMode
-    val filtersExpanded = logsUi.filtersExpanded
     val selectedAppUid = logsUi.selectedAppUid
     val entries = logsUi.logs.data
     val isLoading = !logsUi.preferencesLoaded ||
@@ -232,15 +223,6 @@ fun LogsScreen(
         entries.size
     }
 
-    // Count active filter overrides to show a badge on the filter button
-    val activeFilterCount = remember(outcomeFilter, protocolFilter, groupMode) {
-        listOf(
-            outcomeFilter != LogsOutcomeFilter.All,
-            protocolFilter != LogsProtocolFilter.All,
-            groupMode != LogsGroupMode.Timeline,
-        ).count { it }
-    }
-
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     Scaffold(
@@ -277,26 +259,21 @@ fun LogsScreen(
                 actions = {
                     // Filters only make sense once there is a log to filter.
                     if (hasLog && loggingEnabled) {
-                        // Filter toggle: tonal fill while the panel is open, count badge when active.
-                        BadgedBox(
-                            badge = {
-                                if (activeFilterCount > 0) {
-                                    Badge(
-                                        modifier = Modifier.offset(x = (-6).dp, y = 6.dp),
-                                    ) { Text(activeFilterCount.toString()) }
-                                }
+                        ProtocolFilterButton(
+                            selected = protocolFilter,
+                            onSelect = { viewModel.setProtocolFilter(it) },
+                        )
+                        FilledTonalIconToggleButton(
+                            checked = groupMode == LogsGroupMode.ByApp,
+                            onCheckedChange = {
+                                viewModel.setGroupMode(if (it) LogsGroupMode.ByApp else LogsGroupMode.Timeline)
                             },
+                            shapes = IconButtonDefaults.toggleableShapes(),
                         ) {
-                            FilledTonalIconToggleButton(
-                                checked = filtersExpanded,
-                                onCheckedChange = { viewModel.setFiltersExpanded(it) },
-                                shapes = IconButtonDefaults.toggleableShapes(),
-                            ) {
-                                Icon(
-                                    icon = MaterialSymbols.Filled.FilterList,
-                                    contentDescription = stringResource(Res.string.ui_logs_filters),
-                                )
-                            }
+                            Icon(
+                                icon = MaterialSymbols.Filled.Apps,
+                                contentDescription = stringResource(Res.string.ui_logs_group_by_app),
+                            )
                         }
                     }
                 },
@@ -309,32 +286,12 @@ fun LogsScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            // Collapsible filter panel — slides in/out below the TopAppBar
-            AnimatedVisibility(
-                visible = filtersExpanded && hasLog && loggingEnabled,
-                enter = expandVertically(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessMediumLow,
-                    ),
-                    expandFrom = Alignment.Top,
-                ) + fadeIn(fastEffectsSpec()),
-                exit = shrinkVertically(
-                    animationSpec = spring(stiffness = Spring.StiffnessMedium),
-                    shrinkTowards = Alignment.Top,
-                ) + fadeOut(fastEffectsSpec()),
-            ) {
-                LogsFilterPanel(
-                    outcomeFilter = outcomeFilter,
-                    protocolFilter = protocolFilter,
-                    groupMode = groupMode,
-                    onOutcomeFilterChange = { viewModel.setOutcomeFilter(it) },
-                    onProtocolFilterChange = { viewModel.setProtocolFilter(it) },
-                    onGroupModeChange = { viewModel.setGroupMode(it) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surfaceContainerLow)
-                        .padding(horizontal = spacing.default, vertical = spacing.medium),
+            // One row, like the Firewall list: the outcome is the filter people reach for.
+            if (hasLog && loggingEnabled) {
+                LogsOutcomeRow(
+                    selected = outcomeFilter,
+                    onSelect = { viewModel.setOutcomeFilter(it) },
+                    modifier = Modifier.padding(horizontal = spacing.default, vertical = spacing.small),
                 )
             }
 
@@ -760,82 +717,73 @@ private fun AppPickerRow(
 }
 
 @Composable
-private fun LogsFilterPanel(
-    outcomeFilter: LogsOutcomeFilter,
-    protocolFilter: LogsProtocolFilter,
-    groupMode: LogsGroupMode,
-    onOutcomeFilterChange: (LogsOutcomeFilter) -> Unit,
-    onProtocolFilterChange: (LogsProtocolFilter) -> Unit,
-    onGroupModeChange: (LogsGroupMode) -> Unit,
+private fun LogsOutcomeRow(
+    selected: LogsOutcomeFilter,
+    onSelect: (LogsOutcomeFilter) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val spacing = MaterialTheme.spacing
-
-    Column(
+    data class Option(val filter: LogsOutcomeFilter, val label: String, val filled: MaterialIcon, val outlined: MaterialIcon)
+    val options = listOf(
+        Option(LogsOutcomeFilter.All, stringResource(Res.string.ui_filter_all), MaterialSymbols.Filled.Public, MaterialSymbols.Outlined.Public),
+        Option(LogsOutcomeFilter.Blocked, stringResource(Res.string.menu_traffic_blocked), MaterialSymbols.Filled.Block, MaterialSymbols.Outlined.Block),
+        Option(LogsOutcomeFilter.Allowed, stringResource(Res.string.menu_traffic_allowed), MaterialSymbols.Filled.CheckCircle, MaterialSymbols.Outlined.CheckCircle),
+    )
+    ConnectedToggleButtonRow(
+        options = options,
+        selected = options.first { it.filter == selected },
+        onSelect = { onSelect(it.filter) },
+        label = { it.label },
+        icon = { option, checked -> if (checked) option.filled else option.outlined },
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(spacing.medium),
-    ) {
-        ToggleFilterRow(
-            title = stringResource(Res.string.ui_logs_filter_status),
-            options = listOf(
-                LogsOutcomeFilter.All to stringResource(Res.string.ui_filter_all),
-                LogsOutcomeFilter.Allowed to stringResource(Res.string.menu_traffic_allowed),
-                LogsOutcomeFilter.Blocked to stringResource(Res.string.menu_traffic_blocked),
-            ),
-            selected = outcomeFilter,
-            onSelect = onOutcomeFilterChange,
-        )
-
-        ToggleFilterRow(
-            title = stringResource(Res.string.ui_logs_filter_protocol),
-            options = listOf(
-                LogsProtocolFilter.All to stringResource(Res.string.ui_filter_all),
-                LogsProtocolFilter.Udp to stringResource(Res.string.menu_protocol_udp),
-                LogsProtocolFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
-                LogsProtocolFilter.Other to stringResource(Res.string.menu_protocol_other),
-            ),
-            selected = protocolFilter,
-            onSelect = onProtocolFilterChange,
-        )
-
-        ToggleFilterRow(
-            title = stringResource(Res.string.ui_logs_filter_view),
-            options = listOf(
-                LogsGroupMode.Timeline to stringResource(Res.string.ui_logs_group_timeline),
-                LogsGroupMode.ByApp to stringResource(Res.string.ui_logs_group_by_app),
-            ),
-            selected = groupMode,
-            onSelect = onGroupModeChange,
-        )
-    }
+    )
 }
 
+/** Protocol is a rarer filter, so it lives behind one app bar button that shows when it's narrowed. */
 @Composable
-private fun <T> ToggleFilterRow(
-    title: String,
-    options: List<Pair<T, String>>,
-    selected: T,
-    onSelect: (T) -> Unit,
+private fun ProtocolFilterButton(
+    selected: LogsProtocolFilter,
+    onSelect: (LogsProtocolFilter) -> Unit,
 ) {
-    val spacing = MaterialTheme.spacing
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(spacing.extraSmall),
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        ConnectedToggleButtonRow(
-            options = options,
-            selected = options.first { it.first == selected },
-            onSelect = { onSelect(it.first) },
-            label = { it.second },
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-        )
+    var expanded by remember { mutableStateOf(false) }
+    val options = listOf(
+        LogsProtocolFilter.All to stringResource(Res.string.ui_filter_all),
+        LogsProtocolFilter.Tcp to stringResource(Res.string.menu_protocol_tcp),
+        LogsProtocolFilter.Udp to stringResource(Res.string.menu_protocol_udp),
+        LogsProtocolFilter.Other to stringResource(Res.string.menu_protocol_other),
+    )
+    Box {
+        BadgedBox(
+            badge = {
+                if (selected != LogsProtocolFilter.All) Badge(Modifier.offset(x = (-6).dp, y = 6.dp))
+            },
+        ) {
+            IconButton(onClick = { expanded = true }) {
+                Icon(
+                    icon = MaterialSymbols.Filled.FilterList,
+                    contentDescription = stringResource(Res.string.ui_logs_filter_protocol),
+                )
+            }
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            Text(
+                text = stringResource(Res.string.ui_logs_filter_protocol),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+            options.forEach { (filter, label) ->
+                DropdownMenuItem(
+                    text = { Text(label) },
+                    trailingIcon = {
+                        if (filter == selected) Icon(icon = MaterialSymbols.Filled.Check, contentDescription = null)
+                    },
+                    onClick = {
+                        onSelect(filter)
+                        expanded = false
+                    },
+                )
+            }
+        }
     }
 }
 

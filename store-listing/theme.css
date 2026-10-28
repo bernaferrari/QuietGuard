@@ -125,15 +125,14 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .readme .mood-coral.compare header{left:0;right:0;top:110px;text-align:center}
 .readme .mood-coral.compare h1{font-size:96px}
 .readme .mood-coral.compare .device{top:440px;width:470px}
-/* Before and after: NetGuard a little smaller and behind, QuietGuard larger and stepping in front. */
-.readme .mood-coral.compare .device.before{width:430px;top:450px;z-index:1}
-.readme .mood-coral.compare .device.after{width:480px;top:450px;z-index:2}
+/* Before and after side by side, never overlapping: four equal phones, two clear pairs. */
+.readme .mood-coral.compare .device.before,.readme .mood-coral.compare .device.after{width:460px;top:450px}
 .readme .mood-coral.compare .device.before,.readme .mood-coral.compare .device.after{--bezel:10px;--radius:56px;background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 40px 80px -36px #8a2a1a77}
 .readme .mood-coral.compare .device.before::before{display:none}
-.readme .mood-coral.compare .pair1.before{left:250px}
-.readme .mood-coral.compare .pair1.after{left:620px}
-.readme .mood-coral.compare .pair2.before{left:1290px}
-.readme .mood-coral.compare .pair2.after{left:1660px}
+.readme .mood-coral.compare .pair1.before{left:180px}
+.readme .mood-coral.compare .pair1.after{left:670px}
+.readme .mood-coral.compare .pair2.before{left:1270px}
+.readme .mood-coral.compare .pair2.after{left:1760px}
 .readme .mood-coral.compare .device-label{transform:translateY(calc(-100% - 22px))}
 .readme .mood-coral.compare .device-label span{font-size:46px}
 

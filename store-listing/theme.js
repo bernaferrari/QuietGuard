@@ -39,9 +39,11 @@ function art(ctx) {
     body += `<rect width="${W}" height="${H}" fill="url(#glow${k})"/>`;
   });
   body += '<g mask="url(#quiet)">';
-  // An image can opt out (the comparison keeps all attention on its phones).
-  for (const r of ctx.slide?.ripples === false ? [] : ripples) {
-    const cx = panoramaX(ctx, r.x), cy = H * r.y;
+  // An image can opt out (the comparison) or place its own sets (the tablet spread, centred behind the tablet).
+  // An image's own sets are placed within that image; the shared sets run across the whole strip.
+  const own = Array.isArray(ctx.slide?.ripples);
+  for (const r of ctx.slide?.ripples === false ? [] : own ? ctx.slide.ripples : ripples) {
+    const cx = own ? W * r.x : panoramaX(ctx, r.x), cy = H * r.y;
     if (cx < -unit * 1.6 || cx > W + unit * 1.6) continue;
     for (let i = 0; i < r.rings; i++) {
       const radius = unit * (.1 + i * r.step);

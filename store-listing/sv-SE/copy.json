@@ -15,7 +15,7 @@
     "alt": "Trafikloggen: Kamera, Klocka och Digitalt välmående blockerade från analysdomäner medan Gmail och Maps kommer igenom"
   },
   "detail": {
-    "title": "Kameran\n*förblir offline.*",
+    "title": "Varje app\n*under kontroll.*",
     "body": "Plus regler för skärm på,\nroaming och låsläge.",
     "alt": "Kamera blockerad på Wi-Fi och mobildata, med avancerade regler och historik över blockerad åtkomst"
   },

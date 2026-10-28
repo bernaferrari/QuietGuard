@@ -15,7 +15,7 @@
     "alt": "The traffic log: Camera, Clock and Digital Wellbeing blocked from analytics domains while Gmail and Maps get through"
   },
   "detail": {
-    "title": "The camera\n*stays offline.*",
+    "title": "Every app,\n*under control.*",
     "body": "Plus rules for screen-on,\nroaming and lockdown.",
     "alt": "Camera blocked on Wi-Fi and mobile data, with advanced rules and its blocked access history"
   },
@@ -49,5 +49,8 @@
   },
   "tablet10/appearance": {
     "alt": "The firewall in dark mode on a landscape tablet, with a phone in light mode showing the theme and colour settings in front"
+  },
+  "readme-rules": {
+    "title": "Set it once. *Stay quiet.*"
   }
 }

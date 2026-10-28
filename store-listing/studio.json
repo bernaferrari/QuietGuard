@@ -53,5 +53,17 @@
     "zh-TW"
   ],
   "defaultLocale": "en-US",
-  "supersample": 2
+  "supersample": 2,
+  "readmeStrips": [
+    {
+      "file": "readme/quiet-1.jpg",
+      "kind": "phone",
+      "cards": [
+        0,
+        1,
+        2
+      ],
+      "height": 1200
+    }
+  ]
 }

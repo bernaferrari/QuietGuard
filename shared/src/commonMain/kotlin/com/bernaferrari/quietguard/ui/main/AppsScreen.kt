@@ -706,13 +706,14 @@ private val NetworkSegmentWidth = 52.dp
 private val NetworkSegmentHeight = 40.dp
 private val NetworkSegmentGap = 2.dp
 private val NetworkSegmentInnerCorner = 6.dp
-private val NetworkSegmentBlockedInnerCorner = 10.dp
+// Blocked rounds fully into its own pill, Material 3 Expressive's cue for a chosen segment.
+private val NetworkSegmentBlockedInnerCorner = NetworkSegmentHeight / 2
 private val NetworkSegmentPressedInnerCorner = 3.dp
 
 /**
  * One half of the Wi-Fi/mobile button group. Allowed is a quiet tonal segment; blocked fills the
- * segment with the error container. Colors cross-fade and the inner corners soften slightly when
- * blocked and tighten on press. The visual is 52x40dp; Material's
+ * segment with the error container and rounds it into a full pill. Colors cross-fade, the inner
+ * corners open when blocked and tighten on press. The visual is 52x40dp; Material's
  * minimum interactive size keeps the touch target at least 48dp.
  */
 @Composable
@@ -728,8 +729,8 @@ private fun NetworkToggleSegment(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val outer = NetworkSegmentHeight / 2
-    // The inner corners stay small so the two halves always read as one pill; blocking softens them
-    // a little and a press tightens them, an expressive shape cue that never splits the group.
+    // Allowed halves share one pill with small inner corners; a blocked half opens into a pill of its
+    // own, so blocking reads in the shape as well as the color. A press tightens the corners.
     val innerTarget = when {
         isPressed -> NetworkSegmentPressedInnerCorner
         blocked -> NetworkSegmentBlockedInnerCorner

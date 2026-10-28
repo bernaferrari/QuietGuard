@@ -270,9 +270,14 @@ fun LogsScreen(
                             },
                             shapes = IconButtonDefaults.toggleableShapes(),
                             // Plain while off, filled only while grouping by app, so it never reads as on by mistake.
+                            // The on colours are set explicitly: left to default, the off icon colour carried into
+                            // the checked state and the icon disappeared on the filled teal. On matches the
+                            // selected filter chip below it.
                             colors = IconButtonDefaults.filledIconToggleButtonColors(
                                 containerColor = Color.Transparent,
                                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                checkedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             ),
                         ) {
                             Icon(

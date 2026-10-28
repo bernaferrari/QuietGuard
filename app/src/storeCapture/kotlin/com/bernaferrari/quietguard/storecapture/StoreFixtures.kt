@@ -15,7 +15,8 @@ internal val fixtureApps: List<FixtureApp> =
     listOf(
         FixtureApp("com.google.android.calendar"),
         FixtureApp("com.android.camera2", wifiBlocked = true, mobileBlocked = true),
-        FixtureApp("com.android.chrome"),
+        // Wi-Fi only: the first screen shows one app allowed on Wi-Fi and blocked on mobile data.
+        FixtureApp("com.android.chrome", mobileBlocked = true),
         FixtureApp("com.google.android.deskclock", wifiBlocked = true, mobileBlocked = true),
         FixtureApp("com.google.android.contacts"),
         FixtureApp("com.google.android.apps.wellbeing", wifiBlocked = true, mobileBlocked = true),

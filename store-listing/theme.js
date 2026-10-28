@@ -46,17 +46,6 @@ function art(ctx) {
 export default {
   art,
 
-  compose({index, main, kind}) {
-    if (index !== 0 || kind === 'readme') return;
-    // The app opens the set; later cards carry only their headline.
-    main.classList.add('first');
-    const brand = document.createElement('div');
-    brand.className = 'brand';
-    brand.dataset.checkBounds = '';
-    brand.innerHTML = '<img src="../brand/icon.png" alt="">QuietGuard';
-    main.append(brand);
-  },
-
   /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */
   layout({main}) {
     for (const node of main.querySelectorAll('.device:not(.device-frame-none)')) {

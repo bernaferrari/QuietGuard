@@ -11,7 +11,7 @@ Built with [Screenshot Studio](studio/). Read `~/Documents/screenshot-studio/PLA
 
 ```sh
 ./gradlew :app:installStoreCapture -Pquietguard.abis=arm64-v8a --no-configuration-cache
-python3 store-listing/capture-emulator.py --serial emulator-5572   # needs Pillow
+uv run --with pillow python store-listing/capture-emulator.py --serial emulator-5578   # the shared Resizable_Experimental emulator
 node store-listing/studio/server.cjs 8790        # editor
 node store-listing/studio/export.cjs --locale en-US
 ```

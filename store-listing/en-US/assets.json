@@ -7,7 +7,7 @@
         "slide": 0,
         "width": 1080,
         "height": 1920,
-        "bytes": 203407,
+        "bytes": 197628,
         "sources": [
           "raw/phone/01-home.png"
         ]
@@ -18,7 +18,7 @@
         "slide": 1,
         "width": 1080,
         "height": 1920,
-        "bytes": 204577,
+        "bytes": 207698,
         "sources": [
           "raw/phone/02-firewall.png"
         ]
@@ -29,7 +29,7 @@
         "slide": 2,
         "width": 1080,
         "height": 1920,
-        "bytes": 243798,
+        "bytes": 243737,
         "sources": [
           "raw/phone/03-log.png"
         ]
@@ -40,7 +40,7 @@
         "slide": 3,
         "width": 1080,
         "height": 1920,
-        "bytes": 229042,
+        "bytes": 227748,
         "sources": [
           "raw/phone/04-detail.png"
         ]
@@ -63,7 +63,7 @@
         "slide": 5,
         "width": 1080,
         "height": 1920,
-        "bytes": 253711,
+        "bytes": 253053,
         "sources": [
           "raw/phone/08-blocked.png"
         ]
@@ -74,7 +74,7 @@
         "slide": 6,
         "width": 1080,
         "height": 1920,
-        "bytes": 257805,
+        "bytes": 255657,
         "sources": [
           "raw/phone/07-appearance.png",
           "raw/phone/09-home-dark.png"
@@ -86,7 +86,7 @@
         "slide": 7,
         "width": 1080,
         "height": 1920,
-        "bytes": 240962,
+        "bytes": 243189,
         "sources": [
           "raw/tablet10/02-firewall.png",
           "raw/phone/02-firewall.png"
@@ -100,7 +100,7 @@
         "slide": 0,
         "width": 1200,
         "height": 1920,
-        "bytes": 225183,
+        "bytes": 224930,
         "sources": [
           "raw/tablet7/01-home.png"
         ]
@@ -111,7 +111,7 @@
         "slide": 1,
         "width": 1200,
         "height": 1920,
-        "bytes": 216119,
+        "bytes": 218330,
         "sources": [
           "raw/tablet7/02-firewall.png"
         ]
@@ -122,7 +122,7 @@
         "slide": 2,
         "width": 1200,
         "height": 1920,
-        "bytes": 259356,
+        "bytes": 259291,
         "sources": [
           "raw/tablet7/03-log.png"
         ]
@@ -133,7 +133,7 @@
         "slide": 3,
         "width": 1200,
         "height": 1920,
-        "bytes": 245607,
+        "bytes": 245073,
         "sources": [
           "raw/tablet7/04-detail.png"
         ]
@@ -144,7 +144,7 @@
         "slide": 4,
         "width": 1200,
         "height": 1920,
-        "bytes": 255259,
+        "bytes": 256582,
         "sources": [
           "raw/tablet7/05-settings.png",
           "raw/tablet7/10-firewall-dark.png"
@@ -158,7 +158,7 @@
         "slide": 0,
         "width": 1920,
         "height": 1200,
-        "bytes": 227752,
+        "bytes": 222011,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
@@ -169,7 +169,7 @@
         "slide": 1,
         "width": 1920,
         "height": 1200,
-        "bytes": 242657,
+        "bytes": 240382,
         "sources": [
           "raw/tablet10/01-home.png"
         ]
@@ -180,7 +180,7 @@
         "slide": 2,
         "width": 1920,
         "height": 1200,
-        "bytes": 191062,
+        "bytes": 191208,
         "sources": [
           "raw/tablet10/03-log.png"
         ]
@@ -191,7 +191,7 @@
         "slide": 3,
         "width": 1920,
         "height": 1200,
-        "bytes": 190432,
+        "bytes": 190086,
         "sources": [
           "raw/tablet10/08-blocked.png"
         ]
@@ -202,7 +202,7 @@
         "slide": 4,
         "width": 1920,
         "height": 1200,
-        "bytes": 248310,
+        "bytes": 248998,
         "sources": [
           "raw/tablet10/10-firewall-dark.png",
           "raw/phone/07-appearance.png"
@@ -211,16 +211,16 @@
     ],
     "readme": [
       {
-        "file": "readme/hero.jpg",
-        "feature": "readme-hero",
+        "file": "readme/rules.jpg",
+        "feature": "readme-rules",
         "slide": 0,
         "width": 2400,
         "height": 1260,
-        "bytes": 303371,
+        "bytes": 341748,
         "sources": [
-          "raw/phone/01-home.png",
-          "raw/phone/02-firewall.png",
-          "raw/phone/03-log.png"
+          "raw/phone/04-detail.png",
+          "raw/phone/08-blocked.png",
+          "raw/phone/06-rules.png"
         ]
       },
       {

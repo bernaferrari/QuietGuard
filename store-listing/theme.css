@@ -11,10 +11,6 @@ h1{font-size:108px;line-height:1.02;letter-spacing:-.022em;font-weight:700;font-
 h1 em{color:var(--mint);text-shadow:0 0 42px #3fe3bd55}
 header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;color:var(--muted);max-width:900px;white-space:pre-line}
 
-.brand{position:absolute;z-index:6;left:0;right:0;top:92px;display:flex;justify-content:center;align-items:center;gap:16px;
-  font-size:36px;font-weight:600;letter-spacing:-.01em;color:#e3f7f3}
-.brand img{width:64px;height:64px;border-radius:18px;box-shadow:0 8px 24px #00141a80}
-.campaign.first header{top:200px}
 
 /* Frames: pale mint glass, so every screen sits in the same family of light. */
 .device{--bezel:14px;--radius:78px;background:linear-gradient(170deg,var(--frame-top),var(--frame-bottom));
@@ -23,7 +19,6 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 
 /* Phone: copy on top, the real screen large below it, running off the bottom edge. */
 .phone .big .primary{left:126px;top:560px;width:828px}
-.phone .first .primary{top:640px}
 
 /* Two screens, one hanging from the top and one rising from the bottom, the copy between them. */
 .phone .stack header{top:742px}
@@ -43,9 +38,7 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .tablet7 header{top:130px}
 .tablet7 h1{font-size:116px}
 .tablet7 header p{font-size:42px}
-.tablet7 .campaign.first header{top:220px}
 .tablet7 .big .primary{left:150px;top:640px;width:900px}
-.tablet7 .first .primary{top:720px}
 .tablet7 .duo .primary{left:40px;top:600px;width:640px}
 .tablet7 .duo .secondary{left:520px;top:780px;width:640px}
 
@@ -54,8 +47,6 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .tablet10 h1{font-size:92px}
 .tablet10 h1 .line{white-space:normal}
 .tablet10 header p{margin:26px 0 0;font-size:36px;max-width:540px;white-space:normal}
-.tablet10 .brand{left:110px;right:auto;top:84px;justify-content:flex-start}
-.tablet10 .campaign.first header{top:0}
 .tablet10 .big .primary{left:730px;top:240px;width:1110px}
 .tablet10 .duo .primary{left:720px;top:120px;width:840px}
 .tablet10 .duo .secondary{left:1010px;top:560px;width:840px}
@@ -83,3 +74,13 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .readme .compare .device-label{transform:translateY(calc(var(--h) + 30px));display:flex;justify-content:center}
 .device-label.before span{font-size:40px;font-weight:500;color:#9fb7b6}
 .device-label.after span{font-size:40px;font-weight:700;color:var(--mint);text-shadow:0 0 34px #3fe3bd88}
+
+/* Trio: one headline, then three equal phones in an even row, each under a short caption that lights one word. */
+.readme .trio header{left:0;right:0;top:96px}
+.readme .trio h1{font-size:96px}
+.readme .trio .device{width:600px;top:430px}
+.readme .trio .one{left:150px}
+.readme .trio .two{left:900px}
+.readme .trio .three{left:1650px}
+.readme .trio .device-label{transform:translateY(calc(-100% - 28px));text-align:center;font-size:50px;line-height:1;font-weight:460;letter-spacing:-.01em;color:var(--muted)}
+.readme .trio .device-label em{font-style:normal;font-weight:760;color:var(--mint);text-shadow:0 0 34px #3fe3bd66}

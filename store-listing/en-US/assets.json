@@ -51,7 +51,7 @@
         "slide": 4,
         "width": 1080,
         "height": 1920,
-        "bytes": 196643,
+        "bytes": 194538,
         "sources": [
           "raw/phone/06-rules.png",
           "raw/phone/05-settings.png"
@@ -157,7 +157,7 @@
         "slide": 0,
         "width": 1920,
         "height": 1200,
-        "bytes": 201735,
+        "bytes": 202748,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
@@ -168,7 +168,7 @@
         "slide": 1,
         "width": 1920,
         "height": 1200,
-        "bytes": 217480,
+        "bytes": 218003,
         "sources": [
           "raw/tablet10/01-home.png"
         ]
@@ -179,7 +179,7 @@
         "slide": 2,
         "width": 1920,
         "height": 1200,
-        "bytes": 154866,
+        "bytes": 156680,
         "sources": [
           "raw/tablet10/03-log.png"
         ]
@@ -201,7 +201,7 @@
         "slide": 4,
         "width": 1920,
         "height": 1200,
-        "bytes": 220999,
+        "bytes": 222248,
         "sources": [
           "raw/tablet10/10-firewall-dark.png",
           "raw/phone/07-appearance.png"

@@ -52,13 +52,18 @@ function art(ctx) {
   // card, the top elsewhere); the night field keeps its old faint fade.
   const layout = ctx.slide?.layout || '';
   const [axis, hush] = mood === MOODS.night ? ['y', [[0, .35], [.3, .45], [.45, 1]]]
-    : /stack/.test(layout) ? ['y', [[0, 1], [.3, 1], [.34, 0], [.6, 0], [.64, 1], [1, 1]]]
-    : layout === 'spread' || (W > H && W !== 2400) ? ['x', [[0, 0], [.36, 0], [.42, 1], [1, 1]]]
+    : W > H && W !== 2400 ? ['x', [[0, 1], [.04, 0], [.36, 0], [.42, 1], [1, 1]]]
+    : layout === 'spread' ? ['x', [[0, 0], [.36, 0], [.42, 1], [1, 1]]]
     : layout === 'trio' ? ['y', [[0, 0], [.3, 0], [.36, 1], [1, 1]]]
     : layout === 'compare' ? ['y', [[0, 1], [.84, 1], [.88, 0], [1, 0]]]
     : W > H ? ['y', [[0, 1], [1, 1]]]
     : ['y', [[0, 0], [.27, 0], [.33, 1], [1, 1]]];
-  defs += `<linearGradient id="hush" x1="0" y1="0" x2="${axis === 'x' ? 1 : 0}" y2="${axis === 'y' ? 1 : 0}">${hush.map(([o, a]) => `<stop offset="${o}" stop-color="#fff" stop-opacity="${a}"/>`).join('')}</linearGradient><mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/></mask>`;
+  // The stacked card clears its mid-card headline, fading toward both side edges so neighbours' ripples continue
+  // across the seams and dissolve before the words.
+  const stacked = mood !== MOODS.night && /stack/.test(layout);
+  const stackBand = stacked ? `<linearGradient id="bandX" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".1" stop-color="#000"/><stop offset=".9" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="bandY" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".15" stop-color="#fff"/><stop offset=".85" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient><mask id="bandFeather" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect y="${H * .28}" width="${W}" height="${H * .38}" fill="url(#bandY)"/></mask>` : '';
+  const stackCut = stacked ? `<rect y="${H * .28}" width="${W}" height="${H * .38}" fill="url(#bandX)" mask="url(#bandFeather)"/>` : '';
+  defs += `<linearGradient id="hush" x1="0" y1="0" x2="${axis === 'x' ? 1 : 0}" y2="${axis === 'y' ? 1 : 0}">${hush.map(([o, a]) => `<stop offset="${o}" stop-color="#fff" stop-opacity="${a}"/>`).join('')}</linearGradient>${stackBand}<mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/>${stackCut}</mask>`;
   return `<defs>${defs}</defs>${body}<rect width="${W}" height="${H}" fill="url(#dusk)"/>`;
 }
 

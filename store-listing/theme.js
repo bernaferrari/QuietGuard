@@ -17,7 +17,7 @@ const ripples = [
 const MOODS = {
   night: {field: ['#0a2a36', '#0d3b45', '#0b3140', '#0f4448', '#0b2f3c', '#0d3a45'], shade: '#03141c', shadeTop: .35, shadeBottom: .3, glow: '#2bd3ac', ring: '#9af5e0'},
   mint: {field: ['#c9f4e8', '#dcf9ef', '#bff0e2', '#d6f7ec'], shade: '#ffffff', shadeTop: .4, shadeBottom: 0, glow: '#ffffff', ring: '#2a9c84'},
-  coral: {field: ['#f7826b', '#f88f73', '#f67c68', '#f98d70'], shade: '#ffffff', shadeTop: .15, shadeBottom: 0, glow: '#ffd2c2', ring: '#ffffff'},
+  coral: {field: ['#f7826b', '#f88f73', '#f67c68', '#f98d70'], shade: '#ffffff', shadeTop: .15, shadeBottom: 0, glow: '#ffd2c2', ring: '#ffffff', ringBoost: 2.1, ringWeight: 1.5},
   sunrise: {field: ['#ffd9b8', '#ffc4a8', '#ffb29e', '#ffc9ae'], shade: '#ffffff', shadeTop: .35, shadeBottom: 0, glow: '#ffffff', ring: '#e8846b'},
 };
 
@@ -41,8 +41,8 @@ function art(ctx) {
     if (cx < -unit * 1.6 || cx > W + unit * 1.6) continue;
     for (let i = 0; i < r.rings; i++) {
       const radius = unit * (.12 + i * .13);
-      const opacity = (.2 - i * .028).toFixed(3);
-      body += `<g fill="none" stroke="${mood.ring}" stroke-opacity="${opacity}" stroke-width="${(4 - i * .4).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
+      const opacity = Math.min(.6, (.2 - i * .028) * (mood.ringBoost || 1)).toFixed(3);
+      body += `<g fill="none" stroke="${mood.ring}" stroke-opacity="${opacity}" stroke-width="${((4 - i * .4) * (mood.ringWeight || 1)).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
     }
     body += `<g fill="${mood.ring}" fill-opacity=".06">${shapes.cookie(cx, cy, unit * .12, 0)}</g>`;
   }

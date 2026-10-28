@@ -7,11 +7,11 @@ import {panoramaGradient, panoramaX, shapes} from './studio/shapes.js';
 // They sit on or near the seams, so each set of rings is shared by two neighbouring cards.
 const ripples = [
   {x: .5, y: .2, rings: 5},
-  {x: 1.95, y: .86, rings: 6},
+  {x: 1.95, y: .86, rings: 5},
   {x: 3.6, y: .14, rings: 5},
-  {x: 5.0, y: .9, rings: 6},
+  {x: 5.0, y: .9, rings: 5},
   {x: 6.55, y: .18, rings: 5},
-  {x: 8.0, y: .82, rings: 6},
+  {x: 8.0, y: .82, rings: 5},
 ];
 
 const MOODS = {
@@ -40,7 +40,7 @@ function art(ctx) {
     const cx = panoramaX(ctx, r.x), cy = H * r.y;
     if (cx < -unit * 1.6 || cx > W + unit * 1.6) continue;
     for (let i = 0; i < r.rings; i++) {
-      const radius = unit * (.12 + i * .13);
+      const radius = unit * (.12 + i * .1);
       const opacity = Math.min(.6, (.2 - i * .028) * (mood.ringBoost || 1)).toFixed(3);
       body += `<g fill="none" stroke="${mood.ring}" stroke-opacity="${opacity}" stroke-width="${((4 - i * .4) * (mood.ringWeight || 1)).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
     }
@@ -48,7 +48,17 @@ function art(ctx) {
   }
   body += '</g>';
   // Ripples stay faint behind the headline and open up around the screens.
-  defs += `<linearGradient id="hush" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".3" stop-color="#fff" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity="1"/></linearGradient><mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/></mask>`;
+  // Ripples never run behind words: on light cards they stay clear of the headline band (mid-card on the stacked
+  // card, the top elsewhere); the night field keeps its old faint fade.
+  const layout = ctx.slide?.layout || '';
+  const [axis, hush] = mood === MOODS.night ? ['y', [[0, .35], [.3, .45], [.45, 1]]]
+    : /stack/.test(layout) ? ['y', [[0, 1], [.3, 1], [.34, 0], [.6, 0], [.64, 1], [1, 1]]]
+    : layout === 'spread' || (W > H && W !== 2400) ? ['x', [[0, 0], [.36, 0], [.42, 1], [1, 1]]]
+    : layout === 'trio' ? ['y', [[0, 0], [.3, 0], [.36, 1], [1, 1]]]
+    : layout === 'compare' ? ['y', [[0, 1], [.84, 1], [.88, 0], [1, 0]]]
+    : W > H ? ['y', [[0, 1], [1, 1]]]
+    : ['y', [[0, 0], [.27, 0], [.33, 1], [1, 1]]];
+  defs += `<linearGradient id="hush" x1="0" y1="0" x2="${axis === 'x' ? 1 : 0}" y2="${axis === 'y' ? 1 : 0}">${hush.map(([o, a]) => `<stop offset="${o}" stop-color="#fff" stop-opacity="${a}"/>`).join('')}</linearGradient><mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/></mask>`;
   return `<defs>${defs}</defs>${body}<rect width="${W}" height="${H}" fill="url(#dusk)"/>`;
 }
 

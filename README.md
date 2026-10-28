@@ -18,9 +18,9 @@
   <img src="store-listing/en-US/readme/rules.jpg" width="100%" alt="Set it once, stay quiet: control every app (Camera blocked on Wi-Fi and mobile data), the log filtered to blocked connections grouped by app, and the rules for roaming, screen and lockdown">
 </p>
 
-- **Control every app.** Wi-Fi and mobile data are separate, so video can wait for Wi-Fi while the camera never connects at all.
-- **A log you can read.** Every connection shows the app, the server and whether it got through. Filter to the blocked ones, grouped by app.
-- **Rules for the edge cases.** Allow an app only while the screen is on, block roaming, lock everything down, and choose what new apps get.
+- **Wi-Fi and mobile, separately.** Video can wait for Wi-Fi while the camera never connects at all.
+- **See who tried.** Each connection shows the app, the server and whether it got through. Filter to the blocked ones, grouped by app.
+- **Screen, roaming, lockdown.** Allow an app only while the screen is on, block roaming, lock everything down, and choose what new apps get.
 
 ## On a bigger screen
 

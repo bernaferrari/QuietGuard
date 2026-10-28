@@ -95,9 +95,9 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 /* Spread: the headline on the left, a landscape tablet running off the right edge, a dark phone stepping in front. */
 .readme .spread header{left:150px;right:auto;top:0;bottom:0;width:720px;text-align:left;display:flex;flex-direction:column;justify-content:center}
 .readme .spread h1{font-size:112px}
-.readme .spread header p{margin:28px 0 0;font-size:40px;max-width:640px;text-align:left}
-.readme .spread .tablet{--bezel:18px;--radius:48px;left:1000px;top:150px;width:1620px}
-.readme .spread .phone{--bezel:12px;--radius:60px;left:860px;top:500px;width:420px;z-index:4}
+.readme .spread header p{margin:28px 0 0;font-size:40px;max-width:600px;text-align:left}
+.readme .spread .tablet{--bezel:18px;--radius:48px;left:1100px;top:150px;width:1620px}
+.readme .spread .phone{--bezel:12px;--radius:60px;left:800px;top:500px;width:420px;z-index:4}
 
 /* Light moods (README): white frames, a soft shadow tinted by the field. */
 .light-field .device{background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 50px 90px -40px var(--soft),0 16px 34px -18px var(--soft)}

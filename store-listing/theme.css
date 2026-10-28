@@ -119,3 +119,25 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 /* A card without a subline centres its headline in the space above the screen. */
 .phone header:not(:has(p)){top:190px}
 .tablet7 header:not(:has(p)){top:200px}
+
+/* The comparison on coral reads like the trio: a headline, then four equal white-framed phones in two pairs,
+   each named above in the same ink. No panels. */
+.readme .mood-coral.compare header{left:0;right:0;top:110px;text-align:center}
+.readme .mood-coral.compare h1{font-size:96px}
+.readme .mood-coral.compare .device{top:450px;width:470px}
+.readme .mood-coral.compare .device.before,.readme .mood-coral.compare .device.after{--bezel:10px;--radius:56px;background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 40px 80px -36px #8a2a1a77}
+.readme .mood-coral.compare .device.before::before{display:none}
+.readme .mood-coral.compare .pair1.before{left:130px}
+.readme .mood-coral.compare .pair1.after{left:640px}
+.readme .mood-coral.compare .pair2.before{left:1290px}
+.readme .mood-coral.compare .pair2.after{left:1800px}
+.readme .mood-coral.compare .device-label{transform:translateY(calc(-100% - 22px))}
+.readme .mood-coral.compare .device-label span{font-size:46px}
+
+/* Name card: the icon and name, large and centred, with the three phones rising below. */
+.readme .identity{position:absolute;z-index:5;left:0;right:0;top:80px;display:flex;align-items:center;justify-content:center;gap:40px;
+  font-size:150px;font-weight:700;letter-spacing:-.03em;color:#3a1108}
+.readme .identity img{width:176px;height:176px;border-radius:46px;display:block;box-shadow:0 24px 50px -20px #6b1f1288}
+.readme .hero.named .left{top:480px}
+.readme .hero.named .center{top:360px}
+.readme .hero.named .right{top:480px}

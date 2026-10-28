@@ -3,17 +3,19 @@
 // so the strip joins exactly in the store carousel.
 import {panoramaGradient, panoramaX, shapes} from './studio/shapes.js';
 
-// Ripple centres in card widths across the whole strip, and heights as a fraction of the canvas: all along the
-// bottom, rising from behind the screens, one and a half cards apart, so the headlines stay calm.
-// Four rings, .1 apart, keep the largest inside half the distance to the next centre, so sets never cross.
+// Ripple centres in card widths across the strip, and heights as a fraction of the canvas. Sets of different sizes
+// rise from the bottom edge and from the seams at mid-height, never behind a headline, and each set's outer ring
+// stays clear of its neighbours' (checked for the phone strip), so no two sets ever cross.
 const ripples = [
-  {x: .75, y: .9, rings: 4},
-  {x: 2.25, y: .96, rings: 4},
-  {x: 3.75, y: .88, rings: 4},
-  {x: 5.25, y: .95, rings: 4},
-  {x: 6.75, y: .9, rings: 4},
-  {x: 8.25, y: .96, rings: 4},
-]
+  {x: .25, y: .96, rings: 3, step: .07},
+  {x: 1.05, y: .54, rings: 4, step: .06},
+  {x: 2.2, y: .98, rings: 5, step: .075},
+  {x: 3.25, y: .58, rings: 3, step: .06},
+  {x: 4.1, y: .99, rings: 4, step: .07},
+  {x: 5.55, y: .93, rings: 4, step: .08},
+  {x: 6.5, y: .54, rings: 3, step: .06},
+  {x: 7.45, y: .97, rings: 4, step: .08},
+];
 
 const MOODS = {
   night: {field: ['#0a2a36', '#0d3b45', '#0b3140', '#0f4448', '#0b2f3c', '#0d3a45'], shade: '#03141c', shadeTop: .35, shadeBottom: .3, glow: '#2bd3ac', ring: '#9af5e0'},
@@ -41,7 +43,7 @@ function art(ctx) {
     const cx = panoramaX(ctx, r.x), cy = H * r.y;
     if (cx < -unit * 1.6 || cx > W + unit * 1.6) continue;
     for (let i = 0; i < r.rings; i++) {
-      const radius = unit * (.12 + i * .1);
+      const radius = unit * (.1 + i * r.step);
       const opacity = Math.min(.6, (.2 - i * .028) * (mood.ringBoost || 1)).toFixed(3);
       body += `<g fill="none" stroke="${mood.ring}" stroke-opacity="${opacity}" stroke-width="${((4 - i * .4) * (mood.ringWeight || 1)).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
     }
@@ -61,6 +63,15 @@ export default {
   compose({main, slide}) {
     const mood = slide.mood || 'coral';
     if (mood !== 'night') main.classList.add('light-field', `mood-${mood}`);
+    // The README's first image is the app's name card: icon and name, large, above the app.
+    if (slide.identity) {
+      main.querySelector('header')?.remove();
+      const id = document.createElement('div');
+      id.className = 'identity';
+      id.dataset.checkBounds = '';
+      id.innerHTML = '<img src="../brand/icon.png" alt="">QuietGuard';
+      main.append(id);
+    }
   },
 
   /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */

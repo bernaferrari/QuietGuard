@@ -53,5 +53,8 @@
   "readme-spread": {
     "title": "Room for\n*every rule.*",
     "body": "Tablets and foldables keep the app list and an app's rules side by side."
+  },
+  "readme-compare": {
+    "title": "NetGuard, *redrawn.*"
   }
 }

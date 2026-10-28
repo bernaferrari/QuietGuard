@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="store-listing/brand/icon.png" width="96" alt="QuietGuard icon">
-</p>
-
-<h1 align="center">QuietGuard</h1>
+<h1 align="center">
+  <img src="store-listing/en-US/readme/hero.jpg" width="100%" alt="QuietGuard">
+</h1>
 
 <p align="center"><strong>Decide which apps reach the internet.</strong></p>
 
@@ -13,10 +11,6 @@
 </p>
 
 <p align="center"><a href="https://quietguard.vercel.app/"><strong>Try the web demo</strong></a></p>
-
-<p align="center">
-  <img src="store-listing/en-US/readme/hero.jpg" width="100%" alt="QuietGuard Home with the firewall on, the app list with Wi-Fi and mobile switches, and the traffic log">
-</p>
 
 ## Quiet by default
 
@@ -36,10 +30,10 @@
 
 ## From NetGuard to QuietGuard
 
-The same phone and the same apps, before and after. Every screen is redrawn with Material 3.
+NetGuard and QuietGuard side by side. Every screen is redrawn with Material 3.
 
 <p align="center">
-  <img src="store-listing/en-US/readme/before-after.jpg" width="100%" alt="NetGuard's app list and default rules beside QuietGuard's firewall list and settings, on the same phone with the same apps">
+  <img src="store-listing/en-US/readme/before-after.jpg" width="100%" alt="NetGuard, redrawn: NetGuard's app list and settings beside QuietGuard's">
 </p>
 
 QuietGuard is a fork of [NetGuard](https://github.com/M66B/NetGuard), Marcel Bokhorst's no-root firewall, and stays under the GPLv3. The interface and app logic are rewritten in Kotlin Multiplatform and Compose, with a packet engine in Rust. [What I wrote and what I inherited](docs/PROVENANCE.md).

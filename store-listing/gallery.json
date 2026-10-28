@@ -159,9 +159,9 @@
   "readme": [
     {
       "feature": "readme-hero",
-      "layout": "hero",
+      "layout": "hero named",
       "file": "readme/hero.jpg",
-      "alt": "QuietGuard Home with the firewall on, the app list with Wi-Fi and mobile switches, and the traffic log",
+      "alt": "QuietGuard",
       "devices": [
         {
           "raw": "phone/01-home.png",
@@ -175,7 +175,8 @@
           "raw": "phone/03-log.png",
           "role": "right"
         }
-      ]
+      ],
+      "identity": true
     },
     {
       "feature": "readme-rules",
@@ -221,7 +222,7 @@
       "feature": "readme-compare",
       "layout": "compare",
       "file": "readme/before-after.jpg",
-      "alt": "The same phone and apps in NetGuard and in QuietGuard: the firewall list and the settings",
+      "alt": "NetGuard, redrawn: NetGuard's app list and settings beside QuietGuard's",
       "devices": [
         {
           "raw": "compare/netguard-firewall.png",
@@ -229,7 +230,7 @@
           "label": "NetGuard"
         },
         {
-          "raw": "compare/quietguard-firewall.png",
+          "raw": "phone/02-firewall.png",
           "role": "after pair1",
           "label": "QuietGuard"
         },
@@ -239,7 +240,7 @@
           "label": "NetGuard"
         },
         {
-          "raw": "compare/quietguard-settings.png",
+          "raw": "phone/05-settings.png",
           "role": "after pair2",
           "label": "QuietGuard"
         }

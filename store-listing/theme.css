@@ -104,15 +104,15 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .mood-mint{--soft:#0f6b5a66}
 .mood-coral{--soft:#8a2a1a66}
 .mood-sunrise{--soft:#9a4a2a55}
-/* On coral the type is a deep warm ink, and the key phrase a deep red: legible at thumbnail size, still warm. */
-.mood-coral{--ink-warm:#3a1108;--deep:#9e1f0c}
-.mood-coral h1{color:var(--ink-warm);text-shadow:none}
-.mood-coral h1 em{color:var(--deep);text-shadow:none}
+/* On coral the type is one deep warm ink. The key phrase stands out by weight alone: a light line, then a heavy one. */
+.mood-coral{--ink-warm:#3a1108;--deep:#3a1108}
+.mood-coral h1{color:var(--ink-warm);text-shadow:none;font-weight:500}
+.mood-coral h1 em{color:var(--ink-warm);text-shadow:none;font-weight:800}
 .mood-coral header p{color:#4a1a0e;font-weight:480}
-.readme .mood-coral .device-label{color:var(--ink-warm);font-weight:520}
-.readme .mood-coral .device-label em{color:var(--deep);text-shadow:none;font-weight:780}
-.readme .mood-coral .device-label.before span{color:#6b2a1c}
-.readme .mood-coral .device-label.after span{color:var(--deep);text-shadow:none}
+.readme .mood-coral .device-label{color:var(--ink-warm);font-weight:440}
+.readme .mood-coral .device-label em{color:var(--ink-warm);text-shadow:none;font-weight:800}
+.readme .mood-coral .device-label.before span{color:#6b2a1c;font-weight:500}
+.readme .mood-coral .device-label.after span{color:var(--ink-warm);text-shadow:none;font-weight:800}
 /* The QuietGuard phones in the comparison wear white on coral, not the night mint. */
 .readme .mood-coral.compare .device.after{background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 40px 80px -36px #8a2a1a77}
 .readme .mood-coral.compare .device.before::before{background:#ffffff26}

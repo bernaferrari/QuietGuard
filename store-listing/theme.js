@@ -24,8 +24,8 @@ const MOODS = {
 function art(ctx) {
   const {W, H, slides} = ctx;
   const unit = Math.max(W, H);
-  // A light mood for README art: the same ripples on a bright field, so the app is the darkest thing in view.
-  const mood = MOODS[ctx.slide?.mood] || MOODS.night;
+  // Coral by default: the same ripples on a bright warm field, so the app is the boldest thing in view.
+  const mood = MOODS[ctx.slide?.mood || 'coral'] || MOODS.coral;
   let defs = panoramaGradient(ctx, 'field', mood.field);
   defs += `<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mood.shade}" stop-opacity="${mood.shadeTop}"/><stop offset=".45" stop-color="${mood.shade}" stop-opacity="0"/><stop offset="1" stop-color="${mood.shade}" stop-opacity="${mood.shadeBottom}"/></linearGradient>`;
   let body = `<rect width="${W}" height="${H}" fill="url(#field)"/>`;
@@ -55,9 +55,10 @@ function art(ctx) {
 export default {
   art,
 
-  // README art on a light mood swaps the night frames for white ones with a soft shadow.
+  // Every card sits on coral unless it asks for another mood; light moods swap the night frames for white ones.
   compose({main, slide}) {
-    if (slide.mood && slide.mood !== 'night') main.classList.add('light-field', `mood-${slide.mood}`);
+    const mood = slide.mood || 'coral';
+    if (mood !== 'night') main.classList.add('light-field', `mood-${mood}`);
   },
 
   /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */

@@ -98,11 +98,14 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .mood-coral{--soft:#8a2a1a66}
 .mood-sunrise{--soft:#9a4a2a55}
 /* On coral the type is white, and the key phrase takes the app's deep teal instead of the night glow. */
-.mood-coral{--deep:#0c4a43}
+.mood-coral{--deep:#6b1f12}
 .mood-coral h1{color:#ffffff;text-shadow:0 2px 24px #b0402a33}
 .mood-coral h1 em{color:var(--deep);text-shadow:none}
-.mood-coral header p{color:#fff4ef}
+.mood-coral header p{color:#ffffff;font-weight:480}
 .readme .mood-coral .device-label{color:#ffffff;font-weight:520}
 .readme .mood-coral .device-label em{color:var(--deep);text-shadow:none;font-weight:780}
 .readme .mood-coral .device-label.before span{color:#ffe1d8}
 .readme .mood-coral .device-label.after span{color:var(--deep);text-shadow:none}
+/* The QuietGuard phones in the comparison wear white on coral, not the night mint. */
+.readme .mood-coral.compare .device.after{background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 40px 80px -36px #8a2a1a77}
+.readme .mood-coral.compare .device.before::before{background:#ffffff26}

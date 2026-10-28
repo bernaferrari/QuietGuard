@@ -36,8 +36,8 @@ class StoreCaptureApplication : ApplicationEx() {
         preferences.putBoolean("log", true)
         preferences.putBoolean("filter", true)
         preferences.putBoolean("update_check", false)
-        // The store set shows QuietGuard's own teal, not whatever wallpaper the capture emulator has.
-        preferences.putString("theme", "teal")
+        // The store set shows QuietGuard in warm orange, at home on the coral field, not the emulator's wallpaper.
+        preferences.putString("theme", "orange")
         // Apps without their own rule may connect; the fixture rules carry the blocks.
         preferences.putBoolean("whitelist_wifi", false)
         preferences.putBoolean("whitelist_other", false)

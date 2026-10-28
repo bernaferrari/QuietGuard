@@ -101,26 +101,22 @@ fun FirewallTile(
         animationSpec = effectsSpec(),
         label = "ftDetail",
     )
+    // Blocked fills the whole tile; the icon well melts into it instead of adding a red circle.
     val iconContainerColor by animateColorAsState(
-        targetValue = if (blocked) MaterialTheme.colorScheme.error.copy(alpha = 0.2f)
+        targetValue = if (blocked) MaterialTheme.colorScheme.errorContainer
         else MaterialTheme.colorScheme.surfaceContainerHigh,
         animationSpec = effectsSpec(),
         label = "ftIconBg",
     )
     val iconColor = if (blocked) {
-        MaterialTheme.colorScheme.error
+        MaterialTheme.colorScheme.onErrorContainer
     } else {
         MaterialTheme.colorScheme.onSurfaceVariant
     }
     val iconAllowedTint = if (blocked) {
-        MaterialTheme.colorScheme.error.copy(alpha = 0.44f)
+        MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.44f)
     } else {
         MaterialTheme.colorScheme.onSurfaceVariant
-    }
-    val slashColor = if (blocked) {
-        MaterialTheme.colorScheme.error.copy(alpha = 0.76f)
-    } else {
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
     }
 
     // Announced as a switch that is on when the network is allowed.

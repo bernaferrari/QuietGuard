@@ -26,6 +26,8 @@ import com.bernaferrari.quietguard.generated.resources.ui_empty_apps_title
 import com.bernaferrari.quietguard.generated.resources.ui_filter_all
 import com.bernaferrari.quietguard.generated.resources.ui_filter_empty
 import com.bernaferrari.quietguard.generated.resources.ui_loading
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDp
@@ -676,49 +678,47 @@ private fun RuleCard(
                 )
             }
 
-            // The pair reads as one connected control: both 48dp toggles sit on a shared
-            // tonal track, and a blocked network fills its half with the error container.
-            Box(
-                modifier = Modifier.width(NetworkTogglePairWidth),
-                contentAlignment = Alignment.Center,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(NetworkTogglePairWidth - 4.dp)
-                        .height(NetworkToggleTrackHeight)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+            // One connected button group: two segments share a single pill silhouette (round outer
+            // corners, small inner corners, a 2dp seam). A blocked network fills its whole segment.
+            Row(horizontalArrangement = Arrangement.spacedBy(NetworkSegmentGap)) {
+                NetworkToggleSegment(
+                    blocked = rule.wifi_blocked,
+                    leading = true,
+                    allowedIcon = MaterialSymbols.Filled.Wifi,
+                    blockedIcon = MaterialSymbols.Filled.WifiOff,
+                    contentDescription = wifiDescription,
+                    onToggle = onToggleWifi,
                 )
-                Box(modifier = Modifier.align(Alignment.CenterStart)) {
-                    NetworkToggleButton(
-                        blocked = rule.wifi_blocked,
-                        allowedIcon = MaterialSymbols.Filled.Wifi,
-                        blockedIcon = MaterialSymbols.Filled.WifiOff,
-                        contentDescription = wifiDescription,
-                        onToggle = onToggleWifi,
-                    )
-                }
-                Box(modifier = Modifier.align(Alignment.CenterEnd)) {
-                    NetworkToggleButton(
-                        blocked = rule.other_blocked,
-                        allowedIcon = MaterialSymbols.Outlined.MobiledataArrows,
-                        blockedIcon = MaterialSymbols.Outlined.MobiledataOff,
-                        contentDescription = mobileDescription,
-                        onToggle = onToggleMobile,
-                    )
-                }
+                NetworkToggleSegment(
+                    blocked = rule.other_blocked,
+                    leading = false,
+                    allowedIcon = MaterialSymbols.Outlined.MobiledataArrows,
+                    blockedIcon = MaterialSymbols.Outlined.MobiledataOff,
+                    contentDescription = mobileDescription,
+                    onToggle = onToggleMobile,
+                )
             }
         }
     }
 }
 
-/** Two 48dp toggles whose bubbles sit 40dp apart center-to-center on one 84x38dp track. */
-private val NetworkTogglePairWidth = 88.dp
-private val NetworkToggleTrackHeight = 38.dp
+private val NetworkSegmentWidth = 52.dp
+private val NetworkSegmentHeight = 40.dp
+private val NetworkSegmentGap = 2.dp
+private val NetworkSegmentInnerCorner = 6.dp
+private val NetworkSegmentBlockedInnerCorner = 10.dp
+private val NetworkSegmentPressedInnerCorner = 3.dp
 
+/**
+ * One half of the Wi-Fi/mobile button group. Allowed is a quiet tonal segment; blocked fills the
+ * segment with the error container. Colors cross-fade and the inner corners soften slightly when
+ * blocked and tighten on press. The visual is 52x40dp; Material's
+ * minimum interactive size keeps the touch target at least 48dp.
+ */
 @Composable
-private fun NetworkToggleButton(
+private fun NetworkToggleSegment(
     blocked: Boolean,
+    leading: Boolean,
     allowedIcon: MaterialIcon,
     blockedIcon: MaterialIcon,
     contentDescription: String,
@@ -727,65 +727,24 @@ private fun NetworkToggleButton(
     val motion = LocalMotion.current
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val pressScale by animateFloatAsState(
-        targetValue = if (isPressed && !motion.reducedMotion) 0.96f else 1f,
-        animationSpec = if (motion.reducedMotion) {
-            snap()
-        } else {
-            spring(
-                stiffness = Spring.StiffnessHigh,
-                dampingRatio = Spring.DampingRatioNoBouncy,
-            )
-        },
-        label = "networkTogglePressScale",
+    val outer = NetworkSegmentHeight / 2
+    // The inner corners stay small so the two halves always read as one pill; blocking softens them
+    // a little and a press tightens them, an expressive shape cue that never splits the group.
+    val innerTarget = when {
+        isPressed -> NetworkSegmentPressedInnerCorner
+        blocked -> NetworkSegmentBlockedInnerCorner
+        else -> NetworkSegmentInnerCorner
+    }
+    val inner by animateDpAsState(
+        targetValue = innerTarget,
+        animationSpec = if (motion.reducedMotion) snap() else spring(dampingRatio = 0.7f, stiffness = 700f),
+        label = "networkSegmentInnerCorner",
     )
-    val stateTransition = updateTransition(targetState = blocked, label = "networkToggleState")
-    val bubbleAlpha by stateTransition.animateFloat(
-        transitionSpec = {
-            if (motion.reducedMotion) {
-                snap()
-            } else if (true isTransitioningTo false) {
-                keyframes {
-                    durationMillis = motion.durationFast + 100
-                    1f at 0
-                    1f at 64
-                    0.64f at 160
-                    0f at durationMillis
-                }
-            } else {
-                spring(
-                    stiffness = Spring.StiffnessMediumLow,
-                    dampingRatio = 0.82f,
-                )
-            }
-        },
-        label = "networkToggleBubbleAlpha",
-    ) { isBlocked ->
-        if (isBlocked) 1f else 0f
-    }
-    val bubbleScale by stateTransition.animateFloat(
-        transitionSpec = {
-            if (motion.reducedMotion) {
-                snap()
-            } else if (true isTransitioningTo false) {
-                keyframes {
-                    durationMillis = motion.durationFast + 100
-                    1f at 0
-                    1.1f at 64
-                    0.68f at 160
-                    0f at durationMillis
-                }
-            } else {
-                spring(
-                    stiffness = 640f,
-                    dampingRatio = 0.76f,
-                )
-            }
-        },
-        label = "networkToggleBubbleScale",
-    ) { isBlocked ->
-        if (isBlocked) 1f else 0f
-    }
+    val containerColor by animateColorAsState(
+        targetValue = if (blocked) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
+        animationSpec = effectsSpec(),
+        label = "networkSegmentContainer",
+    )
     val allowedIconTint = if (blocked) {
         MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.44f)
     } else {
@@ -794,25 +753,13 @@ private fun NetworkToggleButton(
     val blockedIconTint = if (blocked) {
         MaterialTheme.colorScheme.onErrorContainer
     } else {
-        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.9f)
+        MaterialTheme.colorScheme.onSurfaceVariant
     }
-    val iconScale by stateTransition.animateFloat(
-        transitionSpec = {
-            if (motion.reducedMotion) {
-                snap()
-            } else {
-                spring(
-                    stiffness = Spring.StiffnessMediumLow,
-                    dampingRatio = Spring.DampingRatioNoBouncy,
-                )
-            }
-        },
-        label = "networkToggleIconScale",
-    ) { isBlocked ->
-        if (isBlocked) 1f else 0.9f
+    val shape = if (leading) {
+        RoundedCornerShape(topStart = outer, bottomStart = outer, topEnd = inner, bottomEnd = inner)
+    } else {
+        RoundedCornerShape(topStart = inner, bottomStart = inner, topEnd = outer, bottomEnd = outer)
     }
-    val blockedBackground = MaterialTheme.colorScheme.errorContainer
-
     val stateLabel = stringResource(
         if (blocked) Res.string.menu_traffic_blocked else Res.string.menu_traffic_allowed,
     )
@@ -820,50 +767,25 @@ private fun NetworkToggleButton(
         checked = !blocked,
         onCheckedChange = { onToggle() },
         interactionSource = interactionSource,
-        shape = CircleShape,
-        color = Color.Transparent,
-        // 48dp hit box; the visual bubble and icon stay 34 / 18dp so the pair reads as one pill.
+        shape = shape,
+        color = containerColor,
         modifier = Modifier
-            .size(48.dp)
+            .size(width = NetworkSegmentWidth, height = NetworkSegmentHeight)
             .semantics {
                 role = Role.Switch
                 stateDescription = stateLabel
-            }
-            .graphicsLayer {
-                scaleX = pressScale
-                scaleY = pressScale
             },
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Box(
-                modifier = Modifier
-                    .size(34.dp)
-                    .graphicsLayer {
-                        alpha = bubbleAlpha
-                        scaleX = bubbleScale
-                        scaleY = bubbleScale
-                    }
-                    .clip(CircleShape)
-                    .background(blockedBackground),
+            DiagonalWipeIcon(
+                blocked = blocked,
+                allowedIcon = allowedIcon,
+                blockedIcon = blockedIcon,
+                allowedTint = allowedIconTint,
+                blockedTint = blockedIconTint,
+                contentDescription = contentDescription,
+                modifier = Modifier.size(20.dp),
             )
-            Box(
-                modifier = Modifier
-                    .size(18.dp)
-                    .graphicsLayer {
-                        scaleX = iconScale
-                        scaleY = iconScale
-                    },
-            ) {
-                DiagonalWipeIcon(
-                    blocked = blocked,
-                    allowedIcon = allowedIcon,
-                    blockedIcon = blockedIcon,
-                    allowedTint = allowedIconTint,
-                    blockedTint = blockedIconTint,
-                    contentDescription = contentDescription,
-                    modifier = Modifier.matchParentSize(),
-                )
-            }
         }
     }
 }

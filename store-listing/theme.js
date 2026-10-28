@@ -39,7 +39,8 @@ function art(ctx) {
     body += `<rect width="${W}" height="${H}" fill="url(#glow${k})"/>`;
   });
   body += '<g mask="url(#quiet)">';
-  for (const r of ripples) {
+  // An image can opt out (the comparison keeps all attention on its phones).
+  for (const r of ctx.slide?.ripples === false ? [] : ripples) {
     const cx = panoramaX(ctx, r.x), cy = H * r.y;
     if (cx < -unit * 1.6 || cx > W + unit * 1.6) continue;
     for (let i = 0; i < r.rings; i++) {

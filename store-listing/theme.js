@@ -83,8 +83,8 @@ export default {
       return;
     }
     const stacked = /stack/.test(slide.layout || '');
-    // The README spread runs its tablet off the right edge on purpose.
-    const bleeds = slide.layout === 'spread';
+    // The README spread and the phone tablet card run their tablet off the right edge on purpose.
+    const bleeds = slide.layout === 'spread' || slide.layout === 'bleed';
     for (const {box, spec} of devices) {
       if (!bleeds && (box.left < 0 || box.left + box.width > W + 1)) throw new Error(`Screen leaves the side of the card: ${spec.raw}`);
       if (stacked) continue;

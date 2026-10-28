@@ -487,4 +487,9 @@
     <string name="about_source_title">மூலக் குறியீடு</string>
     <string name="about_source_summary">திட்டத்தை ஆராயவும், சிக்கல்களைப் புகாரளிக்கவும் அல்லது GitHub இல் பங்களிக்கவும்</string>
     <string name="about_social_title">தொடர்பில் இருங்கள்</string>
+    <string name="color_style_title">வண்ண நடை</string>
+    <string name="color_style_expressive">வெளிப்பாடான</string>
+    <string name="color_style_vibrant">துடிப்பான</string>
+    <string name="color_style_tonal">டோனல்</string>
+    <string name="color_style_muted">மென்மையான</string>
 </resources>

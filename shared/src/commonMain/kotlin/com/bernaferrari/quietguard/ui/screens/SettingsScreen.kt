@@ -167,8 +167,13 @@ import com.bernaferrari.quietguard.ui.screens.vm.SettingsViewModel
 import com.bernaferrari.quietguard.ui.SettingsSection
 import org.koin.compose.viewmodel.koinViewModel
 import com.bernaferrari.quietguard.ui.components.groupItemShape
+import com.bernaferrari.quietguard.ui.components.ColorStylePicker
+import com.bernaferrari.quietguard.ui.theme.ColorStyle
+import com.bernaferrari.quietguard.ui.theme.themeSeedColor
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.foundation.layout.heightIn
 import com.bernaferrari.quietguard.ui.theme.DynamicThemeSwatchColor
-import com.bernaferrari.quietguard.ui.theme.THEME_DEFAULT
+import com.bernaferrari.quietguard.ui.theme.THEME_INITIAL
 import com.bernaferrari.quietguard.ui.theme.platformDynamicColorScheme
 import com.bernaferrari.quietguard.ui.theme.resolveThemeName
 import com.bernaferrari.quietguard.ui.theme.spacing
@@ -306,7 +311,7 @@ fun SettingsScreen(
         ) {
 
             if (section == null) {
-                val currentTheme = resolveThemeName(str("theme", THEME_DEFAULT))
+                val currentTheme = resolveThemeName(str("theme", THEME_INITIAL))
                 val themeChoices = themeSwatchOptions()
                 val dynamicSwatchColor =
                     platformDynamicColorScheme(isDark = false)?.primary ?: DynamicThemeSwatchColor
@@ -393,6 +398,8 @@ fun SettingsScreen(
                                         ),
                                         modifier = Modifier
                                             .weight(1f)
+                                            // 48dp, like the style row below and the touch target guideline.
+                                            .heightIn(min = 48.dp)
                                             .semantics { role = Role.RadioButton },
                                     ) {
                                         Icon(
@@ -447,6 +454,25 @@ fun SettingsScreen(
                                     )
                                 }
                             }
+                        }
+                    }
+                    item { first, last ->
+                        // The style of the chosen color, as wordless gradient segments under the swatches.
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = groupItemShape(first, last),
+                            color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        ) {
+                            ColorStylePicker(
+                                selected = ColorStyle.from(str("color_style", "")),
+                                seedColor = if (currentTheme == "dynamic") dynamicSwatchColor else themeSeedColor(currentTheme),
+                                dark = MaterialTheme.colorScheme.surface.luminance() < 0.5f,
+                                onSelect = {
+                                    viewModel.putString("color_style", it.id)
+                                    NetGuardPlatform.widgets.updateAll()
+                                },
+                                modifier = Modifier.fillMaxWidth().padding(spacing.default),
+                            )
                         }
                     }
                 }

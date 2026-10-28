@@ -499,4 +499,9 @@ A forgalom nem kerül továbbításra távoli VPN szerverre.</string>
     <string name="about_source_title">Forráskód</string>
     <string name="about_source_summary">Fedezze fel a projektet, jelentse a problémákat, vagy járuljon hozzá a GitHubon</string>
     <string name="about_social_title">Vegye fel a kapcsolatot</string>
+    <string name="color_style_title">Színstílus</string>
+    <string name="color_style_expressive">Kifejező</string>
+    <string name="color_style_vibrant">Élénk</string>
+    <string name="color_style_tonal">Tónusos</string>
+    <string name="color_style_muted">Visszafogott</string>
 </resources>

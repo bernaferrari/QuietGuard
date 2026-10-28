@@ -497,4 +497,9 @@ Jou internetverkeer word nie na 'n afgeleë VPN-bediener gestuur nie.</string>
     <string name="about_source_title">Bronkode</string>
     <string name="about_source_summary">Verken die projek, rapporteer kwessies of dra by op GitHub</string>
     <string name="about_social_title">Maak kontak</string>
+    <string name="color_style_title">Kleurstyl</string>
+    <string name="color_style_expressive">Ekspressief</string>
+    <string name="color_style_vibrant">Lewendig</string>
+    <string name="color_style_tonal">Tonaal</string>
+    <string name="color_style_muted">Gedemp</string>
 </resources>

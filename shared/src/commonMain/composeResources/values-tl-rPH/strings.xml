@@ -499,4 +499,9 @@ Ang iyong internet traffic ay hindi pinapadala sa isang liblib na vpn serber.</s
     <string name="about_source_title">Source code</string>
     <string name="about_source_summary">Galugarin ang proyekto, mag-ulat ng mga isyu, o mag-ambag sa GitHub</string>
     <string name="about_social_title">Makipag-ugnayan</string>
+    <string name="color_style_title">Estilo ng kulay</string>
+    <string name="color_style_expressive">Ekspresibo</string>
+    <string name="color_style_vibrant">Matingkad</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Malamlam</string>
 </resources>

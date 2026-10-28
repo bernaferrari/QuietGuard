@@ -499,4 +499,9 @@
     <string name="about_source_title">წყაროს კოდი</string>
     <string name="about_source_summary">გამოიკვლიეთ პროექტი, შეატყობინეთ პრობლემების შესახებ ან წვლილი შეიტანეთ GitHub-ზე</string>
     <string name="about_social_title">დაგვიკავშირდით</string>
+    <string name="color_style_title">ფერის სტილი</string>
+    <string name="color_style_expressive">ექსპრესიული</string>
+    <string name="color_style_vibrant">ცოცხალი</string>
+    <string name="color_style_tonal">ტონალური</string>
+    <string name="color_style_muted">მკრთალი</string>
 </resources>

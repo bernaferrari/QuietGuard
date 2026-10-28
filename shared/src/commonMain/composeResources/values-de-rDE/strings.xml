@@ -499,4 +499,9 @@ Ihr Verkehr wird NICHT an einen entfernten VPN-Server gesendet.</string>
     <string name="about_source_title">Quellcode</string>
     <string name="about_source_summary">Erkunden Sie das Projekt, melden Sie Probleme oder leisten Sie einen Beitrag auf GitHub</string>
     <string name="about_social_title">Nehmen Sie Kontakt auf</string>
+    <string name="color_style_title">Farbstil</string>
+    <string name="color_style_expressive">Expressiv</string>
+    <string name="color_style_vibrant">Lebendig</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Gedämpft</string>
 </resources>

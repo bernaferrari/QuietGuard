@@ -496,4 +496,9 @@ __KLJUČ_o_različici__ 1</string>
     <string name="about_source_title">Izvorna koda</string>
     <string name="about_source_summary">Raziščite projekt, prijavite težave ali prispevajte na GitHub</string>
     <string name="about_social_title">Stopite v stik</string>
+    <string name="color_style_title">Barvni slog</string>
+    <string name="color_style_expressive">Izrazit</string>
+    <string name="color_style_vibrant">Živahen</string>
+    <string name="color_style_tonal">Tonski</string>
+    <string name="color_style_muted">Pridušen</string>
 </resources>

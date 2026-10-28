@@ -499,4 +499,9 @@
     <string name="about_source_title">Исходный код</string>
     <string name="about_source_summary">Изучите проект, сообщите о проблемах или внесите свой вклад на GitHub.</string>
     <string name="about_social_title">Свяжитесь с нами</string>
+    <string name="color_style_title">Цветовой стиль</string>
+    <string name="color_style_expressive">Выразительный</string>
+    <string name="color_style_vibrant">Яркий</string>
+    <string name="color_style_tonal">Тональный</string>
+    <string name="color_style_muted">Приглушённый</string>
 </resources>

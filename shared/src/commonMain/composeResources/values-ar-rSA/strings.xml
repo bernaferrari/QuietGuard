@@ -498,4 +498,9 @@
     <string name="about_source_title">كود المصدر</string>
     <string name="about_source_summary">استكشف المشروع أو أبلغ عن المشكلات أو ساهم في GitHub</string>
     <string name="about_social_title">تواصل معنا</string>
+    <string name="color_style_title">نمط الألوان</string>
+    <string name="color_style_expressive">معبّر</string>
+    <string name="color_style_vibrant">نابض بالحياة</string>
+    <string name="color_style_tonal">متدرّج</string>
+    <string name="color_style_muted">هادئ</string>
 </resources>

@@ -705,10 +705,11 @@ private fun RuleCard(
 private val NetworkSegmentWidth = 52.dp
 private val NetworkSegmentHeight = 40.dp
 private val NetworkSegmentGap = 2.dp
-private val NetworkSegmentInnerCorner = 6.dp
+// Material's connected button group: 8dp inner corners (ShapeDefaults.Small), 4dp while pressed.
+private val NetworkSegmentInnerCorner = 8.dp
 // Blocked rounds fully into its own pill, Material 3 Expressive's cue for a chosen segment.
 private val NetworkSegmentBlockedInnerCorner = NetworkSegmentHeight / 2
-private val NetworkSegmentPressedInnerCorner = 3.dp
+private val NetworkSegmentPressedInnerCorner = 4.dp
 
 /**
  * One half of the Wi-Fi/mobile button group. Allowed is a quiet tonal segment; blocked fills the

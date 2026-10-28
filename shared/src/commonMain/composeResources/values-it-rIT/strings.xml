@@ -499,4 +499,9 @@ Il tuo traffico non viene inviato a un server VPN remoto.</string>
     <string name="about_source_title">Codice sorgente</string>
     <string name="about_source_summary">Esplora il progetto, segnala problemi o contribuisci su GitHub</string>
     <string name="about_social_title">Contattaci</string>
+    <string name="color_style_title">Stile colore</string>
+    <string name="color_style_expressive">Espressivo</string>
+    <string name="color_style_vibrant">Vivace</string>
+    <string name="color_style_tonal">Tonale</string>
+    <string name="color_style_muted">Tenue</string>
 </resources>

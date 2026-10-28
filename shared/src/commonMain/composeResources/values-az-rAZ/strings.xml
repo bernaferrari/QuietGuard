@@ -500,4 +500,9 @@ Buna görə də, zəhmət olmasa növbəti dialoqda VPN bağlantısına icazə v
     <string name="about_source_summary">Layihəni araşdırın, problemləri bildirin və ya GitHub-da töhfə verin
 __ƏSAS_haqqında_sosial_başlıq__ Əlaqə saxlayın</string>
     <string name="about_social_title">Əlaqə saxlayın</string>
+    <string name="color_style_title">Rəng üslubu</string>
+    <string name="color_style_expressive">İfadəli</string>
+    <string name="color_style_vibrant">Canlı</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Sakit</string>
 </resources>

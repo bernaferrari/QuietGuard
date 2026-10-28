@@ -15,7 +15,7 @@
 <p align="center"><a href="https://quietguard.vercel.app/"><strong>Try the web demo</strong></a></p>
 
 <p align="center">
-  <img src="store-listing/en-US/readme/quiet-1.jpg" width="100%" alt="Your apps, on quiet; Wi-Fi or mobile, app by app; every connection, live">
+  <img src="store-listing/en-US/readme/hero.jpg" width="100%" alt="QuietGuard Home with the firewall on, the app list with Wi-Fi and mobile switches, and the traffic log">
 </p>
 
 ## Quiet by default

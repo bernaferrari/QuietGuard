@@ -499,4 +499,9 @@
     <string name="about_source_title">소스 코드</string>
     <string name="about_source_summary">프로젝트 탐색, 문제 보고 또는 GitHub에 기여</string>
     <string name="about_social_title">연락주세요</string>
+    <string name="color_style_title">색상 스타일</string>
+    <string name="color_style_expressive">표현적</string>
+    <string name="color_style_vibrant">선명</string>
+    <string name="color_style_tonal">톤</string>
+    <string name="color_style_muted">차분</string>
 </resources>

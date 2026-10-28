@@ -500,4 +500,9 @@ Twój ruch internetowy nie będzie wysyłany do żadnego zdalnego serwera VPN.</
     <string name="about_source_title">Kod źródłowy</string>
     <string name="about_source_summary">Przeglądaj projekt, zgłaszaj problemy lub współpracuj w GitHub</string>
     <string name="about_social_title">Skontaktuj się z nami</string>
+    <string name="color_style_title">Styl kolorów</string>
+    <string name="color_style_expressive">Ekspresyjny</string>
+    <string name="color_style_vibrant">Żywy</string>
+    <string name="color_style_tonal">Tonalny</string>
+    <string name="color_style_muted">Stonowany</string>
 </resources>

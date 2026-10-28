@@ -499,4 +499,9 @@
     <string name="about_source_title">Изворни код</string>
     <string name="about_source_summary">Истражите пројекат, пријавите проблеме или дајте допринос на ГитХуб-у</string>
     <string name="about_social_title">Јавите се</string>
+    <string name="color_style_title">Стил боја</string>
+    <string name="color_style_expressive">Изражајан</string>
+    <string name="color_style_vibrant">Живописан</string>
+    <string name="color_style_tonal">Тонски</string>
+    <string name="color_style_muted">Пригушен</string>
 </resources>

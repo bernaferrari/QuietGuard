@@ -162,6 +162,26 @@
   ],
   "readme": [
     {
+      "feature": "readme-hero",
+      "layout": "hero",
+      "file": "readme/hero.jpg",
+      "alt": "QuietGuard Home with the firewall on, the app list with Wi-Fi and mobile switches, and the traffic log",
+      "devices": [
+        {
+          "raw": "phone/01-home.png",
+          "role": "left"
+        },
+        {
+          "raw": "phone/02-firewall.png",
+          "role": "center"
+        },
+        {
+          "raw": "phone/03-log.png",
+          "role": "right"
+        }
+      ]
+    },
+    {
       "feature": "readme-rules",
       "layout": "trio",
       "file": "readme/rules.jpg",

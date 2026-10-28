@@ -499,4 +499,9 @@ Lalu lintas internet Anda tidak dikirim ke server VPN jarak jauh.</string>
     <string name="about_source_title">Kode sumber</string>
     <string name="about_source_summary">Jelajahi proyek, laporkan masalah, atau berkontribusi di GitHub</string>
     <string name="about_social_title">Hubungi kami</string>
+    <string name="color_style_title">Gaya warna</string>
+    <string name="color_style_expressive">Ekspresif</string>
+    <string name="color_style_vibrant">Cerah</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Lembut</string>
 </resources>

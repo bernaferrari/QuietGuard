@@ -500,4 +500,9 @@ __GATZA_bertsioa_buruz__ 1</string>
     <string name="about_source_title">Iturburu kodea</string>
     <string name="about_source_summary">Arakatu proiektua, jakinarazi arazoen berri edo lagundu GitHub-en</string>
     <string name="about_social_title">Jarri harremanetan</string>
+    <string name="color_style_title">Kolore-estiloa</string>
+    <string name="color_style_expressive">Adierazkorra</string>
+    <string name="color_style_vibrant">Bizia</string>
+    <string name="color_style_tonal">Tonala</string>
+    <string name="color_style_muted">Leuna</string>
 </resources>

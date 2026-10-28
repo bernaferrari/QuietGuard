@@ -499,4 +499,9 @@
     <string name="about_source_title">स्रोत कोड</string>
     <string name="about_source_summary">प्रोजेक्ट का अन्वेषण करें, समस्याओं की रिपोर्ट करें, या GitHub पर योगदान करें</string>
     <string name="about_social_title">संपर्क करें</string>
+    <string name="color_style_title">रंग शैली</string>
+    <string name="color_style_expressive">अभिव्यंजक</string>
+    <string name="color_style_vibrant">जीवंत</string>
+    <string name="color_style_tonal">टोनल</string>
+    <string name="color_style_muted">हल्का</string>
 </resources>

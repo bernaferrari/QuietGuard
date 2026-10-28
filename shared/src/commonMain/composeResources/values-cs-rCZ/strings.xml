@@ -499,4 +499,9 @@ Váš internetový provoz není odesílán na vzdálený server VPN.</string>
     <string name="about_source_title">Zdrojový kód</string>
     <string name="about_source_summary">Prozkoumejte projekt, nahlaste problémy nebo přispějte na GitHubu</string>
     <string name="about_social_title">Kontaktujte nás</string>
+    <string name="color_style_title">Barevný styl</string>
+    <string name="color_style_expressive">Výrazný</string>
+    <string name="color_style_vibrant">Živý</string>
+    <string name="color_style_tonal">Tónový</string>
+    <string name="color_style_muted">Tlumený</string>
 </resources>

@@ -500,4 +500,9 @@ __Avain_versiosta__ 1</string>
     <string name="about_source_title">Lähdekoodi</string>
     <string name="about_source_summary">Tutustu projektiin, ilmoita ongelmista tai osallistu GitHubissa</string>
     <string name="about_social_title">Ota yhteyttä</string>
+    <string name="color_style_title">Värityyli</string>
+    <string name="color_style_expressive">Ilmeikäs</string>
+    <string name="color_style_vibrant">Eloisa</string>
+    <string name="color_style_tonal">Sävyinen</string>
+    <string name="color_style_muted">Hillitty</string>
 </resources>

@@ -497,4 +497,9 @@
     <string name="about_source_title">Изходен код</string>
     <string name="about_source_summary">Разгледайте проекта, докладвайте за проблеми или допринесете за GitHub</string>
     <string name="about_social_title">Свържете се</string>
+    <string name="color_style_title">Цветови стил</string>
+    <string name="color_style_expressive">Изразителен</string>
+    <string name="color_style_vibrant">Жив</string>
+    <string name="color_style_tonal">Тонален</string>
+    <string name="color_style_muted">Приглушен</string>
 </resources>

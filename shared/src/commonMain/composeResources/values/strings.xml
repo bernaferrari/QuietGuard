@@ -528,4 +528,9 @@ Your internet traffic is not being sent to a remote VPN server.</string>
     <string name="about_source_summary">Explore the project, report issues, or contribute on GitHub</string>
     <string name="about_social_title">Get in touch</string>
 
+    <string name="color_style_title">Color style</string>
+    <string name="color_style_expressive">Expressive</string>
+    <string name="color_style_vibrant">Vibrant</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Muted</string>
 </resources>

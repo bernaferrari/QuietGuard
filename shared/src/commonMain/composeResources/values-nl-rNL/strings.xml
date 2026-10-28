@@ -500,4 +500,9 @@ Je verkeer wordt niet naar een externe server gestuurd.</string>
     <string name="about_source_title">Broncode</string>
     <string name="about_source_summary">Verken het project, rapporteer problemen of draag bij op GitHub</string>
     <string name="about_social_title">Neem contact op</string>
+    <string name="color_style_title">Kleurstijl</string>
+    <string name="color_style_expressive">Expressief</string>
+    <string name="color_style_vibrant">Levendig</string>
+    <string name="color_style_tonal">Tonaal</string>
+    <string name="color_style_muted">Gedempt</string>
 </resources>

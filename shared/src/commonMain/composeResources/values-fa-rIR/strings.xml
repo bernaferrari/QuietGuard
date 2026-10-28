@@ -499,4 +499,9 @@
     <string name="about_source_title">کد منبع</string>
     <string name="about_source_summary">پروژه را کاوش کنید، مشکلات را گزارش دهید، یا در GitHub مشارکت کنید</string>
     <string name="about_social_title">تماس بگیرید</string>
+    <string name="color_style_title">سبک رنگ</string>
+    <string name="color_style_expressive">پرحالت</string>
+    <string name="color_style_vibrant">پرجنب‌وجوش</string>
+    <string name="color_style_tonal">تُنال</string>
+    <string name="color_style_muted">ملایم</string>
 </resources>

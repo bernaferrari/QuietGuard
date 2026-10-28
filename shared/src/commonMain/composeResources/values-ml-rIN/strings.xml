@@ -498,4 +498,9 @@
     <string name="about_source_title">ഉറവിട കോഡ്</string>
     <string name="about_source_summary">പ്രോജക്റ്റ് പര്യവേക്ഷണം ചെയ്യുക, പ്രശ്നങ്ങൾ റിപ്പോർട്ട് ചെയ്യുക അല്ലെങ്കിൽ GitHub-ൽ സംഭാവന ചെയ്യുക</string>
     <string name="about_social_title">ബന്ധപ്പെടുക</string>
+    <string name="color_style_title">നിറ ശൈലി</string>
+    <string name="color_style_expressive">ആവിഷ്കാരപരം</string>
+    <string name="color_style_vibrant">തിളക്കമുള്ളത്</string>
+    <string name="color_style_tonal">ടോണൽ</string>
+    <string name="color_style_muted">മങ്ങിയത്</string>
 </resources>

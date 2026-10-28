@@ -499,4 +499,9 @@
     <string name="about_source_title">Вихідний код</string>
     <string name="about_source_summary">Дослідіть проект, повідомте про проблеми або додайте свій внесок на GitHub</string>
     <string name="about_social_title">Зв'язатися</string>
+    <string name="color_style_title">Колірний стиль</string>
+    <string name="color_style_expressive">Виразний</string>
+    <string name="color_style_vibrant">Яскравий</string>
+    <string name="color_style_tonal">Тональний</string>
+    <string name="color_style_muted">Приглушений</string>
 </resources>

@@ -499,4 +499,9 @@ Jūsu interneta trafiks netiek sūtīts uz attālo VPN serveri.</string>
     <string name="about_source_title">Avota kods</string>
     <string name="about_source_summary">Izpētiet projektu, ziņojiet par problēmām vai sniedziet ieguldījumu vietnē GitHub</string>
     <string name="about_social_title">Sazinieties</string>
+    <string name="color_style_title">Krāsu stils</string>
+    <string name="color_style_expressive">Izteiksmīgs</string>
+    <string name="color_style_vibrant">Spilgts</string>
+    <string name="color_style_tonal">Tonāls</string>
+    <string name="color_style_muted">Klusināts</string>
 </resources>

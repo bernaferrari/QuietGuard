@@ -498,4 +498,9 @@ Bu nedenle lütfen sonraki iletişim kutusunda VPN bağlantısına izin verin.
     <string name="about_source_title">Kaynak kodu</string>
     <string name="about_source_summary">Projeyi keşfedin, sorunları bildirin veya GitHub'a katkıda bulunun</string>
     <string name="about_social_title">İletişime geçin</string>
+    <string name="color_style_title">Renk stili</string>
+    <string name="color_style_expressive">Etkileyici</string>
+    <string name="color_style_vibrant">Canlı</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Yumuşak</string>
 </resources>

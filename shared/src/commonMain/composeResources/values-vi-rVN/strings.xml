@@ -495,4 +495,9 @@
     <string name="about_source_title">Mã nguồn</string>
     <string name="about_source_summary">Khám phá dự án, báo cáo sự cố hoặc đóng góp trên GitHub</string>
     <string name="about_social_title">Hãy liên hệ</string>
+    <string name="color_style_title">Kiểu màu</string>
+    <string name="color_style_expressive">Biểu cảm</string>
+    <string name="color_style_vibrant">Rực rỡ</string>
+    <string name="color_style_tonal">Tông màu</string>
+    <string name="color_style_muted">Dịu</string>
 </resources>

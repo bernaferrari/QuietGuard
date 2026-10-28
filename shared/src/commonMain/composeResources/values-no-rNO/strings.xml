@@ -499,4 +499,9 @@ Internett-trafikken din sendes ikke til en ekstern VPN-server.</string>
     <string name="about_source_title">Kildekode</string>
     <string name="about_source_summary">Utforsk prosjektet, rapporter problemer eller bidra på GitHub</string>
     <string name="about_social_title">Ta kontakt</string>
+    <string name="color_style_title">Fargestil</string>
+    <string name="color_style_expressive">Ekspressiv</string>
+    <string name="color_style_vibrant">Livlig</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Dempet</string>
 </resources>

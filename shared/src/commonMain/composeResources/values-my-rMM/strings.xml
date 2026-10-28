@@ -498,4 +498,9 @@
     <string name="about_source_title">အရင်းအမြစ်ကုဒ်</string>
     <string name="about_source_summary">ပရောဂျက်ကို လေ့လာပါ၊ ပြဿနာများကို သတင်းပို့ပါ သို့မဟုတ် GitHub တွင် ပါဝင်ကူညီပါ</string>
     <string name="about_social_title">ဆက်သွယ်လိုက်ပါ။</string>
+    <string name="color_style_title">အရောင်ပုံစံ</string>
+    <string name="color_style_expressive">ထင်ရှားသော</string>
+    <string name="color_style_vibrant">တောက်ပသော</string>
+    <string name="color_style_tonal">တိုနယ်</string>
+    <string name="color_style_muted">မှိန်သော</string>
 </resources>

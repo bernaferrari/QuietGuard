@@ -495,4 +495,9 @@
     <string name="about_source_title">Zdrojový kód</string>
     <string name="about_source_summary">Preskúmajte projekt, nahláste problémy alebo prispievajte na GitHub</string>
     <string name="about_social_title">Kontaktujte nás</string>
+    <string name="color_style_title">Farebný štýl</string>
+    <string name="color_style_expressive">Výrazný</string>
+    <string name="color_style_vibrant">Živý</string>
+    <string name="color_style_tonal">Tónový</string>
+    <string name="color_style_muted">Tlmený</string>
 </resources>

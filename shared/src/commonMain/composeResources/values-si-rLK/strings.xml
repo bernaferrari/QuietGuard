@@ -498,4 +498,9 @@
     <string name="about_source_title">මූලාශ්‍ර කේතය</string>
     <string name="about_source_summary">ව්‍යාපෘතිය ගවේෂණය කරන්න, ගැටළු වාර්තා කරන්න, හෝ GitHub මත දායක වන්න</string>
     <string name="about_social_title">සම්බන්ධ වන්න</string>
+    <string name="color_style_title">වර්ණ විලාසය</string>
+    <string name="color_style_expressive">ප්‍රකාශිත</string>
+    <string name="color_style_vibrant">දීප්තිමත්</string>
+    <string name="color_style_tonal">ටෝනල්</string>
+    <string name="color_style_muted">මෘදු</string>
 </resources>

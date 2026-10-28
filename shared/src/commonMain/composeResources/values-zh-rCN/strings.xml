@@ -499,4 +499,9 @@
     <string name="about_source_title">源代码</string>
     <string name="about_source_summary">探索项目、报告问题或在 GitHub 上做出贡献</string>
     <string name="about_social_title">联系我们</string>
+    <string name="color_style_title">配色风格</string>
+    <string name="color_style_expressive">表现力</string>
+    <string name="color_style_vibrant">鲜艳</string>
+    <string name="color_style_tonal">色调</string>
+    <string name="color_style_muted">柔和</string>
 </resources>

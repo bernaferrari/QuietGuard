@@ -499,4 +499,9 @@ Traficul dvs. de internet nu este trimis către un server VPN la distanță.</st
     <string name="about_source_title">Cod sursă</string>
     <string name="about_source_summary">Explorați proiectul, raportați probleme sau contribuiți pe GitHub</string>
     <string name="about_social_title">Luați legătura</string>
+    <string name="color_style_title">Stil de culoare</string>
+    <string name="color_style_expressive">Expresiv</string>
+    <string name="color_style_vibrant">Vibrant</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Estompat</string>
 </resources>

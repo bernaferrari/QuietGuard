@@ -497,4 +497,9 @@
     <string name="about_source_title">ソースコード</string>
     <string name="about_source_summary">プロジェクトを探索したり、問題を報告したり、GitHub に貢献したりできます</string>
     <string name="about_social_title">お問い合わせ</string>
+    <string name="color_style_title">カラースタイル</string>
+    <string name="color_style_expressive">エクスプレッシブ</string>
+    <string name="color_style_vibrant">ビビッド</string>
+    <string name="color_style_tonal">トーナル</string>
+    <string name="color_style_muted">ミュート</string>
 </resources>

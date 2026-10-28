@@ -499,4 +499,9 @@
     <string name="about_source_title">קוד מקור</string>
     <string name="about_source_summary">חקור את הפרויקט, דווח על בעיות או תרום ב-GitHub</string>
     <string name="about_social_title">צור קשר</string>
+    <string name="color_style_title">סגנון צבעים</string>
+    <string name="color_style_expressive">אקספרסיבי</string>
+    <string name="color_style_vibrant">תוסס</string>
+    <string name="color_style_tonal">טונאלי</string>
+    <string name="color_style_muted">מעומעם</string>
 </resources>

@@ -16,8 +16,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.platform.PlatformContext
-import com.materialkolor.PaletteStyle
-import com.materialkolor.dynamicColorScheme
+import androidx.compose.material3.ColorScheme
+import com.materialkolor.material3.dynamicColorScheme
 import com.materialkolor.dynamiccolor.ColorSpec
 import org.koin.compose.koinInject
 
@@ -92,23 +92,38 @@ private enum class AppearanceMode(val value: String) {
     }
 }
 
+/** The seed behind a theme name; the wallpaper option previews with Teal until the platform supplies colors. */
+fun themeSeedColor(themeName: String): Color = ThemeSeeds[themeName] ?: Teal500
+
+/**
+ * The scheme for a seed and style. The wallpaper option keeps Android's own scheme for Tonal (what the system
+ * itself uses); the other styles are built from the wallpaper's primary.
+ */
+fun colorSchemeFor(seedColor: Color, darkTheme: Boolean, colorStyle: ColorStyle, wallpaperScheme: ColorScheme? = null): ColorScheme =
+    if (wallpaperScheme != null && colorStyle == ColorStyle.Tonal) {
+        wallpaperScheme
+    } else {
+        dynamicColorScheme(
+            seedColor = wallpaperScheme?.primary ?: seedColor,
+            isDark = darkTheme,
+            style = colorStyle.palette,
+            specVersion = ColorSpec.SpecVersion.SPEC_2025,
+        )
+    }
+
 @Composable
 fun NetGuardTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     themeName: String = "teal",
     dynamicColor: Boolean = false,
+    colorStyle: ColorStyle = ColorStyle.Tonal,
     content: @Composable () -> Unit,
 ) {
-    val seedColor = ThemeSeeds[themeName] ?: Teal500
+    val seedColor = themeSeedColor(themeName)
     val wallpaperScheme =
         if (dynamicColor && themeName == "dynamic") platformDynamicColorScheme(darkTheme) else null
     val colorScheme =
-        wallpaperScheme ?: dynamicColorScheme(
-            seedColor = seedColor,
-            isDark = darkTheme,
-            style = PaletteStyle.TonalSpot,
-            specVersion = ColorSpec.SpecVersion.SPEC_2025,
-        )
+        remember(seedColor, darkTheme, colorStyle, wallpaperScheme) { colorSchemeFor(seedColor, darkTheme, colorStyle, wallpaperScheme) }
 
     val status = remember(darkTheme) { statusColors(darkTheme) }
 
@@ -143,12 +158,13 @@ fun NetGuardAppTheme(content: @Composable () -> Unit) {
                     isSystemInDarkTheme()
                 }
         }
-    val themeName = resolveThemeName(prefs[stringPreferencesKey("theme")] ?: THEME_DEFAULT)
+    val themeName = resolveThemeName(prefs[stringPreferencesKey("theme")] ?: THEME_INITIAL)
     SystemBarsAppearance(darkTheme)
     NetGuardTheme(
         darkTheme = darkTheme,
         themeName = themeName,
         dynamicColor = themeName == "dynamic",
+        colorStyle = ColorStyle.from(prefs[stringPreferencesKey("color_style")]),
         content = content,
     )
 }

@@ -498,4 +498,9 @@
     <string name="about_source_title">مەنبە كودى</string>
     <string name="about_source_summary">تۈر ئۈستىدە ئىزدىنىڭ ، مەسىلىلەرنى دوكلات قىلىڭ ياكى GitHub غا تۆھپە قوشۇڭ</string>
     <string name="about_social_title">ئالاقىلىشىڭ</string>
+    <string name="color_style_title">رەڭ ئۇسلۇبى</string>
+    <string name="color_style_expressive">ئىپادىلىك</string>
+    <string name="color_style_vibrant">جانلىق</string>
+    <string name="color_style_tonal">تونلۇق</string>
+    <string name="color_style_muted">سۇس</string>
 </resources>

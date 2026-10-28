@@ -500,4 +500,9 @@ __key_about_version__ 1</string>
     <string name="about_source_title">উৎস কোড</string>
     <string name="about_source_summary">প্রকল্পটি অন্বেষণ করুন, সমস্যাগুলি রিপোর্ট করুন বা GitHub-এ অবদান রাখুন</string>
     <string name="about_social_title">যোগাযোগ করুন</string>
+    <string name="color_style_title">রঙের ধরন</string>
+    <string name="color_style_expressive">অভিব্যক্তিপূর্ণ</string>
+    <string name="color_style_vibrant">প্রাণবন্ত</string>
+    <string name="color_style_tonal">টোনাল</string>
+    <string name="color_style_muted">মৃদু</string>
 </resources>

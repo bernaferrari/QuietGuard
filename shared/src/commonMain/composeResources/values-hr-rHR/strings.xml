@@ -500,4 +500,9 @@ __KLJUČ_o_verziji__ 1</string>
     <string name="about_source_title">Izvorni kod</string>
     <string name="about_source_summary">Istražite projekt, prijavite probleme ili doprinesite na GitHubu</string>
     <string name="about_social_title">Javite se</string>
+    <string name="color_style_title">Stil boja</string>
+    <string name="color_style_expressive">Izražajan</string>
+    <string name="color_style_vibrant">Živ</string>
+    <string name="color_style_tonal">Tonski</string>
+    <string name="color_style_muted">Prigušen</string>
 </resources>

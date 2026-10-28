@@ -499,4 +499,9 @@ Sinu Interneti-liiklust ei saadeta kaugesse VPN-serverisse.</string>
     <string name="about_source_title">Lähtekood</string>
     <string name="about_source_summary">Tutvuge projektiga, teatage probleemidest või panustage GitHubis</string>
     <string name="about_social_title">Võtke ühendust</string>
+    <string name="color_style_title">Värvistiil</string>
+    <string name="color_style_expressive">Ekspressiivne</string>
+    <string name="color_style_vibrant">Erk</string>
+    <string name="color_style_tonal">Toonne</string>
+    <string name="color_style_muted">Summutatud</string>
 </resources>

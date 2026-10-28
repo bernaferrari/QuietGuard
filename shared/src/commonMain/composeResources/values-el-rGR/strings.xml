@@ -499,4 +499,9 @@
     <string name="about_source_title">Πηγαίος κώδικας</string>
     <string name="about_source_summary">Εξερευνήστε το έργο, αναφέρετε προβλήματα ή συνεισφέρετε στο GitHub</string>
     <string name="about_social_title">Επικοινωνήστε</string>
+    <string name="color_style_title">Στυλ χρωμάτων</string>
+    <string name="color_style_expressive">Εκφραστικό</string>
+    <string name="color_style_vibrant">Ζωντανό</string>
+    <string name="color_style_tonal">Τονικό</string>
+    <string name="color_style_muted">Απαλό</string>
 </resources>

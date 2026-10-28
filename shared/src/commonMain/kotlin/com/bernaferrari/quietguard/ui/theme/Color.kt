@@ -18,6 +18,9 @@ val LimePrimary = Color(0xFF8BC34A)
 
 const val THEME_DEFAULT = "teal"
 
+/** New installs follow the wallpaper; [resolveThemeName] falls back to [THEME_DEFAULT] where Android has no wallpaper colors. */
+const val THEME_INITIAL = "dynamic"
+
 @ColorInt
 val GraphGrayed = Color(0xFFAAAAAA).toArgb()
 

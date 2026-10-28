@@ -500,4 +500,9 @@ Seu tráfego de Internet não está sendo enviado para um servidor VPN remoto.</
     <string name="about_source_title">Código fonte</string>
     <string name="about_source_summary">Explore o projeto, relate problemas ou contribua no GitHub</string>
     <string name="about_social_title">Entre em contato</string>
+    <string name="color_style_title">Estilo de cor</string>
+    <string name="color_style_expressive">Expressivo</string>
+    <string name="color_style_vibrant">Vibrante</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Suave</string>
 </resources>

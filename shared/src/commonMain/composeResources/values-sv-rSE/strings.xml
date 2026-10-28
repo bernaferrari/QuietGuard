@@ -499,4 +499,9 @@ Din internettrafik skickas inte till en avlägsen VPN-server.</string>
     <string name="about_source_title">Källkod</string>
     <string name="about_source_summary">Utforska projektet, rapportera problem eller bidra på GitHub</string>
     <string name="about_social_title">Kontakta oss</string>
+    <string name="color_style_title">Färgstil</string>
+    <string name="color_style_expressive">Expressiv</string>
+    <string name="color_style_vibrant">Livfull</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Dämpad</string>
 </resources>

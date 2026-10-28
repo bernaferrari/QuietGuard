@@ -499,4 +499,9 @@
     <string name="about_source_title">ଉତ୍ସ କୋଡ୍ |</string>
     <string name="about_source_summary">ପ୍ରକଳ୍ପ ଅନୁସନ୍ଧାନ କରନ୍ତୁ, ସମସ୍ୟାଗୁଡିକ ରିପୋର୍ଟ କରନ୍ତୁ, କିମ୍ବା GitHub ରେ ଯୋଗଦାନ କରନ୍ତୁ |</string>
     <string name="about_social_title">ସମ୍ପର୍କ କରନ୍ତୁ |</string>
+    <string name="color_style_title">ରଙ୍ଗ ଶୈଳୀ</string>
+    <string name="color_style_expressive">ଅଭିବ୍ୟକ୍ତିପୂର୍ଣ୍ଣ</string>
+    <string name="color_style_vibrant">ଉଜ୍ଜ୍ୱଳ</string>
+    <string name="color_style_tonal">ଟୋନାଲ</string>
+    <string name="color_style_muted">ମୃଦୁ</string>
 </resources>

@@ -499,4 +499,9 @@ Jūsų srautas nėra siunčiamas į nuotolinį VPN serverį.</string>
     <string name="about_source_title">Šaltinio kodas</string>
     <string name="about_source_summary">Naršykite projektą, praneškite apie problemas arba prisidėkite prie „GitHub“</string>
     <string name="about_social_title">Susisiekite</string>
+    <string name="color_style_title">Spalvų stilius</string>
+    <string name="color_style_expressive">Išraiškingas</string>
+    <string name="color_style_vibrant">Ryškus</string>
+    <string name="color_style_tonal">Tonalinis</string>
+    <string name="color_style_muted">Prislopintas</string>
 </resources>

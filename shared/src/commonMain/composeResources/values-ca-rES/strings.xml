@@ -501,4 +501,9 @@ __CLAU_sobre_la_versió__ 1</string>
     <string name="about_source_title">Codi font</string>
     <string name="about_source_summary">Exploreu el projecte, informeu de problemes o contribuïu a GitHub</string>
     <string name="about_social_title">Poseu-vos en contacte</string>
+    <string name="color_style_title">Estil de color</string>
+    <string name="color_style_expressive">Expressiu</string>
+    <string name="color_style_vibrant">Vibrant</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Suau</string>
 </resources>

@@ -499,4 +499,9 @@ Tu tráfico de Internet no se está enviando a un servidor VPN remoto.</string>
     <string name="about_source_title">Código fuente</string>
     <string name="about_source_summary">Explore el proyecto, informe problemas o contribuya en GitHub</string>
     <string name="about_social_title">Ponte en contacto</string>
+    <string name="color_style_title">Estilo de color</string>
+    <string name="color_style_expressive">Expresivo</string>
+    <string name="color_style_vibrant">Vivo</string>
+    <string name="color_style_tonal">Tonal</string>
+    <string name="color_style_muted">Suave</string>
 </resources>

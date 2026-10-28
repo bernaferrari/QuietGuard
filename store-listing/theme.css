@@ -119,3 +119,8 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 /* A card without a subline centres its headline in the space above the screen. */
 .phone header:not(:has(p)){top:190px}
 .tablet7 header:not(:has(p)){top:200px}
+/* The stacked card's headline sits mid-card, where the ripples run strongest: a feathered blur clears them
+   right behind the words, and they flow on untouched around it and across the seams. */
+.phone .stack header::before,.tablet7 .stack header::before{content:'';position:absolute;z-index:-1;inset:-90px -60px;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  -webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent);mask-image:radial-gradient(closest-side,#000 62%,transparent)}

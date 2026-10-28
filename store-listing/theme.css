@@ -76,11 +76,18 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .device-label.after span{font-size:40px;font-weight:700;color:var(--mint);text-shadow:0 0 34px #3fe3bd88}
 
 /* Trio: one headline, then three equal phones in an even row, each under a short caption that lights one word. */
-.readme .trio header{left:0;right:0;top:96px}
+.readme .trio header{left:0;right:0;top:140px}
 .readme .trio h1{font-size:96px}
-.readme .trio .device{width:600px;top:430px}
+.readme .trio .device{width:600px;top:470px}
 .readme .trio .one{left:150px}
 .readme .trio .two{left:900px}
 .readme .trio .three{left:1650px}
 .readme .trio .device-label{transform:translateY(calc(-100% - 28px));text-align:center;font-size:50px;line-height:1;font-weight:460;letter-spacing:-.01em;color:var(--muted)}
 .readme .trio .device-label em{font-style:normal;font-weight:760;color:var(--mint);text-shadow:0 0 34px #3fe3bd66}
+
+/* Spread: the headline on the left, a landscape tablet running off the right edge, a dark phone stepping in front. */
+.readme .spread header{left:150px;right:auto;top:0;bottom:0;width:720px;text-align:left;display:flex;flex-direction:column;justify-content:center}
+.readme .spread h1{font-size:112px}
+.readme .spread header p{margin:28px 0 0;font-size:40px;max-width:640px;text-align:left}
+.readme .spread .tablet{--bezel:18px;--radius:48px;left:1000px;top:150px;width:1620px}
+.readme .spread .phone{--bezel:12px;--radius:60px;left:860px;top:500px;width:420px;z-index:4}

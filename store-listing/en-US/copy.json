@@ -52,5 +52,9 @@
   },
   "readme-rules": {
     "title": "Set it once. *Stay quiet.*"
+  },
+  "readme-spread": {
+    "title": "Room for\n*every rule.*",
+    "body": "Tablets and foldables keep the app list and an app's rules side by side."
   }
 }

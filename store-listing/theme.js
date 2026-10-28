@@ -58,7 +58,8 @@ export default {
     }
   },
 
-  // Screens may run off the bottom (or hang from the top on the stacked card), never off the sides,
+  // Screens may run off the bottom (or hang from the top on the stacked card), never off the sides (except the
+  // README spread),
   // and most of each screen stays in view.
   decorate({W, H, slide, devices}) {
     if (slide.layout === 'compare') {
@@ -67,8 +68,10 @@ export default {
       return;
     }
     const stacked = /stack/.test(slide.layout || '');
+    // The README spread runs its tablet off the right edge on purpose.
+    const bleeds = slide.layout === 'spread';
     for (const {box, spec} of devices) {
-      if (box.left < 0 || box.left + box.width > W + 1) throw new Error(`Screen leaves the side of the card: ${spec.raw}`);
+      if (!bleeds && (box.left < 0 || box.left + box.width > W + 1)) throw new Error(`Screen leaves the side of the card: ${spec.raw}`);
       if (stacked) continue;
       if (box.top < 0) throw new Error(`Screen leaves the top of the card: ${spec.raw}`);
       if ((H - box.top) / box.height < .62) throw new Error(`Too little of ${spec.raw} is visible`);

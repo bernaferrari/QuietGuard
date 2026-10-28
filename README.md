@@ -28,6 +28,12 @@
 - **A log you can read.** Every connection shows the app, the server and whether it got through. Filter to the blocked ones, grouped by app.
 - **Rules for the edge cases.** Allow an app only while the screen is on, block roaming, lock everything down, and choose what new apps get.
 
+## On a bigger screen
+
+<p align="center">
+  <img src="store-listing/en-US/readme/big-screen.jpg" width="100%" alt="Room for every rule: QuietGuard on a landscape tablet with the app list beside Camera's rules, and the firewall in dark mode on a phone in front">
+</p>
+
 ## From NetGuard to QuietGuard
 
 The same phone and the same apps, before and after. Every screen is redrawn with Material 3.

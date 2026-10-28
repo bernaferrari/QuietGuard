@@ -185,6 +185,23 @@
       ]
     },
     {
+      "feature": "readme-spread",
+      "layout": "spread",
+      "file": "readme/big-screen.jpg",
+      "alt": "QuietGuard on a landscape tablet with the app list beside Camera's rules, and the firewall in dark mode on a phone in front",
+      "devices": [
+        {
+          "raw": "tablet10/02-firewall.png",
+          "role": "tablet",
+          "frame": "tablet"
+        },
+        {
+          "raw": "phone/10-firewall-dark.png",
+          "role": "phone"
+        }
+      ]
+    },
+    {
       "feature": "readme-compare",
       "layout": "compare",
       "file": "readme/before-after.jpg",

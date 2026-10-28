@@ -116,3 +116,6 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 /* The QuietGuard phones in the comparison wear white on coral, not the night mint. */
 .readme .mood-coral.compare .device.after{background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 40px 80px -36px #8a2a1a77}
 .readme .mood-coral.compare .device.before::before{background:#ffffff26}
+/* A card without a subline centres its headline in the space above the screen. */
+.phone header:not(:has(p)){top:190px}
+.tablet7 header:not(:has(p)){top:200px}

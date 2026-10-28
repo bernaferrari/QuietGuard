@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fia edo datuak,\n*aplikazioka.*",
-    "body": "Sakatu eta blokeatu sarea.",
     "alt": "Suhesiaren zerrenda: aplikazio bakoitzak Wi-Fiaren eta datu mugikorren etengailu propioa du, batzuk blokeatuta"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Lasai, egunez\n*eta gauez.*",
-    "body": "Argia, iluna eta zure koloreak.",
     "alt": "Itxuraren ezarpenak modu argian, hasierako pantailaren ondoan modu ilunean"
   },
   "tablet": {
     "title": "Lekua arau\n*guztientzat.*",
-    "body": "Zerrenda eta xehetasunak batera,\ntabletetan eta tolesgarrietan.",
     "alt": "QuietGuard tableta horizontal batean, aplikazio-zerrenda aplikazio baten arauen ondoan, eta telefonoaren diseinua"
   },
   "tablet7/appearance": {

@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi of mobiel,\n*app vir app.*",
-    "body": "Een tik blokkeer enige netwerk.",
     "alt": "Die firewall-lys: elke app met sy eie skakelaar vir Wi-Fi en mobiele data, sommige geblokkeer"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Rustig, dag\n*of nag.*",
-    "body": "Lig, donker, en jou kleure.",
     "alt": "Voorkoms-instellings in ligte modus langs die tuisskerm in donker modus"
   },
   "tablet": {
     "title": "Plek vir\n*elke reël.*",
-    "body": "Lys en besonderhede langs mekaar\nop tablette en voubare toestelle.",
     "alt": "QuietGuard op 'n tablet in landskap met die applys langs 'n app se reëls, en die foonuitleg"
   },
   "tablet7/appearance": {

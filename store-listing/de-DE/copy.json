@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi oder mobil,\n*pro App.*",
-    "body": "Ein Tippen sperrt jedes Netz.",
     "alt": "Die Firewall-Liste: jede App mit eigenem Schalter für Wi-Fi und mobile Daten, einige gesperrt"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Ruhig, bei Tag\n*und Nacht.*",
-    "body": "Hell, dunkel und deine Farben.",
     "alt": "Darstellungseinstellungen im hellen Modus neben der Startseite im dunklen Modus"
   },
   "tablet": {
     "title": "Platz für\n*jede Regel.*",
-    "body": "Liste und Details nebeneinander\nauf Tablets und Foldables.",
     "alt": "QuietGuard auf einem Tablet im Querformat mit der App-Liste neben den Regeln einer App, dazu das Smartphone-Layout"
   },
   "tablet7/appearance": {

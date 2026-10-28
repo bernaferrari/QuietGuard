@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi či mobilní,\n*po aplikacích.*",
-    "body": "Jedno klepnutí zablokuje síť.",
     "alt": "Seznam firewallu: každá aplikace s vlastním přepínačem pro Wi-Fi a mobilní data, některé zablokované"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Klid ve dne\n*i v noci.*",
-    "body": "Světlý, tmavý a vaše barvy.",
     "alt": "Nastavení vzhledu ve světlém režimu vedle domovské obrazovky v tmavém režimu"
   },
   "tablet": {
     "title": "Místo pro\n*každé pravidlo.*",
-    "body": "Seznam a detaily vedle sebe na\ntabletech i skládacích telefonech.",
     "alt": "QuietGuard na tabletu na šířku se seznamem aplikací vedle pravidel aplikace a rozložení pro telefon"
   },
   "tablet7/appearance": {

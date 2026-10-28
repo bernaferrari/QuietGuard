@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi o mobile,\n*kada app.*",
-    "body": "I-block ang network sa isang tap.",
     "alt": "Ang listahan ng firewall: bawat app may sariling switch para sa Wi-Fi at mobile data, may ilang naka-block"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Kalmado, araw\n*man o gabi.*",
-    "body": "Light, dark, at ang kulay mo.",
     "alt": "Appearance settings sa light mode katabi ng Home screen sa dark mode"
   },
   "tablet": {
     "title": "May puwang\n*sa bawat rule.*",
-    "body": "Listahan at detalye magkatabi\nsa tablet at foldable.",
     "alt": "QuietGuard sa landscape na tablet, katabi ng listahan ng apps ang rules ng isang app, at ang layout sa phone"
   },
   "tablet7/appearance": {

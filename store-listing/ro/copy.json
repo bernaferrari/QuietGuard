@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi sau date,\n*pe aplicație.*",
-    "body": "O atingere blochează o rețea.",
     "alt": "Lista firewallului: fiecare aplicație cu propriul comutator pentru Wi-Fi și date mobile, unele blocate"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Calm, zi\n*și noapte.*",
-    "body": "Luminos, întunecat, culorile tale.",
     "alt": "Setările de aspect în modul luminos lângă ecranul principal în modul întunecat"
   },
   "tablet": {
     "title": "Loc pentru\n*fiecare regulă.*",
-    "body": "Listă și detalii alăturate\npe tablete și pliabile.",
     "alt": "QuietGuard pe o tabletă în modul peisaj, cu lista de aplicații lângă regulile unei aplicații, și aspectul de telefon"
   },
   "tablet7/appearance": {

@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi eller mobil,\n*app for app.*",
-    "body": "Ét tryk blokerer hvert netværk.",
     "alt": "Firewall-listen: hver app med sin egen kontakt til Wi-Fi og mobildata, nogle blokeret"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Rolig, dag\n*og nat.*",
-    "body": "Lyst, mørkt og dine farver.",
     "alt": "Indstillinger for udseende i lys tilstand ved siden af startskærmen i mørk tilstand"
   },
   "tablet": {
     "title": "Plads til\n*alle regler.*",
-    "body": "Liste og detaljer side om side\npå tablets og foldbare telefoner.",
     "alt": "QuietGuard på en tablet i liggende format med applisten ved siden af en apps regler og telefonlayoutet"
   },
   "tablet7/appearance": {

@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi ar mobilieji,\n*pagal programą.*",
-    "body": "Vienu palietimu blokuokite tinklą.",
     "alt": "Užkardos sąrašas: kiekviena programa su savo Wi-Fi ir mobiliųjų duomenų jungikliu, kai kurios užblokuotos"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Ramu dieną\n*ir naktį.*",
-    "body": "Šviesu, tamsu ir jūsų spalvos.",
     "alt": "Išvaizdos nustatymai šviesiu režimu šalia pradžios ekrano tamsiu režimu"
   },
   "tablet": {
     "title": "Vieta kiekvienai\n*taisyklei.*",
-    "body": "Sąrašas ir detalės greta\nplanšetėse ir sulankstomuose.",
     "alt": "QuietGuard gulsčioje planšetėje: programų sąrašas šalia programos taisyklių, ir telefono išdėstymas"
   },
   "tablet7/appearance": {

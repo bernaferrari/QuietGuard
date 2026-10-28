@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi ali podatki,\n*za vsako posebej.*",
-    "body": "En dotik blokira omrežje.",
     "alt": "Seznam požarnega zidu: vsaka aplikacija s svojim stikalom za Wi-Fi in mobilne podatke, nekatere blokirane"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Mirno podnevi\n*in ponoči.*",
-    "body": "Svetlo, temno in vaše barve.",
     "alt": "Nastavitve videza v svetlem načinu ob začetnem zaslonu v temnem načinu"
   },
   "tablet": {
     "title": "Prostor za\n*vsako pravilo.*",
-    "body": "Seznam in podrobnosti skupaj\nna tablicah in pregibnih.",
     "alt": "QuietGuard na ležeče obrnjeni tablici s seznamom aplikacij ob pravilih aplikacije ter postavitev na telefonu"
   },
   "tablet7/appearance": {

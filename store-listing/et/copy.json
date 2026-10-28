@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi või mobiil,\n*rakenduse kaupa.*",
-    "body": "Üks puudutus blokeerib võrgu.",
     "alt": "Tulemüüri loend: igal rakendusel oma Wi-Fi ja mobiilandmete lüliti, mõned blokeeritud"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Rahulik päeval\n*ja öösel.*",
-    "body": "Hele, tume ja sinu värvid.",
     "alt": "Välimuse seaded heledas režiimis avakuva kõrval tumedas režiimis"
   },
   "tablet": {
     "title": "Ruumi\n*igale reeglile.*",
-    "body": "Loend ja üksikasjad kõrvuti\ntahvlitel ja volditavatel.",
     "alt": "QuietGuard horisontaalses tahvelarvutis: rakenduste loend ühe rakenduse reeglite kõrval, lisaks telefoni paigutus"
   },
   "tablet7/appearance": {

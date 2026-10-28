@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi ili mobilno,\n*za svaku zasebno.*",
-    "body": "Jednim dodirom blokirajte mrežu.",
     "alt": "Popis vatrozida: svaka aplikacija s vlastitim prekidačem za Wi-Fi i mobilne podatke, neke blokirane"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Smireno, danju\n*i noću.*",
-    "body": "Svijetlo, tamno i vaše boje.",
     "alt": "Postavke izgleda u svijetlom načinu uz početni zaslon u tamnom načinu"
   },
   "tablet": {
     "title": "Mjesta za\n*svako pravilo.*",
-    "body": "Popis i detalji jedno uz drugo\nna tabletu i preklopnom uređaju.",
     "alt": "QuietGuard na tabletu u vodoravnom položaju s popisom aplikacija uz pravila aplikacije, i izgled za telefon"
   },
   "tablet7/appearance": {

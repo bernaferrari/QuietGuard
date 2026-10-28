@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi hay di động,\n*từng ứng dụng.*",
-    "body": "Một chạm để chặn từng mạng.",
     "alt": "Danh sách tường lửa: mỗi ứng dụng có công tắc Wi-Fi và dữ liệu di động riêng, một số đã bị chặn"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Dịu mắt, ngày\n*lẫn đêm.*",
-    "body": "Sáng, tối và màu của bạn.",
     "alt": "Cài đặt giao diện ở chế độ sáng bên cạnh màn hình chính ở chế độ tối"
   },
   "tablet": {
     "title": "Đủ chỗ cho\n*mọi quy tắc.*",
-    "body": "Danh sách và chi tiết cạnh nhau\ntrên máy tính bảng, máy gập.",
     "alt": "QuietGuard trên máy tính bảng nằm ngang với danh sách ứng dụng cạnh quy tắc của một ứng dụng, và bố cục điện thoại"
   },
   "tablet7/appearance": {

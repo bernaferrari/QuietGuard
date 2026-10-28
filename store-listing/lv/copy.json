@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi vai mobilie,\n*katrai lietotnei.*",
-    "body": "Viens pieskāriens bloķē tīklu.",
     "alt": "Ugunsmūra saraksts: katrai lietotnei savs Wi-Fi un mobilo datu slēdzis, dažas bloķētas"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Mierīgs dienā\n*un naktī.*",
-    "body": "Gaišs, tumšs un jūsu krāsas.",
     "alt": "Izskata iestatījumi gaišajā režīmā blakus sākuma ekrānam tumšajā režīmā"
   },
   "tablet": {
     "title": "Vieta\n*katram noteikumam.*",
-    "body": "Saraksts un detaļas blakus\nplanšetdatoros un salokāmajās.",
     "alt": "QuietGuard ainavas režīma planšetdatorā ar lietotņu sarakstu blakus lietotnes noteikumiem, un tālruņa izkārtojums"
   },
   "tablet7/appearance": {

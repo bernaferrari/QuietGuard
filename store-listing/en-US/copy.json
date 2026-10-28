@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi or mobile,\n*app by app.*",
-    "body": "One tap blocks either network.",
     "alt": "The firewall list: each app with its own Wi-Fi and mobile data switch, some blocked"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Calm, day\n*or night.*",
-    "body": "Light, dark, and your colours.",
     "alt": "Appearance settings in light mode beside the Home screen in dark mode"
   },
   "tablet": {
     "title": "Room for\n*every rule.*",
-    "body": "List and details side by side\non tablets and foldables.",
     "alt": "QuietGuard on a landscape tablet with the app list beside an app's rules, and the phone layout"
   },
   "tablet7/appearance": {

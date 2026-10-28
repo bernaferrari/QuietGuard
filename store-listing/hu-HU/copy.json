@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi vagy mobil,\n*alkalmazásonként.*",
-    "body": "Egy koppintás tiltja bármelyiket.",
     "alt": "A tűzfallista: minden alkalmazásnak saját Wi-Fi- és mobiladat-kapcsolója van, néhány tiltva"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Nyugodt, nappal\n*és éjjel.*",
-    "body": "Világos, sötét és a te színeid.",
     "alt": "Megjelenési beállítások világos módban a sötét módú kezdőképernyő mellett"
   },
   "tablet": {
     "title": "Hely minden\n*szabálynak.*",
-    "body": "Lista és részletek egymás mellett\ntableten és összehajthatón.",
     "alt": "A QuietGuard fekvő tableten, az alkalmazáslista egy alkalmazás szabályai mellett, és a telefonos elrendezés"
   },
   "tablet7/appearance": {

@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi vai mobiili,\n*sovelluksittain.*",
-    "body": "Yksi napautus estää verkon.",
     "alt": "Palomuurilista: jokaisella sovelluksella oma Wi-Fi- ja mobiilidatakytkin, osa estetty"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Rauhallinen,\n*päivin ja öin.*",
-    "body": "Vaalea, tumma ja omat värisi.",
     "alt": "Ulkoasuasetukset vaaleassa tilassa etusivun vieressä tummassa tilassa"
   },
   "tablet": {
     "title": "Tilaa kaikille\n*säännöille.*",
-    "body": "Lista ja tiedot rinnakkain\ntableteilla ja taittuvilla.",
     "alt": "QuietGuard vaakasuuntaisella tabletilla: sovelluslista sovelluksen sääntöjen vieressä sekä puhelimen asettelu"
   },
   "tablet7/appearance": {

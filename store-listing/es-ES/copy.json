@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi o móvil,\n*app por app.*",
-    "body": "Un toque bloquea cualquier red.",
     "alt": "La lista del firewall: cada app con su propio interruptor de Wi-Fi y de datos móviles, algunas bloqueadas"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Tranquila, de día\n*o de noche.*",
-    "body": "Claro, oscuro y tus colores.",
     "alt": "Ajustes de apariencia en modo claro junto a la pantalla de inicio en modo oscuro"
   },
   "tablet": {
     "title": "Espacio para\n*cada regla.*",
-    "body": "Lista y detalles uno junto a otro\nen tablets y plegables.",
     "alt": "QuietGuard en una tablet horizontal con la lista de apps junto a las reglas de una app, y el diseño del teléfono"
   },
   "tablet7/appearance": {

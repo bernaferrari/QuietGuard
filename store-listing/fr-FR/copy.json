@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi ou mobile,\n*app par app.*",
-    "body": "Un geste bloque l'un ou l'autre.",
     "alt": "La liste du pare-feu : chaque app avec son propre interrupteur Wi-Fi et données mobiles, certaines bloquées"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Serein, de jour\n*comme de nuit.*",
-    "body": "Clair, sombre, et vos couleurs.",
     "alt": "Paramètres d'apparence en mode clair à côté de l'écran d'accueil en mode sombre"
   },
   "tablet": {
     "title": "De la place pour\n*chaque règle.*",
-    "body": "Liste et détails côte à côte\nsur tablettes et pliables.",
     "alt": "QuietGuard sur une tablette en paysage, la liste des apps à côté des règles d'une app, et la mise en page téléphone"
   },
   "tablet7/appearance": {

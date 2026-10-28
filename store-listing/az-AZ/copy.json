@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi ya mobil,\n*hər tətbiqə.*",
-    "body": "Bir toxunuşla şəbəkəni blokla.",
     "alt": "Firewall siyahısı: hər tətbiqin öz Wi-Fi və mobil internet açarı var, bəziləri bloklanıb"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Gecə də, gündüz də\n*sakit.*",
-    "body": "İşıqlı, qaranlıq, öz rənglərin.",
     "alt": "İşıqlı rejimdə Görünüş ayarları, yanında qaranlıq rejimdə ana ekran"
   },
   "tablet": {
     "title": "Hər qayda üçün\n*yer var.*",
-    "body": "Siyahı və detallar yan-yana,\nplanşet və qatlanan cihazlarda.",
     "alt": "Albom rejimində planşetdə QuietGuard: tətbiqlər siyahısı bir tətbiqin qaydaları ilə yan-yana, həmçinin telefon görünüşü"
   },
   "tablet7/appearance": {

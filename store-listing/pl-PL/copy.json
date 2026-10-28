@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi czy dane,\n*każda osobno.*",
-    "body": "Jedno dotknięcie blokuje sieć.",
     "alt": "Lista zapory: każda aplikacja ma własny przełącznik Wi-Fi i danych mobilnych, niektóre są zablokowane"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Spokój w dzień\n*i w nocy.*",
-    "body": "Jasny, ciemny i Twoje kolory.",
     "alt": "Ustawienia wyglądu w trybie jasnym obok ekranu głównego w trybie ciemnym"
   },
   "tablet": {
     "title": "Miejsce na\n*każdą regułę.*",
-    "body": "Lista i szczegóły obok siebie\nna tabletach i składanych.",
     "alt": "QuietGuard na tablecie w poziomie: lista aplikacji obok reguł aplikacji oraz układ na telefonie"
   },
   "tablet7/appearance": {

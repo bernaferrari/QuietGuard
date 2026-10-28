@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi o mòbil,\n*app per app.*",
-    "body": "Un toc bloqueja qualsevol xarxa.",
     "alt": "La llista del tallafoc: cada app amb el seu interruptor de Wi-Fi i de dades mòbils, algunes bloquejades"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Tranquil·la,\n*de dia o de nit.*",
-    "body": "Clar, fosc i els teus colors.",
     "alt": "Configuració d'aparença en mode clar al costat de la pantalla d'inici en mode fosc"
   },
   "tablet": {
     "title": "Espai per a\n*cada regla.*",
-    "body": "Llista i detalls alhora\nen tauletes i plegables.",
     "alt": "QuietGuard en una tauleta horitzontal amb la llista d'apps al costat de les regles d'una app, i el disseny del telèfon"
   },
   "tablet7/appearance": {

@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi atau seluler,\n*per aplikasi.*",
-    "body": "Sekali ketuk, jaringan diblokir.",
     "alt": "Daftar firewall: setiap aplikasi punya tombol Wi-Fi dan data seluler sendiri, sebagian diblokir"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Tenang, siang\n*maupun malam.*",
-    "body": "Terang, gelap, dan warna Anda.",
     "alt": "Setelan tampilan dalam mode terang di samping layar Beranda dalam mode gelap"
   },
   "tablet": {
     "title": "Ruang untuk\n*setiap aturan.*",
-    "body": "Daftar dan detail berdampingan\ndi tablet dan perangkat lipat.",
     "alt": "QuietGuard di tablet lanskap dengan daftar aplikasi di samping aturan aplikasi, serta tata letak ponsel"
   },
   "tablet7/appearance": {

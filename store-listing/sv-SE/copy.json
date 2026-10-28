@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi eller mobil,\n*app för app.*",
-    "body": "Ett tryck blockerar ett nät.",
     "alt": "Brandväggslistan: varje app med egen brytare för Wi-Fi och mobildata, några blockerade"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Lugn, dag\n*som natt.*",
-    "body": "Ljust, mörkt och dina färger.",
     "alt": "Utseendeinställningar i ljust läge bredvid startskärmen i mörkt läge"
   },
   "tablet": {
     "title": "Plats för\n*varje regel.*",
-    "body": "Lista och detaljer sida vid sida\npå surfplattor och vikbara.",
     "alt": "QuietGuard på en liggande surfplatta med applistan bredvid en apps regler, och telefonlayouten"
   },
   "tablet7/appearance": {

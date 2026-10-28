@@ -6,7 +6,6 @@
   },
   "firewall": {
     "title": "Wi-Fi veya mobil,\n*uygulama bazında.*",
-    "body": "Tek dokunuşla ağı engelleyin.",
     "alt": "Güvenlik duvarı listesi: her uygulamanın kendi Wi-Fi ve mobil veri anahtarı var, bazıları engellenmiş"
   },
   "log": {
@@ -31,12 +30,10 @@
   },
   "appearance": {
     "title": "Gece gündüz\n*sakin.*",
-    "body": "Açık, koyu ve sizin renkleriniz.",
     "alt": "Açık modda görünüm ayarları ve yanında koyu modda ana ekran"
   },
   "tablet": {
     "title": "Her kurala\n*yer var.*",
-    "body": "Tablet ve katlanabilirlerde\nliste ve ayrıntılar yan yana.",
     "alt": "Yatay tablette QuietGuard: bir uygulamanın kurallarının yanında uygulama listesi ve telefon düzeni"
   },
   "tablet7/appearance": {

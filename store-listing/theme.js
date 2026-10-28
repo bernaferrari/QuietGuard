@@ -3,17 +3,17 @@
 // so the strip joins exactly in the store carousel.
 import {panoramaGradient, panoramaX, shapes} from './studio/shapes.js';
 
-// Ripple centres in card widths across the whole strip, and heights as a fraction of the canvas.
-// They sit on or near the seams, so each set of rings is shared by two neighbouring cards. Four rings, .1 apart,
-// keep the largest inside half the distance to the next centre, so sets never cross one another.
+// Ripple centres in card widths across the whole strip, and heights as a fraction of the canvas: all along the
+// bottom, rising from behind the screens, one and a half cards apart, so the headlines stay calm.
+// Four rings, .1 apart, keep the largest inside half the distance to the next centre, so sets never cross.
 const ripples = [
-  {x: .5, y: .2, rings: 4},
-  {x: 1.95, y: .86, rings: 4},
-  {x: 3.6, y: .14, rings: 4},
-  {x: 5.0, y: .9, rings: 4},
-  {x: 6.55, y: .18, rings: 4},
-  {x: 8.0, y: .82, rings: 4},
-];
+  {x: .75, y: .9, rings: 4},
+  {x: 2.25, y: .96, rings: 4},
+  {x: 3.75, y: .88, rings: 4},
+  {x: 5.25, y: .95, rings: 4},
+  {x: 6.75, y: .9, rings: 4},
+  {x: 8.25, y: .96, rings: 4},
+]
 
 const MOODS = {
   night: {field: ['#0a2a36', '#0d3b45', '#0b3140', '#0f4448', '#0b2f3c', '#0d3a45'], shade: '#03141c', shadeTop: .35, shadeBottom: .3, glow: '#2bd3ac', ring: '#9af5e0'},

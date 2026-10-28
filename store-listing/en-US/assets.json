@@ -7,7 +7,7 @@
         "slide": 0,
         "width": 1080,
         "height": 1920,
-        "bytes": 199404,
+        "bytes": 185064,
         "sources": [
           "raw/phone/01-home.png"
         ]
@@ -18,7 +18,7 @@
         "slide": 1,
         "width": 1080,
         "height": 1920,
-        "bytes": 183839,
+        "bytes": 181521,
         "sources": [
           "raw/phone/02-firewall.png"
         ]
@@ -29,7 +29,7 @@
         "slide": 2,
         "width": 1080,
         "height": 1920,
-        "bytes": 227143,
+        "bytes": 225975,
         "sources": [
           "raw/phone/03-log.png"
         ]
@@ -40,7 +40,7 @@
         "slide": 3,
         "width": 1080,
         "height": 1920,
-        "bytes": 222292,
+        "bytes": 208685,
         "sources": [
           "raw/phone/04-detail.png"
         ]
@@ -51,7 +51,7 @@
         "slide": 4,
         "width": 1080,
         "height": 1920,
-        "bytes": 198662,
+        "bytes": 196369,
         "sources": [
           "raw/phone/06-rules.png",
           "raw/phone/05-settings.png"
@@ -63,7 +63,7 @@
         "slide": 5,
         "width": 1080,
         "height": 1920,
-        "bytes": 238842,
+        "bytes": 237481,
         "sources": [
           "raw/phone/08-blocked.png"
         ]
@@ -74,7 +74,7 @@
         "slide": 6,
         "width": 1080,
         "height": 1920,
-        "bytes": 208466,
+        "bytes": 189251,
         "sources": [
           "raw/phone/10-firewall-dark.png",
           "raw/phone/02-firewall.png"
@@ -86,7 +86,7 @@
         "slide": 7,
         "width": 1080,
         "height": 1920,
-        "bytes": 197431,
+        "bytes": 194323,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
@@ -99,7 +99,7 @@
         "slide": 0,
         "width": 1200,
         "height": 1920,
-        "bytes": 219290,
+        "bytes": 199121,
         "sources": [
           "raw/tablet7/01-home.png"
         ]
@@ -110,7 +110,7 @@
         "slide": 1,
         "width": 1200,
         "height": 1920,
-        "bytes": 185609,
+        "bytes": 185244,
         "sources": [
           "raw/tablet7/02-firewall.png"
         ]
@@ -121,7 +121,7 @@
         "slide": 2,
         "width": 1200,
         "height": 1920,
-        "bytes": 239171,
+        "bytes": 237908,
         "sources": [
           "raw/tablet7/03-log.png"
         ]
@@ -132,7 +132,7 @@
         "slide": 3,
         "width": 1200,
         "height": 1920,
-        "bytes": 241451,
+        "bytes": 222760,
         "sources": [
           "raw/tablet7/04-detail.png"
         ]
@@ -143,7 +143,7 @@
         "slide": 4,
         "width": 1200,
         "height": 1920,
-        "bytes": 231227,
+        "bytes": 228289,
         "sources": [
           "raw/tablet7/05-settings.png",
           "raw/tablet7/10-firewall-dark.png"
@@ -157,7 +157,7 @@
         "slide": 0,
         "width": 1920,
         "height": 1200,
-        "bytes": 211185,
+        "bytes": 199668,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
@@ -168,7 +168,7 @@
         "slide": 1,
         "width": 1920,
         "height": 1200,
-        "bytes": 214247,
+        "bytes": 216487,
         "sources": [
           "raw/tablet10/01-home.png"
         ]
@@ -179,7 +179,7 @@
         "slide": 2,
         "width": 1920,
         "height": 1200,
-        "bytes": 171575,
+        "bytes": 175275,
         "sources": [
           "raw/tablet10/03-log.png"
         ]
@@ -190,7 +190,7 @@
         "slide": 3,
         "width": 1920,
         "height": 1200,
-        "bytes": 172414,
+        "bytes": 166632,
         "sources": [
           "raw/tablet10/08-blocked.png"
         ]
@@ -201,7 +201,7 @@
         "slide": 4,
         "width": 1920,
         "height": 1200,
-        "bytes": 219627,
+        "bytes": 222151,
         "sources": [
           "raw/tablet10/10-firewall-dark.png",
           "raw/phone/07-appearance.png"
@@ -215,7 +215,7 @@
         "slide": 0,
         "width": 2400,
         "height": 1260,
-        "bytes": 298331,
+        "bytes": 295391,
         "sources": [
           "raw/phone/01-home.png",
           "raw/phone/02-firewall.png",
@@ -228,7 +228,7 @@
         "slide": 1,
         "width": 2400,
         "height": 1260,
-        "bytes": 313362,
+        "bytes": 310012,
         "sources": [
           "raw/phone/04-detail.png",
           "raw/phone/08-blocked.png",
@@ -241,7 +241,7 @@
         "slide": 2,
         "width": 2400,
         "height": 1260,
-        "bytes": 290650,
+        "bytes": 291014,
         "sources": [
           "raw/tablet10/02-firewall.png",
           "raw/phone/10-firewall-dark.png"
@@ -253,7 +253,7 @@
         "slide": 3,
         "width": 2400,
         "height": 1260,
-        "bytes": 353757,
+        "bytes": 352629,
         "sources": [
           "raw/compare/netguard-firewall.png",
           "raw/compare/quietguard-firewall.png",

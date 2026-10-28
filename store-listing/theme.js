@@ -14,16 +14,25 @@ const ripples = [
   {x: 8.0, y: .82, rings: 6},
 ];
 
+const MOODS = {
+  night: {field: ['#0a2a36', '#0d3b45', '#0b3140', '#0f4448', '#0b2f3c', '#0d3a45'], shade: '#03141c', shadeTop: .35, shadeBottom: .3, glow: '#2bd3ac', ring: '#9af5e0'},
+  mint: {field: ['#c9f4e8', '#dcf9ef', '#bff0e2', '#d6f7ec'], shade: '#ffffff', shadeTop: .4, shadeBottom: 0, glow: '#ffffff', ring: '#2a9c84'},
+  coral: {field: ['#f7826b', '#f88f73', '#f67c68', '#f98d70'], shade: '#ffffff', shadeTop: .15, shadeBottom: 0, glow: '#ffd2c2', ring: '#ffffff'},
+  sunrise: {field: ['#ffd9b8', '#ffc4a8', '#ffb29e', '#ffc9ae'], shade: '#ffffff', shadeTop: .35, shadeBottom: 0, glow: '#ffffff', ring: '#e8846b'},
+};
+
 function art(ctx) {
   const {W, H, slides} = ctx;
   const unit = Math.max(W, H);
-  let defs = panoramaGradient(ctx, 'field', ['#0a2a36', '#0d3b45', '#0b3140', '#0f4448', '#0b2f3c', '#0d3a45']);
-  defs += `<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03141c" stop-opacity=".35"/><stop offset=".45" stop-color="#03141c" stop-opacity="0"/><stop offset="1" stop-color="#03141c" stop-opacity=".3"/></linearGradient>`;
+  // A light mood for README art: the same ripples on a bright field, so the app is the darkest thing in view.
+  const mood = MOODS[ctx.slide?.mood] || MOODS.night;
+  let defs = panoramaGradient(ctx, 'field', mood.field);
+  defs += `<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mood.shade}" stop-opacity="${mood.shadeTop}"/><stop offset=".45" stop-color="${mood.shade}" stop-opacity="0"/><stop offset="1" stop-color="${mood.shade}" stop-opacity="${mood.shadeBottom}"/></linearGradient>`;
   let body = `<rect width="${W}" height="${H}" fill="url(#field)"/>`;
   // A soft light behind every card's product, wide enough to spill into the neighbours.
   slides.forEach((_, k) => {
     const cx = panoramaX(ctx, k + .5), cy = H * (W > H ? .55 : .62);
-    defs += `<radialGradient id="glow${k}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${unit * .62}"><stop offset="0" stop-color="#2bd3ac" stop-opacity=".26"/><stop offset=".55" stop-color="#2bd3ac" stop-opacity=".07"/><stop offset="1" stop-color="#2bd3ac" stop-opacity="0"/></radialGradient>`;
+    defs += `<radialGradient id="glow${k}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${unit * .62}"><stop offset="0" stop-color="${mood.glow}" stop-opacity=".26"/><stop offset=".55" stop-color="${mood.glow}" stop-opacity=".07"/><stop offset="1" stop-color="${mood.glow}" stop-opacity="0"/></radialGradient>`;
     body += `<rect width="${W}" height="${H}" fill="url(#glow${k})"/>`;
   });
   body += '<g mask="url(#quiet)">';
@@ -33,9 +42,9 @@ function art(ctx) {
     for (let i = 0; i < r.rings; i++) {
       const radius = unit * (.12 + i * .13);
       const opacity = (.2 - i * .028).toFixed(3);
-      body += `<g fill="none" stroke="#9af5e0" stroke-opacity="${opacity}" stroke-width="${(4 - i * .4).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
+      body += `<g fill="none" stroke="${mood.ring}" stroke-opacity="${opacity}" stroke-width="${(4 - i * .4).toFixed(1)}">${shapes.cookie(cx, cy, radius, i * .17)}</g>`;
     }
-    body += `<g fill="#7ff3d8" fill-opacity=".06">${shapes.cookie(cx, cy, unit * .12, 0)}</g>`;
+    body += `<g fill="${mood.ring}" fill-opacity=".06">${shapes.cookie(cx, cy, unit * .12, 0)}</g>`;
   }
   body += '</g>';
   // Ripples stay faint behind the headline and open up around the screens.
@@ -45,6 +54,11 @@ function art(ctx) {
 
 export default {
   art,
+
+  // README art on a light mood swaps the night frames for white ones with a soft shadow.
+  compose({main, slide}) {
+    if (slide.mood && slide.mood !== 'night') main.classList.add('light-field', `mood-${slide.mood}`);
+  },
 
   /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */
   layout({main}) {

@@ -179,7 +179,8 @@
           "raw": "phone/03-log.png",
           "role": "right"
         }
-      ]
+      ],
+      "mood": "coral"
     },
     {
       "feature": "readme-rules",
@@ -202,7 +203,8 @@
           "role": "three",
           "label": "Rules for *edge cases*"
         }
-      ]
+      ],
+      "mood": "coral"
     },
     {
       "feature": "readme-spread",
@@ -219,7 +221,8 @@
           "raw": "phone/10-firewall-dark.png",
           "role": "phone"
         }
-      ]
+      ],
+      "mood": "coral"
     },
     {
       "feature": "readme-compare",
@@ -247,7 +250,8 @@
           "role": "after pair2",
           "label": "QuietGuard"
         }
-      ]
+      ],
+      "mood": "coral"
     }
   ]
 }

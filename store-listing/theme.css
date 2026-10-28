@@ -91,3 +91,18 @@ header p{margin:28px auto 0;font-size:40px;line-height:1.28;font-weight:420;colo
 .readme .spread header p{margin:28px 0 0;font-size:40px;max-width:640px;text-align:left}
 .readme .spread .tablet{--bezel:18px;--radius:48px;left:1000px;top:150px;width:1620px}
 .readme .spread .phone{--bezel:12px;--radius:60px;left:860px;top:500px;width:420px;z-index:4}
+
+/* Light moods (README): white frames, a soft shadow tinted by the field. */
+.light-field .device{background:#ffffff;box-shadow:inset 0 0 0 2px #ffffff,0 50px 90px -40px var(--soft),0 16px 34px -18px var(--soft)}
+.mood-mint{--soft:#0f6b5a66}
+.mood-coral{--soft:#8a2a1a66}
+.mood-sunrise{--soft:#9a4a2a55}
+/* On coral the type is white, and the key phrase takes the app's deep teal instead of the night glow. */
+.mood-coral{--deep:#0c4a43}
+.mood-coral h1{color:#ffffff;text-shadow:0 2px 24px #b0402a33}
+.mood-coral h1 em{color:var(--deep);text-shadow:none}
+.mood-coral header p{color:#fff4ef}
+.readme .mood-coral .device-label{color:#ffffff;font-weight:520}
+.readme .mood-coral .device-label em{color:var(--deep);text-shadow:none;font-weight:780}
+.readme .mood-coral .device-label.before span{color:#ffe1d8}
+.readme .mood-coral .device-label.after span{color:var(--deep);text-shadow:none}

@@ -4,14 +4,15 @@
 import {panoramaGradient, panoramaX, shapes} from './studio/shapes.js';
 
 // Ripple centres in card widths across the whole strip, and heights as a fraction of the canvas.
-// They sit on or near the seams, so each set of rings is shared by two neighbouring cards.
+// They sit on or near the seams, so each set of rings is shared by two neighbouring cards. Four rings, .1 apart,
+// keep the largest inside half the distance to the next centre, so sets never cross one another.
 const ripples = [
-  {x: .5, y: .2, rings: 5},
-  {x: 1.95, y: .86, rings: 5},
-  {x: 3.6, y: .14, rings: 5},
-  {x: 5.0, y: .9, rings: 5},
-  {x: 6.55, y: .18, rings: 5},
-  {x: 8.0, y: .82, rings: 5},
+  {x: .5, y: .2, rings: 4},
+  {x: 1.95, y: .86, rings: 4},
+  {x: 3.6, y: .14, rings: 4},
+  {x: 5.0, y: .9, rings: 4},
+  {x: 6.55, y: .18, rings: 4},
+  {x: 8.0, y: .82, rings: 4},
 ];
 
 const MOODS = {
@@ -47,23 +48,9 @@ function art(ctx) {
     body += `<g fill="${mood.ring}" fill-opacity=".06">${shapes.cookie(cx, cy, unit * .12, 0)}</g>`;
   }
   body += '</g>';
-  // Ripples stay faint behind the headline and open up around the screens.
-  // Ripples never run behind words: on light cards they stay clear of the headline band (mid-card on the stacked
-  // card, the top elsewhere); the night field keeps its old faint fade.
-  const layout = ctx.slide?.layout || '';
-  const [axis, hush] = mood === MOODS.night ? ['y', [[0, .35], [.3, .45], [.45, 1]]]
-    : W > H && W !== 2400 ? ['x', [[0, 1], [.04, 0], [.36, 0], [.42, 1], [1, 1]]]
-    : layout === 'spread' ? ['x', [[0, 0], [.36, 0], [.42, 1], [1, 1]]]
-    : layout === 'trio' ? ['y', [[0, 0], [.3, 0], [.36, 1], [1, 1]]]
-    : layout === 'compare' ? ['y', [[0, 1], [.84, 1], [.88, 0], [1, 0]]]
-    : W > H ? ['y', [[0, 1], [1, 1]]]
-    : ['y', [[0, 0], [.27, 0], [.33, 1], [1, 1]]];
-  // The stacked card clears its mid-card headline, fading toward both side edges so neighbours' ripples continue
-  // across the seams and dissolve before the words.
-  const stacked = mood !== MOODS.night && /stack/.test(layout);
-  const stackBand = stacked ? `<linearGradient id="bandX" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".1" stop-color="#000"/><stop offset=".9" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="bandY" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".15" stop-color="#fff"/><stop offset=".85" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient><mask id="bandFeather" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect y="${H * .28}" width="${W}" height="${H * .38}" fill="url(#bandY)"/></mask>` : '';
-  const stackCut = stacked ? `<rect y="${H * .28}" width="${W}" height="${H * .38}" fill="url(#bandX)" mask="url(#bandFeather)"/>` : '';
-  defs += `<linearGradient id="hush" x1="0" y1="0" x2="${axis === 'x' ? 1 : 0}" y2="${axis === 'y' ? 1 : 0}">${hush.map(([o, a]) => `<stop offset="${o}" stop-color="#fff" stop-opacity="${a}"/>`).join('')}</linearGradient>${stackBand}<mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/>${stackCut}</mask>`;
+  // The night field fades its ripples under the headline; light fields let them run freely, text included.
+  const [axis, hush] = mood === MOODS.night ? ['y', [[0, .35], [.3, .45], [.45, 1]]] : ['y', [[0, 1], [1, 1]]];
+    defs += `<linearGradient id="hush" x1="0" y1="0" x2="${axis === 'x' ? 1 : 0}" y2="${axis === 'y' ? 1 : 0}">${hush.map(([o, a]) => `<stop offset="${o}" stop-color="#fff" stop-opacity="${a}"/>`).join('')}</linearGradient><mask id="quiet" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="url(#hush)"/></mask>`;
   return `<defs>${defs}</defs>${body}<rect width="${W}" height="${H}" fill="url(#dusk)"/>`;
 }
 

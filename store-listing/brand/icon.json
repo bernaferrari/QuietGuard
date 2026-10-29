@@ -1,0 +1,8 @@
+{
+  "android": {"res": "app/src/main/res", "legacy": true},
+  "files": [
+    {"path": "store-listing/brand/icon.png", "size": 512, "shape": "square"},
+    {"path": "fastlane/metadata/android/en-US/images/icon.png", "size": 512, "shape": "square"},
+    {"path": "webApp/src/wasmJsMain/resources/favicon.png", "size": 32, "shape": "rounded"}
+  ]
+}

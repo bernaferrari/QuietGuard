@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <!-- The shield split cream and warm orange, the switch in its round button. -->
+<defs>
+  <linearGradient id="warm" x1="54" y1="26" x2="78" y2="84" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff9a68"/><stop offset="1" stop-color="#e2502c"/></linearGradient>
+  <linearGradient id="cream" x1="30" y1="26" x2="54" y2="84" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6e7df"/></linearGradient>
+  <clipPath id="left"><rect x="0" y="0" width="54" height="108"/></clipPath><clipPath id="right"><rect x="54" y="0" width="54" height="108"/></clipPath>
+  <filter id="lift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2.2" stdDeviation="2.4" flood-color="#2a0c04" flood-opacity=".45"/></filter>
+  <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#2a0c04" flood-opacity=".35"/></filter>
+</defs>
+<g transform="translate(54 54.5) scale(.86) translate(-54 -54.5)">
+  <g filter="url(#lift)"><path d="M54 25.5C61.5 30 70.5 32.4 78.5 32.6V52.5C78.5 68.5 68 78.6 54 83.5C40 78.6 29.5 68.5 29.5 52.5V32.6C37.5 32.4 46.5 30 54 25.5Z" fill="url(#cream)" clip-path="url(#left)"/><path d="M54 25.5C61.5 30 70.5 32.4 78.5 32.6V52.5C78.5 68.5 68 78.6 54 83.5C40 78.6 29.5 68.5 29.5 52.5V32.6C37.5 32.4 46.5 30 54 25.5Z" fill="url(#warm)" clip-path="url(#right)"/></g>
+  <circle cx="54" cy="54.5" r="13.2" fill="#fffaf7" filter="url(#soft)"/>
+  <rect x="45.2" y="49.6" width="17.6" height="9.8" rx="4.9" fill="#3a1108"/>
+  <circle cx="57.9" cy="54.5" r="3.3" fill="#ff8a5c"/>
+</g>
+</svg>

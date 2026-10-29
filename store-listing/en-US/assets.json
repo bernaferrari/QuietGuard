@@ -215,7 +215,7 @@
         "slide": 0,
         "width": 2400,
         "height": 1260,
-        "bytes": 295881,
+        "bytes": 292721,
         "sources": [
           "raw/phone/01-home.png",
           "raw/phone/02-firewall.png",
@@ -241,7 +241,7 @@
         "slide": 2,
         "width": 2400,
         "height": 1260,
-        "bytes": 296141,
+        "bytes": 288906,
         "sources": [
           "raw/tablet10/02-firewall.png",
           "raw/phone/10-firewall-dark.png"
@@ -253,7 +253,7 @@
         "slide": 3,
         "width": 2400,
         "height": 1260,
-        "bytes": 331637,
+        "bytes": 315969,
         "sources": [
           "raw/compare/netguard-firewall.png",
           "raw/phone/02-firewall.png",

@@ -1,7 +1,7 @@
 // QuietGuard: one deep-teal field under the whole strip, with quiet ripples (the scalloped shapes
 // of the Home shield) spreading across the card seams. Everything is drawn in panorama coordinates,
 // so the strip joins exactly in the store carousel.
-import {panoramaGradient, panoramaX, shapes} from './studio/shapes.js';
+import {panoramaGradient, panoramaLights, panoramaX, shapes} from './studio/shapes.js';
 
 // Ripple centres in card widths across the strip, and heights as a fraction of the canvas. Sets of different sizes
 // rise from the bottom edge and from the seams at mid-height, never behind a headline, and each set's outer ring
@@ -25,7 +25,7 @@ const MOODS = {
 };
 
 function art(ctx) {
-  const {W, H, slides} = ctx;
+  const {W, H} = ctx;
   const unit = Math.max(W, H);
   // Coral by default: the same ripples on a bright warm field, so the app is the boldest thing in view.
   const mood = MOODS[ctx.slide?.mood || 'coral'] || MOODS.coral;
@@ -33,11 +33,7 @@ function art(ctx) {
   defs += `<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mood.shade}" stop-opacity="${mood.shadeTop}"/><stop offset=".45" stop-color="${mood.shade}" stop-opacity="0"/><stop offset="1" stop-color="${mood.shade}" stop-opacity="${mood.shadeBottom}"/></linearGradient>`;
   let body = `<rect width="${W}" height="${H}" fill="url(#field)"/>`;
   // A soft light behind every card's product, wide enough to spill into the neighbours.
-  slides.forEach((_, k) => {
-    const cx = panoramaX(ctx, k + .5), cy = H * (W > H ? .55 : .62);
-    defs += `<radialGradient id="glow${k}" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${unit * .62}"><stop offset="0" stop-color="${mood.glow}" stop-opacity=".26"/><stop offset=".55" stop-color="${mood.glow}" stop-opacity=".07"/><stop offset="1" stop-color="${mood.glow}" stop-opacity="0"/></radialGradient>`;
-    body += `<rect width="${W}" height="${H}" fill="url(#glow${k})"/>`;
-  });
+  body += panoramaLights(ctx, [{x: .5, y: W > H ? .55 : .62, r: .62, color: mood.glow, stops: [[0, .26], [.55, .07], [1, 0]]}], {id: 'glow'});
   body += '<g mask="url(#quiet)">';
   // An image can opt out (the comparison) or place its own sets (the tablet spread, centred behind the tablet).
   // An image's own sets are placed within that image; the shared sets run across the whole strip.
@@ -61,51 +57,11 @@ function art(ctx) {
 
 export default {
   art,
+  continuous: true,
 
   // Every card sits on coral unless it asks for another mood; light moods swap the night frames for white ones.
   compose({main, slide}) {
     const mood = slide.mood || 'coral';
     if (mood !== 'night') main.classList.add('light-field', `mood-${mood}`);
-    // The README's first image is the app's name card: icon and name, large, above the app.
-    if (slide.identity) {
-      main.querySelector('header')?.remove();
-      const id = document.createElement('div');
-      id.className = 'identity';
-      id.dataset.checkBounds = '';
-      id.innerHTML = '<img src="../brand/icon.png" alt="">QuietGuard';
-      main.append(id);
-    }
-  },
-
-  /** Bezel and corners follow the frame's width, so small and large screens look like one device family. */
-  layout({main}) {
-    for (const node of main.querySelectorAll('.device:not(.device-frame-none)')) {
-      if (main.classList.contains('compare')) break;
-      const image = node.querySelector('img'), width = node.clientWidth;
-      const landscape = image.naturalWidth > image.naturalHeight;
-      const tablet = node.classList.contains('device-frame-tablet');
-      node.style.setProperty('--bezel', `${Math.round(width * (landscape ? .012 : tablet ? .018 : .02))}px`);
-      node.style.setProperty('--radius', `${Math.round(width * (landscape ? .035 : tablet ? .05 : .09))}px`);
-    }
-  },
-
-  // Screens may run off the bottom (or hang from the top on the stacked card), never off the sides (except the
-  // README spread),
-  // and most of each screen stays in view.
-  decorate({W, H, slide, devices}) {
-    if (slide.layout === 'compare') {
-      // Each name sits just under its screen.
-      for (const label of devices[0].node.parentElement.querySelectorAll('.device-label')) label.style.setProperty('--h', `${devices[0].box.height}px`);
-      return;
-    }
-    const stacked = /stack/.test(slide.layout || '');
-    // The README spread and the phone tablet card run their tablet off the right edge on purpose.
-    const bleeds = slide.layout === 'spread' || slide.layout === 'bleed';
-    for (const {box, spec} of devices) {
-      if (!bleeds && (box.left < 0 || box.left + box.width > W + 1)) throw new Error(`Screen leaves the side of the card: ${spec.raw}`);
-      if (stacked) continue;
-      if (box.top < 0) throw new Error(`Screen leaves the top of the card: ${spec.raw}`);
-      if ((H - box.top) / box.height < .62) throw new Error(`Too little of ${spec.raw} is visible`);
-    }
   },
 };

@@ -67,5 +67,22 @@
         "locales": "default"
       }
     ]
+  },
+  "frames": {
+    "fixed": [
+      "compare"
+    ]
+  },
+  "bounds": {
+    "visible": 0.62,
+    "layouts": {
+      "bleed": {
+        "right": true
+      },
+      "stack": {
+        "top": true,
+        "visible": 0
+      }
+    }
   }
 }

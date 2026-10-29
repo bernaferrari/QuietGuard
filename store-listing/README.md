@@ -8,9 +8,10 @@ Built with [Screenshot Studio](studio/). Read `~/Documents/screenshot-studio/PLA
 | Words per language | `<locale>/copy.json`, `<locale>/listing.json` |
 | Look | `theme.css`, `theme.js` |
 | Canvas and capture sizes | `profiles.json` |
+| Scene tour | `capture-emulator.py` (build and runs: `studio.json` → `capture`) |
 
 ```sh
-store-listing/recapture.sh                       # rebuild, capture every size on emulator-5578, export every language
+node store-listing/studio/recapture.cjs          # rebuild, capture every size on emulator-5578, export every language
 node store-listing/studio/server.cjs 8790        # editor
 ```
 

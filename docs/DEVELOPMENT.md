@@ -1,89 +1,104 @@
 # Developing QuietGuard
 
-Related: [README](../README.md) · [Architecture](ARCHITECTURE.md) · [Threat model](THREAT-MODEL.md) · [Provenance](PROVENANCE.md)
+A Kotlin Multiplatform app: one Compose UI for Android and a Wasm web demo, with a Rust packet engine behind
+Android's `VpnService`. `:app` is the Android app; the UI and domain live in `:shared`.
 
-## Install a prebuilt APK
+[README](../README.md) · [Architecture](ARCHITECTURE.md) · [Threat model](THREAT-MODEL.md) · [Provenance](PROVENANCE.md)
 
-When a `v*` tag is pushed, GitHub Actions publishes a **debug-signed** arm64 QuietGuard APK on
-[Releases](https://github.com/bernaferrari/QuietGuard/releases/latest). That build is from **this** repo, not NetGuard.
-Until a tag exists, the Releases page is empty; build from source instead.
-
-Optional: add repo secrets (`SIGNING_STORE_BASE64`, `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS`, `SIGNING_KEY_PASSWORD`)
-to publish a **release-signed** APK instead. See [`.github/workflows/release.yml`](../.github/workflows/release.yml).
-
-Do **not** install upstream NetGuard APKs and expect QuietGuard UI or engine behavior.
-
-## Build for Android
-
-Prerequisites: JDK 17+, Android SDK/NDK (`quietguard.ndkVersion` in `gradle.properties`), Rust/Cargo.
+## Quick start
 
 ```bash
-./gradlew :app:assembleDebug
-./gradlew :app:installDebug
+git clone https://github.com/bernaferrari/QuietGuard.git
+cd QuietGuard
+rustup target add aarch64-linux-android
+./gradlew :app:installDebug -Pquietguard.abis=arm64-v8a
 ```
 
-Limit native targets with `-Pquietguard.abis=arm64-v8a`. A different installed NDK can be used with
-`-Pquietguard.ndkVersion=<version>`.
+## What you need
 
-Local Android check (host tests + optional arm64 debug APK, **not** run on every GitHub push):
+| Tool | Version | Notes |
+| --- | --- | --- |
+| JDK | 17+ | Gradle toolchain is 17; CI uses Temurin 21 |
+| Android SDK | compileSdk 37.2, targetSdk 36, minSdk 26 | Set `ANDROID_HOME` or `sdk.dir` in `local.properties` |
+| Android NDK | 30.0.16248370 | Pinned as `quietguard.ndkVersion` in `gradle.properties`; override with `-Pquietguard.ndkVersion=<version>` |
+| Rust | stable, with Cargo | One rustup target per ABI you build: `aarch64-linux-android`, `armv7-linux-androideabi`, `i686-linux-android`, `x86_64-linux-android` |
+
+Gradle 9.8.1 comes from the wrapper. The web demo needs no Android SDK, NDK or Rust.
+
+## Run it
+
+| Target | Command |
+| --- | --- |
+| Android, debug | `./gradlew :app:installDebug -Pquietguard.abis=arm64-v8a` |
+| Android, every ABI | `./gradlew :app:assembleDebug` (armeabi-v7a, arm64-v8a, x86, x86_64) |
+| Web, dev server | `./gradlew :webApp:wasmJsBrowserDevelopmentRun` |
+| Web, production bundle + checks | `./scripts/simulate-web-ci.sh` |
+
+The web build is a UI demo over seed data and filters nothing. It is deployed at
+[quietguard.vercel.app](https://quietguard.vercel.app/).
+
+## Where things live
+
+| Path | What's there |
+| --- | --- |
+| `shared/` | Compose Multiplatform UI, ViewModels, repositories, Room and DataStore |
+| `app/` | Android host: `VpnService` (`ServiceSinkhole`), UniFFI glue, tiles, workers |
+| `app/src/main/rust/` | Rust packet engine (parsing, sessions, DNS/TLS, SOCKS5), exposed through UniFFI |
+| `app/src/storeCapture/` | Capture build: fictional data for store screenshots |
+| `webApp/`, `sqliteWasmWorker/` | Wasm shell and its Web Worker SQLite driver |
+| `scripts/` | Local CI mirrors, release staging, web deploy |
+| `store-listing/` | Play screenshots, listing copy and icon layers (Screenshot Studio) |
+| `fastlane/` | Play metadata |
+
+How the layers depend on each other: [ARCHITECTURE.md](ARCHITECTURE.md).
+
+## Before you push
 
 ```bash
+./scripts/verify-web-deploy.sh --ci --web-only
+(cd app/src/main/rust && cargo test --locked)
 ./scripts/verify-android-ci.sh
 ```
 
-## Build for the web
+[CI](../.github/workflows/ci.yml) runs the first two on every push and pull request (jobs **KMP web** and
+**Rust engine tests**). It never builds the Android app: `verify-android-ci.sh` (shared host tests plus an arm64
+debug APK) is local only, and the [Release](../.github/workflows/release.yml) workflow builds the APK on `v*` tags.
+Multi-ABI builds, emulator tests and Play packaging are not covered anywhere.
+
+## Store screenshots and icon
+
+Screenshot Studio lives in `store-listing/studio/`. It is synced from `~/Documents/screenshot-studio`, so never
+edit it here.
+
+- The `storeCapture` build type seeds fictional apps, rules and traffic. It has no VPN service and no INTERNET
+  permission, and installs beside the real app as `com.bernaferrari.quietguard.storecapture`. Build it alone with
+  `./gradlew :app:assembleStoreCapture -Pquietguard.abis=arm64-v8a --no-configuration-cache`.
+- `store-listing/capture-emulator.py` is the scene tour; cards and order are in `store-listing/gallery.json`.
 
 ```bash
-./gradlew :webApp:wasmJsBrowserDevelopmentRun
-./scripts/simulate-web-ci.sh          # production Wasm bundle + checks
+node store-listing/studio/recapture.cjs                  # build, install, capture, export every language
+node store-listing/studio/recapture.cjs en-US --profile phone
+node store-listing/studio/recapture.cjs --no-build       # reuse the last APK
+node store-listing/studio/recapture.cjs --no-build --no-capture   # export only, from existing captures
+PLAYWRIGHT_MODULE=… node store-listing/studio/export.cjs --locale en-US
+node store-listing/studio/server.cjs                     # live editor
 ```
 
-Deploy: [quietguard.vercel.app](https://quietguard.vercel.app/) (UI demo only; it does not filter traffic).
+Captures run on the dedicated emulator `CAPTURE_SERIAL` (default `emulator-5578`), never a personal phone.
 
-## Continuous integration
+The icon is drawn as layers in `store-listing/brand/*.svg`; `store-listing/brand/icon.json` lists every output.
+Regenerate them all with `PLAYWRIGHT_MODULE=… node store-listing/studio/icon.cjs`. More in
+[store-listing/README.md](../store-listing/README.md).
 
-Every push and pull request runs [`.github/workflows/ci.yml`](../.github/workflows/ci.yml), intentionally **not** a full
-Android/NDK assemble (that is slow on GitHub and is why the web job exists).
+## Good to know
 
-| Job | What it runs |
-|-----|----------------|
-| **KMP web** | `./scripts/verify-web-deploy.sh --ci --web-only` |
-| **Rust** | `cargo test --locked` in `app/src/main/rust` (host, no NDK) |
-
-Android host tests + arm64 APK: `./scripts/verify-android-ci.sh` locally, or the **Release** workflow on a `v*` tag.
-Not in CI: multi-ABI, emulator, Play packaging.
-
-## Architecture in one picture
-
-```text
-Compose screens → ViewModels → repositories / platform bridges
-        ↓                    ↓                     ↓
-   Android VpnService    Rust engine           Wasm demo (UI only)
-```
-
-Modules: `:app` (host), `:shared` (KMP UI + domain), `:webApp`, `:sqliteWasmWorker`.
-Rules and dependency direction: [ARCHITECTURE.md](ARCHITECTURE.md).
-
-## Behavior notes
-
-- Local-first: filtering does not proxy through a QuietGuard backend.
-- Update checks are **opt-in** (`update_check` defaults off). The hosts download is user-triggered. SOCKS5 defaults off.
-- OEM VPN and battery policies can stop the tunnel; traffic is unfiltered while the service is down.
-
-## QuietGuard and NetGuard
-
-| | **QuietGuard** | **NetGuard** (upstream) |
-|--|----------------|-------------------------|
-| **Lineage** | Fork of NetGuard; GPLv3 | Original project by Marcel Bokhorst |
-| **UI** | Kotlin Multiplatform + Compose + Material 3 | Classic Android views |
-| **Packet engine** | Rust via UniFFI (`app/src/main/rust`) | C/JNI |
-| **Platforms** | Android + Wasm web demo | Android |
-| **Install** | [This repo's Releases](https://github.com/bernaferrari/QuietGuard/releases) or build from source | [Upstream APKs](https://github.com/M66B/NetGuard/releases) |
-
-QuietGuard does **not** ship NetGuard binaries under a new name. Full authorship split: [PROVENANCE.md](PROVENANCE.md).
-
-## Store screenshots
-
-The Play screenshots and README images are real app screens from the `storeCapture` build type, which seeds
-fictional apps and traffic and has no VPN service or INTERNET permission. Capture and compose them with
-[Screenshot Studio](../store-listing/README.md).
+- Release signing: `release` and `play` sign only when a `keystore.properties` exists (gitignored). Never commit it
+  or a keystore. Tag builds are debug-signed unless the repo secrets `SIGNING_STORE_BASE64`,
+  `SIGNING_STORE_PASSWORD`, `SIGNING_KEY_ALIAS` and `SIGNING_KEY_PASSWORD` are set (see `scripts/stage-release-apk.sh`).
+- `play` differs from `release` by blanking the hosts download URL and the GitHub update check
+  (`PLAY_STORE_RELEASE = true`).
+- `-Pquietguard.abis=arm64-v8a` (comma-separated) builds only those ABIs and their Cargo targets; unset, all four
+  are built and need all four rustup targets.
+- Test the VPN on a device or emulator you don't depend on: while the service is down, traffic is unfiltered.
+- QuietGuard ships no NetGuard binaries; its packet engine is Rust, not NetGuard's C. What came from NetGuard and what is new:
+  [PROVENANCE.md](PROVENANCE.md).

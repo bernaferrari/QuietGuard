@@ -1,0 +1,98 @@
+/**
+ * QuietGuard's icon: a shield split cream and warm orange, with the app's switch in a round button,
+ * on coral. Writes every icon the project ships from this one drawing:
+ *   PLAYWRIGHT_MODULE=… node store-listing/brand/make-icon.cjs
+ * Adaptive layers (bitmap foreground and background, vector monochrome for themed icons), launcher and
+ * round PNGs, the 512px originals in app/src/main, the Play and README icon, and the web favicon.
+ */
+const fs = require('fs');
+const path = require('path');
+const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const root = path.resolve(__dirname, '..', '..');
+const res = path.join(root, 'app/src/main/res');
+const art = {};
+const SH = 'M54 25.5C61.5 30 70.5 32.4 78.5 32.6V52.5C78.5 68.5 68 78.6 54 83.5C40 78.6 29.5 68.5 29.5 52.5V32.6C37.5 32.4 46.5 30 54 25.5Z';
+art.qgBackground = `<defs><linearGradient id="ground" x1="18" y1="18" x2="90" y2="90" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffb08f"/><stop offset="1" stop-color="#f06a45"/></linearGradient></defs><rect width="108" height="108" fill="url(#ground)"/>`;
+art.qgForeground = `<defs>
+  <linearGradient id="warm" x1="54" y1="26" x2="78" y2="84" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff9a68"/><stop offset="1" stop-color="#e2502c"/></linearGradient>
+  <linearGradient id="cream" x1="30" y1="26" x2="54" y2="84" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6e7df"/></linearGradient>
+  <clipPath id="left"><rect x="0" y="0" width="54" height="108"/></clipPath><clipPath id="right"><rect x="54" y="0" width="54" height="108"/></clipPath>
+  <filter id="lift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2.2" stdDeviation="2.4" flood-color="#2a0c04" flood-opacity=".45"/></filter>
+  <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.4" flood-color="#2a0c04" flood-opacity=".35"/></filter>
+</defs>
+<g transform="translate(54 54.5) scale(.86) translate(-54 -54.5)">
+  <g filter="url(#lift)"><path d="${SH}" fill="url(#cream)" clip-path="url(#left)"/><path d="${SH}" fill="url(#warm)" clip-path="url(#right)"/></g>
+  <circle cx="54" cy="54.5" r="13.2" fill="#fffaf7" filter="url(#soft)"/>
+  <rect x="45.2" y="49.6" width="17.6" height="9.8" rx="4.9" fill="#3a1108"/>
+  <circle cx="57.9" cy="54.5" r="3.3" fill="#ff8a5c"/>
+</g>`;
+// Single-colour mark (themed icons): the shield with the button cut out and the switch inside it.
+art.qgMonochromePath = (() => {
+  const k = .86, c = [54, 54.5];
+  const t = (x, y) => [(c[0] + (x - c[0]) * k).toFixed(2), (c[1] + (y - c[1]) * k).toFixed(2)];
+  const shield = SH.replace(/(-?\d+(\.\d+)?) (-?\d+(\.\d+)?)/g, (_, x, __, y) => t(+x, +y).join(' '))
+                   .replace(/V(-?\d+(\.\d+)?)/g, (_, y) => 'V' + t(0, +y)[1]);
+  const r = 13.2 * k, [bx, by] = t(54, 54.5);
+  const circle = `M${(+bx - r).toFixed(2)} ${by}a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 ${(2 * r).toFixed(2)} 0a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 ${(-2 * r).toFixed(2)} 0Z`;
+  const [px, py] = t(45.2, 49.6), pw = (17.6 * k).toFixed(2), ph = (9.8 * k).toFixed(2), pr = (4.9 * k).toFixed(2);
+  const pill = `M${(+px + +pr).toFixed(2)} ${py}h${(pw - 2 * pr).toFixed(2)}a${pr} ${pr} 0 0 1 0 ${ph}h${(-(pw - 2 * pr)).toFixed(2)}a${pr} ${pr} 0 0 1 0 ${-ph}Z`;
+  return shield + circle + pill;
+})();
+art.svg = (body, viewBox = '0 0 108 108') => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${body}</svg>`;
+art.render = async (page, svg, size, file) => {
+  const fs = require('fs'), path = require('path');
+  await page.setViewportSize({width: size, height: size});
+  await page.setContent(`<style>html,body{margin:0;background:transparent}</style><img src="data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}" width="${size}" height="${size}" style="display:block">`);
+  await page.waitForFunction(() => document.images[0].complete);
+  fs.mkdirSync(path.dirname(file), {recursive: true});
+  await page.screenshot({path: file, omitBackground: true, clip: {x: 0, y: 0, width: size, height: size}});
+};
+
+const {qgBackground, qgForeground, qgMonochromePath, svg, render} = art;
+const write = (file, text) => { fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, text); console.log(path.relative(root, file)); };
+const shaped = shape => {
+  const clip = shape === 'circle' ? '<circle cx="54" cy="54" r="36"/>' : shape === 'rounded' ? '<rect x="18" y="18" width="72" height="72" rx="16"/>' : '<rect x="18" y="18" width="72" height="72"/>';
+  return svg(`<defs><clipPath id="shape">${clip}</clipPath></defs><g clip-path="url(#shape)">${qgBackground}${qgForeground}</g>`, '18 18 72 72');
+};
+
+write(path.join(res, 'drawable/ic_launcher_monochrome.xml'), `<?xml version="1.0" encoding="utf-8"?>
+<!-- QuietGuard for themed icons: the shield, its button cut out, the switch inside. Generated by store-listing/brand/make-icon.cjs. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path android:fillColor="#FFFFFF" android:fillType="evenOdd" android:pathData="${qgMonochromePath}" />
+</vector>
+`);
+for (const name of ['ic_launcher', 'ic_launcher_round']) {
+  write(path.join(res, `mipmap-anydpi-v26/${name}.xml`), `<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@mipmap/ic_launcher_background" />
+    <foreground android:drawable="@mipmap/ic_launcher_foreground" />
+    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />
+</adaptive-icon>
+`);
+}
+
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  const png = async (image, size, file) => { await render(page, image, size, path.join(root, file)); console.log(file); };
+  for (const [density, factor] of Object.entries({mdpi: 1, hdpi: 1.5, xhdpi: 2, xxhdpi: 3, xxxhdpi: 4})) {
+    const dir = `app/src/main/res/mipmap-${density}`;
+    await png(svg(qgForeground), 108 * factor, `${dir}/ic_launcher_foreground.png`);
+    await png(svg(qgBackground), 108 * factor, `${dir}/ic_launcher_background.png`);
+    await png(shaped('rounded'), 48 * factor, `${dir}/ic_launcher.png`);
+    await png(shaped('circle'), 48 * factor, `${dir}/ic_launcher_round.png`);
+  }
+  await png(shaped('square'), 512, 'app/src/main/ic_launcher-web.png');
+  await png(shaped('circle'), 512, 'app/src/main/ic_launcher_round-web.png');
+  await png(svg(qgForeground), 1024, 'app/src/main/ic_launcher_foreground-web.png');
+  await png(svg(qgBackground), 1024, 'app/src/main/ic_launcher_background-web.png');
+  // Play masks its own shape, so these are full-bleed squares.
+  await png(shaped('square'), 512, 'fastlane/metadata/android/en-US/images/icon.png');
+  await png(shaped('square'), 512, 'store-listing/brand/icon.png');
+  await png(shaped('rounded'), 32, 'webApp/src/wasmJsMain/resources/favicon.png');
+  await browser.close();
+})();

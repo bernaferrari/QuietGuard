@@ -52,10 +52,10 @@ fun <T> ConnectedToggleButtonRow(
                     else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
                 },
                 colors = ToggleButtonDefaults.colors(
-                    containerColor = containerColor,
+                    checkedContainerColor = MaterialTheme.colorScheme.primary,
+                    checkedContentColor = MaterialTheme.colorScheme.onPrimary,
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                     contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    checkedContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 ),
                 modifier = Modifier
                     .weight(1f)

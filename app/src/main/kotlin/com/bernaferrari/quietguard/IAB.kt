@@ -135,6 +135,7 @@ class IAB(
         }
 
         fun isPurchased(sku: String, context: Context): Boolean {
+            if (BuildConfig.PLAY_STORE_RELEASE) return true
             return try {
                 if (Util.isDebuggable(context)) {
                     return !context.preferences().getBoolean("debug_iab", false)

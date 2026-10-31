@@ -10,7 +10,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.appfunctions.service.AppFunctionConfiguration
+import androidx.appfunctions.AppFunctionConfiguration
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import com.bernaferrari.quietguard.appfunctions.AppFunctions

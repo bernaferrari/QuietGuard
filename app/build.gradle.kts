@@ -102,7 +102,7 @@ android {
 
     defaultConfig {
         applicationId = "com.bernaferrari.quietguard"
-        versionName = "1"
+        versionName = "1.0"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
@@ -277,7 +277,6 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.appfunctions)
-    implementation(libs.androidx.appfunctions.service)
     implementation("net.java.dev.jna:jna:5.19.1@aar")
     ksp(libs.androidx.appfunctions.compiler)
 

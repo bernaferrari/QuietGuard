@@ -5,7 +5,7 @@
     <string name="app_copyright" translatable="false">Copyright \u00A9 2015–2025 by M. Bokhorst (M66B)</string>
     <string name="app_android">நெட்கார்டுக்கு Android 5.1 அல்லது அதற்குப் பிறகு தேவைப்படுகிறது</string>
     <string name="app_eula" translatable="false">THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</string>
-    <string name="app_privacy"><a href="https://www.netguard.me/privacy/"> தனியுரிமைக் கொள்கை </a></string>
+    <string name="app_privacy"><a href="https://github.com/bernaferrari/QuietGuard/blob/main/PRIVACY.md"> தனியுரிமைக் கொள்கை </a></string>
     <string name="app_first">நெட்கார்ட்டை உருவாக்க மற்றும் சோதிக்க மிகுந்த கவனம் செலுத்தப்பட்டுள்ளது, இருப்பினும் ஒவ்வொரு சாதனத்திலும் நெட்கார்ட் சரியாக வேலை செய்யும் என்று உத்தரவாதம் அளிக்க முடியாது.</string>
     <string name="app_agree">நான் ஏற்கிறேன்</string>
     <string name="app_disagree">நான் மறுக்கிறேன்</string>

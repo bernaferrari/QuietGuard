@@ -8,7 +8,7 @@ import androidx.appfunctions.AppFunctionElementNotFoundException
 import androidx.appfunctions.AppFunctionInvalidArgumentException
 import androidx.appfunctions.AppFunctionSerializable
 import androidx.appfunctions.AppFunctionStringValueConstraint
-import androidx.appfunctions.service.AppFunction
+import androidx.appfunctions.AppFunctionDeclaration
 import com.bernaferrari.quietguard.ActivityMain
 import com.bernaferrari.quietguard.DatabaseHelper
 import com.bernaferrari.quietguard.Rule
@@ -36,7 +36,7 @@ class AppFunctions(
          *
          * @param appFunctionContext The execution context.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun getFirewallStatus(
             appFunctionContext: AppFunctionContext,
         ): FirewallStatus =
@@ -61,7 +61,7 @@ class AppFunctions(
          * @param appFunctionContext The execution context.
          * @param enabled Whether the firewall should be active.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun setFirewallEnabled(
             appFunctionContext: AppFunctionContext,
             enabled: Boolean,
@@ -108,7 +108,7 @@ class AppFunctions(
          * @param appFunctionContext The execution context.
          * @param enabled Whether lockdown mode should be active.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun setLockdownEnabled(
             appFunctionContext: AppFunctionContext,
             enabled: Boolean,
@@ -135,7 +135,7 @@ class AppFunctions(
          * @param appFunctionContext The execution context.
          * @param query App display name or package name fragment. Null or blank returns the first manageable apps.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun searchApps(
             appFunctionContext: AppFunctionContext,
             query: String?,
@@ -182,7 +182,7 @@ class AppFunctions(
          * @param appFunctionContext The execution context.
          * @param packageName The Android package name of the target app.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun getAppFirewallStatus(
             appFunctionContext: AppFunctionContext,
             packageName: String,
@@ -207,7 +207,7 @@ class AppFunctions(
          * @param network Which network type to change. Accepts "WIFI", "MOBILE", or "BOTH".
          * @param blocked Whether internet access should be blocked on the selected network(s).
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun setAppInternetBlocked(
             appFunctionContext: AppFunctionContext,
             packageName: String,
@@ -245,7 +245,7 @@ class AppFunctions(
          * @param appFunctionContext The execution context.
          * @param limit Maximum number of entries to return. Defaults to 5.
          */
-        @AppFunction(isDescribedByKDoc = true)
+        @AppFunctionDeclaration(isDescribedByKDoc = true)
         suspend fun getRecentBlockedConnections(
             appFunctionContext: AppFunctionContext,
             limit: Int = 5,

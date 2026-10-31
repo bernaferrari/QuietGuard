@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">VPN e privacidade</string>
+    <string name="vpn_disclosure_body">O QuietGuard usa uma VPN no aparelho para analisar conexões e aplicar suas regras de firewall. Ele lê os nomes dos aplicativos instalados e pode armazenar detalhes das conexões, como endereços e domínios, neste aparelho. O tráfego não é enviado a um servidor do QuietGuard. Um proxy opcional configurado por você pode receber o tráfego permitido.</string>
+    <string name="vpn_disclosure_accept">Concordo</string>
+</resources>

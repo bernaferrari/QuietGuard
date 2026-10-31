@@ -505,4 +505,6 @@ Seu tráfego de Internet não está sendo enviado para um servidor VPN remoto.</
     <string name="color_style_vibrant">Vibrante</string>
     <string name="color_style_tonal">Tonal</string>
     <string name="color_style_muted">Suave</string>
+    <string name="about_privacy_title">Política de privacidade</string>
+    <string name="about_privacy_summary">Como o QuietGuard trata seus dados</string>
 </resources>

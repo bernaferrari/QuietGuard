@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">VPN and privacy</string>
+    <string name="vpn_disclosure_body">QuietGuard uses an on-device VPN to inspect network connections and apply your firewall rules. It reads installed app names and can store connection details such as addresses and domains on this device. Traffic is not sent to a QuietGuard server. An optional proxy you configure can receive allowed traffic.</string>
+    <string name="vpn_disclosure_accept">I agree</string>
+</resources>

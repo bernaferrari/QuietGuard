@@ -69,7 +69,7 @@ class AppFunctions(
             withContext(Dispatchers.IO) {
                 if (enabled) {
                     val vpnIntent = VpnService.prepare(context)
-                    if (vpnIntent != null) {
+                    if (vpnIntent != null || !context.preferences().getBoolean(ActivityMain.VPN_DISCLOSURE_ACCEPTED, false)) {
                         val confirmation =
                             PendingIntent.getActivity(
                                 context,

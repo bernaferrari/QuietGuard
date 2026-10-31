@@ -533,4 +533,6 @@ Your internet traffic is not being sent to a remote VPN server.</string>
     <string name="color_style_vibrant">Vibrant</string>
     <string name="color_style_tonal">Tonal</string>
     <string name="color_style_muted">Muted</string>
+    <string name="about_privacy_title">Privacy policy</string>
+    <string name="about_privacy_summary">How QuietGuard handles your data</string>
 </resources>

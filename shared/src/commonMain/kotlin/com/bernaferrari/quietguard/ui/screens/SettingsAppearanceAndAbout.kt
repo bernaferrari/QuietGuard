@@ -43,6 +43,8 @@ import com.bernaferrari.quietguard.generated.resources.Res
 import com.bernaferrari.quietguard.generated.resources.about_social_title
 import com.bernaferrari.quietguard.generated.resources.about_source_summary
 import com.bernaferrari.quietguard.generated.resources.about_source_title
+import com.bernaferrari.quietguard.generated.resources.about_privacy_title
+import com.bernaferrari.quietguard.generated.resources.about_privacy_summary
 import com.bernaferrari.quietguard.generated.resources.about_version
 import com.bernaferrari.quietguard.generated.resources.app_description
 import com.bernaferrari.quietguard.generated.resources.app_name
@@ -158,6 +160,14 @@ internal fun AboutContent(onOpenUrl: (String) -> Unit) {
             icon = MaterialSymbols.Filled.Code,
             trailingIcon = MaterialSymbols.AutoMirrored.Filled.OpenInNew,
             onClick = { onOpenUrl(PROJECT_GITHUB_URL) },
+        )
+
+        SettingsDestinationRow(
+            title = stringResource(Res.string.about_privacy_title),
+            subtitle = stringResource(Res.string.about_privacy_summary),
+            icon = MaterialSymbols.Filled.Shield,
+            trailingIcon = MaterialSymbols.AutoMirrored.Filled.OpenInNew,
+            onClick = { onOpenUrl("$PROJECT_GITHUB_URL/blob/main/PRIVACY.md") },
         )
 
         AboutSocialLinks(onOpenUrl = onOpenUrl)

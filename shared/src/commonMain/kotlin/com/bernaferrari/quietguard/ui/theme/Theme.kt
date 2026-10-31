@@ -96,15 +96,15 @@ private enum class AppearanceMode(val value: String) {
 fun themeSeedColor(themeName: String): Color = ThemeSeeds[themeName] ?: Teal500
 
 /**
- * The scheme for a seed and style. The wallpaper option keeps Android's own scheme for Tonal (what the system
- * itself uses); the other styles are built from the wallpaper's primary.
+ * The scheme for a seed and style. The wallpaper option is Android's own scheme, whatever the style, so the app
+ * matches the rest of the phone (Android has its own style setting for it); the style shapes the app's own colors.
  */
 fun colorSchemeFor(seedColor: Color, darkTheme: Boolean, colorStyle: ColorStyle, wallpaperScheme: ColorScheme? = null): ColorScheme =
-    if (wallpaperScheme != null && colorStyle == ColorStyle.Tonal) {
+    if (wallpaperScheme != null) {
         wallpaperScheme
     } else {
         dynamicColorScheme(
-            seedColor = wallpaperScheme?.primary ?: seedColor,
+            seedColor = seedColor,
             isDark = darkTheme,
             style = colorStyle.palette,
             specVersion = ColorSpec.SpecVersion.SPEC_2025,

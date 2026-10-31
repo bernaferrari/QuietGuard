@@ -454,8 +454,9 @@ fun SettingsScreen(
                             }
                         }
                     }
-                    item { first, last ->
-                        // The style of the chosen color, as wordless gradient segments under the swatches.
+                    // The style of the chosen color, as wordless gradient segments under the swatches. Only for
+                    // the app's own colors: wallpaper colors come as Android gives them.
+                    if (currentTheme != "dynamic") item { first, last ->
                         Surface(
                             modifier = Modifier.fillMaxWidth(),
                             shape = groupItemShape(first, last),

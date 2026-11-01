@@ -1,6 +1,6 @@
-<h1 align="center">
+<p align="center">
   <img src="store-listing/en-US/readme/hero.jpg" width="100%" alt="QuietGuard">
-</h1>
+</p>
 
 <p align="center"><strong>Decide which apps reach the internet.</strong></p>
 
@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.bernaferrari.quietguard"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="80" alt="Get it on Google Play"></a>
+  <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.bernaferrari.quietguard%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fbernaferrari%2FQuietGuard%22%2C%22author%22%3A%22bernaferrari%22%2C%22name%22%3A%22QuietGuard%22%7D"><img src="docs/obtainium-badge.png" height="80" alt="Get it on Obtainium"></a>
 </p>
 
 <p align="center"><a href="https://quietguard.vercel.app/"><strong>Try the web demo</strong></a></p>

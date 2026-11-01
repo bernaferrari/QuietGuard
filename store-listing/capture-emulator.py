@@ -1,18 +1,15 @@
 """Capture QuietGuard's store screens on the capture emulator (needs adb and Pillow).
 
-`node store-listing/studio/recapture.cjs` builds the capture build, which seeds fictional apps and
+`npx screenshot-studio recapture` builds the capture build, which seeds fictional apps and
 traffic and never starts the VPN or touches the network, installs it, runs this tour for every device
-size and exports. Run alone: python3 store-listing/capture-emulator.py [--profile phone] [--locale de-DE].
+size and exports.
+Run alone: npx screenshot-studio recapture --no-build --no-export [--profile phone] [de-DE].
 
 Scenes are tapped by their English labels and recorded in en-US/raw/tap-map.json, so other locales
 replay the same taps. Writes <locale>/raw/<profile>/<scene>.png plus a <scene>.nodes.json layout sidecar.
-The emulator plumbing is the studio's capture.py.
+The emulator plumbing is the studio's capture.py (on PYTHONPATH while recapture runs the tour).
 """
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent / 'studio'))
-from capture import Device, parser  # noqa: E402
+from capture import Device, parser
 
 args = parser(__doc__).parse_args()
 d = Device(args, 'com.bernaferrari.quietguard.storecapture', 'com.bernaferrari.quietguard.ActivityMain')

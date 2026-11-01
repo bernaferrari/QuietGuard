@@ -1,4 +1,5 @@
 {
+  "$schema": "https://unpkg.com/screenshot-studio/studio/schemas/studio.schema.json",
   "app": "QuietGuard",
   "package": "com.bernaferrari.quietguard",
   "locales": [

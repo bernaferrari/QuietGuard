@@ -1,6 +1,6 @@
 # QuietGuard · Play listing
 
-Built with [Screenshot Studio](studio/). Read `~/Documents/screenshot-studio/PLAYBOOK.md` first.
+Built with [Screenshot Studio](https://github.com/bernaferrari/screenshot-studio) (`npx screenshot-studio`); the app keeps no copy of it.
 
 | Change | File |
 | --- | --- |
@@ -11,8 +11,10 @@ Built with [Screenshot Studio](studio/). Read `~/Documents/screenshot-studio/PLA
 | Scene tour | `capture-emulator.py` (build and runs: `studio.json` → `capture`) |
 
 ```sh
-node store-listing/studio/recapture.cjs          # rebuild, capture every size on emulator-5578, export every language
-node store-listing/studio/server.cjs 8790        # editor
+npx screenshot-studio recapture                 # rebuild, capture every size on emulator-5578, export every language
+npx screenshot-studio studio                    # editor
+npx screenshot-studio export --locale en-US
+npx screenshot-studio check                     # fast check after each edit
 ```
 
 The capture build (`app/src/storeCapture`) shows the real UI over fictional apps, rules and traffic. It has no

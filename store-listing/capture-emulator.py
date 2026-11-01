@@ -3,11 +3,11 @@
 `npx screenshot-studio recapture` builds the capture build, which seeds fictional apps and
 traffic and never starts the VPN or touches the network, installs it, runs this tour for every device
 size and exports.
-Run alone: npx screenshot-studio recapture --no-build --no-export [--profile phone] [de-DE].
+Run alone: npx screenshot-studio tour [--profile phone] [--locale de-DE].
 
 Scenes are tapped by their English labels and recorded in en-US/raw/tap-map.json, so other locales
 replay the same taps. Writes <locale>/raw/<profile>/<scene>.png plus a <scene>.nodes.json layout sidecar.
-The emulator plumbing is the studio's capture.py (on PYTHONPATH while recapture runs the tour).
+The emulator plumbing is the studio's capture.py.
 """
 from capture import Device, parser
 

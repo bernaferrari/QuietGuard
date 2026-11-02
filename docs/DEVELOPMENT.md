@@ -73,7 +73,7 @@ edit it here.
 - The `storeCapture` build type seeds fictional apps, rules and traffic. It has no VPN service and no INTERNET
   permission, and installs beside the real app as `com.bernaferrari.quietguard.storecapture`. Build it alone with
   `./gradlew :app:assembleStoreCapture -Pquietguard.abis=arm64-v8a --no-configuration-cache`.
-- `store-listing/capture-emulator.py` is the scene tour; cards and order are in `store-listing/gallery.json`.
+- `store-listing/capture.tour.mjs` is the scene tour; cards and order are in `store-listing/gallery.json`.
 
 ```bash
 node store-listing/studio/recapture.cjs                  # build, install, capture, export every language

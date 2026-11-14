@@ -14,7 +14,6 @@ import android.net.ConnectivityManager
 import android.net.TrafficStats
 import android.net.VpnService
 import android.os.Build
-import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.ParcelFileDescriptor
@@ -50,7 +49,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 
 class ServiceSinkhole : VpnService() {
     @Volatile private var destroying = false
-    private val updateExecutor = Executors.newSingleThreadExecutor()
 
     private var registeredUser = false
     private var registeredIdleState = false
@@ -245,7 +243,6 @@ class ServiceSinkhole : VpnService() {
 
                 Command.householding -> householding(intent)
                 Command.watchdog -> watchdog(intent)
-                Command.updatecheck -> scheduleUpdateCheck(reportResult = true)
                 else -> Log.e(TAG, "Unknown command=$cmd")
             }
 
@@ -433,7 +430,7 @@ class ServiceSinkhole : VpnService() {
             !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
                 prefs.getBoolean(PreferenceKeys.UPDATE_CHECK, PreferenceKeys.UPDATE_CHECK_DEFAULT)
         ) {
-            scheduleUpdateCheck(reportResult = false)
+            scheduleUpdateCheck(this, reportResult = false)
         }
     }
 
@@ -442,33 +439,6 @@ class ServiceSinkhole : VpnService() {
             if (prefs.getBoolean("enabled", false)) {
                 Log.e(TAG, "Service was killed")
                 start()
-            }
-        }
-    }
-
-    private fun checkUpdateResult(result: UpdateCheckResult) {
-        val resultIntent = Intent(ACTION_UPDATE_CHECK_RESULT).setPackage(packageName)
-        resultIntent.putExtra(EXTRA_UPDATE_CHECK_STATUS, result.status.name)
-        result.availableVersion?.let { resultIntent.putExtra(EXTRA_UPDATE_CHECK_VERSION, it) }
-        sendBroadcast(resultIntent)
-    }
-
-    private fun scheduleUpdateCheck(reportResult: Boolean) {
-        updateExecutor.execute {
-            val result =
-                ReleaseUpdateChecker.check(
-                    apiUrl = BuildConfig.GITHUB_LATEST_API,
-                    currentVersion = Util.getSelfVersionName(this),
-                )
-            Handler(mainLooper).post {
-                if (destroying) return@post
-                if (result.status == UpdateCheckStatus.available) {
-                    notifications.showUpdate(
-                        requireNotNull(result.assetName),
-                        requireNotNull(result.releaseUrl),
-                    )
-                }
-                if (reportResult) checkUpdateResult(result)
             }
         }
     }
@@ -1735,7 +1705,6 @@ class ServiceSinkhole : VpnService() {
     override fun onDestroy() {
         destroying = true
         synchronized(this) {
-            updateExecutor.shutdownNow()
             Log.i(TAG, "Destroy")
             commandLooper.quit()
             logLooper.quit()
@@ -2004,9 +1973,35 @@ class ServiceSinkhole : VpnService() {
         fun reloadStats(reason: String, context: Context) =
             sendCommand(context, Command.stats, reason)
 
+        // A user-requested check must deliver its result even if the VPN stops.
+        private val updateExecutor = Executors.newSingleThreadExecutor()
+
         @JvmStatic
-        fun checkForUpdateNow(reason: String, context: Context) =
-            sendCommand(context, Command.updatecheck, reason)
+        fun checkForUpdateNow(reason: String, context: Context) {
+            Log.i(TAG, "Checking for updates: $reason")
+            scheduleUpdateCheck(context, reportResult = true)
+        }
+
+        private fun scheduleUpdateCheck(context: Context, reportResult: Boolean) {
+            val app = context.applicationContext
+            updateExecutor.execute {
+                val result = ReleaseUpdateChecker.check(
+                    apiUrl = BuildConfig.GITHUB_LATEST_API,
+                    currentVersion = Util.getSelfVersionName(app),
+                )
+                val assetName = result.assetName
+                val releaseUrl = result.releaseUrl
+                if (result.status == UpdateCheckStatus.available && assetName != null && releaseUrl != null) {
+                    SinkholeNotifications(app, app.preferences()).showUpdate(assetName, releaseUrl)
+                }
+                if (reportResult) {
+                    val intent = Intent(ACTION_UPDATE_CHECK_RESULT).setPackage(app.packageName)
+                    intent.putExtra(EXTRA_UPDATE_CHECK_STATUS, result.status.name)
+                    result.availableVersion?.let { intent.putExtra(EXTRA_UPDATE_CHECK_VERSION, it) }
+                    app.sendBroadcast(intent)
+                }
+            }
+        }
 
         private fun sendCommand(
             context: Context,
@@ -2057,6 +2052,5 @@ class ServiceSinkhole : VpnService() {
         set,
         householding,
         watchdog,
-        updatecheck,
     }
 }

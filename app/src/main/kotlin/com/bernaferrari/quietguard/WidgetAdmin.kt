@@ -9,7 +9,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.Log
-import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.data.preferences
 import java.util.Date
 
@@ -35,17 +34,13 @@ class WidgetAdmin : ReceiverAutostart() {
                 context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             }
         if (vs != null && vs.hasVibrator()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vs.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-            } else {
-                @Suppress("DEPRECATION")
-                vs.vibrate(50)
-            }
+            vs.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
         }
 
         try {
             when (intent?.action) {
-                INTENT_ON, INTENT_OFF -> {
+                INTENT_ON,
+                INTENT_OFF -> {
                     val enabled = INTENT_ON == intent.action
                     context.preferences().putBoolean("enabled", enabled)
                     if (enabled) {
@@ -55,19 +50,17 @@ class WidgetAdmin : ReceiverAutostart() {
                     }
                     Widgets.updateFirewall(context)
 
-                    val auto = context.preferences().getString("auto_enable", "0")?.toIntOrNull() ?: 0
+                    val auto =
+                        context.preferences().getString("auto_enable", "0")?.toIntOrNull() ?: 0
                     if (!enabled && auto > 0) {
                         Log.i(TAG, "Scheduling enabled after minutes=$auto")
                         val trigger = Date().time + auto * 60 * 1000L
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                            am.set(AlarmManager.RTC_WAKEUP, trigger, pi)
-                        } else {
-                            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
-                        }
+                        am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
                     }
                 }
 
-                INTENT_LOCKDOWN_ON, INTENT_LOCKDOWN_OFF -> {
+                INTENT_LOCKDOWN_ON,
+                INTENT_LOCKDOWN_OFF -> {
                     val lockdown = INTENT_LOCKDOWN_ON == intent.action
                     context.preferences().putBoolean("lockdown", lockdown)
                     ServiceSinkhole.reload("widget", context, false)

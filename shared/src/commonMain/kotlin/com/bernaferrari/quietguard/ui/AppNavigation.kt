@@ -51,7 +51,6 @@ import com.bernaferrari.quietguard.ui.screens.AppRuleDetailScreen
 import com.bernaferrari.quietguard.ui.screens.DnsScreen
 import com.bernaferrari.quietguard.ui.screens.ForwardingScreen
 import com.bernaferrari.quietguard.ui.screens.LogsScreen
-import com.bernaferrari.quietguard.ui.screens.ProScreen
 import com.bernaferrari.quietguard.ui.screens.SettingsScreen
 import com.bernaferrari.quietguard.ui.screens.vm.LogsViewModel
 import com.bernaferrari.quietguard.ui.theme.LocalMotion
@@ -190,7 +189,7 @@ fun AppNavigation(
         val appKey = current as? AppNavKey ?: return null
         return when (appKey) {
             is AppRuleDetail -> Apps
-            Dns, Forwarding, Pro, is SettingsDetail -> Settings
+            Dns, Forwarding, is SettingsDetail -> Settings
             else -> appKey
         }
     }
@@ -404,11 +403,6 @@ fun AppNavigation(
                                 ForwardingScreen(onBack = { popBackStack() })
                             }
                         }
-                        entry<Pro> {
-                            CenteredScreen {
-                                ProScreen(onBack = { popBackStack() })
-                            }
-                        }
                     },
             )
         }
@@ -455,6 +449,5 @@ private fun canonicalStackFor(destination: AppNavKey): List<AppNavKey> =
         is SettingsDetail -> listOf(Home, Settings, destination)
         Dns -> listOf(Home, Settings, Dns)
         Forwarding -> listOf(Home, Settings, Forwarding)
-        Pro -> listOf(Home, Settings, Pro)
         is AppRuleDetail -> listOf(Home, Apps, destination)
     }

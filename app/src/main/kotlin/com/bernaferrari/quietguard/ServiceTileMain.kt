@@ -4,15 +4,12 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.service.quicksettings.Tile
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.preferences
 import java.util.Date
 
-@RequiresApi(Build.VERSION_CODES.N)
 class ServiceTileMain : PreferenceTileService() {
     override val logTag: String = TAG
     override val watchedKeys: Set<String> = setOf(PreferenceKeys.ENABLED)
@@ -44,15 +41,14 @@ class ServiceTileMain : PreferenceTileService() {
             ServiceSinkhole.stop("tile", this, false)
 
             val auto =
-                applicationContext.preferences().getString(PreferenceKeys.AUTO_ENABLE, "0")?.toIntOrNull() ?: 0
+                applicationContext
+                    .preferences()
+                    .getString(PreferenceKeys.AUTO_ENABLE, "0")
+                    ?.toIntOrNull() ?: 0
             if (auto > 0) {
                 Log.i(TAG, "Scheduling enabled after minutes=$auto")
                 val trigger = Date().time + auto * 60 * 1000L
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                    am.set(AlarmManager.RTC_WAKEUP, trigger, pi)
-                } else {
-                    am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
-                }
+                am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, trigger, pi)
             }
         }
         Widgets.updateFirewall(this)

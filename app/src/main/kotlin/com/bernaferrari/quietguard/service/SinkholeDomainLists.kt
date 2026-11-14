@@ -16,35 +16,34 @@ internal class SinkholeDomainLists(
     private var lastMalwareModified = 0L
 
     @Synchronized
-    fun refreshHosts() = reload(
-        enabled = prefs.getBoolean("filter", false) && prefs.getBoolean("use_hosts", false),
-        file = File(context.filesDir, HOSTS_FILE),
-        target = blockedHosts,
-        previousModified = lastHostsModified,
-        setModified = { lastHostsModified = it },
-        includeTestDomain = true,
-        description = "Hosts",
-    )
+    fun refreshHosts() =
+        reload(
+            enabled = prefs.getBoolean("filter", false) && prefs.getBoolean("use_hosts", false),
+            file = File(context.filesDir, HOSTS_FILE),
+            target = blockedHosts,
+            previousModified = lastHostsModified,
+            setModified = { lastHostsModified = it },
+            includeTestDomain = true,
+            description = "Hosts",
+        )
 
     @Synchronized
-    fun refreshMalware() = reload(
-        enabled = prefs.getBoolean("filter", false) && prefs.getBoolean("malware", false),
-        file = File(context.filesDir, MALWARE_FILE),
-        target = malwareHosts,
-        previousModified = lastMalwareModified,
-        setModified = { lastMalwareModified = it },
-        includeTestDomain = false,
-        description = "Malware",
-    )
+    fun refreshMalware() =
+        reload(
+            enabled = prefs.getBoolean("filter", false) && prefs.getBoolean("malware", false),
+            file = File(context.filesDir, MALWARE_FILE),
+            target = malwareHosts,
+            previousModified = lastMalwareModified,
+            setModified = { lastMalwareModified = it },
+            includeTestDomain = false,
+            description = "Malware",
+        )
 
-    @Synchronized
-    fun isBlocked(domain: String): Boolean = domain in blockedHosts
+    @Synchronized fun isBlocked(domain: String): Boolean = domain in blockedHosts
 
-    @Synchronized
-    fun isMalware(domain: String): Boolean = domain in malwareHosts
+    @Synchronized fun isMalware(domain: String): Boolean = domain in malwareHosts
 
-    @Synchronized
-    fun blockedCount(): Int = blockedHosts.size
+    @Synchronized fun blockedCount(): Int = blockedHosts.size
 
     @Synchronized
     fun clear() {
@@ -71,12 +70,14 @@ internal class SinkholeDomainLists(
             Log.i(TAG, "$description file unchanged")
             return
         }
-        val domains = DomainListLoader.load(file, includeTestDomain) { line ->
-            Log.i(TAG, "Invalid ${description.lowercase()} file line: $line")
-        } ?: run {
-            Log.e(TAG, "Unable to read ${description.lowercase()} file")
-            return
-        }
+        val domains =
+            DomainListLoader.load(file) { line ->
+                Log.i(TAG, "Invalid ${description.lowercase()} file line: $line")
+            }
+                ?: run {
+                    Log.e(TAG, "Unable to read ${description.lowercase()} file")
+                    return
+                }
         target.clear()
         target.addAll(domains)
         if (includeTestDomain) target.add(TEST_DOMAIN)

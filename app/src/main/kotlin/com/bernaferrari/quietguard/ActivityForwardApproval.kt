@@ -1,7 +1,5 @@
 package com.bernaferrari.quietguard
 
-import com.bernaferrari.quietguard.shared.R
-
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -22,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bernaferrari.quietguard.shared.R
 import com.bernaferrari.quietguard.ui.theme.NetGuardAppTheme
 import java.net.InetAddress
 
@@ -39,7 +38,9 @@ class ActivityForwardApproval : ComponentActivity() {
         try {
             val iraddr = InetAddress.getByName(raddr)
             if (rport < 1024 && (iraddr.isLoopbackAddress || iraddr.isAnyLocalAddress)) {
-                throw IllegalArgumentException("Port forwarding to privileged port on local address not possible")
+                throw IllegalArgumentException(
+                    "Port forwarding to privileged port on local address not possible"
+                )
             }
         } catch (ex: Throwable) {
             Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
@@ -74,14 +75,13 @@ class ActivityForwardApproval : ComponentActivity() {
                         if (ACTION_START_PORT_FORWARD == intent.action) {
                             Log.i(
                                 TAG,
-                                "Start forwarding protocol $protocol port $dport to $raddr/$rport uid $ruid"
+                                "Start forwarding protocol $protocol port $dport to $raddr/$rport uid $ruid",
                             )
-                            val dh = DatabaseHelper.getInstance(this)
-                            dh.deleteForward(protocol, dport)
+                            val dh = AndroidFirewallDatabase.getInstance(this)
                             dh.addForward(protocol, dport, raddr, rport, ruid)
                         } else if (ACTION_STOP_PORT_FORWARD == intent.action) {
                             Log.i(TAG, "Stop forwarding protocol $protocol port $dport")
-                            DatabaseHelper.getInstance(this).deleteForward(protocol, dport)
+                            AndroidFirewallDatabase.getInstance(this).deleteForward(protocol, dport)
                         }
 
                         ServiceSinkhole.reload("forwarding", this, false)

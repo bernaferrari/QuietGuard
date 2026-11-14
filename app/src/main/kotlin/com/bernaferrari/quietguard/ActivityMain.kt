@@ -100,7 +100,6 @@ class ActivityMain : ComponentActivity() {
         const val EXTRA_ROUTE = "Route"
         const val ACTION_RULES_CHANGED = "com.bernaferrari.quietguard.ACTION_RULES_CHANGED"
         const val ACTION_QUEUE_CHANGED = "com.bernaferrari.quietguard.ACTION_QUEUE_CHANGED"
-        const val EXTRA_REFRESH = "Refresh"
         const val EXTRA_SEARCH = "Search"
         const val EXTRA_RELATED = "Related"
         const val EXTRA_APPROVE = "Approve"

@@ -2,19 +2,22 @@ package com.bernaferrari.quietguard.data
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.mutablePreferencesOf
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.core.stringSetPreferencesKey
+import java.io.File
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.io.File
 
 class PreferencesRepositoryTest {
     @Test
@@ -36,54 +39,58 @@ class PreferencesRepositoryTest {
             repository.putInt("delay", 5)
             repository.putString("theme", "blue")
             repository.putStringSet("wifi_home", setOf("home", "office"))
-            repository.setEnabled(true)
-
-            withTimeout(2_000) {
-                repository.data.first { prefs ->
-                    prefs[booleanPreferencesKey("filter")] == true &&
-                        prefs[intPreferencesKey("delay")] == 5 &&
-                        prefs[stringPreferencesKey("theme")] == "blue" &&
-                        prefs[stringSetPreferencesKey("wifi_home")] == setOf("home", "office") &&
-                        prefs[booleanPreferencesKey("enabled")] == true
-                }
-            }
-
             assertTrue(repository.getBoolean("filter"))
             assertEquals(5, repository.getInt("delay"))
             assertEquals("blue", repository.getString("theme"))
             assertEquals(setOf("home", "office"), repository.getStringSet("wifi_home"))
+            repository.setEnabled(true)
             assertTrue(repository.getBoolean("enabled"))
         }
     }
 
     @Test
-    fun loadedStateChangesAfterFirstDataStoreEmission() {
-        runBlocking {
-            val repository = createRepository()
+    fun startupReadsPersistedEnabledStateBeforeReturning() = runBlocking {
+        val store = createDataStore()
+        store.edit { it[booleanPreferencesKey("enabled")] = true }
 
-            withTimeout(2_000) {
-                repository.isLoaded.first { it }
-            }
+        val repository = PreferencesRepository(store)
 
-            assertTrue(repository.isLoaded.value)
-        }
+        assertTrue(repository.isLoaded.value)
+        assertTrue(repository.getBoolean("enabled"))
+    }
+
+    @Test
+    fun writesKeepDiskAndMemoryInSubmissionOrder() = runBlocking {
+        val store = createDataStore()
+        val repository = PreferencesRepository(store)
+
+        repository.putBoolean("enabled", true)
+        assertTrue(repository.getBoolean("enabled"))
+        repository.setEnabled(false)
+
+        assertFalse(repository.getBoolean("enabled"))
+        assertEquals(false, store.data.first()[booleanPreferencesKey("enabled")])
+    }
+
+    @Test
+    fun defaultPolicyAllowsAppsUntilRulesAreConfigured() {
+        val repository = createRepository()
+        assertFalse(repository.getBoolean(PreferenceKeys.WHITELIST_WIFI))
+        assertFalse(repository.getBoolean(PreferenceKeys.WHITELIST_OTHER))
+        assertTrue(repository.getBoolean(PreferenceKeys.FILTER_UDP))
     }
 
     @Test
     fun changesEmitsUpdatedKeyNames() {
         runBlocking {
             val repository = createRepository()
+            val changes =
+                async(start = CoroutineStart.UNDISPATCHED) {
+                    repository.changes.take(2).toList()
+                }
             repository.putString("theme", "teal")
-
-            withTimeout(5_000) {
-                repository.changes.first { it.contains("theme") }
-            }
-
             repository.putString("theme", "blue")
-
-            withTimeout(5_000) {
-                repository.changes.first { it.contains("theme") }
-            }
+            assertEquals(List(2) { setOf("theme") }, withTimeout(2_000) { changes.await() })
         }
     }
 
@@ -91,14 +98,8 @@ class PreferencesRepositoryTest {
     fun changedKeysDetectsAddUpdateAndRemove() {
         val repository = createRepository()
         val empty = emptyPreferences()
-        val withTheme =
-            mutablePreferencesOf(
-                stringPreferencesKey("theme") to "teal",
-            )
-        val updated =
-            mutablePreferencesOf(
-                stringPreferencesKey("theme") to "blue",
-            )
+        val withTheme = mutablePreferencesOf(stringPreferencesKey("theme") to "teal")
+        val updated = mutablePreferencesOf(stringPreferencesKey("theme") to "blue")
 
         assertEquals(setOf("theme"), repository.changedKeys(empty, withTheme))
         assertEquals(setOf("theme"), repository.changedKeys(withTheme, updated))
@@ -156,12 +157,11 @@ class PreferencesRepositoryTest {
         }
     }
 
-    private fun createRepository(): PreferencesRepository {
+    private fun createRepository() = PreferencesRepository(createDataStore())
+
+    private fun createDataStore():
+        androidx.datastore.core.DataStore<androidx.datastore.preferences.core.Preferences> {
         val file = File.createTempFile("prefs", ".preferences_pb")
-        val dataStore =
-            PreferenceDataStoreFactory.create(
-                produceFile = { file },
-            )
-        return PreferencesRepository(dataStore)
+        return PreferenceDataStoreFactory.create(produceFile = { file })
     }
 }

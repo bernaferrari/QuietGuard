@@ -40,15 +40,6 @@ fun installWasmPlatformBindings() {
             override fun scheduleWatchdog(intervalMinutes: Int, enabled: Boolean) {}
         }
 
-    NetGuardPlatform.proFeatures =
-        object : ProFeaturesBridge {
-            override val logSku: String = "log"
-
-            override fun isPurchased(sku: String): Boolean = true
-
-            override fun openProScreen() {}
-        }
-
     NetGuardPlatform.ruleHelpers =
         object : RuleHelperBridge {
             override fun isSystem(packageName: String): Boolean = packageName in wasmSystemPackages

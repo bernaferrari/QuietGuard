@@ -19,8 +19,8 @@ import com.bernaferrari.quietguard.ui.screens.defaultProtocolFilterFromPrefs
 import com.bernaferrari.quietguard.ui.util.UiAsyncState
 import com.bernaferrari.quietguard.ui.util.asUiAsyncState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -46,8 +46,10 @@ class LogsViewModel(
     private val preferencesRepository: PreferencesRepository,
     private val trafficRepository: TrafficRepository,
 ) : ViewModel() {
-    private val outcomeFilter = MutableStateFlow(defaultOutcomeFilterFromPrefs(preferencesRepository))
-    private val protocolFilter = MutableStateFlow(defaultProtocolFilterFromPrefs(preferencesRepository))
+    private val outcomeFilter =
+        MutableStateFlow(defaultOutcomeFilterFromPrefs(preferencesRepository))
+    private val protocolFilter =
+        MutableStateFlow(defaultProtocolFilterFromPrefs(preferencesRepository))
     private val groupMode = MutableStateFlow(LogsGroupMode.Timeline)
     private val selectedAppUid = MutableStateFlow<Int?>(null)
     private val retryRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
@@ -55,14 +57,14 @@ class LogsViewModel(
 
     private val prefsFlags: StateFlow<PreferencesFlags> =
         combine(preferencesRepository.data, preferencesRepository.isLoaded) { prefs, loaded ->
-            val logOn = (prefs[booleanPreferencesKey("log")] ?: false) || isDemoMode
-            val filterOn = (prefs[booleanPreferencesKey("filter")] ?: false) || isDemoMode
-            PreferencesFlags(
-                loggingEnabled = logOn,
-                filteringEnabled = filterOn,
-                loaded = loaded || isDemoMode,
-            )
-        }
+                val logOn = (prefs[booleanPreferencesKey("log")] ?: false) || isDemoMode
+                val filterOn = (prefs[booleanPreferencesKey("filter")] ?: false) || isDemoMode
+                PreferencesFlags(
+                    loggingEnabled = logOn,
+                    filteringEnabled = filterOn,
+                    loaded = loaded || isDemoMode,
+                )
+            }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5_000),
@@ -75,8 +77,8 @@ class LogsViewModel(
 
     private val logsState: StateFlow<UiAsyncState<List<LogEntry>>> =
         combine(outcomeFilter, protocolFilter) { outcome, protocol ->
-            buildLogQueryFlags(protocol, outcome)
-        }
+                buildLogQueryFlags(protocol, outcome)
+            }
             .flatMapLatest { flags ->
                 trafficRepository.observeLogs(
                     udp = flags.udp,
@@ -95,38 +97,38 @@ class LogsViewModel(
 
     private val filtersState =
         combine(outcomeFilter, protocolFilter, groupMode, selectedAppUid) {
-                outcome,
-                protocol,
-                group,
-                selected,
-            ->
+            outcome,
+            protocol,
+            group,
+            selected ->
             FiltersSlice(outcome, protocol, group, selected)
         }
 
     val uiState: StateFlow<LogsScreenState> =
         combine(filtersState, logsState, prefsFlags) { filters, logs, flags ->
-            LogsScreenState(
-                outcomeFilter = filters.outcome,
-                protocolFilter = filters.protocol,
-                groupMode = filters.group,
-                selectedAppUid = filters.selected,
-                logs = logs,
-                preferencesLoaded = flags.loaded,
-                loggingEnabled = flags.loggingEnabled,
-                filteringEnabled = flags.filteringEnabled,
+                LogsScreenState(
+                    outcomeFilter = filters.outcome,
+                    protocolFilter = filters.protocol,
+                    groupMode = filters.group,
+                    selectedAppUid = filters.selected,
+                    logs = logs,
+                    preferencesLoaded = flags.loaded,
+                    loggingEnabled = flags.loggingEnabled,
+                    filteringEnabled = flags.filteringEnabled,
+                )
+            }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                LogsScreenState(
+                    outcomeFilter = outcomeFilter.value,
+                    protocolFilter = protocolFilter.value,
+                    logs = logsState.value,
+                    preferencesLoaded = prefsFlags.value.loaded,
+                    loggingEnabled = prefsFlags.value.loggingEnabled,
+                    filteringEnabled = prefsFlags.value.filteringEnabled,
+                ),
             )
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            LogsScreenState(
-                outcomeFilter = outcomeFilter.value,
-                protocolFilter = protocolFilter.value,
-                logs = logsState.value,
-                preferencesLoaded = prefsFlags.value.loaded,
-                loggingEnabled = prefsFlags.value.loggingEnabled,
-                filteringEnabled = prefsFlags.value.filteringEnabled,
-            ),
-        )
 
     fun setOutcomeFilter(filter: LogsOutcomeFilter) {
         outcomeFilter.value = filter
@@ -155,10 +157,6 @@ class LogsViewModel(
         NetGuardPlatform.firewall.reload("logs", false)
     }
 
-    fun openPro() {
-        NetGuardPlatform.proFeatures.openProScreen()
-    }
-
     fun clearLogs() {
         viewModelScope.launch { trafficRepository.clearAllLogs() }
     }
@@ -169,9 +167,6 @@ class LogsViewModel(
 
     fun appDisplay(uid: Int, fallbackLabel: String): AppDisplayInfo =
         trafficRepository.appDisplay(uid, fallbackLabel)
-
-    fun hasLogPro(): Boolean =
-        NetGuardPlatform.proFeatures.isPurchased(NetGuardPlatform.proFeatures.logSku)
 
     private data class FiltersSlice(
         val outcome: LogsOutcomeFilter,

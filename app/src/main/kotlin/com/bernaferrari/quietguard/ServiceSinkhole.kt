@@ -1,15 +1,8 @@
 package com.bernaferrari.quietguard
 
-import com.bernaferrari.quietguard.shared.R
-import com.bernaferrari.quietguard.netguard.NativePcapConfig
-import com.bernaferrari.quietguard.netguard.NativeSocks5Config
-import com.bernaferrari.quietguard.netguard.capabilities
-import com.bernaferrari.quietguard.service.*
-
 import android.annotation.TargetApi
 import android.app.AlarmManager
 import android.app.ForegroundServiceStartNotAllowedException
-import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -17,22 +10,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
 import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
 import android.net.TrafficStats
 import android.net.VpnService
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
-import android.os.Message
 import android.os.ParcelFileDescriptor
 import android.os.PowerManager
 import android.os.Process
@@ -40,22 +24,18 @@ import android.os.SystemClock
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
-import android.util.Pair
 import androidx.core.content.ContextCompat
 import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.PreferencesRepository
+import com.bernaferrari.quietguard.data.db.ForwardEntity
 import com.bernaferrari.quietguard.data.preferences
-import com.bernaferrari.quietguard.ui.theme.GraphGrayed
-import com.bernaferrari.quietguard.ui.theme.GraphReceive
-import com.bernaferrari.quietguard.ui.theme.GraphSend
-import com.bernaferrari.quietguard.ui.theme.THEME_DEFAULT
-import com.bernaferrari.quietguard.ui.theme.themeOffColor
-import com.bernaferrari.quietguard.ui.theme.themeOnColor
-import com.bernaferrari.quietguard.ui.theme.themePrimaryColor
+import com.bernaferrari.quietguard.netguard.NativePcapConfig
+import com.bernaferrari.quietguard.netguard.NativeSocks5Config
+import com.bernaferrari.quietguard.netguard.capabilities
+import com.bernaferrari.quietguard.service.*
+import com.bernaferrari.quietguard.shared.R
 import java.io.File
-import java.io.FileReader
 import java.io.IOException
-import java.math.BigInteger
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.InetAddress
@@ -69,8 +49,8 @@ import java.util.concurrent.RejectedExecutionException
 import java.util.concurrent.locks.ReentrantReadWriteLock
 
 class ServiceSinkhole : VpnService() {
-    @Volatile
-    private var destroying = false
+    @Volatile private var destroying = false
+    private val updateExecutor = Executors.newSingleThreadExecutor()
 
     private var registeredUser = false
     private var registeredIdleState = false
@@ -89,6 +69,7 @@ class ServiceSinkhole : VpnService() {
 
     private val prefs: PreferencesRepository
         get() = applicationContext.preferences()
+
     private val notifications by lazy { SinkholeNotifications(this, prefs) }
     private val trafficNotifications by lazy { TrafficNotificationPresenter(this, prefs) }
     private val networkMonitor by lazy {
@@ -125,7 +106,7 @@ class ServiceSinkhole : VpnService() {
     private val allowedUids = HashSet<Int>()
     private val knownUids = HashSet<Int>()
     private val mapUidIPFilters = HashMap<IpRuleKey, MutableMap<InetAddress, IpRule>>()
-    private val mapForward = HashMap<Int, Forward>()
+    private val mapForward = HashMap<ForwardKey, ForwardEntity>()
     private val mapNotify = HashMap<Int, Boolean>()
     private val lock = ReentrantReadWriteLock(true)
 
@@ -147,23 +128,17 @@ class ServiceSinkhole : VpnService() {
         }
     }
 
-    @Volatile
-    private lateinit var commandLooper: Looper
+    @Volatile private lateinit var commandLooper: Looper
 
-    @Volatile
-    private lateinit var logLooper: Looper
+    @Volatile private lateinit var logLooper: Looper
 
-    @Volatile
-    private lateinit var statsLooper: Looper
+    @Volatile private lateinit var statsLooper: Looper
 
-    @Volatile
-    private lateinit var commandHandler: SinkholeCommandHandler
+    @Volatile private lateinit var commandHandler: SinkholeCommandHandler
 
-    @Volatile
-    private lateinit var logHandler: SinkholeLogHandler
+    @Volatile private lateinit var logHandler: SinkholeLogHandler
 
-    @Volatile
-    private lateinit var statsHandler: SinkholeStatsHandler
+    @Volatile private lateinit var statsHandler: SinkholeStatsHandler
     private var statsWhenMs: Long = 0
     private val trafficStatistics = TrafficStatistics()
 
@@ -185,225 +160,166 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun handleCommandIntent(intent: Intent) {
-            
-            val cmd = getCommandExtra(intent) ?: return
-            val reason = intent.getStringExtra(EXTRA_REASON)
-            Log.i(
-                TAG,
-                "Executing intent=$intent command=$cmd reason=$reason" +
-                        " vpn=" + (vpn != null) + " user=" + (Process.myUid() / 100000),
+        val cmd = getCommandExtra(intent) ?: return
+        val reason = intent.getStringExtra(EXTRA_REASON)
+        Log.i(
+            TAG,
+            "Executing intent=$intent command=$cmd reason=$reason" +
+                " vpn=" +
+                (vpn != null) +
+                " user=" +
+                (Process.myUid() / 100000),
+        )
+
+        if (cmd != Command.stop && !userForeground) {
+            Log.i(TAG, "Command $cmd ignored for background user")
+            return
+        }
+
+        if (cmd == Command.stop) {
+            temporarilyStopped = intent.getBooleanExtra(EXTRA_TEMPORARY, false)
+        } else if (cmd == Command.start) {
+            temporarilyStopped = false
+        } else if (cmd == Command.reload && temporarilyStopped) {
+            Log.i(TAG, "Command $cmd ignored because of temporary stop")
+            return
+        }
+
+        if (prefs.getBoolean(PreferenceKeys.SCREEN_ON)) {
+            if (!registeredInteractiveState) {
+                Log.i(TAG, "Starting listening for interactive state changes")
+                lastInteractive = Util.isInteractive(this@ServiceSinkhole)
+                val ifInteractive = IntentFilter()
+                ifInteractive.addAction(Intent.ACTION_SCREEN_ON)
+                ifInteractive.addAction(Intent.ACTION_SCREEN_OFF)
+                ifInteractive.addAction(ACTION_SCREEN_OFF_DELAYED)
+                ContextCompat.registerReceiver(
+                    this@ServiceSinkhole,
+                    interactiveStateReceiver,
+                    ifInteractive,
+                    ContextCompat.RECEIVER_NOT_EXPORTED,
+                )
+                registeredInteractiveState = true
+            }
+        } else {
+            if (registeredInteractiveState) {
+                Log.i(TAG, "Stopping listening for interactive state changes")
+                unregisterReceiver(interactiveStateReceiver)
+                registeredInteractiveState = false
+                lastInteractive = false
+            }
+        }
+
+        val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        if (prefs.getBoolean("disable_on_call", false)) {
+            if (tm != null) {
+                Log.i(TAG, "Starting listening for call states")
+                telephonyMonitor.setCallStateListening(tm, enabled = true)
+            }
+        } else {
+            if (tm != null) {
+                Log.i(TAG, "Stopping listening for call states")
+                telephonyMonitor.setCallStateListening(tm, enabled = false)
+            }
+        }
+
+        if (cmd == Command.start || cmd == Command.reload || cmd == Command.stop) {
+            val watchdog = prefs.getString("watchdog", "0")?.toIntOrNull() ?: 0
+            val enabled = prefs.getBoolean("enabled", false)
+            WorkScheduler.scheduleWatchdog(
+                this@ServiceSinkhole,
+                watchdog,
+                enabled && cmd != Command.stop,
             )
+        }
 
-            if (cmd != Command.stop && !userForeground) {
-                Log.i(TAG, "Command $cmd ignored for background user")
-                return
+        try {
+            when (cmd) {
+                Command.run -> Unit
+                Command.start -> start()
+                Command.reload -> reload(intent.getBooleanExtra(EXTRA_INTERACTIVE, false))
+                Command.stop -> stop(temporarilyStopped)
+                Command.stats -> {
+                    statsHandler.restart()
+                }
+
+                Command.householding -> householding(intent)
+                Command.watchdog -> watchdog(intent)
+                Command.updatecheck -> scheduleUpdateCheck(reportResult = true)
+                else -> Log.e(TAG, "Unknown command=$cmd")
             }
 
-            if (cmd == Command.stop) {
-                temporarilyStopped = intent.getBooleanExtra(EXTRA_TEMPORARY, false)
-            } else if (cmd == Command.start) {
-                temporarilyStopped = false
-            } else if (cmd == Command.reload && temporarilyStopped) {
-                Log.i(TAG, "Command $cmd ignored because of temporary stop")
-                return
-            }
-
-            if (prefs.getBoolean("screen_on", true)) {
-                if (!registeredInteractiveState) {
-                    Log.i(TAG, "Starting listening for interactive state changes")
-                    lastInteractive = Util.isInteractive(this@ServiceSinkhole)
-                    val ifInteractive = IntentFilter()
-                    ifInteractive.addAction(Intent.ACTION_SCREEN_ON)
-                    ifInteractive.addAction(Intent.ACTION_SCREEN_OFF)
-                    ifInteractive.addAction(ACTION_SCREEN_OFF_DELAYED)
-                    ContextCompat.registerReceiver(
-                        this@ServiceSinkhole,
-                        interactiveStateReceiver,
-                        ifInteractive,
-                        ContextCompat.RECEIVER_NOT_EXPORTED,
-                    )
-                    registeredInteractiveState = true
-                }
-            } else {
-                if (registeredInteractiveState) {
-                    Log.i(TAG, "Stopping listening for interactive state changes")
-                    unregisterReceiver(interactiveStateReceiver)
-                    registeredInteractiveState = false
-                    lastInteractive = false
-                }
-            }
-
-            val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
-            if (prefs.getBoolean("disable_on_call", false)) {
-                if (tm != null) {
-                    Log.i(TAG, "Starting listening for call states")
-                    telephonyMonitor.setCallStateListening(tm, enabled = true)
-                }
-            } else {
-                if (tm != null) {
-                    Log.i(TAG, "Stopping listening for call states")
-                    telephonyMonitor.setCallStateListening(tm, enabled = false)
+            if (cmd == Command.start || cmd == Command.reload) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    val filter = prefs.getBoolean("filter", false)
+                    if (filter && isLockdownEnabled()) {
+                        showLockdownNotification()
+                    } else {
+                        removeLockdownNotification()
+                    }
                 }
             }
 
             if (cmd == Command.start || cmd == Command.reload || cmd == Command.stop) {
-                val watchdog = prefs.getString("watchdog", "0")?.toIntOrNull() ?: 0
-                val enabled = prefs.getBoolean("enabled", false)
-                WorkScheduler.scheduleWatchdog(
-                    this@ServiceSinkhole,
-                    watchdog,
-                    enabled && cmd != Command.stop
+                val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED).setPackage(packageName)
+                ruleset.putExtra(
+                    ActivityMain.EXTRA_CONNECTED,
+                    cmd != Command.stop && lastConnected,
                 )
+                ruleset.putExtra(ActivityMain.EXTRA_METERED, cmd != Command.stop && lastMetered)
+                sendBroadcast(ruleset)
+
+                Widgets.updateFirewall(this@ServiceSinkhole)
             }
 
-            try {
-                when (cmd) {
-                    Command.run -> Unit
-                    Command.start -> start()
-                    Command.reload -> reload(intent.getBooleanExtra(EXTRA_INTERACTIVE, false))
-                    Command.stop -> stop(temporarilyStopped)
-                    Command.stats -> {
-                        statsHandler.restart()
-                    }
-
-                    Command.householding -> householding(intent)
-                    Command.watchdog -> watchdog(intent)
-                    Command.updatecheck -> checkUpdateResult(checkUpdate())
-                    else -> Log.e(TAG, "Unknown command=$cmd")
-                }
-
-                if (cmd == Command.start || cmd == Command.reload) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        val filter = prefs.getBoolean("filter", false)
-                        if (filter && isLockdownEnabled()) {
-                            showLockdownNotification()
-                        } else {
-                            removeLockdownNotification()
-                        }
-                    }
-                }
-
-                if (cmd == Command.start || cmd == Command.reload || cmd == Command.stop) {
-                    val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED).setPackage(packageName)
-                    ruleset.putExtra(
-                        ActivityMain.EXTRA_CONNECTED,
-                        cmd != Command.stop && lastConnected
-                    )
-                    ruleset.putExtra(ActivityMain.EXTRA_METERED, cmd != Command.stop && lastMetered)
-                    sendBroadcast(ruleset)
-
-                    Widgets.updateFirewall(this@ServiceSinkhole)
-                }
-
-                if (
-                    !commandHandler.hasMessages(Command.start.ordinal) &&
+            if (
+                !commandHandler.hasMessages(Command.start.ordinal) &&
                     !commandHandler.hasMessages(Command.reload.ordinal) &&
                     !prefs.getBoolean("enabled", false) &&
                     !prefs.getBoolean("show_stats", false)
-                ) {
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                }
+            ) {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            }
+        } catch (ex: Throwable) {
+            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
 
-            } catch (ex: Throwable) {
-                Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-
-                if (cmd == Command.start || cmd == Command.reload) {
-                    if (VpnService.prepare(this@ServiceSinkhole) == null) {
-                        Log.w(TAG, "VPN prepared connected=$lastConnected")
-                        if (lastConnected && ex !is StartFailedException) {
-                            if (!Util.isPlayStoreInstall(this@ServiceSinkhole)) {
-                                showErrorNotification(ex.toString())
-                            }
-                        }
-                    } else {
-                        showErrorNotification(ex.toString())
-
-                        if (ex !is StartFailedException) {
-                            prefs.putBoolean("enabled", false)
-                            Widgets.updateFirewall(this@ServiceSinkhole)
+            if (cmd == Command.start || cmd == Command.reload) {
+                if (VpnService.prepare(this@ServiceSinkhole) == null) {
+                    Log.w(TAG, "VPN prepared connected=$lastConnected")
+                    if (lastConnected && ex !is StartFailedException) {
+                        if (!Util.isPlayStoreInstall(this@ServiceSinkhole)) {
+                            showErrorNotification(ex.toString())
                         }
                     }
                 } else {
                     showErrorNotification(ex.toString())
-                }
-            }
-        }
 
-        private fun start() {
-            if (vpn == null) {
-                if (state != State.none) {
-                    Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                }
-                startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
-                state = State.enforcing
-                Log.d(TAG, "Start foreground state=$state")
-
-                val listRule = Rule.getRules(true, this@ServiceSinkhole)
-                val listAllowed = getAllowedRules(listRule)
-
-                lastBuilder = getBuilder(listAllowed, listRule)
-                vpn = startVPN(lastBuilder!!)
-                if (vpn == null) {
-                    throw StartFailedException(getString((R.string.msg_start_failed)))
-                }
-
-                startNative(vpn!!, listAllowed, listRule)
-
-                removeWarningNotifications()
-                foregroundNotifications.updateEnforcing(
-                    listAllowed.size,
-                    listRule.size,
-                    domainLists.blockedCount(),
-                )
-            }
-        }
-
-        private fun reload(interactive: Boolean) {
-            val listRule = Rule.getRules(true, this@ServiceSinkhole)
-
-            if (interactive) {
-                var process = false
-                for (rule in listRule) {
-                    val blocked = if (lastMetered) rule.other_blocked else rule.wifi_blocked
-                    val screen = if (lastMetered) rule.screen_other else rule.screen_wifi
-                    if (blocked && screen) {
-                        process = true
-                        break
+                    if (ex !is StartFailedException) {
+                        prefs.putBoolean("enabled", false)
+                        Widgets.updateFirewall(this@ServiceSinkhole)
                     }
                 }
-                if (!process) {
-                    Log.i(TAG, "No changed rules on interactive state change")
-                    return
-                }
-            }
-
-            
-            if (state != State.enforcing) {
-                if (state != State.none) {
-                    Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                }
-                startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
-                state = State.enforcing
-                Log.d(TAG, "Start foreground state=$state")
-            }
-
-            val listAllowed = getAllowedRules(listRule)
-            val builder = getBuilder(listAllowed, listRule)
-
-            if (vpn != null && prefs.getBoolean("filter", false) && builder == lastBuilder) {
-                Log.i(TAG, "Native restart")
-                stopNative()
             } else {
-                lastBuilder = builder
-                vpn?.let {
-                    stopNative()
-                    stopVPN(it)
-                }
-                vpn = startVPN(builder)
+                showErrorNotification(ex.toString())
             }
+        }
+    }
 
+    private fun start() {
+        if (vpn == null) {
+            if (state != State.none) {
+                Log.d(TAG, "Stop foreground state=$state")
+                stopForeground(STOP_FOREGROUND_REMOVE)
+            }
+            startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
+            state = State.enforcing
+            Log.d(TAG, "Start foreground state=$state")
+
+            val listRule = Rule.getRules(true, this@ServiceSinkhole)
+            val listAllowed = getAllowedRules(listRule)
+
+            lastBuilder = getBuilder(listAllowed, listRule)
+            vpn = startVPN(lastBuilder!!)
             if (vpn == null) {
                 throw StartFailedException(getString((R.string.msg_start_failed)))
             }
@@ -417,78 +333,147 @@ class ServiceSinkhole : VpnService() {
                 domainLists.blockedCount(),
             )
         }
+    }
 
-        private fun stop(temporary: Boolean) {
-            if (vpn != null) {
-                stopNative()
-                stopVPN(vpn!!)
-                vpn = null
-                unprepare()
+    private fun reload(interactive: Boolean) {
+        val listRule = Rule.getRules(true, this@ServiceSinkhole)
+
+        if (interactive) {
+            var process = false
+            for (rule in listRule) {
+                val blocked = if (lastMetered) rule.other_blocked else rule.wifi_blocked
+                val screen = if (lastMetered) rule.screen_other else rule.screen_wifi
+                if (blocked && screen) {
+                    process = true
+                    break
+                }
             }
-            if (state == State.enforcing && !temporary) {
+            if (!process) {
+                Log.i(TAG, "No changed rules on interactive state change")
+                return
+            }
+        }
+
+        if (state != State.enforcing) {
+            if (state != State.none) {
                 Log.d(TAG, "Stop foreground state=$state")
-                foregroundNotifications.resetCounts()
-
                 stopForeground(STOP_FOREGROUND_REMOVE)
-
-                                if (prefs.getBoolean("show_stats", false)) {
-                    startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
-                    state = State.waiting
-                    Log.d(TAG, "Start foreground state=$state")
-                } else {
-                    state = State.none
-                    stopSelf()
-                }
             }
+            startForeground(NOTIFY_ENFORCING, foregroundNotifications.enforcing())
+            state = State.enforcing
+            Log.d(TAG, "Start foreground state=$state")
         }
 
-        private fun householding(intent: Intent) {
-                        val retentionDays =
-                (prefs.getString("log_retention_days", "3")?.toIntOrNull() ?: 3)
-                    .coerceIn(0, 365)
-            if (retentionDays > 0) {
-                val cutoffTime = Date().time - retentionDays * 24L * 3600L * 1000L
-                DatabaseHelper.getInstance(this@ServiceSinkhole).cleanupLog(cutoffTime)
+        val listAllowed = getAllowedRules(listRule)
+        val builder = getBuilder(listAllowed, listRule)
+
+        if (vpn != null && prefs.getBoolean("filter", false) && builder == lastBuilder) {
+            Log.i(TAG, "Native restart")
+            stopNative()
+        } else {
+            lastBuilder = builder
+            vpn?.let {
+                stopNative()
+                stopVPN(it)
+            }
+            vpn = startVPN(builder)
+        }
+
+        if (vpn == null) {
+            throw StartFailedException(getString((R.string.msg_start_failed)))
+        }
+
+        startNative(vpn!!, listAllowed, listRule)
+
+        removeWarningNotifications()
+        foregroundNotifications.updateEnforcing(
+            listAllowed.size,
+            listRule.size,
+            domainLists.blockedCount(),
+        )
+    }
+
+    private fun stop(temporary: Boolean) {
+        if (vpn != null) {
+            stopNative()
+            stopVPN(vpn!!)
+            vpn = null
+            unprepare()
+        }
+        if (state == State.enforcing && !temporary) {
+            Log.d(TAG, "Stop foreground state=$state")
+            foregroundNotifications.resetCounts()
+
+            stopForeground(STOP_FOREGROUND_REMOVE)
+
+            if (prefs.getBoolean("show_stats", false)) {
+                startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
+                state = State.waiting
+                Log.d(TAG, "Start foreground state=$state")
             } else {
-                Log.i(TAG, "Log cleanup disabled by preference")
+                state = State.none
+                stopSelf()
             }
+        }
+    }
 
-            DatabaseHelper.getInstance(this@ServiceSinkhole).cleanupDns()
+    private fun householding(intent: Intent) {
+        val retentionDays =
+            (prefs.getString("log_retention_days", "3")?.toIntOrNull() ?: 3).coerceIn(0, 365)
+        if (retentionDays > 0) {
+            val cutoffTime = Date().time - retentionDays * 24L * 3600L * 1000L
+            AndroidFirewallDatabase.getInstance(this@ServiceSinkhole).cleanupLog(cutoffTime)
+        } else {
+            Log.i(TAG, "Log cleanup disabled by preference")
+        }
 
-            if (
-                !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
+        AndroidFirewallDatabase.getInstance(this@ServiceSinkhole).cleanupDns()
+
+        if (
+            !Util.isPlayStoreInstall(this@ServiceSinkhole) &&
                 prefs.getBoolean(PreferenceKeys.UPDATE_CHECK, PreferenceKeys.UPDATE_CHECK_DEFAULT)
-            ) {
-                checkUpdate()
+        ) {
+            scheduleUpdateCheck(reportResult = false)
+        }
+    }
+
+    private fun watchdog(intent: Intent) {
+        if (vpn == null) {
+            if (prefs.getBoolean("enabled", false)) {
+                Log.e(TAG, "Service was killed")
+                start()
             }
         }
+    }
 
-        private fun watchdog(intent: Intent) {
-            if (vpn == null) {
-                                if (prefs.getBoolean("enabled", false)) {
-                    Log.e(TAG, "Service was killed")
-                    start()
+    private fun checkUpdateResult(result: UpdateCheckResult) {
+        val resultIntent = Intent(ACTION_UPDATE_CHECK_RESULT).setPackage(packageName)
+        resultIntent.putExtra(EXTRA_UPDATE_CHECK_STATUS, result.status.name)
+        result.availableVersion?.let { resultIntent.putExtra(EXTRA_UPDATE_CHECK_VERSION, it) }
+        sendBroadcast(resultIntent)
+    }
+
+    private fun scheduleUpdateCheck(reportResult: Boolean) {
+        updateExecutor.execute {
+            val result =
+                ReleaseUpdateChecker.check(
+                    apiUrl = BuildConfig.GITHUB_LATEST_API,
+                    currentVersion = Util.getSelfVersionName(this),
+                )
+            Handler(mainLooper).post {
+                if (destroying) return@post
+                if (result.status == UpdateCheckStatus.available) {
+                    notifications.showUpdate(
+                        requireNotNull(result.assetName),
+                        requireNotNull(result.releaseUrl),
+                    )
                 }
+                if (reportResult) checkUpdateResult(result)
             }
         }
+    }
 
-        private fun checkUpdateResult(result: UpdateCheckResult) {
-            val resultIntent = Intent(ACTION_UPDATE_CHECK_RESULT).setPackage(packageName)
-            resultIntent.putExtra(EXTRA_UPDATE_CHECK_STATUS, result.status.name)
-            result.availableVersion?.let { resultIntent.putExtra(EXTRA_UPDATE_CHECK_VERSION, it) }
-            sendBroadcast(resultIntent)
-        }
-
-        private fun checkUpdate(): UpdateCheckResult {
-            val result = ReleaseUpdateChecker.check(
-                apiUrl = BuildConfig.GITHUB_LATEST_API,
-                currentVersion = Util.getSelfVersionName(this@ServiceSinkhole),
-            )
-            if (result.status == UpdateCheckStatus.available) {
-                showUpdateNotification(requireNotNull(result.assetName), requireNotNull(result.releaseUrl))
-            }
-            return result
-        }
+    private data class ForwardKey(val protocol: Int, val port: Int)
 
     private class StartFailedException(msg: String) : IllegalStateException(msg)
 
@@ -510,32 +495,44 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun renderTrafficStats(): Long? {
-            if (destroying) return null
+        if (destroying) return null
 
-            val frequency =
-                (prefs.getString("stats_frequency", "1000")?.toLongOrNull() ?: 1000)
-                    .coerceIn(MIN_STATS_FREQUENCY_MS, MAX_STATS_FREQUENCY_MS)
-            val samples =
-                (prefs.getString("stats_samples", "90")?.toLongOrNull() ?: 90)
-                    .coerceIn(MIN_STATS_SAMPLES, MAX_STATS_SAMPLES)
-            val filter = prefs.getBoolean("filter", false)
-            val showTop = prefs.getBoolean("show_top", false)
+        val frequency =
+            (prefs.getString("stats_frequency", "1000")?.toLongOrNull() ?: 1000).coerceIn(
+                MIN_STATS_FREQUENCY_MS,
+                MAX_STATS_FREQUENCY_MS,
+            )
+        val samples =
+            (prefs.getString("stats_samples", "90")?.toLongOrNull() ?: 90).coerceIn(
+                MIN_STATS_SAMPLES,
+                MAX_STATS_SAMPLES,
+            )
+        val filter = prefs.getBoolean("filter", false)
+        val showTop = prefs.getBoolean("show_top", false)
 
-            val ct = SystemClock.elapsedRealtime()
+        val ct = SystemClock.elapsedRealtime()
 
-            var ttx = TrafficStats.getTotalTxBytes().coerceAtLeast(0)
-            var trx = TrafficStats.getTotalRxBytes().coerceAtLeast(0)
-            if (filter) {
-                ttx = (ttx - TrafficStats.getUidTxBytes(Process.myUid()).coerceAtLeast(0)).coerceAtLeast(0)
-                trx = (trx - TrafficStats.getUidRxBytes(Process.myUid()).coerceAtLeast(0)).coerceAtLeast(0)
-            }
-            val rates = trafficStatistics.sample(ct, ttx, trx, samples)
-            val txsec = rates.transmitPerSecond
-            val rxsec = rates.receivePerSecond
+        var ttx = TrafficStats.getTotalTxBytes().coerceAtLeast(0)
+        var trx = TrafficStats.getTotalRxBytes().coerceAtLeast(0)
+        if (filter) {
+            ttx =
+                (ttx - TrafficStats.getUidTxBytes(Process.myUid()).coerceAtLeast(0)).coerceAtLeast(
+                    0
+                )
+            trx =
+                (trx - TrafficStats.getUidRxBytes(Process.myUid()).coerceAtLeast(0)).coerceAtLeast(
+                    0
+                )
+        }
+        val rates = trafficStatistics.sample(ct, ttx, trx, samples)
+        val txsec = rates.transmitPerSecond
+        val rxsec = rates.receivePerSecond
 
-            var topText = ""
-            if (showTop) {
-                val uidBytes = packageManager.getInstalledApplications(0)
+        var topText = ""
+        if (showTop) {
+            val uidBytes =
+                packageManager
+                    .getInstalledApplications(0)
                     .asSequence()
                     .map { it.uid }
                     .filter { it != Process.myUid() }
@@ -544,152 +541,104 @@ class ServiceSinkhole : VpnService() {
                         TrafficStats.getUidTxBytes(uid).coerceAtLeast(0) +
                             TrafficStats.getUidRxBytes(uid).coerceAtLeast(0)
                     }
-                if (!trafficStatistics.hasUidBaseline()) {
-                    trafficStatistics.initializeUidBytes(uidBytes)
-                } else {
-
-                    val sb = StringBuilder()
-                    var i = 0
-                    for ((uid, speed) in trafficStatistics.uidRates(uidBytes)) {
-                        if (i++ >= 3) break
-                        if (speed < 1000 * 1000) {
-                            sb.append(getString(R.string.msg_kbsec, speed / 1000))
-                        } else {
-                            sb.append(getString(R.string.msg_mbsec, speed / 1000 / 1000))
-                        }
-                        sb.append(' ')
-                        val apps = Util.getApplicationNames(uid, this@ServiceSinkhole)
-                        sb.append(if (apps.isNotEmpty()) apps[0] else "?")
-                        sb.append("\r\n")
-                    }
-                    if (sb.isNotEmpty()) {
-                        sb.setLength(sb.length - 2)
-                        topText = sb.toString()
-                    }
-                }
+            if (!trafficStatistics.hasUidBaseline()) {
+                trafficStatistics.initializeUidBytes(uidBytes)
             } else {
-                trafficStatistics.clearUidBaseline()
-            }
 
-            val points = trafficStatistics.points()
-
-            val height = Util.dips2pixels(96, this@ServiceSinkhole)
-            val width = Util.dips2pixels(96 * 5, this@ServiceSinkhole)
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-
-            val canvas = Canvas(bitmap)
-            canvas.drawColor(Color.TRANSPARENT)
-
-            var max = 0f
-            var xmax: Long = 0
-            var ymax = 0f
-            for (point in points) {
-                if (point.timestampMs > xmax) xmax = point.timestampMs
-                val tx = point.transmitPerSecond
-                val rx = point.receivePerSecond
-                if (tx > max) max = tx
-                if (rx > max) max = rx
-                if (tx > ymax) ymax = tx
-                if (rx > ymax) ymax = rx
-            }
-
-            val ptx = Path()
-            val prx = Path()
-            for ((index, point) in points.withIndex()) {
-                val x = width - width * (xmax - point.timestampMs) / 1000f / samples
-                val ytx = height - height * point.transmitPerSecond / ymax.coerceAtLeast(1f)
-                val yrx = height - height * point.receivePerSecond / ymax.coerceAtLeast(1f)
-                if (index == 0) {
-                    ptx.moveTo(x, ytx)
-                    prx.moveTo(x, yrx)
-                } else {
-                    ptx.lineTo(x, ytx)
-                    prx.lineTo(x, yrx)
+                val sb = StringBuilder()
+                var i = 0
+                for ((uid, speed) in trafficStatistics.uidRates(uidBytes)) {
+                    if (i++ >= 3) break
+                    if (speed < 1000 * 1000) {
+                        sb.append(getString(R.string.msg_kbsec, speed / 1000))
+                    } else {
+                        sb.append(getString(R.string.msg_mbsec, speed / 1000 / 1000))
+                    }
+                    sb.append(' ')
+                    val apps = Util.getApplicationNames(uid, this@ServiceSinkhole)
+                    sb.append(if (apps.isNotEmpty()) apps[0] else "?")
+                    sb.append("\r\n")
+                }
+                if (sb.isNotEmpty()) {
+                    sb.setLength(sb.length - 2)
+                    topText = sb.toString()
                 }
             }
+        } else {
+            trafficStatistics.clearUidBaseline()
+        }
 
-            val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-            paint.style = Paint.Style.STROKE
+        val graph = renderTrafficGraph(this, trafficStatistics.points(), samples)
 
-            paint.strokeWidth = Util.dips2pixels(1, this@ServiceSinkhole).toFloat()
-            paint.color = GraphGrayed
-            val y = height / 2f
-            canvas.drawLine(0f, y, width.toFloat(), y, paint)
-
-            paint.strokeWidth = Util.dips2pixels(2, this@ServiceSinkhole).toFloat()
-            paint.color = GraphSend
-            canvas.drawPath(ptx, paint)
-            paint.color = GraphReceive
-            canvas.drawPath(prx, paint)
-
-            val txText =
-                if (txsec < 1000 * 1000) {
-                    getString(R.string.msg_kbsec, txsec / 1000)
-                } else {
-                    getString(R.string.msg_mbsec, txsec / 1000 / 1000)
-                }
-            val rxText =
-                if (rxsec < 1000 * 1000) {
-                    getString(R.string.msg_kbsec, rxsec / 1000)
-                } else {
-                    getString(R.string.msg_mbsec, rxsec / 1000 / 1000)
-                }
-            val maxText =
-                if (max < 1000 * 1000) {
-                    getString(R.string.msg_kbsec, max / 2 / 1000)
-                } else {
-                    getString(R.string.msg_mbsec, max / 2 / 1000 / 1000)
-                }
-            val statsSummary =
+        val txText =
+            if (txsec < 1000 * 1000) {
+                getString(R.string.msg_kbsec, txsec / 1000)
+            } else {
+                getString(R.string.msg_mbsec, txsec / 1000 / 1000)
+            }
+        val rxText =
+            if (rxsec < 1000 * 1000) {
+                getString(R.string.msg_kbsec, rxsec / 1000)
+            } else {
+                getString(R.string.msg_mbsec, rxsec / 1000 / 1000)
+            }
+        val maxText =
+            if (graph.peak < 1000 * 1000) {
+                getString(R.string.msg_kbsec, graph.peak / 2 / 1000)
+            } else {
+                getString(R.string.msg_mbsec, graph.peak / 2 / 1000 / 1000)
+            }
+        val statsSummary =
+            getString(
+                R.string.notify_traffic_summary,
+                txText,
+                rxText,
+                maxText,
+            )
+        val debugText =
+            if (BuildConfig.DEBUG) {
+                val count = nativeEngine.stats()
                 getString(
-                    R.string.notify_traffic_summary,
-                    txText,
-                    rxText,
-                    maxText,
+                    R.string.notify_traffic_debug,
+                    count.icmpSessions,
+                    count.udpSessions,
+                    count.tcpSessions,
+                    count.openFileDescriptors,
+                    count.fileDescriptorLimit,
                 )
-            val debugText =
-                if (BuildConfig.DEBUG) {
-                    val count = nativeEngine.stats()
-                    getString(
-                        R.string.notify_traffic_debug,
-                        count.icmpSessions,
-                        count.udpSessions,
-                        count.tcpSessions,
-                        count.openFileDescriptors,
-                        count.fileDescriptorLimit,
-                    )
-                } else {
-                    ""
-                }
-
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val extraLines = buildList {
-                if (topText.isNotBlank()) {
-                    addAll(topText.split("\r\n"))
-                }
-                if (debugText.isNotBlank()) {
-                    add(debugText)
-                }
+            } else {
+                ""
             }
-            val notification = trafficNotifications.build(
-                TrafficNotificationContent(statsWhenMs, bitmap, statsSummary, extraLines),
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val extraLines = buildList {
+            if (topText.isNotBlank()) {
+                addAll(topText.split("\r\n"))
+            }
+            if (debugText.isNotBlank()) {
+                add(debugText)
+            }
+        }
+        val notification =
+            trafficNotifications.build(
+                TrafficNotificationContent(statsWhenMs, graph.bitmap, statsSummary, extraLines)
             )
 
-            if (state == State.none || state == State.waiting) {
-                if (state != State.none) {
-                    Log.d(TAG, "Stop foreground state=$state")
-                    stopForeground(STOP_FOREGROUND_REMOVE)
-                }
-                startForeground(NOTIFY_TRAFFIC, notification)
-                state = State.stats
-                Log.d(TAG, "Start foreground state=$state")
-            } else {
-                if (Util.canNotify(this@ServiceSinkhole)) {
-                    notificationManager.notify(NOTIFY_TRAFFIC, notification)
-                }
+        if (state == State.none || state == State.waiting) {
+            if (state != State.none) {
+                Log.d(TAG, "Stop foreground state=$state")
+                stopForeground(STOP_FOREGROUND_REMOVE)
             }
-            return frequency
+            startForeground(NOTIFY_TRAFFIC, notification)
+            state = State.stats
+            Log.d(TAG, "Start foreground state=$state")
+        } else {
+            if (Util.canNotify(this@ServiceSinkhole)) {
+                notificationManager.notify(NOTIFY_TRAFFIC, notification)
+            }
+        }
+        return frequency
     }
 
     private fun startVPN(builder: TrackingVpnBuilder): ParcelFileDescriptor? {
@@ -706,7 +655,7 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun getBuilder(listAllowed: List<Rule>, listRule: List<Rule>): TrackingVpnBuilder {
-                val subnet = prefs.getBoolean("subnet", false)
+        val subnet = prefs.getBoolean("subnet", false)
         val tethering = prefs.getBoolean("tethering", false)
         val lan = prefs.getBoolean("lan", false)
         val ip6 = prefs.getBoolean("ip6", true)
@@ -724,8 +673,9 @@ class ServiceSinkhole : VpnService() {
         Log.i(TAG, "Using VPN4=$vpn4")
         builder.addAddress(vpn4, 32)
         if (ip6) {
-            val vpn6 = prefs.getString("vpn6", "fd00:1:fd00:1:fd00:1:fd00:1")
-                ?: "fd00:1:fd00:1:fd00:1:fd00:1"
+            val vpn6 =
+                prefs.getString("vpn6", "fd00:1:fd00:1:fd00:1:fd00:1")
+                    ?: "fd00:1:fd00:1:fd00:1:fd00:1"
             Log.i(TAG, "Using VPN6=$vpn6")
             builder.addAddress(vpn6, 128)
         }
@@ -768,10 +718,10 @@ class ServiceSinkhole : VpnService() {
                             val ni = nis.nextElement()
                             if (
                                 ni != null &&
-                                !ni.isLoopback &&
-                                ni.isUp &&
-                                ni.name != null &&
-                                ni.name.startsWith("ap_br_wlan")
+                                    !ni.isLoopback &&
+                                    ni.isUp &&
+                                    ni.name != null &&
+                                    ni.name.startsWith("ap_br_wlan")
                             ) {
                                 val ias = ni.interfaceAddresses
                                 if (ias != null) {
@@ -826,66 +776,7 @@ class ServiceSinkhole : VpnService() {
                 }
             }
 
-            val config: Configuration = resources.configuration
-
-            if (
-                config.mcc == 310 &&
-                (config.mnc == 160 ||
-                        config.mnc == 200 ||
-                        config.mnc == 210 ||
-                        config.mnc == 220 ||
-                        config.mnc == 230 ||
-                        config.mnc == 240 ||
-                        config.mnc == 250 ||
-                        config.mnc == 260 ||
-                        config.mnc == 270 ||
-                        config.mnc == 310 ||
-                        config.mnc == 490 ||
-                        config.mnc == 660 ||
-                        config.mnc == 800)
-            ) {
-                listExclude.add(IPUtil.CIDR("66.94.2.0", 24))
-                listExclude.add(IPUtil.CIDR("66.94.6.0", 23))
-                listExclude.add(IPUtil.CIDR("66.94.8.0", 22))
-                listExclude.add(IPUtil.CIDR("208.54.0.0", 16))
-            }
-
-            if (
-                (config.mcc == 310 &&
-                        (config.mnc == 4 ||
-                                config.mnc == 5 ||
-                                config.mnc == 6 ||
-                                config.mnc == 10 ||
-                                config.mnc == 12 ||
-                                config.mnc == 13 ||
-                                config.mnc == 350 ||
-                                config.mnc == 590 ||
-                                config.mnc == 820 ||
-                                config.mnc == 890 ||
-                                config.mnc == 910)) ||
-                (config.mcc == 311 &&
-                        (config.mnc == 12 ||
-                                config.mnc == 110 ||
-                                (config.mnc >= 270 && config.mnc <= 289) ||
-                                config.mnc == 390 ||
-                                (config.mnc >= 480 && config.mnc <= 489) ||
-                                config.mnc == 590)) ||
-                (config.mcc == 312 && config.mnc == 770)
-            ) {
-                listExclude.add(IPUtil.CIDR("66.174.0.0", 16))
-                listExclude.add(IPUtil.CIDR("66.82.0.0", 15))
-                listExclude.add(IPUtil.CIDR("69.96.0.0", 13))
-                listExclude.add(IPUtil.CIDR("70.192.0.0", 11))
-                listExclude.add(IPUtil.CIDR("97.128.0.0", 9))
-                listExclude.add(IPUtil.CIDR("174.192.0.0", 9))
-                listExclude.add(IPUtil.CIDR("72.96.0.0", 9))
-                listExclude.add(IPUtil.CIDR("75.192.0.0", 9))
-                listExclude.add(IPUtil.CIDR("97.0.0.0", 10))
-            }
-
-            if (config.mnc == 10 && config.mcc == 208) {
-                listExclude.add(IPUtil.CIDR("10.151.0.0", 24))
-            }
+            listExclude.addAll(carrierRouteExclusions(resources.configuration))
 
             listExclude.add(IPUtil.CIDR("224.0.0.0", 3))
 
@@ -898,10 +789,7 @@ class ServiceSinkhole : VpnService() {
                     val excludeEnd = exclude.getEnd() ?: continue
                     Log.i(
                         TAG,
-                        "Exclude " +
-                                excludeStart.hostAddress +
-                                "..." +
-                                excludeEnd.hostAddress,
+                        "Exclude " + excludeStart.hostAddress + "..." + excludeEnd.hostAddress,
                     )
                     val before = IPUtil.minus1(excludeStart) ?: continue
                     for (include in IPUtil.toCIDR(start, before)) {
@@ -991,9 +879,9 @@ class ServiceSinkhole : VpnService() {
     private fun startNative(
         vpn: ParcelFileDescriptor,
         listAllowed: List<Rule>,
-        listRule: List<Rule>
+        listRule: List<Rule>,
     ) {
-                val log = prefs.getBoolean("log", false)
+        val log = prefs.getBoolean("log", false)
         val filter = prefs.getBoolean("filter", false)
 
         Log.i(TAG, "Start native log=$log filter=$filter")
@@ -1029,14 +917,18 @@ class ServiceSinkhole : VpnService() {
                         prefs.getString("socks5_port", "0")?.toIntOrNull() ?: 0,
                         prefs.getString("socks5_username", "") ?: "",
                         prefs.getString("socks5_password", "") ?: "",
-                    ),
+                    )
                 )
             } else {
                 nativeEngine.configureSocks5(null)
             }
 
             Log.i(TAG, "Starting UniFFI tunnel engine")
-            nativeEngine.start(vpn.fd, withPolicyRead { 53 in mapForward }, rcode)
+            nativeEngine.start(
+                vpn.fd,
+                withPolicyRead { ForwardKey(17, 53) in mapForward },
+                rcode,
+            )
             Log.i(TAG, "Started tunnel thread")
         }
     }
@@ -1076,38 +968,29 @@ class ServiceSinkhole : VpnService() {
         withPolicyWrite {
             if (dname == null) {
                 mapUidIPFilters.clear()
-                if (!IAB.isPurchased(ActivityPro.SKU_FILTER, this@ServiceSinkhole)) {
-                    return
-                }
             }
 
-            DatabaseHelper.getInstance(this@ServiceSinkhole).getAccessDns(dname).use { cursor ->
-            val colUid = cursor.getColumnIndex("uid")
-            val colVersion = cursor.getColumnIndex("version")
-            val colProtocol = cursor.getColumnIndex("protocol")
-            val colDAddr = cursor.getColumnIndex("daddr")
-            val colResource = cursor.getColumnIndex("resource")
-            val colDPort = cursor.getColumnIndex("dport")
-            val colBlock = cursor.getColumnIndex("block")
-            val colTime = cursor.getColumnIndex("time")
-            val colTTL = cursor.getColumnIndex("ttl")
-            while (cursor.moveToNext()) {
-                val uid = cursor.getInt(colUid)
-                val version = cursor.getInt(colVersion)
-                val protocol = cursor.getInt(colProtocol)
-                val daddr = cursor.getString(colDAddr)
-                val dresource =
-                    if (cursor.isNull(colResource)) null else cursor.getString(colResource)
-                val dport = cursor.getInt(colDPort)
-                val block = cursor.getInt(colBlock) > 0
-                val time = if (cursor.isNull(colTime)) Date().time else cursor.getLong(colTime)
-                val ttl =
-                    if (cursor.isNull(colTTL)) 7 * 24 * 3600 * 1000L else cursor.getLong(colTTL)
+            val rows = AndroidFirewallDatabase.getInstance(this@ServiceSinkhole).getAccessDns(dname)
+            for (row in rows) {
+                val uid = row.uid
+                val version = row.version
+                val protocol = row.protocol
+                val daddr = row.daddr
+                val dresource = row.resource
+                val dport = row.dport
+                val block = row.block > 0
+                val time = row.time ?: System.currentTimeMillis()
+                val ttl = row.ttl ?: 7 * 24 * 3600 * 1000L
 
                 if (isLockedDown(lastMetered)) {
                     val pkg = packageManager.getPackagesForUid(uid)
                     if (pkg != null && pkg.isNotEmpty()) {
-                        if (!prefs.getBoolean(PreferencesRepository.namespaced("lockdown", pkg[0]), false)) {
+                        if (
+                            !prefs.getBoolean(
+                                PreferencesRepository.namespaced("lockdown", pkg[0]),
+                                false,
+                            )
+                        ) {
                             continue
                         }
                     }
@@ -1119,41 +1002,40 @@ class ServiceSinkhole : VpnService() {
                 }
 
                 try {
-                        val name = if (dresource == null) daddr else dresource
-                        if (Util.isNumericAddress(name)) {
-                            val iname = InetAddress.getByName(name)
-                            if (version == 4 && iname !is Inet4Address) {
-                                continue
-                            }
-                            if (version == 6 && iname !is Inet6Address) {
-                                continue
-                            }
+                    val name = if (dresource == null) daddr else dresource
+                    if (Util.isNumericAddress(name)) {
+                        val iname = InetAddress.getByName(name)
+                        if (version == 4 && iname !is Inet4Address) {
+                            continue
+                        }
+                        if (version == 6 && iname !is Inet6Address) {
+                            continue
+                        }
 
-                            val exists = mapUidIPFilters[key]?.containsKey(iname) == true
-                            val currentRule = mapUidIPFilters[key]?.get(iname)
-                            if (!exists || currentRule?.isBlocked() == false) {
-                                val rule = IpRule(key, "$name/$iname", block, time, ttl)
-                                mapUidIPFilters[key]?.put(iname, rule)
-                                if (exists) {
-                                    Log.w(TAG, "Address conflict $key $daddr/$dresource")
-                                }
-                            } else if (exists) {
-                                currentRule?.refresh(time, ttl)
-                                if (dname != null && ttl > 60 * 1000L) {
-                                    Log.w(TAG, "Address updated $key $daddr/$dresource")
-                                }
-                            } else {
-                                if (dname != null) {
-                                    Log.i(TAG, "Ignored $key $daddr/$dresource=$block")
-                                }
+                        val exists = mapUidIPFilters[key]?.containsKey(iname) == true
+                        val currentRule = mapUidIPFilters[key]?.get(iname)
+                        if (!exists || currentRule?.isBlocked() == false) {
+                            val rule = IpRule(key, "$name/$iname", block, time, ttl)
+                            mapUidIPFilters[key]?.put(iname, rule)
+                            if (exists) {
+                                Log.w(TAG, "Address conflict $key $daddr/$dresource")
+                            }
+                        } else if (exists) {
+                            currentRule?.refresh(time, ttl)
+                            if (dname != null && ttl > 60 * 1000L) {
+                                Log.w(TAG, "Address updated $key $daddr/$dresource")
                             }
                         } else {
-                            Log.w(TAG, "Address not numeric $name")
+                            if (dname != null) {
+                                Log.i(TAG, "Ignored $key $daddr/$dresource=$block")
+                            }
                         }
+                    } else {
+                        Log.w(TAG, "Address not numeric $name")
+                    }
                 } catch (ex: UnknownHostException) {
                     Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
                 }
-            }
             }
         }
     }
@@ -1162,29 +1044,17 @@ class ServiceSinkhole : VpnService() {
         withPolicyWrite {
             mapForward.clear()
             if (prefs.getBoolean("filter", false)) {
-                DatabaseHelper.getInstance(this@ServiceSinkhole).getForwarding().use { cursor ->
-                    val colProtocol = cursor.getColumnIndex("protocol")
-                    val colDPort = cursor.getColumnIndex("dport")
-                    val colRAddr = cursor.getColumnIndex("raddr")
-                    val colRPort = cursor.getColumnIndex("rport")
-                    val colRUid = cursor.getColumnIndex("ruid")
-                    while (cursor.moveToNext()) {
-                        val fwd = Forward()
-                        fwd.protocol = cursor.getInt(colProtocol)
-                        fwd.dport = cursor.getInt(colDPort)
-                        fwd.raddr = cursor.getString(colRAddr)
-                        fwd.rport = cursor.getInt(colRPort)
-                        fwd.ruid = cursor.getInt(colRUid)
-                        mapForward[fwd.dport] = fwd
-                        Log.i(TAG, "Forward $fwd")
-                    }
+                for (forward in
+                    AndroidFirewallDatabase.getInstance(this@ServiceSinkhole).getForwarding()) {
+                    mapForward[ForwardKey(forward.protocol, forward.dport)] = forward
+                    Log.i(TAG, "Forward $forward")
                 }
             }
         }
     }
 
     private fun prepareNotify(listRule: List<Rule>) {
-                val notify = prefs.getBoolean("notify_access", false)
+        val notify = prefs.getBoolean("notify_access", false)
         val system = prefs.getBoolean("manage_system", false)
 
         withPolicyWrite {
@@ -1196,7 +1066,7 @@ class ServiceSinkhole : VpnService() {
     }
 
     private fun isLockedDown(metered: Boolean): Boolean {
-                var lockdown = prefs.getBoolean("lockdown", false)
+        var lockdown = prefs.getBoolean("lockdown", false)
         val lockdownWifi = prefs.getBoolean("lockdown_wifi", true)
         val lockdownOther = prefs.getBoolean("lockdown_other", true)
         if (metered) {
@@ -1209,7 +1079,7 @@ class ServiceSinkhole : VpnService() {
 
     private fun getAllowedRules(listRule: List<Rule>): List<Rule> {
         val listAllowed = ArrayList<Rule>()
-        
+
         val wifi = Util.isWifiActive(this)
         var metered = Util.isMeteredNetwork(this)
         val useMetered = prefs.getBoolean("use_metered", false)
@@ -1239,8 +1109,8 @@ class ServiceSinkhole : VpnService() {
         }
         if (
             wifi &&
-            ssidHomes.isNotEmpty() &&
-            !(ssidHomes.contains(ssidNetwork) || ssidHomes.contains('"' + ssidNetwork + '"'))
+                ssidHomes.isNotEmpty() &&
+                !(ssidHomes.contains(ssidNetwork) || ssidHomes.contains('"' + ssidNetwork + '"'))
         ) {
             metered = true
             Log.i(TAG, "!@home=$ssidNetwork homes=" + TextUtils.join(",", ssidHomes))
@@ -1258,17 +1128,32 @@ class ServiceSinkhole : VpnService() {
         Log.i(
             TAG,
             "Get allowed" +
-                    " connected=" + lastConnected +
-                    " wifi=" + wifi +
-                    " home=" + TextUtils.join(",", ssidHomes) +
-                    " network=" + ssidNetwork +
-                    " metered=" + metered + "/" + orgMetered +
-                    " generation=" + generation +
-                    " roaming=" + roaming + "/" + orgRoaming +
-                    " interactive=" + lastInteractive +
-                    " tethering=" + tethering +
-                    " filter=" + filter +
-                    " lockdown=" + lockdown,
+                " connected=" +
+                lastConnected +
+                " wifi=" +
+                wifi +
+                " home=" +
+                TextUtils.join(",", ssidHomes) +
+                " network=" +
+                ssidNetwork +
+                " metered=" +
+                metered +
+                "/" +
+                orgMetered +
+                " generation=" +
+                generation +
+                " roaming=" +
+                roaming +
+                "/" +
+                orgRoaming +
+                " interactive=" +
+                lastInteractive +
+                " tethering=" +
+                tethering +
+                " filter=" +
+                filter +
+                " lockdown=" +
+                lockdown,
         )
 
         if (lastConnected) {
@@ -1277,8 +1162,8 @@ class ServiceSinkhole : VpnService() {
                 val screen = if (metered) rule.screen_other else rule.screen_wifi
                 if (
                     (!blocked || (screen && lastInteractive)) &&
-                    (!metered || !(rule.roaming && roaming)) &&
-                    (!lockdown || rule.lockdown)
+                        (!metered || !(rule.roaming && roaming)) &&
+                        (!lockdown || rule.lockdown)
                 ) {
                     listAllowed.add(rule)
                 }
@@ -1308,18 +1193,13 @@ class ServiceSinkhole : VpnService() {
         }
     }
 
-    private fun nativeError(error: Int, message: String?) {
-        Log.w(TAG, "Native error $error: $message")
-        showErrorNotification(message ?: "")
-    }
-
     private fun logPacket(packet: Packet) {
         val connection = if (lastConnected) if (lastMetered) 2 else 1 else 0
         logHandler.queue(packet, connection, lastInteractive)
     }
 
     private fun dnsResolved(rr: ResourceRecord) {
-        if (DatabaseHelper.getInstance(this@ServiceSinkhole).insertDns(rr)) {
+        if (AndroidFirewallDatabase.getInstance(this@ServiceSinkhole).insertDns(rr)) {
             Log.i(TAG, "New IP $rr")
             prepareUidIPFilters(rr.QName)
         }
@@ -1330,7 +1210,7 @@ class ServiceSinkhole : VpnService() {
                 val notified = prefs.getBoolean("malware.${rr.uid}", false)
                 if (!notified) {
                     prefs.putBoolean("malware.${rr.uid}", true)
-                    notifyNewApplication(rr.uid, true)
+                    notifications.showNewApplication(rr.uid, true)
                 }
             }
         }
@@ -1347,14 +1227,15 @@ class ServiceSinkhole : VpnService() {
         saddr: String,
         sport: Int,
         daddr: String,
-        dport: Int
+        dport: Int,
     ): Int {
         if (protocol != 6 && protocol != 17) {
             return Process.INVALID_UID
         }
 
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
-            ?: return Process.INVALID_UID
+        val cm =
+            getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
+                ?: return Process.INVALID_UID
 
         val local = InetSocketAddress(saddr, sport)
         val remote = InetSocketAddress(daddr, dport)
@@ -1371,80 +1252,74 @@ class ServiceSinkhole : VpnService() {
 
     private fun isAddressAllowed(packet: Packet): Allowed? {
         val allowed = withPolicyRead {
-
-        packet.allowed = false
-        if (prefs.getBoolean("filter", false)) {
-            if (packet.protocol == 17 && !prefs.getBoolean("filter_udp", false)) {
-                packet.allowed = true
-                Log.i(TAG, "Allowing UDP $packet")
-            } else if (packet.uid < 2000 && !lastConnected && isSupported(packet.protocol) && false) {
-                packet.allowed = true
-                Log.w(TAG, "Allowing disconnected system $packet")
-            } else if (
-                (packet.uid < 2000 || BuildConfig.PLAY_STORE_RELEASE) &&
-                packet.uid !in knownUids &&
-                isSupported(packet.protocol)
-            ) {
-                packet.allowed = true
-                Log.w(TAG, "Allowing unknown system $packet")
-            } else if (packet.uid == Process.myUid()) {
-                packet.allowed = true
-                Log.w(TAG, "Allowing self $packet")
-            } else {
-                var filtered = false
-                val key = IpRuleKey(packet.version, packet.protocol, packet.dport, packet.uid)
-                if (mapUidIPFilters.containsKey(key)) {
-                    try {
-                        val daddr = packet.daddr
-                        if (daddr == null) {
-                            return@withPolicyRead null
-                        }
-                        val iaddr = InetAddress.getByName(daddr)
-                        val map = mapUidIPFilters[key]
-                        if (map != null && map.containsKey(iaddr)) {
-                            val rule = map[iaddr]
-                            if (rule != null && rule.isExpired()) {
-                                Log.i(TAG, "DNS expired $packet rule $rule")
-                            } else if (rule != null) {
-                                filtered = true
-                                packet.allowed = !rule.isBlocked()
-                                Log.i(TAG, "Filtering $packet allowed=${packet.allowed} rule $rule")
+            packet.allowed = false
+            if (prefs.getBoolean("filter", false)) {
+                if (packet.protocol == 17 && !prefs.getBoolean(PreferenceKeys.FILTER_UDP)) {
+                    packet.allowed = true
+                    Log.i(TAG, "Allowing UDP $packet")
+                } else if (
+                    (packet.uid < 2000 || BuildConfig.PLAY_STORE_RELEASE) &&
+                        packet.uid !in knownUids &&
+                        isSupported(packet.protocol)
+                ) {
+                    packet.allowed = true
+                    Log.w(TAG, "Allowing unknown system $packet")
+                } else if (packet.uid == Process.myUid()) {
+                    packet.allowed = true
+                    Log.w(TAG, "Allowing self $packet")
+                } else {
+                    var filtered = false
+                    val key = IpRuleKey(packet.version, packet.protocol, packet.dport, packet.uid)
+                    if (mapUidIPFilters.containsKey(key)) {
+                        try {
+                            val daddr = packet.daddr
+                            if (daddr == null) {
+                                return@withPolicyRead null
                             }
+                            val iaddr = InetAddress.getByName(daddr)
+                            val map = mapUidIPFilters[key]
+                            if (map != null && map.containsKey(iaddr)) {
+                                val rule = map[iaddr]
+                                if (rule != null && rule.isExpired()) {
+                                    Log.i(TAG, "DNS expired $packet rule $rule")
+                                } else if (rule != null) {
+                                    filtered = true
+                                    packet.allowed = !rule.isBlocked()
+                                    Log.i(
+                                        TAG,
+                                        "Filtering $packet allowed=${packet.allowed} rule $rule",
+                                    )
+                                }
+                            }
+                        } catch (ex: UnknownHostException) {
+                            Log.w(TAG, "Allowed $ex\n" + Log.getStackTraceString(ex))
                         }
-                    } catch (ex: UnknownHostException) {
-                        Log.w(TAG, "Allowed $ex\n" + Log.getStackTraceString(ex))
                     }
-                }
 
-                if (!filtered) {
-                    if (packet.uid in allowedUids) {
-                        packet.allowed = true
-                    } else {
-                        Log.w(TAG, "No rules for $packet")
-                    }
-                }
-            }
-        }
-
-        var redirect: Allowed? = null
-        if (packet.allowed) {
-            if (mapForward.containsKey(packet.dport)) {
-                val fwd = mapForward[packet.dport]
-                if (fwd != null) {
-                    redirect =
-                        if (fwd.ruid == packet.uid) {
-                            Allowed()
+                    if (!filtered) {
+                        if (packet.uid in allowedUids) {
+                            packet.allowed = true
                         } else {
-                            packet.data = "> " + fwd.raddr + "/" + fwd.rport
-                            Allowed(fwd.raddr, fwd.rport)
+                            Log.w(TAG, "No rules for $packet")
                         }
+                    }
                 }
-            } else {
-                redirect = Allowed()
             }
-        }
 
-        redirect
+            val redirect =
+                if (packet.allowed) {
+                    val forward = mapForward[ForwardKey(packet.protocol, packet.dport)]
+                    if (forward == null || forward.ruid == packet.uid) {
+                        Allowed()
+                    } else {
+                        packet.data = "> ${forward.raddr}/${forward.rport}"
+                        Allowed(forward.raddr, forward.rport)
+                    }
+                } else {
+                    null
+                }
+
+            redirect
         }
 
         if (prefs.getBoolean("log", false)) {
@@ -1471,49 +1346,49 @@ class ServiceSinkhole : VpnService() {
                 if (destroying || executor.isShutdown) return
                 try {
                     executor.execute {
-                    val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val i = Intent(ACTION_SCREEN_OFF_DELAYED)
-                    i.setPackage(context.packageName)
-                    val pi =
-                        PendingIntentCompat.getBroadcast(
-                            context,
-                            0,
-                            i,
-                            PendingIntent.FLAG_UPDATE_CURRENT,
-                        )
-                    am.cancel(pi)
+                        val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                        val i = Intent(ACTION_SCREEN_OFF_DELAYED)
+                        i.setPackage(context.packageName)
+                        val pi =
+                            PendingIntentCompat.getBroadcast(
+                                context,
+                                0,
+                                i,
+                                PendingIntent.FLAG_UPDATE_CURRENT,
+                            )
+                        am.cancel(pi)
 
-                    try {
-                                                val delay = prefs.getString("screen_delay", "0")?.toIntOrNull() ?: 0
-                        val interactive = Intent.ACTION_SCREEN_ON == intent.action
+                        try {
+                            val delay = prefs.getString("screen_delay", "0")?.toIntOrNull() ?: 0
+                            val interactive = Intent.ACTION_SCREEN_ON == intent.action
 
-                        if (interactive || delay == 0) {
-                            lastInteractive = interactive
-                            reload("interactive state changed", this@ServiceSinkhole, true)
-                        } else {
-                            if (ACTION_SCREEN_OFF_DELAYED == intent.action) {
+                            if (interactive || delay == 0) {
                                 lastInteractive = interactive
                                 reload("interactive state changed", this@ServiceSinkhole, true)
                             } else {
-                                am.setAndAllowWhileIdle(
-                                    AlarmManager.RTC_WAKEUP,
-                                    Date().time + delay * 60 * 1000L,
-                                    pi,
-                                )
+                                if (ACTION_SCREEN_OFF_DELAYED == intent.action) {
+                                    lastInteractive = interactive
+                                    reload("interactive state changed", this@ServiceSinkhole, true)
+                                } else {
+                                    am.setAndAllowWhileIdle(
+                                        AlarmManager.RTC_WAKEUP,
+                                        Date().time + delay * 60 * 1000L,
+                                        pi,
+                                    )
+                                }
                             }
+
+                            if (Util.isInteractive(this@ServiceSinkhole)) statsHandler.start()
+                            else statsHandler.stop()
+                        } catch (ex: Throwable) {
+                            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
+
+                            am.setAndAllowWhileIdle(
+                                AlarmManager.RTC_WAKEUP,
+                                Date().time + 15 * 1000L,
+                                pi,
+                            )
                         }
-
-                        if (Util.isInteractive(this@ServiceSinkhole)) statsHandler.start()
-                        else statsHandler.stop()
-                    } catch (ex: Throwable) {
-                        Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-
-                        am.setAndAllowWhileIdle(
-                            AlarmManager.RTC_WAKEUP,
-                            Date().time + 15 * 1000L,
-                            pi,
-                        )
-                    }
                     }
                 } catch (_: RejectedExecutionException) {
                     Log.i(TAG, "Ignoring interactive change after executor shutdown")
@@ -1571,7 +1446,6 @@ class ServiceSinkhole : VpnService() {
 
     private val apStateReceiver: BroadcastReceiver =
         object : BroadcastReceiver() {
-            @TargetApi(Build.VERSION_CODES.M)
             override fun onReceive(context: Context, intent: Intent) {
                 Log.i(TAG, "Received $intent")
                 Util.logExtras(intent)
@@ -1585,145 +1459,26 @@ class ServiceSinkhole : VpnService() {
     private val packageChangedReceiver by lazy {
         SinkholePackageChangeReceiver(
             preferences = { prefs },
-            onNewApplication = { uid -> notifyNewApplication(uid, false) },
+            onNewApplication = { uid -> notifications.showNewApplication(uid, false) },
             onReload = { reason, context -> reload(reason, context, false) },
         )
-    }
-
-    fun notifyNewApplication(uid: Int, malware: Boolean) {
-        if (uid < 0 || uid == Process.myUid()) {
-            return
-        }
-
-                try {
-            val names = Util.getApplicationNames(uid, this)
-            if (names.isEmpty()) {
-                return
-            }
-            val name = TextUtils.join(", ", names)
-
-            val pm = packageManager
-            val packages = pm.getPackagesForUid(uid)
-            if (packages == null || packages.isEmpty()) {
-                throw PackageManager.NameNotFoundException(uid.toString())
-            }
-            val internet = Util.hasInternet(uid, this)
-
-            val main = Intent(this, ActivityMain::class.java)
-            main.putExtra(ActivityMain.EXTRA_REFRESH, true)
-            main.putExtra(ActivityMain.EXTRA_SEARCH, uid.toString())
-            val pi =
-                PendingIntentCompat.getActivity(this, uid, main, PendingIntent.FLAG_UPDATE_CURRENT)
-
-            val notificationColor = themePrimaryColor(prefs.getString("theme", THEME_DEFAULT))
-            val builder = Notification.Builder(
-                this,
-                if (malware) Notifications.CHANNEL_MALWARE else Notifications.CHANNEL_NOTIFY
-            )
-            builder
-                .setSmallIcon(this.securityIcon())
-                .setContentIntent(pi)
-                .setColor(notificationColor)
-                .setAutoCancel(true)
-
-            if (malware) {
-                builder.setContentTitle(name)
-                    .setContentText(getString(R.string.msg_malware, name))
-            } else {
-                builder.setContentTitle(name)
-                    .setContentText(getString(R.string.msg_installed_n))
-            }
-
-            builder.setCategory(Notification.CATEGORY_STATUS)
-                .setVisibility(Notification.VISIBILITY_SECRET)
-
-            val packageName = packages[0]
-            val wifi = prefs.getBoolean(
-                PreferencesRepository.namespaced("wifi", packageName),
-                prefs.getBoolean("whitelist_wifi", true),
-            )
-            val other = prefs.getBoolean(
-                PreferencesRepository.namespaced("other", packageName),
-                prefs.getBoolean("whitelist_other", true),
-            )
-
-            val riWifi = Intent(this, ServiceSinkhole::class.java)
-            riWifi.putExtra(EXTRA_COMMAND, Command.set)
-            riWifi.putExtra(EXTRA_NETWORK, "wifi")
-            riWifi.putExtra(EXTRA_UID, uid)
-            riWifi.putExtra(EXTRA_PACKAGE, packageName)
-            riWifi.putExtra(EXTRA_BLOCKED, !wifi)
-
-            val piWifi =
-                PendingIntentCompat.getService(this, uid, riWifi, PendingIntent.FLAG_UPDATE_CURRENT)
-            val wAction =
-                Notification.Action.Builder(
-                    if (wifi) this.wifiIcon(true) else this.wifiIcon(false),
-                    getString(if (wifi) R.string.title_allow_wifi else R.string.title_block_wifi),
-                    piWifi,
-                ).build()
-            builder.addAction(wAction)
-
-            val riOther = Intent(this, ServiceSinkhole::class.java)
-            riOther.putExtra(EXTRA_COMMAND, Command.set)
-            riOther.putExtra(EXTRA_NETWORK, "other")
-            riOther.putExtra(EXTRA_UID, uid)
-            riOther.putExtra(EXTRA_PACKAGE, packageName)
-            riOther.putExtra(EXTRA_BLOCKED, !other)
-            val piOther =
-                PendingIntentCompat.getService(
-                    this,
-                    uid + 10000,
-                    riOther,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-            val oAction =
-                Notification.Action.Builder(
-                    if (other) this.cellularIcon(true) else this.cellularIcon(false),
-                    getString(if (other) R.string.title_allow_other else R.string.title_block_other),
-                    piOther,
-                ).build()
-            builder.addAction(oAction)
-
-            if (internet) {
-                if (Util.canNotify(this)) {
-                    val notificationManager =
-                        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.notify(uid, builder.build())
-                }
-            } else {
-                builder.setStyle(
-                    Notification.BigTextStyle()
-                        .bigText(getString(R.string.msg_installed_n))
-                        .setSummaryText(getString(R.string.title_internet)),
-                )
-                if (Util.canNotify(this)) {
-                    val notificationManager =
-                        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.notify(uid, builder.build())
-                }
-            }
-        } catch (ex: PackageManager.NameNotFoundException) {
-            Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-        }
     }
 
     override fun onCreate() {
         destroying = false
         Log.i(
             TAG,
-            "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this)
+            "Create version=" + Util.getSelfVersionName(this) + "/" + Util.getSelfVersionCode(this),
         )
         startForeground(NOTIFY_WAITING, foregroundNotifications.waiting())
 
-        
         nativeEngine = NativeVpnEngineController(Build.VERSION.SDK_INT, nativeCallbacks)
         Log.i(TAG, "Created UniFFI native engine")
         val pcap = prefs.getBoolean("pcap", false)
         setPcap(pcap, this, nativeEngine)
 
         removePrefsListener = prefs.addListener { key ->
-            onPreferenceChanged(key)
+            if (!destroying) onPreferenceChanged(key)
         }
 
         Util.setTheme(this)
@@ -1732,14 +1487,14 @@ class ServiceSinkhole : VpnService() {
         val commandThread =
             HandlerThread(
                 getString(R.string.app_name) + " command",
-                Process.THREAD_PRIORITY_FOREGROUND
+                Process.THREAD_PRIORITY_FOREGROUND,
             )
         val logThread =
             HandlerThread(getString(R.string.app_name) + " log", Process.THREAD_PRIORITY_BACKGROUND)
         val statsThread =
             HandlerThread(
                 getString(R.string.app_name) + " stats",
-                Process.THREAD_PRIORITY_BACKGROUND
+                Process.THREAD_PRIORITY_BACKGROUND,
             )
         commandThread.start()
         logThread.start()
@@ -1749,48 +1504,64 @@ class ServiceSinkhole : VpnService() {
         logLooper = logThread.looper
         statsLooper = statsThread.looper
 
-        commandHandler = SinkholeCommandHandler(
-            looper = commandLooper,
-            commandCode = { intent -> getCommandExtra(intent)?.ordinal },
-            handleCommand = { intent ->
-                if (!destroying) synchronized(this) { if (!destroying) handleCommandIntent(intent) }
-            },
-            reportQueueSize = { size ->
-                sendBroadcast(
-                    Intent(ActivityMain.ACTION_QUEUE_CHANGED)
-                        .setPackage(packageName)
-                        .putExtra(ActivityMain.EXTRA_SIZE, size),
-                )
-            },
-            releaseWakeLock = {
-                val wakeLock = getLock(this)
-                if (wakeLock.isHeld) wakeLock.release() else Log.w(TAG, "Wakelock under-locked")
-            },
-        )
-        logHandler = SinkholeLogHandler(
-            looper = logLooper,
-            context = applicationContext,
-            prefs = prefs,
-            shouldShowAccessNotification = { uid -> withPolicyRead { mapNotify[uid] != false } },
-            showAccessNotification = ::showAccessNotification,
-        )
-        statsHandler = SinkholeStatsHandler(
-            looper = statsLooper,
-            isEnabled = { !destroying && prefs.getBoolean("show_stats", false) },
-            onStarted = ::onStatsStarted,
-            onStopped = ::onStatsStopped,
-            onRefresh = ::renderTrafficStats,
-        )
+        commandHandler =
+            SinkholeCommandHandler(
+                looper = commandLooper,
+                commandCode = { intent -> getCommandExtra(intent)?.ordinal },
+                handleCommand = { intent ->
+                    if (!destroying)
+                        synchronized(this) { if (!destroying) handleCommandIntent(intent) }
+                },
+                reportQueueSize = { size ->
+                    sendBroadcast(
+                        Intent(ActivityMain.ACTION_QUEUE_CHANGED)
+                            .setPackage(packageName)
+                            .putExtra(ActivityMain.EXTRA_SIZE, size)
+                    )
+                },
+                releaseWakeLock = {
+                    val wakeLock = getLock(this)
+                    if (wakeLock.isHeld) wakeLock.release() else Log.w(TAG, "Wakelock under-locked")
+                },
+            )
+        logHandler =
+            SinkholeLogHandler(
+                looper = logLooper,
+                context = applicationContext,
+                prefs = prefs,
+                shouldShowAccessNotification = { uid ->
+                    withPolicyRead { mapNotify[uid] != false }
+                },
+                showAccessNotification = ::showAccessNotification,
+            )
+        statsHandler =
+            SinkholeStatsHandler(
+                looper = statsLooper,
+                isEnabled = { !destroying && prefs.getBoolean("show_stats", false) },
+                onStarted = ::onStatsStarted,
+                onStopped = ::onStatsStopped,
+                onRefresh = ::renderTrafficStats,
+            )
 
         val ifUser = IntentFilter()
         ifUser.addAction(Intent.ACTION_USER_BACKGROUND)
         ifUser.addAction(Intent.ACTION_USER_FOREGROUND)
-        ContextCompat.registerReceiver(this, userReceiver, ifUser, ContextCompat.RECEIVER_NOT_EXPORTED)
+        ContextCompat.registerReceiver(
+            this,
+            userReceiver,
+            ifUser,
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
         registeredUser = true
 
         val ifIdle = IntentFilter()
         ifIdle.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED)
-        ContextCompat.registerReceiver(this, idleStateReceiver, ifIdle, ContextCompat.RECEIVER_NOT_EXPORTED)
+        ContextCompat.registerReceiver(
+            this,
+            idleStateReceiver,
+            ifIdle,
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
         registeredIdleState = true
 
         val ifAp = IntentFilter()
@@ -1799,7 +1570,7 @@ class ServiceSinkhole : VpnService() {
             this,
             apStateReceiver,
             ifAp,
-            ContextCompat.RECEIVER_NOT_EXPORTED
+            ContextCompat.RECEIVER_NOT_EXPORTED,
         )
         registeredApState = true
 
@@ -1811,7 +1582,7 @@ class ServiceSinkhole : VpnService() {
             this,
             packageChangedReceiver,
             ifPackage,
-            ContextCompat.RECEIVER_NOT_EXPORTED
+            ContextCompat.RECEIVER_NOT_EXPORTED,
         )
         registeredPackageChanged = true
 
@@ -1876,8 +1647,10 @@ class ServiceSinkhole : VpnService() {
 
         var actualIntent = intent
 
-        if (actualIntent != null && actualIntent.hasExtra(EXTRA_COMMAND) &&
-            getCommandExtra(actualIntent) == Command.set
+        if (
+            actualIntent != null &&
+                actualIntent.hasExtra(EXTRA_COMMAND) &&
+                getCommandExtra(actualIntent) == Command.set
         ) {
             set(actualIntent)
             return START_STICKY
@@ -1909,7 +1682,10 @@ class ServiceSinkhole : VpnService() {
         Log.i(
             TAG,
             "Start intent=$actualIntent command=$cmd reason=$reason" +
-                    " vpn=" + (vpn != null) + " user=" + (Process.myUid() / 100000),
+                " vpn=" +
+                (vpn != null) +
+                " user=" +
+                (Process.myUid() / 100000),
         )
 
         if (!commandHandler.queue(actualIntent)) {
@@ -1921,17 +1697,17 @@ class ServiceSinkhole : VpnService() {
 
     private fun set(intent: Intent) {
         val uid = intent.getIntExtra(EXTRA_UID, 0)
-        val network = intent.getStringExtra(EXTRA_NETWORK)
-        val pkg = intent.getStringExtra(EXTRA_PACKAGE)
+        val network = intent.getStringExtra(EXTRA_NETWORK) ?: return
+        val pkg = intent.getStringExtra(EXTRA_PACKAGE) ?: return
+        if (network != "wifi" && network != "other") return
         val blocked = intent.getBooleanExtra(EXTRA_BLOCKED, false)
         Log.i(TAG, "Set $pkg $network=$blocked")
 
-        val defaultWifi = prefs.getBoolean("whitelist_wifi", true)
-        val defaultOther = prefs.getBoolean("whitelist_other", true)
+        val defaultWifi = prefs.getBoolean(PreferenceKeys.WHITELIST_WIFI)
+        val defaultOther = prefs.getBoolean(PreferenceKeys.WHITELIST_OTHER)
 
-        val networkName = network ?: "other"
-        val key = PreferencesRepository.namespaced(networkName, pkg ?: "")
-        if (blocked == (if ("wifi" == networkName) defaultWifi else defaultOther)) {
+        val key = PreferencesRepository.namespaced(network, pkg)
+        if (blocked == (if ("wifi" == network) defaultWifi else defaultOther)) {
             prefs.remove(key)
         } else {
             prefs.putBoolean(key, blocked)
@@ -1939,7 +1715,7 @@ class ServiceSinkhole : VpnService() {
 
         reload("notification", this@ServiceSinkhole, false)
 
-        notifyNewApplication(uid, false)
+        notifications.showNewApplication(uid, false)
 
         val ruleset = Intent(ActivityMain.ACTION_RULES_CHANGED).setPackage(packageName)
         sendBroadcast(ruleset)
@@ -1959,6 +1735,7 @@ class ServiceSinkhole : VpnService() {
     override fun onDestroy() {
         destroying = true
         synchronized(this) {
+            updateExecutor.shutdownNow()
             Log.i(TAG, "Destroy")
             commandLooper.quit()
             logLooper.quit()
@@ -2030,10 +1807,6 @@ class ServiceSinkhole : VpnService() {
         notifications.removeLockdown()
     }
 
-    private fun showAutoStartNotification() {
-        notifications.showAutoStart()
-    }
-
     private fun showErrorNotification(message: String) {
         notifications.showError(message)
     }
@@ -2042,19 +1815,16 @@ class ServiceSinkhole : VpnService() {
         notifications.showAccess(uid)
     }
 
-    private fun showUpdateNotification(name: String, url: String) {
-        notifications.showUpdate(name, url)
-    }
-
     private fun removeWarningNotifications() {
         notifications.removeWarnings()
     }
 
     /** Records the effective VPN configuration so equivalent reloads can reuse the tunnel. */
     private inner class TrackingVpnBuilder : VpnService.Builder() {
-        private val fingerprint = VpnConfigurationFingerprint(
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager,
-        )
+        private val fingerprint =
+            VpnConfigurationFingerprint(
+                getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            )
 
         override fun setMtu(mtu: Int): VpnService.Builder {
             fingerprint.setMtu(mtu)
@@ -2132,8 +1902,7 @@ class ServiceSinkhole : VpnService() {
         private const val MAX_STATS_SAMPLES = 3_600L
         private const val USER_FOREGROUND_DELAY_MS = 3_000L
 
-        @Volatile
-        private var wlInstance: PowerManager.WakeLock? = null
+        @Volatile private var wlInstance: PowerManager.WakeLock? = null
 
         const val ACTION_HOUSE_HOLDING = "com.bernaferrari.quietguard.HOUSE_HOLDING"
         private const val ACTION_SCREEN_OFF_DELAYED =
@@ -2152,8 +1921,8 @@ class ServiceSinkhole : VpnService() {
             try {
                 var r = prefs.getString("pcap_record_size", null)
                 if (TextUtils.isEmpty(r)) r = "64"
-                recordSize = (r?.toIntOrNull() ?: 64)
-                    .coerceIn(MIN_PCAP_RECORD_SIZE, MAX_PCAP_RECORD_SIZE)
+                recordSize =
+                    (r?.toIntOrNull() ?: 64).coerceIn(MIN_PCAP_RECORD_SIZE, MAX_PCAP_RECORD_SIZE)
             } catch (ex: Throwable) {
                 Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
             }
@@ -2162,19 +1931,24 @@ class ServiceSinkhole : VpnService() {
             try {
                 var f = prefs.getString("pcap_file_size", null)
                 if (TextUtils.isEmpty(f)) f = "2"
-                val fileSizeMib = (f?.toIntOrNull() ?: 2)
-                    .coerceIn(MIN_PCAP_FILE_SIZE_MIB, MAX_PCAP_FILE_SIZE_MIB)
+                val fileSizeMib =
+                    (f?.toIntOrNull() ?: 2).coerceIn(MIN_PCAP_FILE_SIZE_MIB, MAX_PCAP_FILE_SIZE_MIB)
                 fileSize = fileSizeMib * 1024 * 1024
             } catch (ex: Throwable) {
                 Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
             }
 
-            val pcap = if (enabled) File(
-                context.getDir("data", Context.MODE_PRIVATE),
-                "netguard.pcap"
-            ) else null
+            val pcap =
+                if (enabled)
+                    File(
+                        context.getDir("data", Context.MODE_PRIVATE),
+                        "netguard.pcap",
+                    )
+                else null
             try {
-                engine.configurePcap(NativePcapConfig(pcap?.absolutePath, recordSize, fileSize.toLong()))
+                engine.configurePcap(
+                    NativePcapConfig(pcap?.absolutePath, recordSize, fileSize.toLong())
+                )
             } catch (ex: Throwable) {
                 Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
             }
@@ -2208,114 +1982,61 @@ class ServiceSinkhole : VpnService() {
         fun getDns(context: Context): List<InetAddress> = SinkholeDnsResolver.resolve(context)
 
         @JvmStatic
-        fun run(reason: String, context: Context) {
-            val intent = Intent(context, ServiceSinkhole::class.java)
-            intent.putExtra(EXTRA_COMMAND, Command.run)
-            intent.putExtra(EXTRA_REASON, reason)
-            try {
-                ContextCompat.startForegroundService(context, intent)
-            } catch (ex: Throwable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
-                    try {
-                        context.startService(intent)
-                    } catch (exex: Throwable) {
-                        Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
-                    }
-                }
-            }
-        }
+        fun run(reason: String, context: Context) = sendCommand(context, Command.run, reason)
 
         @JvmStatic
-        fun start(reason: String, context: Context) {
-            val intent = Intent(context, ServiceSinkhole::class.java)
-            intent.putExtra(EXTRA_COMMAND, Command.start)
-            intent.putExtra(EXTRA_REASON, reason)
-            try {
-                ContextCompat.startForegroundService(context, intent)
-            } catch (ex: Throwable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
-                    try {
-                        context.startService(intent)
-                    } catch (exex: Throwable) {
-                        Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
-                    }
-                }
-            }
-        }
+        fun start(reason: String, context: Context) = sendCommand(context, Command.start, reason)
 
         @JvmStatic
         fun reload(reason: String, context: Context, interactive: Boolean) {
-            if (context.preferences().getBoolean("enabled", false)) {
-                val intent = Intent(context, ServiceSinkhole::class.java)
-                intent.putExtra(EXTRA_COMMAND, Command.reload)
-                intent.putExtra(EXTRA_REASON, reason)
-                intent.putExtra(EXTRA_INTERACTIVE, interactive)
-                try {
-                    ContextCompat.startForegroundService(context, intent)
-                } catch (ex: Throwable) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
-                        try {
-                            context.startService(intent)
-                        } catch (exex: Throwable) {
-                            Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
-                        }
-                    }
+            if (context.preferences().getBoolean(PreferenceKeys.ENABLED)) {
+                sendCommand(context, Command.reload, reason) {
+                    putExtra(EXTRA_INTERACTIVE, interactive)
                 }
             }
         }
 
         @JvmStatic
-        fun stop(reason: String, context: Context, vpnonly: Boolean) {
-            val intent = Intent(context, ServiceSinkhole::class.java)
-            intent.putExtra(EXTRA_COMMAND, Command.stop)
-            intent.putExtra(EXTRA_REASON, reason)
-            intent.putExtra(EXTRA_TEMPORARY, vpnonly)
-            try {
-                ContextCompat.startForegroundService(context, intent)
-            } catch (ex: Throwable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
-                    try {
-                        context.startService(intent)
-                    } catch (exex: Throwable) {
-                        Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
-                    }
-                }
-            }
-        }
+        fun stop(reason: String, context: Context, vpnonly: Boolean) =
+            sendCommand(context, Command.stop, reason) { putExtra(EXTRA_TEMPORARY, vpnonly) }
 
         @JvmStatic
-        fun reloadStats(reason: String, context: Context) {
-            val intent = Intent(context, ServiceSinkhole::class.java)
-            intent.putExtra(EXTRA_COMMAND, Command.stats)
-            intent.putExtra(EXTRA_REASON, reason)
-            try {
-                ContextCompat.startForegroundService(context, intent)
-            } catch (ex: Throwable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
-                    try {
-                        context.startService(intent)
-                    } catch (exex: Throwable) {
-                        Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
-                    }
-                }
-            }
-        }
+        fun reloadStats(reason: String, context: Context) =
+            sendCommand(context, Command.stats, reason)
 
         @JvmStatic
-        fun checkForUpdateNow(reason: String, context: Context) {
-            val intent = Intent(context, ServiceSinkhole::class.java)
-            intent.putExtra(EXTRA_COMMAND, Command.updatecheck)
-            intent.putExtra(EXTRA_REASON, reason)
+        fun checkForUpdateNow(reason: String, context: Context) =
+            sendCommand(context, Command.updatecheck, reason)
+
+        private fun sendCommand(
+            context: Context,
+            command: Command,
+            reason: String,
+            extras: Intent.() -> Unit = {},
+        ) {
+            val intent =
+                Intent(context, ServiceSinkhole::class.java).apply {
+                    putExtra(EXTRA_COMMAND, command)
+                    putExtra(EXTRA_REASON, reason)
+                    extras()
+                }
             try {
                 ContextCompat.startForegroundService(context, intent)
-            } catch (ex: Throwable) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ex is ForegroundServiceStartNotAllowedException) {
+            } catch (failure: IllegalStateException) {
+                if (
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                        failure is ForegroundServiceStartNotAllowedException
+                ) {
                     try {
                         context.startService(intent)
-                    } catch (exex: Throwable) {
-                        Log.e(TAG, exex.toString() + "\n" + Log.getStackTraceString(exex))
+                    } catch (fallbackFailure: IllegalStateException) {
+                        Log.w(TAG, "Could not start service for $command", fallbackFailure)
                     }
+                } else {
+                    Log.w(TAG, "Could not start foreground service for $command", failure)
                 }
+            } catch (failure: SecurityException) {
+                Log.w(TAG, "Could not start foreground service for $command", failure)
             }
         }
     }

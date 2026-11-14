@@ -4,99 +4,75 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.res.XmlResourceParser
-import android.database.Cursor
 import android.os.Build
 import android.os.Process
 import android.util.Log
+import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.data.preferences
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
 import com.bernaferrari.quietguard.shared.R
-import org.xmlpull.v1.XmlPullParser
 import java.text.Collator
 import java.util.Locale
+import org.xmlpull.v1.XmlPullParser
 
-class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: Context) {
-    @JvmField
-    var uid: Int = 0
+class Rule private constructor(info: PackageInfo, context: Context) {
+    var visible = true
+        private set
 
-    @JvmField
-    var packageName: String? = null
+    @JvmField var uid: Int = 0
 
-    @JvmField
-    var icon: Int = 0
+    @JvmField var packageName: String? = null
 
-    @JvmField
-    var name: String? = null
+    @JvmField var icon: Int = 0
 
-    @JvmField
-    var version: String? = null
+    @JvmField var name: String? = null
 
-    @JvmField
-    var system: Boolean = false
+    @JvmField var version: String? = null
 
-    @JvmField
-    var internet: Boolean = false
+    @JvmField var system: Boolean = false
 
-    @JvmField
-    var enabled: Boolean = false
+    @JvmField var internet: Boolean = false
 
-    @JvmField
-    var pkg: Boolean = true
+    @JvmField var enabled: Boolean = false
 
-    @JvmField
-    var wifi_default: Boolean = false
+    @JvmField var pkg: Boolean = true
 
-    @JvmField
-    var other_default: Boolean = false
+    @JvmField var wifi_default: Boolean = false
 
-    @JvmField
-    var screen_wifi_default: Boolean = false
+    @JvmField var other_default: Boolean = false
 
-    @JvmField
-    var screen_other_default: Boolean = false
+    @JvmField var screen_wifi_default: Boolean = false
 
-    @JvmField
-    var roaming_default: Boolean = false
+    @JvmField var screen_other_default: Boolean = false
 
-    @JvmField
-    var wifi_blocked: Boolean = false
+    @JvmField var roaming_default: Boolean = false
 
-    @JvmField
-    var other_blocked: Boolean = false
+    @JvmField var wifi_blocked: Boolean = false
 
-    @JvmField
-    var screen_wifi: Boolean = false
+    @JvmField var other_blocked: Boolean = false
 
-    @JvmField
-    var screen_other: Boolean = false
+    @JvmField var screen_wifi: Boolean = false
 
-    @JvmField
-    var roaming: Boolean = false
+    @JvmField var screen_other: Boolean = false
 
-    @JvmField
-    var lockdown: Boolean = false
+    @JvmField var roaming: Boolean = false
 
-    @JvmField
-    var apply: Boolean = true
+    @JvmField var lockdown: Boolean = false
 
-    @JvmField
-    var notify: Boolean = true
+    @JvmField var apply: Boolean = true
 
-    @JvmField
-    var relateduids: Boolean = false
+    @JvmField var notify: Boolean = true
 
-    @JvmField
-    var related: Array<String>? = null
+    @JvmField var relateduids: Boolean = false
 
-    @JvmField
-    var hosts: Long = 0
+    @JvmField var related: Array<String>? = null
 
-    @JvmField
-    var changed: Boolean = false
+    @JvmField var hosts: Long = 0
 
-    @JvmField
-    var expanded: Boolean = false
+    @JvmField var changed: Boolean = false
+
+    @JvmField var expanded: Boolean = false
 
     init {
         val appInfo = requireNotNull(info.applicationInfo)
@@ -155,29 +131,10 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
             }
 
             else -> {
-                var cursor: Cursor? = null
-                try {
-                    cursor = dh.getApp(packageNameValue)
-                    if (cursor.moveToNext()) {
-                        val labelColumn = cursor.getColumnIndexOrThrow("label")
-                        val systemColumn = cursor.getColumnIndexOrThrow("system")
-                        val internetColumn = cursor.getColumnIndexOrThrow("internet")
-                        val enabledColumn = cursor.getColumnIndexOrThrow("enabled")
-                        name = cursor.getString(labelColumn)
-                        system = cursor.getInt(systemColumn) > 0
-                        internet = cursor.getInt(internetColumn) > 0
-                        enabled = cursor.getInt(enabledColumn) > 0
-                    } else {
-                        name = getLabel(info, context)
-                        system = isSystem(packageNameValue, context)
-                        internet = hasInternet(packageNameValue, context)
-                        enabled = isEnabled(info, context)
-
-                        dh.addApp(packageNameValue, name, system, internet, enabled)
-                    }
-                } finally {
-                    cursor?.close()
-                }
+                name = getLabel(info, context)
+                system = isSystem(packageNameValue, context)
+                internet = hasInternet(packageNameValue, context)
+                enabled = isEnabled(info, context)
             }
         }
     }
@@ -185,25 +142,17 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
     private fun updateChanged(
         default_wifi: Boolean,
         default_other: Boolean,
-        default_roaming: Boolean
+        default_roaming: Boolean,
     ) {
         changed =
             wifi_blocked != default_wifi ||
-                    other_blocked != default_other ||
-                    (wifi_blocked && screen_wifi != screen_wifi_default) ||
-                    (other_blocked && screen_other != screen_other_default) ||
-                    ((!other_blocked || screen_other) && roaming != default_roaming) ||
-                    hosts > 0 ||
-                    lockdown ||
-                    !apply
-    }
-
-    fun updateChanged(context: Context) {
-        val screen_on = context.preferences().getBoolean("screen_on", false)
-        val default_wifi = context.preferences().getBoolean("whitelist_wifi", true) && screen_on
-        val default_other = context.preferences().getBoolean("whitelist_other", true) && screen_on
-        val default_roaming = context.preferences().getBoolean("whitelist_roaming", true)
-        updateChanged(default_wifi, default_other, default_roaming)
+                other_blocked != default_other ||
+                (wifi_blocked && screen_wifi != screen_wifi_default) ||
+                (other_blocked && screen_other != screen_other_default) ||
+                ((!other_blocked || screen_other) && roaming != default_roaming) ||
+                hosts > 0 ||
+                lockdown ||
+                !apply
     }
 
     override fun toString(): String {
@@ -213,6 +162,7 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
     companion object {
         private const val TAG = "NetGuard.Rule"
 
+        private val cacheLock = Any()
         private var cachePackageInfo: List<PackageInfo>? = null
         private val cacheLabel = HashMap<PackageInfo, String>()
         private val cacheSystem = HashMap<String, Boolean>()
@@ -258,30 +208,29 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
         }
 
         @JvmStatic
-        fun clearCache(context: Context) {
+        fun clearCache() {
             Log.i(TAG, "Clearing cache")
-            synchronized(context.applicationContext) {
+            synchronized(cacheLock) {
                 cachePackageInfo = null
                 cacheLabel.clear()
                 cacheSystem.clear()
                 cacheInternet.clear()
                 cacheEnabled.clear()
             }
-            val dh = DatabaseHelper.getInstance(context)
-            dh.clearApps()
         }
 
         @JvmStatic
-        fun getRules(all: Boolean, context: Context): List<Rule> {
-            synchronized(context.applicationContext) {
-                var default_wifi = context.preferences().getBoolean("whitelist_wifi", true)
-                var default_other = context.preferences().getBoolean("whitelist_other", true)
+        fun getRules(all: Boolean, context: Context, refresh: Boolean = false): List<Rule> {
+            synchronized(cacheLock) {
+                if (refresh) clearCache()
+                val default_wifi = context.preferences().getBoolean(PreferenceKeys.WHITELIST_WIFI)
+                val default_other = context.preferences().getBoolean(PreferenceKeys.WHITELIST_OTHER)
                 var default_screen_wifi = context.preferences().getBoolean("screen_wifi", false)
                 var default_screen_other = context.preferences().getBoolean("screen_other", false)
                 val default_roaming = context.preferences().getBoolean("whitelist_roaming", true)
 
                 val manage_system = context.preferences().getBoolean("manage_system", false)
-                val screen_on = context.preferences().getBoolean("screen_on", true)
+                val screen_on = context.preferences().getBoolean(PreferenceKeys.SCREEN_ON)
                 val show_user = context.preferences().getBoolean("show_user", true)
                 val show_system = context.preferences().getBoolean("show_system", false)
                 val show_nointernet = context.preferences().getBoolean("show_nointernet", true)
@@ -312,19 +261,22 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                                     val pkg = xml.getAttributeValue(null, "package")
                                     val pblocked =
                                         xml.getAttributeBooleanValue(null, "blocked", false)
-                                    val proaming = xml.getAttributeBooleanValue(
-                                        null,
-                                        "roaming",
-                                        default_roaming
-                                    )
+                                    val proaming =
+                                        xml.getAttributeBooleanValue(
+                                            null,
+                                            "roaming",
+                                            default_roaming,
+                                        )
                                     pre_other_blocked[pkg] = pblocked
                                     pre_roaming[pkg] = proaming
                                 }
 
                                 "relation" -> {
                                     val pkg = xml.getAttributeValue(null, "package")
-                                    val rel = xml.getAttributeValue(null, "related").split(",")
-                                        .toTypedArray()
+                                    val rel =
+                                        xml.getAttributeValue(null, "related")
+                                            .split(",")
+                                            .toTypedArray()
                                     pre_related[pkg] = rel
                                 }
 
@@ -346,84 +298,97 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
 
                 val userId = Process.myUid() / 100000
 
-                val root = PackageInfo().apply {
-                    packageName = "root"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 0
-                        icon = 0
+                val root =
+                    PackageInfo().apply {
+                        packageName = "root"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 0
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(root)
 
-                val media = PackageInfo().apply {
-                    packageName = "android.media"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 1013 + userId * 100000
-                        icon = 0
+                val media =
+                    PackageInfo().apply {
+                        packageName = "android.media"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 1013 + userId * 100000
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(media)
 
-                val mdr = PackageInfo().apply {
-                    packageName = "android.multicast"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 1020 + userId * 100000
-                        icon = 0
+                val mdr =
+                    PackageInfo().apply {
+                        packageName = "android.multicast"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 1020 + userId * 100000
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(mdr)
 
-                val gps = PackageInfo().apply {
-                    packageName = "android.gps"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 1021 + userId * 100000
-                        icon = 0
+                val gps =
+                    PackageInfo().apply {
+                        packageName = "android.gps"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 1021 + userId * 100000
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(gps)
 
-                val dns = PackageInfo().apply {
-                    packageName = "android.dns"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 1051 + userId * 100000
-                        icon = 0
+                val dns =
+                    PackageInfo().apply {
+                        packageName = "android.dns"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 1051 + userId * 100000
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(dns)
 
-                val nobody = PackageInfo().apply {
-                    packageName = "nobody"
-                    versionName = Build.VERSION.RELEASE
-                    applicationInfo = ApplicationInfo().apply {
-                        uid = 9999
-                        icon = 0
+                val nobody =
+                    PackageInfo().apply {
+                        packageName = "nobody"
+                        versionName = Build.VERSION.RELEASE
+                        applicationInfo =
+                            ApplicationInfo().apply {
+                                uid = 9999
+                                icon = 0
+                            }
                     }
-                }
                 listPI.add(nobody)
 
-                val dh = DatabaseHelper.getInstance(context)
+                val hostCounts = AndroidFirewallDatabase.getInstance(context).getHostCounts()
+                val packagesByUid = listPI.groupBy { it.applicationInfo?.uid }
                 for (info in listPI) {
                     try {
                         val appInfo = info.applicationInfo ?: continue
                         if (appInfo.uid == Process.myUid()) continue
 
-                        val rule = Rule(dh, info, context)
+                        val rule = Rule(info, context)
 
                         if (pre_system.containsKey(info.packageName)) {
                             rule.system = pre_system[info.packageName] == true
                         }
                         if (appInfo.uid == Process.myUid()) rule.system = true
 
-                        if (all ||
-                            ((if (rule.system) show_system else show_user) &&
-                                    (show_nointernet || rule.internet) &&
-                                    (show_disabled || rule.enabled))
-                        ) {
+                        rule.visible =
+                            (if (rule.system) show_system else show_user) &&
+                                (show_nointernet || rule.internet) &&
+                                (show_disabled || rule.enabled)
+                        if (all || rule.visible) {
                             rule.wifi_default = pre_wifi_blocked[info.packageName] ?: default_wifi
                             rule.other_default =
                                 pre_other_blocked[info.packageName] ?: default_other
@@ -434,40 +399,69 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                             val packageName = info.packageName
                             rule.wifi_blocked =
                                 (!(rule.system && !manage_system) &&
-                                        context.preferences().getBoolean(
+                                    context
+                                        .preferences()
+                                        .getBoolean(
                                             PreferencesRepository.namespaced("wifi", packageName),
-                                            rule.wifi_default
+                                            rule.wifi_default,
                                         ))
                             rule.other_blocked =
                                 (!(rule.system && !manage_system) &&
-                                        context.preferences().getBoolean(
+                                    context
+                                        .preferences()
+                                        .getBoolean(
                                             PreferencesRepository.namespaced("other", packageName),
-                                            rule.other_default
+                                            rule.other_default,
                                         ))
                             rule.screen_wifi =
-                                context.preferences().getBoolean(
-                                    PreferencesRepository.namespaced("screen_wifi", packageName),
-                                    rule.screen_wifi_default
-                                ) &&
-                                        screen_on
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced(
+                                            "screen_wifi",
+                                            packageName,
+                                        ),
+                                        rule.screen_wifi_default,
+                                    ) && screen_on
                             rule.screen_other =
-                                context.preferences().getBoolean(
-                                    PreferencesRepository.namespaced("screen_other", packageName),
-                                    rule.screen_other_default
-                                ) &&
-                                        screen_on
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced(
+                                            "screen_other",
+                                            packageName,
+                                        ),
+                                        rule.screen_other_default,
+                                    ) && screen_on
                             rule.roaming =
-                                context.preferences().getBoolean(
-                                    PreferencesRepository.namespaced("roaming", packageName),
-                                    rule.roaming_default
-                                )
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced("roaming", packageName),
+                                        rule.roaming_default,
+                                    )
                             rule.lockdown =
-                                context.preferences().getBoolean(PreferencesRepository.namespaced("lockdown", packageName), false)
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced("lockdown", packageName),
+                                        false,
+                                    )
 
                             rule.apply =
-                                context.preferences().getBoolean(PreferencesRepository.namespaced("apply", packageName), true)
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced("apply", packageName),
+                                        true,
+                                    )
                             rule.notify =
-                                context.preferences().getBoolean(PreferencesRepository.namespaced("notify", packageName), true)
+                                context
+                                    .preferences()
+                                    .getBoolean(
+                                        PreferencesRepository.namespaced("notify", packageName),
+                                        true,
+                                    )
 
                             val listPkg = ArrayList<String>()
                             if (pre_related.containsKey(info.packageName)) {
@@ -475,16 +469,15 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                                     pre_related[info.packageName]?.toList() ?: emptyList()
                                 )
                             }
-                            for (pi in listPI) {
-                                val piAppInfo = pi.applicationInfo ?: continue
-                                if (piAppInfo.uid == rule.uid && pi.packageName != rule.packageName) {
+                            for (pi in packagesByUid[rule.uid].orEmpty()) {
+                                if (pi.packageName != rule.packageName) {
                                     rule.relateduids = true
                                     listPkg.add(pi.packageName)
                                 }
                             }
                             rule.related = listPkg.toTypedArray()
 
-                            rule.hosts = dh.getHostCount(rule.uid, true)
+                            rule.hosts = hostCounts[rule.uid] ?: 0
                             rule.updateChanged(default_wifi, default_other, default_roaming)
 
                             listRules.add(rule)
@@ -494,9 +487,10 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                     }
                 }
 
-                val collator = Collator.getInstance(Locale.getDefault()).apply {
-                    strength = Collator.SECONDARY
-                }
+                val collator =
+                    Collator.getInstance(Locale.getDefault()).apply {
+                        strength = Collator.SECONDARY
+                    }
 
                 val sort = context.preferences().getString("sort", "name")
                 if (sort == "uid") {

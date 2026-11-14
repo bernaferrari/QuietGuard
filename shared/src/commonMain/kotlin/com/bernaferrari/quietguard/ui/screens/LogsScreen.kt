@@ -21,13 +21,11 @@ import com.bernaferrari.quietguard.generated.resources.menu_protocol_udp
 import com.bernaferrari.quietguard.generated.resources.menu_search
 import com.bernaferrari.quietguard.generated.resources.menu_traffic_allowed
 import com.bernaferrari.quietguard.generated.resources.menu_traffic_blocked
-import com.bernaferrari.quietguard.generated.resources.msg_log_disabled
 import com.bernaferrari.quietguard.generated.resources.setting_log_app
 import com.bernaferrari.quietguard.generated.resources.status_copied
 import com.bernaferrari.quietguard.generated.resources.summary_log_app
 import com.bernaferrari.quietguard.generated.resources.title_enable_filtering
 import com.bernaferrari.quietguard.generated.resources.title_enable_help2
-import com.bernaferrari.quietguard.generated.resources.title_pro
 import com.bernaferrari.quietguard.generated.resources.ui_empty_logs_body
 import com.bernaferrari.quietguard.generated.resources.ui_empty_logs_title
 import com.bernaferrari.quietguard.generated.resources.ui_filter_all
@@ -41,7 +39,6 @@ import com.bernaferrari.quietguard.generated.resources.ui_log_details_app_id
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_destination
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_protocol
 import com.bernaferrari.quietguard.generated.resources.ui_log_details_time
-import com.bernaferrari.quietguard.generated.resources.ui_learn_more
 import com.bernaferrari.quietguard.generated.resources.ui_log_open_app_rules
 import com.bernaferrari.quietguard.generated.resources.ui_multicast_all_nodes
 import com.bernaferrari.quietguard.generated.resources.ui_multicast_all_routers
@@ -164,7 +161,6 @@ fun LogsScreen(
 ) {
     val spacing = MaterialTheme.spacing
     val logsUi by viewModel.uiState.collectAsStateWithLifecycle()
-    val hasLog = remember { viewModel.hasLogPro() }
     val unknownSourceLabel = stringResource(Res.string.ui_logs_unknown_source)
     val loggingEnabled = logsUi.loggingEnabled
     val filteringEnabled = logsUi.filteringEnabled
@@ -258,7 +254,7 @@ fun LogsScreen(
                 },
                 actions = {
                     // Filters only make sense once there is a log to filter.
-                    if (hasLog && loggingEnabled) {
+                    if (loggingEnabled) {
                         ProtocolFilterButton(
                             selected = protocolFilter,
                             onSelect = { viewModel.setProtocolFilter(it) },
@@ -297,23 +293,12 @@ fun LogsScreen(
                 .padding(padding),
         ) {
             // One row, like the Firewall list: the outcome is the filter people reach for.
-            if (hasLog && loggingEnabled) {
+            if (loggingEnabled) {
                 LogsOutcomeRow(
                     selected = outcomeFilter,
                     onSelect = { viewModel.setOutcomeFilter(it) },
                     modifier = Modifier.padding(horizontal = spacing.default, vertical = spacing.small),
                 )
-            }
-
-            if (!hasLog) {
-                StatePlaceholder(
-                    title = stringResource(Res.string.title_pro),
-                    message = stringResource(Res.string.msg_log_disabled),
-                    icon = MaterialSymbols.Filled.Inbox,
-                    actionLabel = stringResource(Res.string.ui_learn_more),
-                    onAction = viewModel::openPro,
-                )
-                return@Column
             }
 
             if (loggingEnabled && !filteringEnabled) {

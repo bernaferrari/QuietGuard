@@ -3,8 +3,6 @@ package com.bernaferrari.quietguard.platform
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import com.bernaferrari.quietguard.ActivityPro
-import com.bernaferrari.quietguard.IAB
 import com.bernaferrari.quietguard.ServiceExternal
 import com.bernaferrari.quietguard.ServiceSinkhole
 import com.bernaferrari.quietguard.Util
@@ -33,7 +31,8 @@ fun installNetGuardPlatformBindings() {
 
             override val extraUpdateCheckStatus: String = ServiceSinkhole.EXTRA_UPDATE_CHECK_STATUS
 
-            override val extraUpdateCheckVersion: String = ServiceSinkhole.EXTRA_UPDATE_CHECK_VERSION
+            override val extraUpdateCheckVersion: String =
+                ServiceSinkhole.EXTRA_UPDATE_CHECK_VERSION
         }
 
     NetGuardPlatform.widgets =
@@ -66,22 +65,13 @@ fun installNetGuardPlatformBindings() {
             }
         }
 
-    NetGuardPlatform.proFeatures =
-        object : ProFeaturesBridge {
-            override val logSku: String = ActivityPro.SKU_LOG
-
-            override fun isPurchased(sku: String): Boolean = IAB.isPurchased(sku, context)
-
-            override fun openProScreen() {
-                context.startActivity(Intent(context, ActivityPro::class.java))
-            }
-        }
-
     NetGuardPlatform.ruleHelpers =
         object : RuleHelperBridge {
-            override fun isSystem(packageName: String): Boolean = Util.isSystem(packageName, context)
+            override fun isSystem(packageName: String): Boolean =
+                Util.isSystem(packageName, context)
 
-            override fun hasInternet(packageName: String): Boolean = Util.hasInternet(packageName, context)
+            override fun hasInternet(packageName: String): Boolean =
+                Util.hasInternet(packageName, context)
 
             override fun isEnabled(packageName: String): Boolean {
                 val pm = context.packageManager
@@ -97,7 +87,8 @@ fun installNetGuardPlatformBindings() {
             override fun areNotificationsEnabled(): Boolean =
                 androidx.core.app.NotificationManagerCompat.from(context).areNotificationsEnabled()
 
-            override fun getApplicationNames(uid: Int): List<String> = Util.getApplicationNames(uid, context)
+            override fun getApplicationNames(uid: Int): List<String> =
+                Util.getApplicationNames(uid, context)
 
             override fun getProtocolName(protocol: Int, version: Int, brief: Boolean): String =
                 Util.getProtocolName(protocol, version, brief)

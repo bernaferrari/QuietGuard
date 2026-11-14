@@ -26,19 +26,22 @@ class MainViewModel(
     private val rulesRepository: RulesRepository,
 ) : ViewModel() {
     private var pendingRefreshJob: Job? = null
+    private var loadJob: Job? = null
 
     val firewallState: StateFlow<UiAsyncState<Boolean>> =
-        combine(preferencesRepository.enabledFlow, preferencesRepository.isLoaded) { enabled, loaded ->
-            UiAsyncState(
-                data = enabled,
-                isLoading = !loaded,
-                hasReceived = loaded,
+        combine(preferencesRepository.enabledFlow, preferencesRepository.isLoaded) { enabled, loaded
+                ->
+                UiAsyncState(
+                    data = enabled,
+                    isLoading = !loaded,
+                    hasReceived = loaded,
+                )
+            }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                UiAsyncState(data = false, isLoading = true),
             )
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            UiAsyncState(data = false, isLoading = true),
-        )
     private val _rulesUiState = MutableStateFlow(UiAsyncState<List<FirewallRule>>(emptyList()))
     val rulesUiState: StateFlow<UiAsyncState<List<FirewallRule>>> = _rulesUiState.asStateFlow()
 
@@ -47,20 +50,17 @@ class MainViewModel(
             preferencesRepository.changes.collect { changedKeys ->
                 if (changedKeys.any { !PreferenceKeys.isPerAppRuleKey(it) }) {
                     pendingRefreshJob?.cancel()
-                    pendingRefreshJob =
-                        launch {
-                            delay(300L)
-                            loadRules(refreshFromSystem = false)
-                        }
+                    pendingRefreshJob = launch {
+                        delay(300L)
+                        loadRules(refreshFromSystem = false)
+                    }
                 }
             }
         }
     }
 
     fun setEnabled(enabled: Boolean) {
-        viewModelScope.launch {
-            preferencesRepository.setEnabled(enabled)
-        }
+        preferencesRepository.putBoolean(PreferenceKeys.ENABLED, enabled)
     }
 
     fun ensureRulesLoaded() {
@@ -76,20 +76,20 @@ class MainViewModel(
     }
 
     private fun loadRules(refreshFromSystem: Boolean) {
-        if (_rulesUiState.value.isLoading) {
-            return
-        }
-        viewModelScope.launch {
-            _rulesUiState.update { it.copy(isLoading = true, error = null) }
+        loadJob?.cancel()
+        _rulesUiState.update { it.copy(isLoading = true, error = null) }
+        loadJob = viewModelScope.launch {
             try {
                 val loaded =
-                    rulesRepository.loadRules(refresh = refreshFromSystem)
-                        .sortedBy { (it.name ?: it.packageName.orEmpty()).lowercase() }
-                _rulesUiState.value = UiAsyncState(
-                    data = loaded,
-                    isLoading = false,
-                    hasReceived = true,
-                )
+                    rulesRepository.loadRules(refresh = refreshFromSystem).sortedBy {
+                        (it.name ?: it.packageName.orEmpty()).lowercase()
+                    }
+                _rulesUiState.value =
+                    UiAsyncState(
+                        data = loaded,
+                        isLoading = false,
+                        hasReceived = true,
+                    )
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Throwable) {

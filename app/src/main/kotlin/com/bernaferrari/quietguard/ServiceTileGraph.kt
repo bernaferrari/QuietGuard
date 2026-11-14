@@ -1,11 +1,8 @@
 package com.bernaferrari.quietguard
 
-import com.bernaferrari.quietguard.shared.R
-
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.preferences
@@ -29,11 +26,7 @@ class ServiceTileGraph : PreferenceTileService() {
         Log.i(TAG, "Click")
 
         val stats = !applicationContext.preferences().getBoolean(PreferenceKeys.SHOW_STATS, false)
-        if (stats && !IAB.isPurchased(ActivityPro.SKU_SPEED, this)) {
-            Toast.makeText(this, R.string.title_pro_feature, Toast.LENGTH_SHORT).show()
-        } else {
-            applicationContext.preferences().putBoolean(PreferenceKeys.SHOW_STATS, stats)
-        }
+        applicationContext.preferences().putBoolean(PreferenceKeys.SHOW_STATS, stats)
         ServiceSinkhole.reloadStats("tile", this)
     }
 

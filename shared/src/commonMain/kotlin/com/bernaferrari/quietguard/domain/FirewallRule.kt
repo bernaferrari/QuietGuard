@@ -21,5 +21,6 @@ data class FirewallRule(
     var system: Boolean = false,
     var internet: Boolean = false,
     var enabled: Boolean = true,
+    val installedPackage: Boolean = true,
     var related: List<String> = emptyList(),
 )

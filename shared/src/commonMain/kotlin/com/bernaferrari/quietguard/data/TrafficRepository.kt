@@ -22,8 +22,8 @@ import org.koin.core.annotation.Single
 /**
  * UI-facing traffic/log/DNS/forwarding access via Koin.
  *
- * Screens inject this instead of calling platform expect/actual functions directly.
- * Platform implementations still do the work (Room Flow on wasm, DatabaseHelper on Android).
+ * Screens inject this instead of calling platform expect/actual functions directly. Platform
+ * implementations still do the work (Room Flow on wasm, Room on Android).
  */
 @Single
 class TrafficRepository {
@@ -42,7 +42,8 @@ class TrafficRepository {
 
     fun observeAccess(uid: Int): Flow<List<AccessEntry>> = observeAccessEntries(uid)
 
-    fun appDisplay(uid: Int, fallbackLabel: String): AppDisplayInfo = loadAppDisplayInfo(uid, fallbackLabel)
+    fun appDisplay(uid: Int, fallbackLabel: String): AppDisplayInfo =
+        loadAppDisplayInfo(uid, fallbackLabel)
 
     suspend fun cleanupDnsEntries() = platformCleanupDns()
 

@@ -17,5 +17,4 @@ private var dataStoreInstance: DataStore<Preferences>? = null
 fun createPreferencesDataStore(): DataStore<Preferences> =
     dataStoreInstance ?: createPlatformDataStore().also { dataStoreInstance = it }
 
-fun createPreferencesRepository(): PreferencesRepository =
-    PreferencesRepository(createPreferencesDataStore())
+internal expect fun readInitialPreferences(dataStore: DataStore<Preferences>): Preferences?

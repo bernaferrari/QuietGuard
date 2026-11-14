@@ -1,7 +1,9 @@
 package com.bernaferrari.quietguard.data.db
 
 internal suspend fun seedWebDemoDataIfEmpty(dao: NetGuardDao) {
-    if (dao.getLogLimited(udp = 1, tcp = 1, other = 1, allowed = 1, blocked = 1, limit = 1).isNotEmpty()) {
+    if (
+        dao.getLogs(udp = 1, tcp = 1, other = 1, allowed = 1, blocked = 1, limit = 1).isNotEmpty()
+    ) {
         return
     }
 
@@ -10,45 +12,47 @@ internal suspend fun seedWebDemoDataIfEmpty(dao: NetGuardDao) {
     }
 
     listOf(
-        dns(1_700_000_000_000L, "google.com", "google.com", "A", 300_000, 10101),
-        dns(1_700_000_050_000L, "gmail.com", "gmail.com", "A", 300_000, 10102),
-        dns(1_700_000_100_000L, "spotify.com", "spotify.com", "A", 300_000, 10103),
-        dns(1_700_000_150_000L, "cdninstagram.com", "cdninstagram.com", "A", 300_000, 10104),
-        dns(1_700_000_200_000L, "whatsapp.net", "whatsapp.net", "A", 300_000, 10105),
-    ).forEach { dao.insertDns(it) }
+            dns(1_700_000_000_000L, "google.com", "google.com", "A", 300_000, 10101),
+            dns(1_700_000_050_000L, "gmail.com", "gmail.com", "A", 300_000, 10102),
+            dns(1_700_000_100_000L, "spotify.com", "spotify.com", "A", 300_000, 10103),
+            dns(1_700_000_150_000L, "cdninstagram.com", "cdninstagram.com", "A", 300_000, 10104),
+            dns(1_700_000_200_000L, "whatsapp.net", "whatsapp.net", "A", 300_000, 10105),
+        )
+        .forEach { dao.insertDns(it) }
 
     dao.insertForward(
-        ForwardEntity(protocol = 6, dport = 8080, raddr = "192.168.1.10", rport = 80, ruid = 10101),
+        ForwardEntity(protocol = 6, dport = 8080, raddr = "192.168.1.10", rport = 80, ruid = 10101)
     )
 
     listOf(
-        AccessEntity(
-            uid = 10101,
-            version = 4,
-            protocol = 6,
-            daddr = "142.250.80.46",
-            dport = 443,
-            time = 1_700_000_000_000L,
-            allowed = 0,
-            block = -1,
-            sent = null,
-            received = null,
-            connections = null,
-        ),
-        AccessEntity(
-            uid = 10101,
-            version = 4,
-            protocol = 17,
-            daddr = "8.8.8.8",
-            dport = 53,
-            time = 1_700_000_100_000L,
-            allowed = 1,
-            block = -1,
-            sent = null,
-            received = null,
-            connections = null,
-        ),
-    ).forEach { dao.insertAccess(it) }
+            AccessEntity(
+                uid = 10101,
+                version = 4,
+                protocol = 6,
+                daddr = "142.250.80.46",
+                dport = 443,
+                time = 1_700_000_000_000L,
+                allowed = 0,
+                block = -1,
+                sent = null,
+                received = null,
+                connections = null,
+            ),
+            AccessEntity(
+                uid = 10101,
+                version = 4,
+                protocol = 17,
+                daddr = "8.8.8.8",
+                dport = 53,
+                time = 1_700_000_100_000L,
+                allowed = 1,
+                block = -1,
+                sent = null,
+                received = null,
+                connections = null,
+            ),
+        )
+        .forEach { dao.insertAccess(it) }
 }
 
 private fun demoLogs(): List<LogEntity> =

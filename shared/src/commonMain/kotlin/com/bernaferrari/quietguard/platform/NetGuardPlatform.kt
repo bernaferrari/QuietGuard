@@ -32,14 +32,6 @@ interface WorkSchedulerBridge {
     fun scheduleWatchdog(intervalMinutes: Int, enabled: Boolean)
 }
 
-interface ProFeaturesBridge {
-    val logSku: String
-
-    fun isPurchased(sku: String): Boolean
-
-    fun openProScreen()
-}
-
 interface UiHelperBridge {
     fun canNotify(): Boolean
 
@@ -65,7 +57,6 @@ object NetGuardPlatform {
     lateinit var widgets: WidgetBridge
     lateinit var hosts: HostsBridge
     lateinit var workScheduler: WorkSchedulerBridge
-    lateinit var proFeatures: ProFeaturesBridge
     lateinit var uiHelpers: UiHelperBridge
     lateinit var ruleHelpers: RuleHelperBridge
 }

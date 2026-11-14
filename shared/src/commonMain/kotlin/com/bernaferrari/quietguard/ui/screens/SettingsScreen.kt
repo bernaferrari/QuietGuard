@@ -1,5 +1,7 @@
 package com.bernaferrari.quietguard.ui.screens
 
+import com.bernaferrari.quietguard.data.BooleanPreference
+import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.ui.icons.MaterialSymbols
 
 import org.jetbrains.compose.resources.stringResource
@@ -199,6 +201,7 @@ fun SettingsScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     fun bool(key: String, default: Boolean) = prefs[booleanPreferencesKey(key)] ?: default
+    fun bool(key: BooleanPreference) = bool(key.name, key.default)
     fun str(key: String, default: String) = prefs[stringPreferencesKey(key)] ?: default
     fun strSet(key: String, default: Set<String>) = prefs[stringSetPreferencesKey(key)] ?: default
     fun updateFlag(
@@ -317,19 +320,19 @@ fun SettingsScreen(
                     platformDynamicColorScheme(isDark = false)?.primary ?: DynamicThemeSwatchColor
 
                 QuickFirewallControls(
-                    wifiAllowed = !bool("whitelist_wifi", true),
-                    mobileAllowed = !bool("whitelist_other", true),
+                    wifiAllowed = !bool(PreferenceKeys.WHITELIST_WIFI),
+                    mobileAllowed = !bool(PreferenceKeys.WHITELIST_OTHER),
                     onToggleWifi = {
                         updateFlag(
-                            "whitelist_wifi",
-                            !bool("whitelist_wifi", true),
+                            PreferenceKeys.WHITELIST_WIFI.name,
+                            !bool(PreferenceKeys.WHITELIST_WIFI),
                             reload = true,
                         )
                     },
                     onToggleMobile = {
                         updateFlag(
-                            "whitelist_other",
-                            !bool("whitelist_other", true),
+                            PreferenceKeys.WHITELIST_OTHER.name,
+                            !bool(PreferenceKeys.WHITELIST_OTHER),
                             reload = true,
                         )
                     },
@@ -494,10 +497,10 @@ fun SettingsScreen(
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_screen_on),
-                            checked = bool("screen_on", true),
+                            checked = bool(PreferenceKeys.SCREEN_ON),
                             isFirst = first,
                             isLast = last,
-                        ) { updateFlag("screen_on", it, reload = true) }
+                        ) { updateFlag(PreferenceKeys.SCREEN_ON.name, it, reload = true) }
                     }
                     item { first, last ->
                         SettingTogglePairRow(
@@ -711,10 +714,10 @@ fun SettingsScreen(
                     item { first, last ->
                         SettingToggleRow(
                             title = stringResource(Res.string.setting_filter_udp),
-                            checked = bool("filter_udp", false),
+                            checked = bool(PreferenceKeys.FILTER_UDP),
                             isFirst = first,
                             isLast = last,
-                        ) { updateFlag("filter_udp", it, reload = true) }
+                        ) { updateFlag(PreferenceKeys.FILTER_UDP.name, it, reload = true) }
                     }
                     item { first, last ->
                         SettingToggleRowWithTooltip(

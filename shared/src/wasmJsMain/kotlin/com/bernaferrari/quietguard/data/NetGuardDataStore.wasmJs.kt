@@ -11,7 +11,7 @@ private val dataStorePath = "/data/$dataStoreFileName".toPath()
 
 actual fun createPlatformDataStore(): DataStore<Preferences> {
     fakeFileSystem.createDirectories(dataStorePath.parent!!)
-    return PreferenceDataStoreFactory.createWithPath(
-        produceFile = { dataStorePath },
-    )
+    return PreferenceDataStoreFactory.createWithPath(produceFile = { dataStorePath })
 }
+
+internal actual fun readInitialPreferences(dataStore: DataStore<Preferences>): Preferences? = null

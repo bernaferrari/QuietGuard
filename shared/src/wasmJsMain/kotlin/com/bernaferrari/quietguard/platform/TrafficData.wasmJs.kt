@@ -2,7 +2,6 @@ package com.bernaferrari.quietguard.platform
 
 import com.bernaferrari.quietguard.data.db.ForwardEntity
 import com.bernaferrari.quietguard.data.db.WasmNetGuardDatabase
-import com.bernaferrari.quietguard.data.db.observeRoomInvalidations
 import com.bernaferrari.quietguard.data.db.toAccessEntry
 import com.bernaferrari.quietguard.data.db.toDnsEntry
 import com.bernaferrari.quietguard.data.db.toForwardingEntry
@@ -11,11 +10,11 @@ import com.bernaferrari.quietguard.demo.wasmDemoApps
 import com.bernaferrari.quietguard.domain.FirewallRule
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
-private suspend fun dao() = WasmNetGuardDatabase.dao.also {
-    WasmNetGuardDatabase.ensureDemoDataSeeded()
-}
+private suspend fun dao() =
+    WasmNetGuardDatabase.dao.also {
+        WasmNetGuardDatabase.ensureDemoDataSeeded()
+    }
 
 actual suspend fun loadLogs(
     udp: Boolean,
@@ -25,26 +24,8 @@ actual suspend fun loadLogs(
     blocked: Boolean,
     limit: Int,
 ): List<LogEntry> {
-    val d = dao()
     val rows =
-        if (limit > 0) {
-            d.getLogLimited(
-                udp = boolInt(udp),
-                tcp = boolInt(tcp),
-                other = boolInt(other),
-                allowed = boolInt(allowed),
-                blocked = boolInt(blocked),
-                limit = limit,
-            )
-        } else {
-            d.getLogUnlimited(
-                udp = boolInt(udp),
-                tcp = boolInt(tcp),
-                other = boolInt(other),
-                allowed = boolInt(allowed),
-                blocked = boolInt(blocked),
-            )
-        }
+        dao().getLogs(udp.flag, tcp.flag, other.flag, allowed.flag, blocked.flag, limit.sqlLimit)
     return rows.map { it.toLogEntry() }
 }
 
@@ -55,39 +36,13 @@ actual fun observeLogs(
     allowed: Boolean,
     blocked: Boolean,
     limit: Int,
-): Flow<List<LogEntry>> =
-    flow {
-        WasmNetGuardDatabase.ensureDemoDataSeeded()
-        val d = WasmNetGuardDatabase.dao
-        d.observeLogTable()
-            .map {
-                if (limit > 0) {
-                    d.getLogLimited(
-                        udp = boolInt(udp),
-                        tcp = boolInt(tcp),
-                        other = boolInt(other),
-                        allowed = boolInt(allowed),
-                        blocked = boolInt(blocked),
-                        limit = limit,
-                    )
-                } else {
-                    d.getLogUnlimited(
-                        udp = boolInt(udp),
-                        tcp = boolInt(tcp),
-                        other = boolInt(other),
-                        allowed = boolInt(allowed),
-                        blocked = boolInt(blocked),
-                    )
-                }.map { it.toLogEntry() }
-            }
-            .collect { emit(it) }
-    }
+): Flow<List<LogEntry>> = flow {
+    dao()
+        .observeLogs(udp.flag, tcp.flag, other.flag, allowed.flag, blocked.flag, limit.sqlLimit)
+        .collect { rows -> emit(rows.map { it.toLogEntry() }) }
+}
 
-actual fun observeLogChanges(onChanged: () -> Unit): () -> Unit =
-    observeRoomInvalidations(WasmNetGuardDatabase.dao.observeLogTable(), onChanged)
-
-actual suspend fun loadDnsEntries(): List<DnsEntry> =
-    dao().getAllDns().map { it.toDnsEntry() }
+actual suspend fun loadDnsEntries(): List<DnsEntry> = dao().getAllDns().map { it.toDnsEntry() }
 
 actual suspend fun cleanupDns() {
     dao().cleanupDns(currentTimeMillis())
@@ -100,35 +55,17 @@ actual suspend fun clearDns() {
 actual suspend fun loadForwardingEntries(): List<ForwardingEntry> =
     dao().getAllForwards().map { it.toForwardingEntry() }
 
-actual fun observeDnsEntries(): Flow<List<DnsEntry>> =
-    flow {
-        WasmNetGuardDatabase.ensureDemoDataSeeded()
-        val d = WasmNetGuardDatabase.dao
-        d.observeDnsTable()
-            .map { d.getAllDns().map { it.toDnsEntry() } }
-            .collect { emit(it) }
-    }
+actual fun observeDnsEntries(): Flow<List<DnsEntry>> = flow {
+    dao().observeAllDns().collect { rows -> emit(rows.map { it.toDnsEntry() }) }
+}
 
-actual fun observeForwardingEntries(): Flow<List<ForwardingEntry>> =
-    flow {
-        WasmNetGuardDatabase.ensureDemoDataSeeded()
-        val d = WasmNetGuardDatabase.dao
-        d.observeForwardTable()
-            .map { d.getAllForwards().map { it.toForwardingEntry() } }
-            .collect { emit(it) }
-    }
+actual fun observeForwardingEntries(): Flow<List<ForwardingEntry>> = flow {
+    dao().observeAllForwards().collect { rows -> emit(rows.map { it.toForwardingEntry() }) }
+}
 
-actual fun observeForwardingChanges(onChanged: () -> Unit): () -> Unit =
-    observeRoomInvalidations(WasmNetGuardDatabase.dao.observeForwardTable(), onChanged)
-
-actual fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>> =
-    flow {
-        WasmNetGuardDatabase.ensureDemoDataSeeded()
-        val d = WasmNetGuardDatabase.dao
-        d.observeAccessTable()
-            .map { d.getAccessForUid(uid).map { it.toAccessEntry() } }
-            .collect { emit(it) }
-    }
+actual fun observeAccessEntries(uid: Int): Flow<List<AccessEntry>> = flow {
+    dao().observeAccessForUid(uid, 250).collect { rows -> emit(rows.map { it.toAccessEntry() }) }
+}
 
 actual suspend fun addForwardingEntry(
     protocol: Int,
@@ -137,9 +74,16 @@ actual suspend fun addForwardingEntry(
     rport: Int,
     ruid: Int,
 ) {
-    dao().insertForward(
-        ForwardEntity(protocol = protocol, dport = dport, raddr = raddr, rport = rport, ruid = ruid),
-    )
+    dao()
+        .insertForward(
+            ForwardEntity(
+                protocol = protocol,
+                dport = dport,
+                raddr = raddr,
+                rport = rport,
+                ruid = ruid,
+            )
+        )
 }
 
 actual suspend fun deleteForwardingEntry(entry: ForwardingEntry) {
@@ -149,24 +93,24 @@ actual suspend fun deleteForwardingEntry(entry: ForwardingEntry) {
 actual fun loadAppDisplayInfo(uid: Int, fallbackLabel: String): AppDisplayInfo =
     wasmDemoApps[uid] ?: AppDisplayInfo(label = fallbackLabel, packageName = null)
 
-actual suspend fun loadAllRulesForPicker(): List<FirewallRule> =
-    wasmDemoApps.map { (uid, info) ->
-        FirewallRule(
-            uid = uid,
-            packageName = info.packageName,
-            name = info.label,
-        )
-    }
+actual suspend fun loadAllRulesForPicker(): List<FirewallRule> = wasmDemoApps.map { (uid, info) ->
+    FirewallRule(
+        uid = uid,
+        packageName = info.packageName,
+        name = info.label,
+    )
+}
 
-actual fun registerUpdateCheckListener(onResult: (status: String?, version: String?) -> Unit): () -> Unit =
-    { }
+actual fun registerUpdateCheckListener(
+    onResult: (status: String?, version: String?) -> Unit
+): () -> Unit = {}
 
 actual fun exportDnsToFile(onComplete: (success: Boolean, error: String?) -> Unit) {
     onComplete(false, null)
 }
 
 actual suspend fun loadAccessEntries(uid: Int): List<AccessEntry> =
-    dao().getAccessForUid(uid).map { it.toAccessEntry() }
+    dao().getAccessForUid(uid, 250).map { it.toAccessEntry() }
 
 actual suspend fun clearAccess(uid: Int) {
     dao().deleteAccessForUid(uid)
@@ -176,4 +120,8 @@ actual suspend fun clearLogs() {
     dao().deleteLogs(-1)
 }
 
-private fun boolInt(value: Boolean): Int = if (value) 1 else 0
+private val Boolean.flag: Int
+    get() = if (this) 1 else 0
+
+private val Int.sqlLimit: Int
+    get() = if (this > 0) this else -1

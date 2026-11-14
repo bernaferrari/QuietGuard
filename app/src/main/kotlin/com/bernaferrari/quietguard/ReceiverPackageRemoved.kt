@@ -15,7 +15,7 @@ class ReceiverPackageRemoved : BroadcastReceiver() {
         if (Intent.ACTION_PACKAGE_FULLY_REMOVED == action) {
             val uid = intent.getIntExtra(Intent.EXTRA_UID, 0)
             if (uid > 0) {
-                val dh = DatabaseHelper.getInstance(context)
+                val dh = AndroidFirewallDatabase.getInstance(context)
                 dh.clearLog(uid)
                 dh.clearAccess(uid, false)
 

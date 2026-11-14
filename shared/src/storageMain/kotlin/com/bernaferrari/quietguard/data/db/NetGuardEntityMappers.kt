@@ -6,12 +6,12 @@ import com.bernaferrari.quietguard.platform.ForwardingEntry
 import com.bernaferrari.quietguard.platform.LogEntry
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
 
-internal fun LogEntity.toLogEntry(): LogEntry {
+internal fun LogEntity.toLogEntry(formatTime: (Long) -> String = ::formatTimeHHmm): LogEntry {
     val protocolValue = protocol ?: -1
     return LogEntry(
         id = id,
         time = time,
-        timeText = formatTimeHHmm(time),
+        timeText = formatTime(time),
         protocolLabel = NetGuardPlatform.uiHelpers.getProtocolName(protocolValue, 0, false),
         daddr = daddr.orEmpty(),
         dport = dport ?: -1,
@@ -40,10 +40,12 @@ internal fun ForwardEntity.toForwardingEntry(): ForwardingEntry =
         ruid = ruid,
     )
 
-internal fun AccessWithCountRow.toAccessEntry(): AccessEntry =
+internal fun AccessWithCountRow.toAccessEntry(
+    formatTime: (Long) -> String = ::formatTimeHHmm
+): AccessEntry =
     AccessEntry(
         time = time,
-        timeText = formatTimeHHmm(time),
+        timeText = formatTime(time),
         daddr = daddr,
         dport = dport,
         allowed = allowed ?: -1,

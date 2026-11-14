@@ -1,7 +1,5 @@
 package com.bernaferrari.quietguard
 
-import com.bernaferrari.quietguard.shared.R
-
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.util.Log
@@ -9,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.bernaferrari.quietguard.data.PreferenceKeys
 import com.bernaferrari.quietguard.data.preferences
+import com.bernaferrari.quietguard.shared.R
 
 @RequiresApi(Build.VERSION_CODES.N)
 class ServiceTileFilter : PreferenceTileService() {
@@ -29,13 +28,9 @@ class ServiceTileFilter : PreferenceTileService() {
         Log.i(TAG, "Click")
 
         if (Util.canFilter(this)) {
-            if (IAB.isPurchased(ActivityPro.SKU_FILTER, this)) {
-                val enabled = !applicationContext.preferences().getBoolean(PreferenceKeys.FILTER, false)
-                applicationContext.preferences().putBoolean(PreferenceKeys.FILTER, enabled)
-                ServiceSinkhole.reload("tile", this, false)
-            } else {
-                Toast.makeText(this, R.string.title_pro_feature, Toast.LENGTH_SHORT).show()
-            }
+            val enabled = !applicationContext.preferences().getBoolean(PreferenceKeys.FILTER, false)
+            applicationContext.preferences().putBoolean(PreferenceKeys.FILTER, enabled)
+            ServiceSinkhole.reload("tile", this, false)
         } else {
             Toast.makeText(this, R.string.msg_unavailable, Toast.LENGTH_SHORT).show()
         }

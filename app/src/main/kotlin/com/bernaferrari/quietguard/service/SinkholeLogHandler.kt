@@ -1,12 +1,11 @@
 package com.bernaferrari.quietguard.service
 
-import com.bernaferrari.quietguard.*
-
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import com.bernaferrari.quietguard.*
 import com.bernaferrari.quietguard.data.PreferencesRepository
 
 /** Serializes database-backed packet logging without retaining the service as an implicit owner. */
@@ -62,7 +61,7 @@ internal class SinkholeLogHandler(
     }
 
     private fun log(packet: Packet, connection: Int, interactive: Boolean) {
-        val database = DatabaseHelper.getInstance(context)
+        val database = AndroidFirewallDatabase.getInstance(context)
         val destination = packet.daddr ?: return
         val domainName = database.getQName(packet.uid, destination)
 
@@ -71,13 +70,18 @@ internal class SinkholeLogHandler(
 
         if (
             packet.uid < 0 ||
-            (packet.uid == 0 && (packet.protocol == TCP || packet.protocol == UDP) && packet.dport == DNS_PORT)
+                (packet.uid == 0 &&
+                    (packet.protocol == TCP || packet.protocol == UDP) &&
+                    packet.dport == DNS_PORT)
         ) {
             return
         }
         if (packet.protocol != TCP && packet.protocol != UDP) packet.dport = 0
 
-        if (database.updateAccess(packet, domainName, -1) && shouldShowAccessNotification(packet.uid)) {
+        if (
+            database.updateAccess(packet, domainName, -1) &&
+                shouldShowAccessNotification(packet.uid)
+        ) {
             showAccessNotification(packet.uid)
         }
     }
@@ -88,14 +92,14 @@ internal class SinkholeLogHandler(
         }
         if (
             !prefs.getBoolean("filter", false) ||
-            !prefs.getBoolean("log", false) ||
-            !prefs.getBoolean("track_usage", false)
+                !prefs.getBoolean("log", false) ||
+                !prefs.getBoolean("track_usage", false)
         ) {
             return
         }
 
         val destination = usage.DAddr ?: return
-        val database = DatabaseHelper.getInstance(context)
+        val database = AndroidFirewallDatabase.getInstance(context)
         val domainName = database.getQName(usage.Uid, destination)
         Log.i(TAG, "Usage account $usage dname=$domainName")
         database.updateUsage(usage, domainName)

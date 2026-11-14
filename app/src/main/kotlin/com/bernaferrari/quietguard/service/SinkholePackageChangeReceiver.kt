@@ -5,9 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.bernaferrari.quietguard.ActivityPro
-import com.bernaferrari.quietguard.DatabaseHelper
-import com.bernaferrari.quietguard.IAB
+import com.bernaferrari.quietguard.AndroidFirewallDatabase
 import com.bernaferrari.quietguard.Rule
 import com.bernaferrari.quietguard.Util
 import com.bernaferrari.quietguard.data.PreferencesRepository
@@ -15,8 +13,8 @@ import com.bernaferrari.quietguard.data.PreferencesRepository
 /**
  * Keeps package installation/removal cleanup separate from VPN lifecycle orchestration.
  *
- * Preferences are read only when a broadcast arrives: the service creates this receiver
- * before it has a Context, so touching preferences at construction time would crash.
+ * Preferences are read only when a broadcast arrives: the service creates this receiver before it
+ * has a Context, so touching preferences at construction time would crash.
  */
 internal class SinkholePackageChangeReceiver(
     private val preferences: () -> PreferencesRepository,
@@ -38,10 +36,10 @@ internal class SinkholePackageChangeReceiver(
     }
 
     private fun handlePackageAdded(context: Context, intent: Intent) {
-        Rule.clearCache(context)
-        if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) &&
-            IAB.isPurchased(ActivityPro.SKU_NOTIFY, context) &&
-            preferences().getBoolean("install", true)
+        Rule.clearCache()
+        if (
+            !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) &&
+                preferences().getBoolean("install", true)
         ) {
             onNewApplication(intent.getIntExtra(Intent.EXTRA_UID, -1))
         }
@@ -49,7 +47,7 @@ internal class SinkholePackageChangeReceiver(
     }
 
     private fun handlePackageRemoved(context: Context, intent: Intent) {
-        Rule.clearCache(context)
+        Rule.clearCache()
         if (intent.getBooleanExtra(Intent.EXTRA_DATA_REMOVED, false)) {
             removePackageData(context, intent)
         }
@@ -66,7 +64,7 @@ internal class SinkholePackageChangeReceiver(
 
         val uid = intent.getIntExtra(Intent.EXTRA_UID, 0)
         if (uid > 0) {
-            DatabaseHelper.getInstance(context).apply {
+            AndroidFirewallDatabase.getInstance(context).apply {
                 clearLog(uid)
                 clearAccess(uid, false)
             }
@@ -80,15 +78,16 @@ internal class SinkholePackageChangeReceiver(
     private companion object {
         const val TAG = "NetGuard.Service"
         const val NOTIFICATION_OTHER_OFFSET = 10_000
-        val PACKAGE_PREFERENCE_NAMES = listOf(
-            "wifi",
-            "other",
-            "screen_wifi",
-            "screen_other",
-            "roaming",
-            "lockdown",
-            "apply",
-            "notify",
-        )
+        val PACKAGE_PREFERENCE_NAMES =
+            listOf(
+                "wifi",
+                "other",
+                "screen_wifi",
+                "screen_other",
+                "roaming",
+                "lockdown",
+                "apply",
+                "notify",
+            )
     }
 }

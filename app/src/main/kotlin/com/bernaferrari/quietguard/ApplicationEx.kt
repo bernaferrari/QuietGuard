@@ -1,15 +1,7 @@
 package com.bernaferrari.quietguard
 
-import android.app.Activity
 import android.app.Application
-import android.graphics.Color
-import android.os.Build
-import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.appfunctions.AppFunctionConfiguration
 import coil3.ImageLoader
 import coil3.SingletonImageLoader
@@ -32,16 +24,13 @@ open class ApplicationEx : Application(), AppFunctionConfiguration.Provider {
                 .build()
         }
 
-    private var prevHandler: Thread.UncaughtExceptionHandler? = null
-
     override fun onCreate() {
         super.onCreate()
 
+        initPreferencesDataStore(this)
         startKoin<ApplicationEx> {
             androidContext(this@ApplicationEx)
         }
-
-        initPreferencesDataStore(this)
         installNetGuardPlatformBindings()
 
         SingletonImageLoader.setSafe { context ->
@@ -55,63 +44,7 @@ open class ApplicationEx : Application(), AppFunctionConfiguration.Provider {
         preferences()
         WorkScheduler.scheduleHousekeeping(this)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notifications.ensureChannels(this)
-        }
-
-        prevHandler = Thread.getDefaultUncaughtExceptionHandler()
-        Thread.setDefaultUncaughtExceptionHandler { thread, ex ->
-            if (Util.ownFault(this, ex) && Util.isPlayStoreInstall(this)) {
-                Log.e(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                prevHandler?.uncaughtException(thread, ex)
-            } else {
-                Log.w(TAG, ex.toString() + "\n" + Log.getStackTraceString(ex))
-                System.exit(1)
-            }
-        }
-
-        registerActivityLifecycleCallbacks(
-            object : ActivityLifecycleCallbacks {
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && false) {
-                        val content = activity.findViewById<View>(android.R.id.content)
-                        ViewCompat.setOnApplyWindowInsetsListener(content) { v, insets ->
-                            val bars =
-                                insets.getInsets(
-                                    WindowInsetsCompat.Type.systemBars() or
-                                        WindowInsetsCompat.Type.displayCutout() or
-                                        WindowInsetsCompat.Type.ime(),
-                                )
-
-                            val dark = activity.preferences().getBoolean("dark_theme", false)
-                            content.setBackgroundColor(if (dark) Color.parseColor("#ff121212") else Color.WHITE)
-
-                            val actionBarHeight = Util.dips2pixels(56, activity)
-                            val decor = activity.window.decorView
-                            WindowCompat.getInsetsController(activity.window, decor).apply {
-                                isAppearanceLightStatusBars = false
-                                isAppearanceLightNavigationBars = !dark
-                            }
-                            v.setPadding(
-                                bars.left,
-                                bars.top + actionBarHeight,
-                                bars.right,
-                                bars.bottom,
-                            )
-
-                            insets
-                        }
-                    }
-                }
-
-                override fun onActivityStarted(activity: Activity) {}
-                override fun onActivityResumed(activity: Activity) {}
-                override fun onActivityPaused(activity: Activity) {}
-                override fun onActivityStopped(activity: Activity) {}
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-                override fun onActivityDestroyed(activity: Activity) {}
-            },
-        )
+        Notifications.ensureChannels(this)
     }
 
     companion object {

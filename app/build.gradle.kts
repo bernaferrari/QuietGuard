@@ -105,7 +105,7 @@ android {
         versionName = "1.0"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
+        versionCode = 4
 
         ndkVersion = androidNdkVersion
         ndk {
@@ -205,7 +205,6 @@ android {
     }
 
     buildFeatures {
-        aidl = true
         compose = true
         buildConfig = true
     }

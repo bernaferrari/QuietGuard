@@ -1,6 +1,13 @@
 package com.bernaferrari.quietguard.data
 
+data class BooleanPreference(val name: String, val default: Boolean)
+
 object PreferenceKeys {
+    val SCREEN_ON = BooleanPreference("screen_on", true)
+    val WHITELIST_WIFI = BooleanPreference("whitelist_wifi", false)
+    val WHITELIST_OTHER = BooleanPreference("whitelist_other", false)
+    val FILTER_UDP = BooleanPreference("filter_udp", true)
+
     const val ENABLED = "enabled"
     const val FILTER = "filter"
     const val LOCKDOWN = "lockdown"
@@ -24,12 +31,9 @@ object PreferenceKeys {
             "roaming",
             "lockdown",
             "notify",
-            "unused",
         )
 
-    fun isPerAppRuleKey(key: String): Boolean =
-        PER_APP_RULE_PREFIXES.any { prefix ->
-            key.startsWith("${prefix}_") &&
-                key.substring(prefix.length + 1).contains('.')
-        }
+    fun isPerAppRuleKey(key: String): Boolean = PER_APP_RULE_PREFIXES.any { prefix ->
+        key.startsWith("${prefix}_") && key.substring(prefix.length + 1).contains('.')
+    }
 }

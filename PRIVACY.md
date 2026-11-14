@@ -8,6 +8,8 @@ To let you configure per-app rules, QuietGuard reads the list of installed apps 
 
 You control optional exports, packet captures, custom hosts-file downloads, and any proxy you configure. Data you choose to export or share is handled by the receiving app or service. A custom hosts URL contacts its server when you request the download. The Play build does not use the bundled update-check or default hosts-download endpoints. Other apps and websites you access through your connection have their own privacy practices.
 
+When Android reports an internet-capable network as unvalidated, QuietGuard may open a TCP connection to port 443 on www.google.com, or to the validation host you configure. This checks reachability without sending an HTTP request. The host can see the connection and your network’s public IP address.
+
 Rules, logs, and preferences are kept on your device. You can clear app data or uninstall QuietGuard to remove its app-private data; files you exported separately remain where you saved them. Android backup for the app is disabled. Device security and any copies you create affect the privacy of locally stored data.
 
 This policy may be updated as the app changes. The current version is published at https://github.com/bernaferrari/QuietGuard/blob/main/PRIVACY.md.

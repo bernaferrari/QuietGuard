@@ -57,11 +57,6 @@ data object Forwarding : AppNavKey {
 }
 
 @Serializable
-data object Pro : AppNavKey {
-    override val route = "pro"
-}
-
-@Serializable
 data class AppRuleDetail(val uid: Int) : AppNavKey {
     override val route = "app_rule_detail"
 }
@@ -74,29 +69,24 @@ object NavRoutes {
             Settings.route -> Settings
             Dns.route -> Dns
             Forwarding.route -> Forwarding
-            Pro.route -> Pro
             else ->
                 SettingsSection.entries
                     .firstOrNull { route == "settings/${it.name.lowercase()}" }
-                    ?.let(::SettingsDetail)
-                    ?: Home
+                    ?.let(::SettingsDetail) ?: Home
         }
 }
 
-val appNavSavedStateConfiguration =
-    SavedStateConfiguration {
-        serializersModule =
-            SerializersModule {
-                polymorphic(NavKey::class) {
-                    subclass(Home::class, Home.serializer())
-                    subclass(Apps::class, Apps.serializer())
-                    subclass(Logs::class, Logs.serializer())
-                    subclass(Settings::class, Settings.serializer())
-                    subclass(SettingsDetail::class, SettingsDetail.serializer())
-                    subclass(Dns::class, Dns.serializer())
-                    subclass(Forwarding::class, Forwarding.serializer())
-                    subclass(Pro::class, Pro.serializer())
-                    subclass(AppRuleDetail::class, AppRuleDetail.serializer())
-                }
-            }
+val appNavSavedStateConfiguration = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(NavKey::class) {
+            subclass(Home::class, Home.serializer())
+            subclass(Apps::class, Apps.serializer())
+            subclass(Logs::class, Logs.serializer())
+            subclass(Settings::class, Settings.serializer())
+            subclass(SettingsDetail::class, SettingsDetail.serializer())
+            subclass(Dns::class, Dns.serializer())
+            subclass(Forwarding::class, Forwarding.serializer())
+            subclass(AppRuleDetail::class, AppRuleDetail.serializer())
+        }
     }
+}

@@ -5,6 +5,8 @@ import android.content.Context
 import com.bernaferrari.quietguard.Rule
 import com.bernaferrari.quietguard.data.PreferencesRepository
 import com.bernaferrari.quietguard.platform.NetGuardPlatform
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Single
 
 @Single
@@ -12,104 +14,91 @@ class AndroidRulesRepository(
     private val preferencesRepository: PreferencesRepository,
     private val context: Context,
 ) : RulesRepository {
+    @Volatile private var allInstalledRules: List<FirewallRule> = emptyList()
+
     override suspend fun loadRules(refresh: Boolean): List<FirewallRule> =
-        Rule.getRules(refresh, context).map { it.toFirewallRule() }
+        withContext(Dispatchers.IO) {
+            val rules = Rule.getRules(all = true, context, refresh)
+            allInstalledRules = rules.map { it.toFirewallRule() }
+            rules.filter { it.visible }.map { it.toFirewallRule() }
+        }
+
+    fun loadAllRules(): List<FirewallRule> =
+        Rule.getRules(all = true, context).map { it.toFirewallRule() }
 
     override fun persistRule(rule: FirewallRule, allRules: List<FirewallRule>) {
-        persistRuleInternal(rule, allRules, mutableSetOf())
+        persistRules(
+            rule,
+            allInstalledRules.map { it.copy() } + allRules,
+            wifi = true,
+            mobile = true,
+            includeOtherSettings = true,
+        )
     }
 
-    private fun persistRuleInternal(
+    fun persistNetworkRule(
         rule: FirewallRule,
         allRules: List<FirewallRule>,
-        visited: MutableSet<String>,
+        wifi: Boolean,
+        mobile: Boolean,
     ) {
-        val packageName = rule.packageName ?: return
-        if (!visited.add(packageName)) return
+        persistRules(rule, allRules, wifi, mobile, includeOtherSettings = false)
+    }
 
-        if (rule.wifi_blocked == rule.wifi_default) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("wifi", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("wifi", packageName),
-                rule.wifi_blocked,
-            )
-        }
-        if (rule.other_blocked == rule.other_default) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("other", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("other", packageName),
-                rule.other_blocked,
-            )
-        }
-        if (rule.apply) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("apply", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("apply", packageName),
-                rule.apply,
-            )
-        }
-        if (rule.screen_wifi == rule.screen_wifi_default) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("screen_wifi", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("screen_wifi", packageName),
-                rule.screen_wifi,
-            )
-        }
-        if (rule.screen_other == rule.screen_other_default) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("screen_other", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("screen_other", packageName),
-                rule.screen_other,
-            )
-        }
-        if (rule.roaming == rule.roaming_default) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("roaming", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("roaming", packageName),
-                rule.roaming,
-            )
-        }
-        if (rule.lockdown) {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("lockdown", packageName),
-                rule.lockdown,
-            )
-        } else {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("lockdown", packageName))
-        }
-        if (rule.notify) {
-            preferencesRepository.removeBoolean(PreferencesRepository.namespaced("notify", packageName))
-        } else {
-            preferencesRepository.putBoolean(
-                PreferencesRepository.namespaced("notify", packageName),
-                rule.notify,
-            )
+    private fun persistRules(
+        rule: FirewallRule,
+        allRules: List<FirewallRule>,
+        wifi: Boolean,
+        mobile: Boolean,
+        includeOtherSettings: Boolean,
+    ) {
+        val byPackage = allRules.associateBy { it.packageName }
+        val visited = mutableSetOf<String>()
+        val affectedUids = mutableSetOf<Int>()
+        val changes = mutableMapOf<String, Boolean?>()
+
+        fun write(target: FirewallRule) {
+            val packageName = target.packageName ?: return
+            if (!visited.add(packageName)) return
+            affectedUids += target.uid
+
+            fun store(prefix: String, value: Boolean, default: Boolean) {
+                val key = PreferencesRepository.namespaced(prefix, packageName)
+                changes[key] = value.takeUnless { it == default }
+            }
+
+            if (wifi) {
+                target.wifi_blocked = rule.wifi_blocked
+                store("wifi", target.wifi_blocked, target.wifi_default)
+            }
+            if (mobile) {
+                target.other_blocked = rule.other_blocked
+                store("other", target.other_blocked, target.other_default)
+            }
+            if (includeOtherSettings) {
+                target.apply = rule.apply
+                target.screen_wifi = rule.screen_wifi
+                target.screen_other = rule.screen_other
+                target.roaming = rule.roaming
+                target.lockdown = rule.lockdown
+                target.notify = rule.notify
+                store("apply", target.apply, true)
+                store("screen_wifi", target.screen_wifi, target.screen_wifi_default)
+                store("screen_other", target.screen_other, target.screen_other_default)
+                store("roaming", target.roaming, target.roaming_default)
+                store("lockdown", target.lockdown, false)
+                store("notify", target.notify, true)
+            }
+            target.related.forEach { name -> byPackage[name]?.let(::write) }
         }
 
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(rule.uid)
+        write(rule)
+        if (changes.isEmpty()) return
+        preferencesRepository.putBooleans(changes)
+        val notifications = context.getSystemService(NotificationManager::class.java)
+        affectedUids.forEach { notifications.cancel(it) }
         NetGuardPlatform.firewall.reload("rule changed", false)
         NetGuardPlatform.widgets.updateFirewall()
-
-        rule.related.forEach { relatedPkg ->
-            val related = allRules.firstOrNull { it.packageName == relatedPkg } ?: return@forEach
-            related.wifi_blocked = rule.wifi_blocked
-            related.other_blocked = rule.other_blocked
-            related.apply = rule.apply
-            related.screen_wifi = rule.screen_wifi
-            related.screen_other = rule.screen_other
-            related.roaming = rule.roaming
-            related.lockdown = rule.lockdown
-            related.notify = rule.notify
-            persistRuleInternal(related, allRules, visited)
-        }
     }
 }
 
@@ -135,5 +124,6 @@ private fun Rule.toFirewallRule(): FirewallRule =
         system = system,
         internet = internet,
         enabled = enabled,
+        installedPackage = pkg,
         related = related?.toList() ?: emptyList(),
     )

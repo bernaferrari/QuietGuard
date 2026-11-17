@@ -42,15 +42,20 @@ internal fun FirewallStateShader(
     }
 
     val motion = LocalMotion.current
-    val phase by rememberInfiniteTransition(label = "firewallShader").animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = motion.durationSlow * 40, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart,
-        ),
-        label = "firewallShaderPhase",
-    )
+    val phase = if (motion.reducedMotion) {
+        0f
+    } else {
+        val animatedPhase by rememberInfiniteTransition(label = "firewallShader").animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = motion.durationSlow * 40, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart,
+            ),
+            label = "firewallShaderPhase",
+        )
+        animatedPhase
+    }
 
     val paint = remember { AndroidPaint().apply { isAntiAlias = true } }
     val density = LocalDensity.current.density

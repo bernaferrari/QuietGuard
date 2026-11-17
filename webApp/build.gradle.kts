@@ -35,3 +35,11 @@ kotlin {
 // Kotlin/JS/Wasm webpack picks up snippets from webpack.config.d/ (merged into generated webpack.config.js).
 // COOP/COEP are required so Room's WebWorkerSQLiteDriver can use OPFS / SharedArrayBuffer locally.
 // See webpack.config.d/coop-coep-headers.js and webApp/vercel.json for production.
+
+dependencies {
+    // Material 3 resolves newer Compose UI than the Compose plugin bundles by default.
+    val skikoRuntime = variantOf(libs.skiko.wasm.js) { classifier("skiko-runtime") }
+    configurations.matching { it.name == "COMPOSE_SKIKO_JS_WASM_RUNTIME" }.configureEach {
+        dependencies.addLater(skikoRuntime)
+    }
+}

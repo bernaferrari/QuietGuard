@@ -59,9 +59,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NetGuard"
-        appfn:description="@string/app_function_app_description"
+        appfn:instructions="@string/app_function_app_description"
         appfn:displayDescription="@string/app_function_app_display_description"
         tools:ignore="ManifestResource">
+
+        <service
+            android:name=".appfunctions.QuietGuardAppFunctionService"
+            android:enabled="@bool/enable_app_functions"
+            android:exported="true"
+            android:permission="android.permission.BIND_APP_FUNCTION_SERVICE"
+            tools:targetApi="36">
+            <property android:name="android.app.appfunctions.v2" android:value="quietguard_functions.xml" />
+            <intent-filter>
+                <action android:name="android.app.appfunctions.AppFunctionService" />
+            </intent-filter>
+        </service>
+
 
         <property
             android:name="android.app.appfunctions.app_metadata"

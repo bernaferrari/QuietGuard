@@ -1,14 +1,14 @@
 package com.bernaferrari.quietguard.appfunctions
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.content.Context as AndroidContext
 import android.net.VpnService
-import androidx.appfunctions.AppFunctionContext
+import androidx.annotation.RequiresApi
 import androidx.appfunctions.AppFunctionDeclaration
 import androidx.appfunctions.AppFunctionElementNotFoundException
 import androidx.appfunctions.AppFunctionInvalidArgumentException
 import androidx.appfunctions.AppFunctionSerializable
+import androidx.appfunctions.AppFunctionService
+import androidx.appfunctions.AppFunctionServiceEntryPoint
 import androidx.appfunctions.AppFunctionStringValueConstraint
 import com.bernaferrari.quietguard.ActivityMain
 import com.bernaferrari.quietguard.AndroidFirewallDatabase
@@ -20,23 +20,21 @@ import com.bernaferrari.quietguard.domain.AndroidRulesRepository
 import com.bernaferrari.quietguard.domain.FirewallRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.annotation.Single
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /** Exposes NetGuard firewall controls to the Android intelligence system. */
-@Single
-// AppFunctions compiler alpha13 still requires this restricted context (b/500281348).
-@SuppressLint("RestrictedApi")
-class AppFunctions(
-    private val context: AndroidContext,
-    private val rulesRepository: AndroidRulesRepository,
-) {
+@RequiresApi(36)
+@AppFunctionServiceEntryPoint(serviceName = "QuietGuardAppFunctionService", appFunctionXmlFileName = "quietguard_functions")
+abstract class AppFunctions : AppFunctionService(), KoinComponent {
+    private val context get() = applicationContext
+    private val rulesRepository by inject<AndroidRulesRepository>()
+
     /**
      * Returns the current global firewall and lockdown state.
-     *
-     * @param appFunctionContext The execution context.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
-    suspend fun getFirewallStatus(appFunctionContext: AppFunctionContext): FirewallStatus =
+    suspend fun getFirewallStatus(): FirewallStatus =
         withContext(Dispatchers.IO) {
             val rules = rulesRepository.loadAllRules()
             val blockedApps = rules.count { rule ->
@@ -53,12 +51,10 @@ class AppFunctions(
      * Enables or disables the NetGuard VPN firewall. When VPN permission has not been granted yet,
      * returns a [PendingIntent] that opens the app so the user can approve VPN access.
      *
-     * @param appFunctionContext The execution context.
      * @param enabled Whether the firewall should be active.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun setFirewallEnabled(
-        appFunctionContext: AppFunctionContext,
         enabled: Boolean,
     ): FirewallToggleResult =
         withContext(Dispatchers.IO) {
@@ -105,12 +101,10 @@ class AppFunctions(
      * Enables or disables global lockdown mode. Lockdown blocks all apps except those explicitly
      * allowed during lockdown.
      *
-     * @param appFunctionContext The execution context.
      * @param enabled Whether lockdown mode should be active.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun setLockdownEnabled(
-        appFunctionContext: AppFunctionContext,
         enabled: Boolean,
     ): LockdownResult =
         withContext(Dispatchers.IO) {
@@ -132,13 +126,11 @@ class AppFunctions(
      * Searches installed apps that NetGuard can manage. Use the returned package name with
      * [getAppFirewallStatus] or [setAppInternetBlocked].
      *
-     * @param appFunctionContext The execution context.
      * @param query App display name or package name fragment. Null or blank returns the first
      *   manageable apps.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun searchApps(
-        appFunctionContext: AppFunctionContext,
         query: String?,
     ): List<AppSearchResult> =
         withContext(Dispatchers.IO) {
@@ -181,12 +173,10 @@ class AppFunctions(
      * Returns the current Wi-Fi and mobile blocking state for a single app. Call [searchApps] first
      * when the package name is unknown.
      *
-     * @param appFunctionContext The execution context.
      * @param packageName The Android package name of the target app.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun getAppFirewallStatus(
-        appFunctionContext: AppFunctionContext,
         packageName: String,
     ): AppFirewallStatus =
         withContext(Dispatchers.IO) {
@@ -204,14 +194,12 @@ class AppFunctions(
      * Blocks or allows internet access for an app on Wi-Fi and/or mobile data. Call [searchApps]
      * first when the package name is unknown.
      *
-     * @param appFunctionContext The execution context.
      * @param packageName The Android package name of the target app.
      * @param network Which network type to change. Accepts "WIFI", "MOBILE", or "BOTH".
      * @param blocked Whether internet access should be blocked on the selected network(s).
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun setAppInternetBlocked(
-        appFunctionContext: AppFunctionContext,
         packageName: String,
         @AppFunctionStringValueConstraint(enumValues = ["WIFI", "MOBILE", "BOTH"]) network: String,
         blocked: Boolean,
@@ -249,12 +237,10 @@ class AppFunctions(
     /**
      * Returns the most recent blocked connection attempts recorded by the firewall.
      *
-     * @param appFunctionContext The execution context.
      * @param limit Maximum number of entries to return. Defaults to 5.
      */
     @AppFunctionDeclaration(isDescribedByKDoc = true)
     suspend fun getRecentBlockedConnections(
-        appFunctionContext: AppFunctionContext,
         limit: Int = 5,
     ): List<BlockedConnection> =
         withContext(Dispatchers.IO) {

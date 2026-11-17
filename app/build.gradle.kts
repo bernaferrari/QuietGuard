@@ -281,7 +281,3 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
-
-ksp {
-    arg("appfunctions:aggregateAppFunctions", "true")
-}

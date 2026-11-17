@@ -30,6 +30,11 @@
 -dontwarn androidx.test.platform.app.InstrumentationRegistry
 
 #JNI
+-keep class com.sun.jna.** { *; }
+# UniFFI callbacks and structures are inspected by JNA through reflection.
+-keep class com.bernaferrari.quietguard.netguard.** { *; }
+# JNA also contains optional desktop AWT integration, unavailable on Android.
+-dontwarn java.awt.**
 -keepclasseswithmembernames class * {
     native <methods>;
 }

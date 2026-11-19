@@ -272,12 +272,12 @@ tasks.configureEach {
 
 dependencies {
     implementation(project(":shared"))
-    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.appfunctions)
     implementation("net.java.dev.jna:jna:5.19.1@aar")
     ksp(libs.androidx.appfunctions.compiler)
 
-    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.tooling)
 }

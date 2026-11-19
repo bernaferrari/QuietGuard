@@ -100,9 +100,9 @@ kotlin {
         androidMain.dependencies {
             api(libs.androidx.core.ktx)
             api(libs.androidx.activity.compose)
-            api(libs.androidx.compose.runtime)
-            api(libs.androidx.compose.foundation)
-            api(libs.androidx.compose.ui)
+            api(libs.compose.runtime)
+            api(libs.compose.foundation)
+            api(libs.compose.ui)
             api(libs.compose.material3)
             api(libs.androidx.navigation3.runtime)
             api(libs.androidx.navigation3.ui)
@@ -145,7 +145,6 @@ kotlin {
 }
 
 dependencies {
-    add("androidMainApi", platform(libs.androidx.compose.bom))
     add("androidMainApi", platform(libs.koin.bom))
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspWasmJs", libs.androidx.room.compiler)

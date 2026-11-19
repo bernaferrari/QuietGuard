@@ -152,7 +152,7 @@ private fun StatusCard(
         },
         label = "heroHalo",
     )
-    val morphProgress by animateFloatAsState(
+    val morphProgress = animateFloatAsState(
         targetValue = if (enabled) 1f else 0f,
         animationSpec = if (motion.reducedMotion) {
             tween(0)
@@ -195,7 +195,6 @@ private fun StatusCard(
             carrierRotation.snapTo(0f)
         }
     }
-    val rotation = carrierRotation.value
     val coreShape = rememberHeroCoreShape(morphProgress)
     val innerHaloShape = rememberHeroInnerHaloShape()
     val outerHaloShape = rememberHeroOuterHaloShape()
@@ -250,7 +249,7 @@ private fun StatusCard(
                         scaleX = scale
                         scaleY = scale
                         alpha = haloProgress.coerceIn(0f, 1f) * 0.5f
-                        rotationZ = -rotation * 0.5f
+                        rotationZ = -carrierRotation.value * 0.5f
                         shape = outerHaloShape
                         clip = true
                     }
@@ -264,7 +263,7 @@ private fun StatusCard(
                         scaleX = scale
                         scaleY = scale
                         alpha = haloProgress.coerceIn(0f, 1f)
-                        rotationZ = rotation
+                        rotationZ = carrierRotation.value
                         shape = innerHaloShape
                         clip = true
                     }
@@ -274,7 +273,7 @@ private fun StatusCard(
                 modifier = Modifier
                     .size(150.dp)
                     .graphicsLayer {
-                        rotationZ = rotation * 0.4f
+                        rotationZ = carrierRotation.value * 0.4f
                         shape = coreShape
                         clip = true
                     }
@@ -288,7 +287,7 @@ private fun StatusCard(
                     tint = iconTint,
                     modifier = Modifier
                         .size(56.dp)
-                        .graphicsLayer { rotationZ = -(rotation * 0.4f) },
+                        .graphicsLayer { rotationZ = -carrierRotation.value * 0.4f },
                 )
             }
         }

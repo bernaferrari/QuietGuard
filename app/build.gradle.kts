@@ -102,10 +102,10 @@ android {
 
     defaultConfig {
         applicationId = "com.bernaferrari.quietguard"
-        versionName = "1.0"
+        versionName = "1.0.1"
         minSdk = 26
         targetSdk = 36
-        versionCode = 4
+        versionCode = 2
 
         ndkVersion = androidNdkVersion
         ndk {

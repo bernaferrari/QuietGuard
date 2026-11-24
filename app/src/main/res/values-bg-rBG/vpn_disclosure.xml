@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Включете защитната стена</string>
+    <string name="vpn_disclosure_intro">QuietGuard използва VPN интерфейса на Android, за да прилага правилата на защитната стена на вашето устройство.</string>
+    <string name="vpn_disclosure_data_title">До какво има достъп защитната стена</string>
+    <string name="vpn_disclosure_data">QuietGuard чете &lt;b&gt;списъка с инсталирани приложения&lt;/b&gt; и проверява връзките, за да прилага правилата ви. Дневниците на връзките и незадължителните записи на пакети &lt;b&gt;остават на това устройство&lt;/b&gt;, освен ако не ги експортирате.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;не препраща трафика ви през сървър&lt;/b&gt;, освен ако не настроите прокси.</string>
+    <string name="vpn_disclosure_accept">Приемам и продължавам</string>
+    <string name="vpn_disclosure_decline">Не сега</string>
+</resources>

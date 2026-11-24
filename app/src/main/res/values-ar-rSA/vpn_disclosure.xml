@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">تشغيل جدار الحماية</string>
+    <string name="vpn_disclosure_intro">يستخدم QuietGuard واجهة VPN في Android لتطبيق قواعد جدار الحماية على جهازك.</string>
+    <string name="vpn_disclosure_data_title">ما يصل إليه جدار الحماية</string>
+    <string name="vpn_disclosure_data">يقرأ QuietGuard &lt;b&gt;قائمة التطبيقات المثبّتة&lt;/b&gt; ويفحص الاتصالات لتطبيق قواعدك. &lt;b&gt;تبقى سجلات الاتصالات ولقطات الحزم الاختيارية على هذا الجهاز&lt;/b&gt; ما لم تصدّرها.</string>
+    <string name="vpn_disclosure_sharing">لا يمرّر QuietGuard حركة بياناتك &lt;b&gt;عبر أي خادم&lt;/b&gt; إلا إذا أعددت خادمًا وكيلاً.</string>
+    <string name="vpn_disclosure_accept">أوافق وأتابع</string>
+    <string name="vpn_disclosure_decline">ليس الآن</string>
+</resources>

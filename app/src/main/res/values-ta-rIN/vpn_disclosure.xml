@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ஃபயர்வாலை இயக்கவும்</string>
+    <string name="vpn_disclosure_intro">உங்கள் சாதனத்தில் ஃபயர்வால் விதிகளைப் பயன்படுத்த QuietGuard, Android இன் VPN இடைமுகத்தைப் பயன்படுத்துகிறது.</string>
+    <string name="vpn_disclosure_data_title">ஃபயர்வால் அணுகும் தகவல்கள்</string>
+    <string name="vpn_disclosure_data">உங்கள் விதிகளைப் பயன்படுத்த QuietGuard &lt;b&gt;நிறுவப்பட்ட ஆப்ஸின் பட்டியலை&lt;/b&gt; வாசித்து, இணைப்புகளை ஆய்வு செய்கிறது. இணைப்புப் பதிவுகளும் விருப்பமான பாக்கெட் பதிவுகளும் நீங்கள் ஏற்றுமதி செய்யாத வரை &lt;b&gt;இந்தச் சாதனத்திலேயே இருக்கும்&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">நீங்கள் ப்ராக்ஸியை அமைக்காத வரை QuietGuard &lt;b&gt;உங்கள் தரவுப் போக்குவரத்தை எந்தச் சேவையகம் வழியாகவும் அனுப்பாது&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">ஏற்றுக்கொண்டு தொடரவும்</string>
+    <string name="vpn_disclosure_decline">இப்போது வேண்டாம்</string>
+</resources>

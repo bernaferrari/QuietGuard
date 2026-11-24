@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Vklopite požarni zid</string>
+    <string name="vpn_disclosure_intro">QuietGuard uporablja vmesnik VPN sistema Android za uveljavljanje pravil požarnega zidu v vaši napravi.</string>
+    <string name="vpn_disclosure_data_title">Do česa ima požarni zid dostop</string>
+    <string name="vpn_disclosure_data">QuietGuard prebere &lt;b&gt;seznam nameščenih aplikacij&lt;/b&gt; in pregleduje povezave, da uveljavi vaša pravila. Dnevniki povezav in izbirni zajemi paketov &lt;b&gt;ostanejo v tej napravi&lt;/b&gt;, razen če jih izvozite.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;vašega prometa ne posreduje prek nobenega strežnika&lt;/b&gt;, razen če nastavite posredniški strežnik.</string>
+    <string name="vpn_disclosure_accept">Strinjam se in želim nadaljevati</string>
+    <string name="vpn_disclosure_decline">Ne zdaj</string>
+</resources>

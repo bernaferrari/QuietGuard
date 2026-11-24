@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Skakel die firewall aan</string>
+    <string name="vpn_disclosure_intro">QuietGuard gebruik Android se VPN-koppelvlak om firewallreëls op jou toestel toe te pas.</string>
+    <string name="vpn_disclosure_data_title">Waartoe die firewall toegang het</string>
+    <string name="vpn_disclosure_data">QuietGuard lees jou &lt;b&gt;lys geïnstalleerde programme&lt;/b&gt; en ondersoek verbindings om jou reëls toe te pas. Verbindingslogboeke en opsionele pakkie-opnames &lt;b&gt;bly op hierdie toestel&lt;/b&gt; tensy jy dit uitvoer.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;stuur nie jou verkeer deur enige bediener nie&lt;/b&gt;, tensy jy ’n instaanbediener opstel.</string>
+    <string name="vpn_disclosure_accept">Stem in en gaan voort</string>
+    <string name="vpn_disclosure_decline">Nie nou nie</string>
+</resources>

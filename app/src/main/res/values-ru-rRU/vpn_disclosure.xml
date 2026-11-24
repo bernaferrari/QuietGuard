@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Включите сетевой экран</string>
+    <string name="vpn_disclosure_intro">QuietGuard использует VPN-интерфейс Android, чтобы применять правила сетевого экрана на вашем устройстве.</string>
+    <string name="vpn_disclosure_data_title">К каким данным обращается сетевой экран</string>
+    <string name="vpn_disclosure_data">QuietGuard читает &lt;b&gt;список установленных приложений&lt;/b&gt; и проверяет подключения, чтобы применять ваши правила. Журналы подключений и необязательные записи пакетов &lt;b&gt;остаются на этом устройстве&lt;/b&gt;, если вы их не экспортируете.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;не перенаправляет ваш трафик ни через какие серверы&lt;/b&gt;, если вы не настроили прокси.</string>
+    <string name="vpn_disclosure_accept">Принять и продолжить</string>
+    <string name="vpn_disclosure_decline">Не сейчас</string>
+</resources>

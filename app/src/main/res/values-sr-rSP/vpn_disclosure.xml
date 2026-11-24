@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Укључите заштитни зид</string>
+    <string name="vpn_disclosure_intro">QuietGuard користи VPN интерфејс Android-а да примени правила заштитног зида на вашем уређају.</string>
+    <string name="vpn_disclosure_data_title">Чему заштитни зид приступа</string>
+    <string name="vpn_disclosure_data">QuietGuard чита &lt;b&gt;листу инсталираних апликација&lt;/b&gt; и проверава везе да би применио ваша правила. Евиденција веза и опционални снимци пакета &lt;b&gt;остају на овом уређају&lt;/b&gt; осим ако их извезете.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;не прослеђује ваш саобраћај преко било ког сервера&lt;/b&gt; осим ако подесите прокси.</string>
+    <string name="vpn_disclosure_accept">Прихватам и настављам</string>
+    <string name="vpn_disclosure_decline">Не сада</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Aktibatu suebakia</string>
+    <string name="vpn_disclosure_intro">QuietGuard-ek Androiden VPN interfazea erabiltzen du zure gailuan suebakiaren arauak aplikatzeko.</string>
+    <string name="vpn_disclosure_data_title">Zer atzi dezake suebakiak?</string>
+    <string name="vpn_disclosure_data">QuietGuard-ek &lt;b&gt;instalatutako aplikazioen zerrenda&lt;/b&gt; irakurtzen du eta konexioak ikuskatzen ditu zure arauak aplikatzeko. Konexioen erregistroak eta aukerako pakete-harrapaketak &lt;b&gt;gailu honetan geratzen dira&lt;/b&gt;, esportatzen ez badituzu.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard-ek &lt;b&gt;ez du zure trafikoa zerbitzari baten bidez bideratzen&lt;/b&gt;, proxy bat konfiguratzen ez baduzu.</string>
+    <string name="vpn_disclosure_accept">Onartu eta jarraitu</string>
+    <string name="vpn_disclosure_decline">Orain ez</string>
+</resources>

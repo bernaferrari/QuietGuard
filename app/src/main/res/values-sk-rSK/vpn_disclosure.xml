@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Zapnite bránu firewall</string>
+    <string name="vpn_disclosure_intro">QuietGuard používa rozhranie VPN systému Android na uplatňovanie pravidiel brány firewall vo vašom zariadení.</string>
+    <string name="vpn_disclosure_data_title">K čomu má brána firewall prístup</string>
+    <string name="vpn_disclosure_data">QuietGuard číta &lt;b&gt;zoznam nainštalovaných aplikácií&lt;/b&gt; a kontroluje pripojenia, aby uplatnil vaše pravidlá. Denníky pripojení a voliteľné záznamy paketov &lt;b&gt;zostávajú v tomto zariadení&lt;/b&gt;, pokiaľ ich neexportujete.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;nesmeruje vašu prevádzku cez žiadny server&lt;/b&gt;, kým nenastavíte proxy server.</string>
+    <string name="vpn_disclosure_accept">Súhlasím a pokračujem</string>
+    <string name="vpn_disclosure_decline">Teraz nie</string>
+</resources>

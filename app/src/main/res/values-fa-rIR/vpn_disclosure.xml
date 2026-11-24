@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">دیوار آتش را روشن کنید</string>
+    <string name="vpn_disclosure_intro">QuietGuard از رابط VPN اندروید برای اجرای قوانین دیوار آتش روی دستگاه شما استفاده می‌کند.</string>
+    <string name="vpn_disclosure_data_title">دیوار آتش به چه چیزهایی دسترسی دارد</string>
+    <string name="vpn_disclosure_data">QuietGuard &lt;b&gt;فهرست برنامه‌های نصب‌شده&lt;/b&gt; را می‌خواند و اتصال‌ها را بررسی می‌کند تا قوانین شما را اعمال کند. گزارش‌های اتصال و ضبط‌های اختیاری بسته‌ها، مگر اینکه آن‌ها را صادر کنید، &lt;b&gt;روی همین دستگاه می‌مانند&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;ترافیک شما را از هیچ سروری عبور نمی‌دهد&lt;/b&gt;، مگر اینکه پراکسی تنظیم کنید.</string>
+    <string name="vpn_disclosure_accept">موافقم و ادامه می‌دهم</string>
+    <string name="vpn_disclosure_decline">فعلاً نه</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Włącz zaporę sieciową</string>
+    <string name="vpn_disclosure_intro">QuietGuard używa interfejsu VPN Androida do stosowania reguł zapory na Twoim urządzeniu.</string>
+    <string name="vpn_disclosure_data_title">Do czego zapora ma dostęp</string>
+    <string name="vpn_disclosure_data">QuietGuard odczytuje &lt;b&gt;listę zainstalowanych aplikacji&lt;/b&gt; i sprawdza połączenia, aby stosować Twoje reguły. Dzienniki połączeń i opcjonalne zapisy przechwyconych pakietów &lt;b&gt;pozostają na tym urządzeniu&lt;/b&gt;, chyba że je wyeksportujesz.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;nie przekazuje Twojego ruchu przez żaden serwer&lt;/b&gt;, chyba że skonfigurujesz serwer proxy.</string>
+    <string name="vpn_disclosure_accept">Wyraź zgodę i kontynuuj</string>
+    <string name="vpn_disclosure_decline">Nie teraz</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Uključite vatrozid</string>
+    <string name="vpn_disclosure_intro">QuietGuard koristi VPN sučelje Androida za primjenu pravila vatrozida na vašem uređaju.</string>
+    <string name="vpn_disclosure_data_title">Čemu vatrozid pristupa</string>
+    <string name="vpn_disclosure_data">QuietGuard čita &lt;b&gt;popis instaliranih aplikacija&lt;/b&gt; i pregledava veze kako bi primijenio vaša pravila. Zapisi o vezama i neobavezne snimke paketa &lt;b&gt;ostaju na ovom uređaju&lt;/b&gt; ako ih ne izvezete.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;ne prosljeđuje vaš promet ni preko jednog poslužitelja&lt;/b&gt; osim ako postavite proxy.</string>
+    <string name="vpn_disclosure_accept">Prihvaćam i nastavljam</string>
+    <string name="vpn_disclosure_decline">Ne sada</string>
+</resources>

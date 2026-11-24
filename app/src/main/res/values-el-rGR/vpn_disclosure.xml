@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Ενεργοποιήστε το τείχος προστασίας</string>
+    <string name="vpn_disclosure_intro">Το QuietGuard χρησιμοποιεί τη διεπαφή VPN του Android για να εφαρμόζει τους κανόνες του τείχους προστασίας στη συσκευή σας.</string>
+    <string name="vpn_disclosure_data_title">Σε τι έχει πρόσβαση το τείχος προστασίας</string>
+    <string name="vpn_disclosure_data">Το QuietGuard διαβάζει τη &lt;b&gt;λίστα εγκατεστημένων εφαρμογών&lt;/b&gt; και ελέγχει τις συνδέσεις για να εφαρμόζει τους κανόνες σας. Τα αρχεία καταγραφής συνδέσεων και οι προαιρετικές καταγραφές πακέτων &lt;b&gt;παραμένουν σε αυτή τη συσκευή&lt;/b&gt; εκτός αν τα εξαγάγετε.</string>
+    <string name="vpn_disclosure_sharing">Το QuietGuard &lt;b&gt;δεν αναμεταδίδει την κίνησή σας μέσω κανενός διακομιστή&lt;/b&gt;, εκτός αν ρυθμίσετε έναν διακομιστή μεσολάβησης.</string>
+    <string name="vpn_disclosure_accept">Συμφωνώ και συνεχίζω</string>
+    <string name="vpn_disclosure_decline">Όχι τώρα</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">방화벽 켜기</string>
+    <string name="vpn_disclosure_intro">QuietGuard는 Android의 VPN 인터페이스를 사용해 기기에서 방화벽 규칙을 적용합니다.</string>
+    <string name="vpn_disclosure_data_title">방화벽이 액세스하는 정보</string>
+    <string name="vpn_disclosure_data">QuietGuard는 규칙을 적용하기 위해 &lt;b&gt;설치된 앱 목록&lt;/b&gt;을 읽고 연결을 검사합니다. 연결 로그와 선택적으로 캡처한 패킷은 내보내지 않는 한 &lt;b&gt;이 기기에만 저장됩니다&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">프록시를 설정하지 않으면 QuietGuard는 &lt;b&gt;어떤 서버로도 트래픽을 중계하지 않습니다&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">동의하고 계속</string>
+    <string name="vpn_disclosure_decline">나중에</string>
+</resources>

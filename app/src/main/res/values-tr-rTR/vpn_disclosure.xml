@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Güvenlik duvarını açın</string>
+    <string name="vpn_disclosure_intro">QuietGuard, güvenlik duvarı kurallarını cihazınızda uygulamak için Android’in VPN arayüzünü kullanır.</string>
+    <string name="vpn_disclosure_data_title">Güvenlik duvarının eriştiği bilgiler</string>
+    <string name="vpn_disclosure_data">QuietGuard, kurallarınızı uygulamak için &lt;b&gt;yüklü uygulamaların listesini&lt;/b&gt; okur ve bağlantıları inceler. Bağlantı günlükleri ve isteğe bağlı paket kayıtları, dışa aktarmadığınız sürece &lt;b&gt;bu cihazda kalır&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">Bir proxy ayarlamadığınız sürece QuietGuard &lt;b&gt;trafiğinizi hiçbir sunucu üzerinden iletmez&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">Kabul et ve devam et</string>
+    <string name="vpn_disclosure_decline">Şimdi değil</string>
+</resources>

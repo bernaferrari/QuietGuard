@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Slå på brannmuren</string>
+    <string name="vpn_disclosure_intro">QuietGuard bruker Androids VPN-grensesnitt til å håndheve brannmurregler på enheten din.</string>
+    <string name="vpn_disclosure_data_title">Hva brannmuren har tilgang til</string>
+    <string name="vpn_disclosure_data">QuietGuard leser &lt;b&gt;listen over installerte apper&lt;/b&gt; og undersøker tilkoblinger for å håndheve reglene dine. Tilkoblingslogger og valgfrie pakkeopptak &lt;b&gt;blir på denne enheten&lt;/b&gt; med mindre du eksporterer dem.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;videresender ikke trafikken din gjennom noen server&lt;/b&gt;, med mindre du konfigurerer en proxy.</string>
+    <string name="vpn_disclosure_accept">Godta og fortsett</string>
+    <string name="vpn_disclosure_decline">Ikke nå</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">फ़ायरवॉल चालू करें</string>
+    <string name="vpn_disclosure_intro">QuietGuard आपके डिवाइस पर फ़ायरवॉल के नियम लागू करने के लिए Android के VPN इंटरफ़ेस का इस्तेमाल करता है।</string>
+    <string name="vpn_disclosure_data_title">फ़ायरवॉल किस डेटा को ऐक्सेस करता है</string>
+    <string name="vpn_disclosure_data">QuietGuard आपके नियम लागू करने के लिए &lt;b&gt;इंस्टॉल किए गए ऐप्लिकेशन की सूची&lt;/b&gt; पढ़ता है और कनेक्शन की जाँच करता है। कनेक्शन लॉग और वैकल्पिक पैकेट कैप्चर &lt;b&gt;इसी डिवाइस पर रहते हैं&lt;/b&gt;, जब तक आप उन्हें एक्सपोर्ट नहीं करते।</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;आपके ट्रैफ़िक को किसी भी सर्वर से होकर नहीं भेजता&lt;/b&gt;, जब तक आप कोई प्रॉक्सी सेट अप नहीं करते।</string>
+    <string name="vpn_disclosure_accept">सहमति दें और जारी रखें</string>
+    <string name="vpn_disclosure_decline">अभी नहीं</string>
+</resources>

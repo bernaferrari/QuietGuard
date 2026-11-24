@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ഫയർവാൾ ഓണാക്കുക</string>
+    <string name="vpn_disclosure_intro">നിങ്ങളുടെ ഉപകരണത്തിൽ ഫയർവാൾ നിയമങ്ങൾ പ്രയോഗിക്കാൻ QuietGuard Android-ന്റെ VPN ഇന്റർഫേസ് ഉപയോഗിക്കുന്നു.</string>
+    <string name="vpn_disclosure_data_title">ഫയർവാളിന് ആക്‌സസ് ഉള്ള വിവരങ്ങൾ</string>
+    <string name="vpn_disclosure_data">നിങ്ങളുടെ നിയമങ്ങൾ പ്രയോഗിക്കാൻ QuietGuard &lt;b&gt;ഇൻസ്റ്റാൾ ചെയ്‌ത ആപ്പുകളുടെ പട്ടിക&lt;/b&gt; വായിക്കുകയും കണക്ഷനുകൾ പരിശോധിക്കുകയും ചെയ്യുന്നു. കണക്ഷൻ ലോഗുകളും ഐച്ഛിക പാക്കറ്റ് ക്യാപ്‌ചറുകളും എക്‌സ്‌പോർട്ട് ചെയ്യാത്തിടത്തോളം &lt;b&gt;ഈ ഉപകരണത്തിൽ തന്നെ നിലനിൽക്കും&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">നിങ്ങൾ ഒരു പ്രോക്‌സി സജ്ജീകരിക്കാത്തിടത്തോളം QuietGuard &lt;b&gt;നിങ്ങളുടെ ട്രാഫിക് ഒരു സെർവർ വഴിയും അയയ്ക്കില്ല&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">സമ്മതിച്ച് തുടരുക</string>
+    <string name="vpn_disclosure_decline">ഇപ്പോൾ വേണ്ട</string>
+</resources>

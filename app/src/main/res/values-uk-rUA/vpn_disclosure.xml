@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Увімкніть брандмауер</string>
+    <string name="vpn_disclosure_intro">QuietGuard використовує інтерфейс VPN Android, щоб застосовувати правила брандмауера на вашому пристрої.</string>
+    <string name="vpn_disclosure_data_title">До яких даних має доступ брандмауер</string>
+    <string name="vpn_disclosure_data">QuietGuard читає &lt;b&gt;список установлених застосунків&lt;/b&gt; і перевіряє з’єднання, щоб застосовувати ваші правила. Журнали з’єднань і необов’язкові записи пакетів &lt;b&gt;залишаються на цьому пристрої&lt;/b&gt;, якщо ви їх не експортуєте.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;не перенаправляє ваш трафік через жоден сервер&lt;/b&gt;, якщо ви не налаштуєте проксі.</string>
+    <string name="vpn_disclosure_accept">Погодитися й продовжити</string>
+    <string name="vpn_disclosure_decline">Не зараз</string>
+</resources>

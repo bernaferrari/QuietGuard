@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">開啟防火牆</string>
+    <string name="vpn_disclosure_intro">QuietGuard 使用 Android 的 VPN 介面，在你的裝置上套用防火牆規則。</string>
+    <string name="vpn_disclosure_data_title">防火牆會存取哪些資料</string>
+    <string name="vpn_disclosure_data">QuietGuard 會讀取&lt;b&gt;已安裝的應用程式清單&lt;/b&gt;並檢查連線，以套用你的規則。連線記錄和選擇性擷取的封包&lt;b&gt;會留在這部裝置上&lt;/b&gt;，除非你將它們匯出。</string>
+    <string name="vpn_disclosure_sharing">除非你設定 Proxy，否則 QuietGuard &lt;b&gt;不會透過任何伺服器轉送你的網路流量&lt;/b&gt;。</string>
+    <string name="vpn_disclosure_accept">同意並繼續</string>
+    <string name="vpn_disclosure_decline">暫不</string>
+</resources>

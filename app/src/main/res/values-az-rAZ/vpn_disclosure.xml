@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Təhlükəsizlik divarını aktiv edin</string>
+    <string name="vpn_disclosure_intro">QuietGuard cihazınızda təhlükəsizlik divarı qaydalarını tətbiq etmək üçün Android-in VPN interfeysindən istifadə edir.</string>
+    <string name="vpn_disclosure_data_title">Təhlükəsizlik divarı hansı məlumatlara baxır</string>
+    <string name="vpn_disclosure_data">QuietGuard qaydalarınızı tətbiq etmək üçün &lt;b&gt;quraşdırılmış tətbiqlərin siyahısını&lt;/b&gt; oxuyur və bağlantıları yoxlayır. Bağlantı jurnalları və istəyə bağlı paket qeydləri, onları ixrac etməsəniz, &lt;b&gt;bu cihazda qalır&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">Proksi qurmasanız, QuietGuard &lt;b&gt;trafikinizi heç bir server vasitəsilə ötürmür&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">Razılaş və davam et</string>
+    <string name="vpn_disclosure_decline">İndi yox</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Activa el tallafoc</string>
+    <string name="vpn_disclosure_intro">QuietGuard utilitza la interfície VPN d’Android per aplicar les regles del tallafoc al dispositiu.</string>
+    <string name="vpn_disclosure_data_title">A què accedeix el tallafoc</string>
+    <string name="vpn_disclosure_data">QuietGuard llegeix la &lt;b&gt;llista d’aplicacions instal·lades&lt;/b&gt; i inspecciona les connexions per aplicar les teves regles. Els registres de connexions i les captures de paquets opcionals &lt;b&gt;es queden en aquest dispositiu&lt;/b&gt; si no els exportes.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;no fa passar el trànsit per cap servidor&lt;/b&gt; tret que configuris un servidor intermediari.</string>
+    <string name="vpn_disclosure_accept">Accepta i continua</string>
+    <string name="vpn_disclosure_decline">Ara no</string>
+</resources>

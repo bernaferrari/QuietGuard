@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Įjunkite užkardą</string>
+    <string name="vpn_disclosure_intro">„QuietGuard“ naudoja „Android“ VPN sąsają užkardos taisyklėms jūsų įrenginyje taikyti.</string>
+    <string name="vpn_disclosure_data_title">Kokius duomenis pasiekia užkarda</string>
+    <string name="vpn_disclosure_data">„QuietGuard“ skaito &lt;b&gt;įdiegtų programų sąrašą&lt;/b&gt; ir tikrina ryšius, kad pritaikytų jūsų taisykles. Ryšių žurnalai ir pasirinktinai užfiksuoti paketai &lt;b&gt;lieka šiame įrenginyje&lt;/b&gt;, nebent juos eksportuojate.</string>
+    <string name="vpn_disclosure_sharing">„QuietGuard“ &lt;b&gt;nepersiunčia jūsų srauto per jokį serverį&lt;/b&gt;, nebent nustatote tarpinį serverį.</string>
+    <string name="vpn_disclosure_accept">Sutinku ir tęsiu</string>
+    <string name="vpn_disclosure_decline">Ne dabar</string>
+</resources>

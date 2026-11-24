@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Bật tường lửa</string>
+    <string name="vpn_disclosure_intro">QuietGuard dùng giao diện VPN của Android để áp dụng các quy tắc tường lửa trên thiết bị của bạn.</string>
+    <string name="vpn_disclosure_data_title">Tường lửa truy cập những gì</string>
+    <string name="vpn_disclosure_data">QuietGuard đọc &lt;b&gt;danh sách ứng dụng đã cài đặt&lt;/b&gt; và kiểm tra các kết nối để áp dụng quy tắc của bạn. Nhật ký kết nối và dữ liệu gói tin thu thập theo tùy chọn &lt;b&gt;nằm trên thiết bị này&lt;/b&gt; trừ khi bạn xuất chúng.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;không chuyển tiếp lưu lượng truy cập của bạn qua bất kỳ máy chủ nào&lt;/b&gt; trừ khi bạn thiết lập proxy.</string>
+    <string name="vpn_disclosure_accept">Đồng ý và tiếp tục</string>
+    <string name="vpn_disclosure_decline">Để sau</string>
+</resources>

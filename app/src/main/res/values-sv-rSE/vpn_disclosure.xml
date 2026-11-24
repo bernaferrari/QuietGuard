@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Slå på brandväggen</string>
+    <string name="vpn_disclosure_intro">QuietGuard använder Androids VPN-gränssnitt för att tillämpa brandväggsregler på din enhet.</string>
+    <string name="vpn_disclosure_data_title">Vad brandväggen kommer åt</string>
+    <string name="vpn_disclosure_data">QuietGuard läser din &lt;b&gt;lista över installerade appar&lt;/b&gt; och granskar anslutningar för att tillämpa dina regler. Anslutningsloggar och valfria paketinsamlingar &lt;b&gt;stannar på den här enheten&lt;/b&gt; om du inte exporterar dem.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;vidarebefordrar inte din trafik via någon server&lt;/b&gt;, såvida du inte konfigurerar en proxy.</string>
+    <string name="vpn_disclosure_accept">Godkänn och fortsätt</string>
+    <string name="vpn_disclosure_decline">Inte nu</string>
+</resources>

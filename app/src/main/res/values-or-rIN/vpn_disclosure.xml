@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ଫାୟାରୱାଲ୍ ଚାଲୁ କରନ୍ତୁ</string>
+    <string name="vpn_disclosure_intro">QuietGuard ଆପଣଙ୍କ ଡିଭାଇସରେ ଫାୟାରୱାଲ୍ ନିୟମ ଲାଗୁ କରିବାକୁ Androidର VPN ଇଣ୍ଟରଫେସ୍ ବ୍ୟବହାର କରେ।</string>
+    <string name="vpn_disclosure_data_title">ଫାୟାରୱାଲ୍ କେଉଁ ତଥ୍ୟ ବ୍ୟବହାର କରେ</string>
+    <string name="vpn_disclosure_data">QuietGuard ଆପଣଙ୍କ ନିୟମ ଲାଗୁ କରିବାକୁ &lt;b&gt;ଇନଷ୍ଟଲ୍ ହୋଇଥିବା ଆପ୍‌ଗୁଡ଼ିକର ତାଲିକା&lt;/b&gt; ପଢ଼େ ଏବଂ ସଂଯୋଗଗୁଡ଼ିକ ଯାଞ୍ଚ କରେ। ସଂଯୋଗ ଲଗ୍ ଓ ଇଚ୍ଛାଧୀନ ପ୍ୟାକେଟ୍ କ୍ୟାପଚର୍ ଏକ୍ସପୋର୍ଟ ନକଲେ &lt;b&gt;ଏହି ଡିଭାଇସରେ ହିଁ ରହେ&lt;/b&gt;।</string>
+    <string name="vpn_disclosure_sharing">ଆପଣ ପ୍ରକ୍ସି ସେଟ୍‌ଅପ୍ ନକଲେ QuietGuard &lt;b&gt;କୌଣସି ସର୍ଭର ମାଧ୍ୟମରେ ଆପଣଙ୍କ ଟ୍ରାଫିକ୍ ପଠାଏ ନାହିଁ&lt;/b&gt;।</string>
+    <string name="vpn_disclosure_accept">ସମ୍ମତି ଦେଇ ଆଗକୁ ଯାଆନ୍ତୁ</string>
+    <string name="vpn_disclosure_decline">ବର୍ତ୍ତମାନ ନୁହେଁ</string>
+</resources>

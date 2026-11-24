@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="vpn_disclosure_title">VPN and privacy</string>
-    <string name="vpn_disclosure_body">QuietGuard uses an on-device VPN to inspect network connections and apply your firewall rules. It reads installed app names and can store connection details such as addresses and domains on this device. Traffic is not sent to a QuietGuard server. An optional proxy you configure can receive allowed traffic.</string>
-    <string name="vpn_disclosure_accept">I agree</string>
+    <string name="vpn_disclosure_title">Turn on the firewall</string>
+    <string name="vpn_disclosure_intro">QuietGuard uses Android’s VPN interface to apply firewall rules on your device.</string>
+    <string name="vpn_disclosure_data_title">What the firewall accesses</string>
+    <string name="vpn_disclosure_data">QuietGuard reads your &lt;b&gt;installed app list&lt;/b&gt; and inspects connections to apply your rules. Connection logs and optional packet captures &lt;b&gt;stay on this device&lt;/b&gt; unless you export them.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;doesn’t relay your traffic through any server&lt;/b&gt; unless you set up a proxy.</string>
+    <string name="vpn_disclosure_accept">Agree and continue</string>
+    <string name="vpn_disclosure_decline">Not now</string>
 </resources>

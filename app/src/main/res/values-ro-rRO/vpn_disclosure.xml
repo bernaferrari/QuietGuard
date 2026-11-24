@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Activează paravanul de protecție</string>
+    <string name="vpn_disclosure_intro">QuietGuard folosește interfața VPN a Android pentru a aplica regulile paravanului de protecție pe dispozitivul tău.</string>
+    <string name="vpn_disclosure_data_title">Ce date accesează paravanul de protecție</string>
+    <string name="vpn_disclosure_data">QuietGuard citește &lt;b&gt;lista de aplicații instalate&lt;/b&gt; și verifică conexiunile pentru a aplica regulile tale. Jurnalele de conexiuni și capturile opționale de pachete &lt;b&gt;rămân pe acest dispozitiv&lt;/b&gt;, dacă nu le exporți.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;nu retransmite traficul tău prin niciun server&lt;/b&gt;, dacă nu configurezi un proxy.</string>
+    <string name="vpn_disclosure_accept">Acceptă și continuă</string>
+    <string name="vpn_disclosure_decline">Nu acum</string>
+</resources>

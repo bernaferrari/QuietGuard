@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">مۇداپىئە تېمىنى قوزغىتىڭ</string>
+    <string name="vpn_disclosure_intro">QuietGuard ئۈسكۈنىڭىزدە مۇداپىئە تېمى قائىدىلىرىنى قوللىنىش ئۈچۈن Android نىڭ VPN كۆرۈنمە يۈزىنى ئىشلىتىدۇ.</string>
+    <string name="vpn_disclosure_data_title">مۇداپىئە تېمى زىيارەت قىلىدىغان ئۇچۇرلار</string>
+    <string name="vpn_disclosure_data">QuietGuard قائىدىلىرىڭىزنى قوللىنىش ئۈچۈن &lt;b&gt;ئورنىتىلغان ئەپلەر تىزىملىكىنى&lt;/b&gt; ئوقۇيدۇ ۋە ئۇلىنىشلارنى تەكشۈرىدۇ. ئۇلىنىش خاتىرىلىرى ۋە ئىختىيارىي بولاق تۇتۇش خاتىرىلىرىنى چىقارمىسىڭىز، ئۇلار &lt;b&gt;بۇ ئۈسكۈنىدە قالىدۇ&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">ۋاكالەتچى مۇلازىمېتىر تەڭشىمىسىڭىز، QuietGuard &lt;b&gt;تور ئېقىمىڭىزنى ھېچقانداق مۇلازىمېتىر ئارقىلىق ئۆتكۈزمەيدۇ&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">قوشۇلىمەن ۋە داۋاملاشتۇرىمەن</string>
+    <string name="vpn_disclosure_decline">ھازىر ئەمەس</string>
+</resources>

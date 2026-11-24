@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Aktifkan firewall</string>
+    <string name="vpn_disclosure_intro">QuietGuard menggunakan antarmuka VPN Android untuk menerapkan aturan firewall di perangkat Anda.</string>
+    <string name="vpn_disclosure_data_title">Data yang diakses firewall</string>
+    <string name="vpn_disclosure_data">QuietGuard membaca &lt;b&gt;daftar aplikasi yang terinstal&lt;/b&gt; dan memeriksa koneksi untuk menerapkan aturan Anda. Log koneksi dan tangkapan paket opsional &lt;b&gt;tetap di perangkat ini&lt;/b&gt; kecuali jika Anda mengekspornya.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;tidak meneruskan lalu lintas Anda melalui server mana pun&lt;/b&gt; kecuali jika Anda menyiapkan proksi.</string>
+    <string name="vpn_disclosure_accept">Setuju dan lanjutkan</string>
+    <string name="vpn_disclosure_decline">Jangan sekarang</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Activer le pare-feu</string>
+    <string name="vpn_disclosure_intro">QuietGuard utilise l’interface VPN d’Android pour appliquer les règles du pare-feu sur votre appareil.</string>
+    <string name="vpn_disclosure_data_title">Données auxquelles le pare-feu accède</string>
+    <string name="vpn_disclosure_data">QuietGuard lit la &lt;b&gt;liste des applications installées&lt;/b&gt; et inspecte les connexions pour appliquer vos règles. Les journaux de connexion et les captures de paquets facultatives &lt;b&gt;restent sur cet appareil&lt;/b&gt;, sauf si vous les exportez.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;ne fait transiter votre trafic par aucun serveur&lt;/b&gt;, sauf si vous configurez un proxy.</string>
+    <string name="vpn_disclosure_accept">Accepter et continuer</string>
+    <string name="vpn_disclosure_decline">Pas maintenant</string>
+</resources>

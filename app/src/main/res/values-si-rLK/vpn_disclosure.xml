@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ෆයර්වෝලය ක්‍රියාත්මක කරන්න</string>
+    <string name="vpn_disclosure_intro">QuietGuard ඔබේ උපාංගයේ ෆයර්වෝල් නීති යෙදීමට Android හි VPN අතුරුමුහුණත භාවිත කරයි.</string>
+    <string name="vpn_disclosure_data_title">ෆයර්වෝලය ප්‍රවේශ වන දත්ත</string>
+    <string name="vpn_disclosure_data">QuietGuard ඔබේ නීති යෙදීමට &lt;b&gt;ස්ථාපිත යෙදුම් ලැයිස්තුව&lt;/b&gt; කියවා සම්බන්ධතා පරීක්ෂා කරයි. සම්බන්ධතා සටහන් සහ විකල්ප පැකට් ග්‍රහණ, ඔබ ඒවා අපනයනය නොකළහොත්, &lt;b&gt;මෙම උපාංගයේම රැඳේ&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_sharing">ඔබ ප්‍රොක්සියක් සකස් නොකළහොත් QuietGuard &lt;b&gt;ඔබේ ජාල ගමනාගමනය කිසිදු සේවාදායකයක් හරහා යවන්නේ නැත&lt;/b&gt;.</string>
+    <string name="vpn_disclosure_accept">එකඟ වී ඉදිරියට යන්න</string>
+    <string name="vpn_disclosure_decline">දැන් නොවේ</string>
+</resources>

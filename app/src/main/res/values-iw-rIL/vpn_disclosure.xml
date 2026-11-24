@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">הפעלת חומת האש</string>
+    <string name="vpn_disclosure_intro">QuietGuard משתמש בממשק ה‑VPN של Android כדי להחיל את כללי חומת האש במכשיר שלך.</string>
+    <string name="vpn_disclosure_data_title">לאילו נתונים חומת האש ניגשת</string>
+    <string name="vpn_disclosure_data">QuietGuard קורא את &lt;b&gt;רשימת האפליקציות המותקנות&lt;/b&gt; ובודק חיבורים כדי להחיל את הכללים שלך. יומני החיבורים ולכידות המנות האופציונליות &lt;b&gt;נשארים במכשיר הזה&lt;/b&gt;, אלא אם בחרת לייצא אותם.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;לא מעביר את התעבורה שלך דרך שום שרת&lt;/b&gt;, אלא אם הגדרת שרת פרוקסי.</string>
+    <string name="vpn_disclosure_accept">הסכמה והמשך</string>
+    <string name="vpn_disclosure_decline">לא עכשיו</string>
+</resources>

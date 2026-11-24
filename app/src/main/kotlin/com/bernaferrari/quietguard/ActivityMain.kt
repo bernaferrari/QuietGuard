@@ -8,13 +8,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.bernaferrari.quietguard.data.preferences
 import com.bernaferrari.quietguard.ui.Home
 import com.bernaferrari.quietguard.ui.main.MainViewModel
@@ -22,13 +20,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ActivityMain : ComponentActivity() {
     private val pendingRoute = mutableStateOf<String?>(null)
+    private var requestEnableFirewall by mutableStateOf(false)
     private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         pendingRoute.value = intent.getStringExtra(EXTRA_ROUTE)
-        val requestEnableFirewall = intent.getBooleanExtra(EXTRA_ENABLE_FIREWALL, false)
+        requestEnableFirewall = savedInstanceState == null &&
+            intent.getBooleanExtra(EXTRA_ENABLE_FIREWALL, false)
 
         setContent {
             val vpnLauncher =
@@ -41,42 +41,33 @@ class ActivityMain : ComponentActivity() {
                     }
                 }
 
-            val showVpnDisclosure = remember { mutableStateOf(false) }
-            val handleToggleEnabled: (Boolean) -> Unit = { enable ->
-                if (enable && !preferences().getBoolean(VPN_DISCLOSURE_ACCEPTED, false)) {
-                    showVpnDisclosure.value = true
-                } else if (enable) {
-                    val vpnIntent = VpnService.prepare(this@ActivityMain)
-                    if (vpnIntent == null) {
-                        viewModel.setEnabled(true)
-                        ServiceSinkhole.start("UI", this@ActivityMain)
-                    } else {
-                        vpnLauncher.launch(vpnIntent)
-                    }
+            var showVpnDisclosure by rememberSaveable { mutableStateOf(false) }
+            val requestVpnConnection: () -> Unit = {
+                val vpnIntent = VpnService.prepare(this@ActivityMain)
+                if (vpnIntent == null) {
+                    viewModel.setEnabled(true)
+                    ServiceSinkhole.start("UI", this@ActivityMain)
                 } else {
-                    viewModel.setEnabled(false)
-                    ServiceSinkhole.stop("UI", this@ActivityMain, false)
+                    vpnLauncher.launch(vpnIntent)
                 }
             }
 
-            LaunchedEffect(Unit) {
-                if (requestEnableFirewall) handleToggleEnabled(true)
+            val handleToggleEnabled: (Boolean) -> Unit = { enable ->
+                when {
+                    !enable -> {
+                        viewModel.setEnabled(false)
+                        ServiceSinkhole.stop("UI", this@ActivityMain, false)
+                    }
+                    preferences().getBoolean(VPN_DISCLOSURE_ACCEPTED, false) -> requestVpnConnection()
+                    else -> showVpnDisclosure = true
+                }
             }
 
-            if (showVpnDisclosure.value) {
-                AlertDialog(
-                    onDismissRequest = { showVpnDisclosure.value = false },
-                    title = { Text(stringResource(R.string.vpn_disclosure_title)) },
-                    text = { Text(stringResource(R.string.vpn_disclosure_body)) },
-                    confirmButton = { TextButton(onClick = {
-                        preferences().putBoolean(VPN_DISCLOSURE_ACCEPTED, true)
-                        showVpnDisclosure.value = false
-                        handleToggleEnabled(true)
-                    }) { Text(stringResource(R.string.vpn_disclosure_accept)) } },
-                    dismissButton = { TextButton(onClick = { showVpnDisclosure.value = false }) {
-                        Text(stringResource(android.R.string.cancel))
-                    } },
-                )
+            LaunchedEffect(requestEnableFirewall) {
+                if (requestEnableFirewall) {
+                    requestEnableFirewall = false
+                    handleToggleEnabled(true)
+                }
             }
 
             AppContent(
@@ -86,6 +77,17 @@ class ActivityMain : ComponentActivity() {
                 onRouteNavigated = { pendingRoute.value = null },
                 viewModel = viewModel,
             )
+
+            if (showVpnDisclosure) {
+                VpnDisclosureSheet(
+                    onDismiss = { showVpnDisclosure = false },
+                    onAccept = {
+                        preferences().putBoolean(VPN_DISCLOSURE_ACCEPTED, true)
+                        showVpnDisclosure = false
+                        requestVpnConnection()
+                    },
+                )
+            }
         }
     }
 
@@ -93,6 +95,7 @@ class ActivityMain : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         pendingRoute.value = intent.getStringExtra(EXTRA_ROUTE)
+        requestEnableFirewall = intent.getBooleanExtra(EXTRA_ENABLE_FIREWALL, false)
     }
 
     companion object {

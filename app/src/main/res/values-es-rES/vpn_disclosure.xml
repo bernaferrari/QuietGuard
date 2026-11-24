@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Activa el cortafuegos</string>
+    <string name="vpn_disclosure_intro">QuietGuard utiliza la interfaz VPN de Android para aplicar las reglas del cortafuegos en tu dispositivo.</string>
+    <string name="vpn_disclosure_data_title">A qué accede el cortafuegos</string>
+    <string name="vpn_disclosure_data">QuietGuard lee tu &lt;b&gt;lista de aplicaciones instaladas&lt;/b&gt; e inspecciona las conexiones para aplicar tus reglas. Los registros de conexión y las capturas de paquetes opcionales &lt;b&gt;se quedan en este dispositivo&lt;/b&gt; salvo que los exportes.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;no reenvía tu tráfico a través de ningún servidor&lt;/b&gt; salvo que configures un proxy.</string>
+    <string name="vpn_disclosure_accept">Aceptar y continuar</string>
+    <string name="vpn_disclosure_decline">Ahora no</string>
+</resources>

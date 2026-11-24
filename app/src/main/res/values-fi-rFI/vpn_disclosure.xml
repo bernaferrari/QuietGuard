@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Ota palomuuri käyttöön</string>
+    <string name="vpn_disclosure_intro">QuietGuard käyttää Androidin VPN-rajapintaa palomuurisääntöjen soveltamiseen laitteellasi.</string>
+    <string name="vpn_disclosure_data_title">Mitä tietoja palomuuri käyttää</string>
+    <string name="vpn_disclosure_data">QuietGuard lukee &lt;b&gt;asennettujen sovellusten luettelon&lt;/b&gt; ja tutkii yhteydet soveltaakseen sääntöjäsi. Yhteyslokit ja valinnaiset pakettikaappaukset &lt;b&gt;pysyvät tällä laitteella&lt;/b&gt;, ellet vie niitä.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;ei välitä liikennettäsi minkään palvelimen kautta&lt;/b&gt;, ellet määritä välityspalvelinta.</string>
+    <string name="vpn_disclosure_accept">Hyväksy ja jatka</string>
+    <string name="vpn_disclosure_decline">Ei nyt</string>
+</resources>

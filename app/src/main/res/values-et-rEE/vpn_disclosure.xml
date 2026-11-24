@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Lülita tulemüür sisse</string>
+    <string name="vpn_disclosure_intro">QuietGuard kasutab Androidi VPN-liidest, et rakendada sinu seadmes tulemüürireegleid.</string>
+    <string name="vpn_disclosure_data_title">Millele tulemüür ligi pääseb</string>
+    <string name="vpn_disclosure_data">QuietGuard loeb &lt;b&gt;installitud rakenduste loendit&lt;/b&gt; ja kontrollib ühendusi, et rakendada sinu reegleid. Ühenduste logid ja valikulised paketisalvestised &lt;b&gt;jäävad sellesse seadmesse&lt;/b&gt;, kui sa neid ei ekspordi.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;ei edasta sinu liiklust ühegi serveri kaudu&lt;/b&gt;, välja arvatud siis, kui seadistad puhverserveri.</string>
+    <string name="vpn_disclosure_accept">Nõustu ja jätka</string>
+    <string name="vpn_disclosure_decline">Praegu mitte</string>
+</resources>

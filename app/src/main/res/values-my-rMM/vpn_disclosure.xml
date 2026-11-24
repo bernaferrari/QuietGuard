@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ဖိုင်ယာဝေါ ဖွင့်ရန်</string>
+    <string name="vpn_disclosure_intro">QuietGuard သည် သင့်စက်တွင် ဖိုင်ယာဝေါ စည်းမျဉ်းများ အသုံးချရန် Android ၏ VPN မျက်နှာပြင်ကို သုံးသည်။</string>
+    <string name="vpn_disclosure_data_title">ဖိုင်ယာဝေါ အသုံးပြုသည့် အချက်အလက်</string>
+    <string name="vpn_disclosure_data">QuietGuard သည် သင့်စည်းမျဉ်းများ အသုံးချရန် &lt;b&gt;ထည့်သွင်းထားသော အက်ပ်စာရင်း&lt;/b&gt;ကို ဖတ်ပြီး ချိတ်ဆက်မှုများကို စစ်ဆေးသည်။ ချိတ်ဆက်မှု မှတ်တမ်းများနှင့် ရွေးချယ်နိုင်သော ပက်ကတ် ဖမ်းယူမှုများကို ထုတ်ယူမထားလျှင် &lt;b&gt;ဤစက်တွင်သာ ရှိနေမည်&lt;/b&gt;။</string>
+    <string name="vpn_disclosure_sharing">ပရောက်စီတစ်ခု မသတ်မှတ်ထားလျှင် QuietGuard သည် &lt;b&gt;သင့်ဒေတာစီးဆင်းမှုကို မည်သည့် ဆာဗာမှတစ်ဆင့်မျှ မပို့ပါ&lt;/b&gt;။</string>
+    <string name="vpn_disclosure_accept">သဘောတူပြီး ဆက်လုပ်ရန်</string>
+    <string name="vpn_disclosure_decline">ယခု မလုပ်သေးပါ</string>
+</resources>

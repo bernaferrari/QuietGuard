@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ফায়ারওয়াল চালু করুন</string>
+    <string name="vpn_disclosure_intro">QuietGuard আপনার ডিভাইসে ফায়ারওয়ালের নিয়ম প্রয়োগ করতে Android-এর VPN ইন্টারফেস ব্যবহার করে।</string>
+    <string name="vpn_disclosure_data_title">ফায়ারওয়াল কী অ্যাক্সেস করে</string>
+    <string name="vpn_disclosure_data">QuietGuard আপনার &lt;b&gt;ইনস্টল করা অ্যাপের তালিকা&lt;/b&gt; পড়ে এবং আপনার নিয়ম প্রয়োগ করতে সংযোগগুলো পরীক্ষা করে। সংযোগের লগ ও ঐচ্ছিক প্যাকেট ক্যাপচার আপনি রপ্তানি না করলে &lt;b&gt;এই ডিভাইসেই থাকে&lt;/b&gt;।</string>
+    <string name="vpn_disclosure_sharing">আপনি প্রক্সি সেট আপ না করলে QuietGuard &lt;b&gt;কোনো সার্ভারের মাধ্যমে আপনার ট্রাফিক পাঠায় না&lt;/b&gt;।</string>
+    <string name="vpn_disclosure_accept">সম্মত হয়ে চালিয়ে যান</string>
+    <string name="vpn_disclosure_decline">এখন নয়</string>
+</resources>

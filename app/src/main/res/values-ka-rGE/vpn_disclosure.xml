@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">ჩართეთ ქსელის დამცავი ეკრანი</string>
+    <string name="vpn_disclosure_intro">QuietGuard იყენებს Android-ის VPN ინტერფეისს, რათა ქსელის დამცავი ეკრანის წესები თქვენს მოწყობილობაზე გამოიყენოს.</string>
+    <string name="vpn_disclosure_data_title">რა მონაცემებზე აქვს წვდომა დამცავ ეკრანს</string>
+    <string name="vpn_disclosure_data">QuietGuard კითხულობს &lt;b&gt;დაყენებული აპების სიას&lt;/b&gt; და ამოწმებს კავშირებს თქვენი წესების გამოსაყენებლად. კავშირების ჟურნალები და პაკეტების არასავალდებულო ჩანაწერები &lt;b&gt;ამ მოწყობილობაზე რჩება&lt;/b&gt;, თუ მათ ექსპორტს არ გააკეთებთ.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;არ ატარებს თქვენს ტრაფიკს არცერთი სერვერის გავლით&lt;/b&gt;, თუ პროქსის არ დააყენებთ.</string>
+    <string name="vpn_disclosure_accept">ვეთანხმები და ვაგრძელებ</string>
+    <string name="vpn_disclosure_decline">ახლა არა</string>
+</resources>

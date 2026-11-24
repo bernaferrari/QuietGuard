@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Attiva il firewall</string>
+    <string name="vpn_disclosure_intro">QuietGuard usa l’interfaccia VPN di Android per applicare le regole del firewall sul tuo dispositivo.</string>
+    <string name="vpn_disclosure_data_title">A quali dati accede il firewall</string>
+    <string name="vpn_disclosure_data">QuietGuard legge l’&lt;b&gt;elenco delle app installate&lt;/b&gt; e controlla le connessioni per applicare le tue regole. I registri delle connessioni e le acquisizioni facoltative dei pacchetti &lt;b&gt;restano su questo dispositivo&lt;/b&gt;, a meno che tu non li esporti.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;non fa passare il tuo traffico attraverso alcun server&lt;/b&gt;, a meno che tu non configuri un proxy.</string>
+    <string name="vpn_disclosure_accept">Accetta e continua</string>
+    <string name="vpn_disclosure_decline">Non ora</string>
+</resources>

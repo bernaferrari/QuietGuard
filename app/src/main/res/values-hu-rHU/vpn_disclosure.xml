@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Kapcsold be a tűzfalat</string>
+    <string name="vpn_disclosure_intro">A QuietGuard az Android VPN-felületén keresztül alkalmazza a tűzfalszabályokat az eszközödön.</string>
+    <string name="vpn_disclosure_data_title">Mihez fér hozzá a tűzfal?</string>
+    <string name="vpn_disclosure_data">A QuietGuard elolvassa a &lt;b&gt;telepített alkalmazások listáját&lt;/b&gt;, és megvizsgálja a kapcsolatokat a szabályaid alkalmazásához. A kapcsolati naplók és az opcionális csomagrögzítések &lt;b&gt;ezen az eszközön maradnak&lt;/b&gt;, hacsak nem exportálod őket.</string>
+    <string name="vpn_disclosure_sharing">A QuietGuard &lt;b&gt;nem továbbítja a forgalmadat semmilyen szerveren keresztül&lt;/b&gt;, kivéve, ha beállítasz egy proxyt.</string>
+    <string name="vpn_disclosure_accept">Elfogadom és folytatom</string>
+    <string name="vpn_disclosure_decline">Most nem</string>
+</resources>

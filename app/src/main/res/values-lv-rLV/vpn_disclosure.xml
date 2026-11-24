@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">Ieslēdziet ugunsmūri</string>
+    <string name="vpn_disclosure_intro">QuietGuard izmanto Android VPN saskarni, lai piemērotu ugunsmūra kārtulas jūsu ierīcē.</string>
+    <string name="vpn_disclosure_data_title">Kādiem datiem ugunsmūris piekļūst</string>
+    <string name="vpn_disclosure_data">QuietGuard nolasa &lt;b&gt;instalēto lietotņu sarakstu&lt;/b&gt; un pārbauda savienojumus, lai piemērotu jūsu kārtulas. Savienojumu žurnāli un neobligātie pakešu ieraksti &lt;b&gt;paliek šajā ierīcē&lt;/b&gt;, ja vien tos neeksportējat.</string>
+    <string name="vpn_disclosure_sharing">QuietGuard &lt;b&gt;nepārsūta jūsu datplūsmu caur nevienu serveri&lt;/b&gt;, ja vien neiestatāt starpniekserveri.</string>
+    <string name="vpn_disclosure_accept">Piekrītu un turpinu</string>
+    <string name="vpn_disclosure_decline">Ne tagad</string>
+</resources>

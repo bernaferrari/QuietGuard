@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_disclosure_title">I-on ang firewall</string>
+    <string name="vpn_disclosure_intro">Ginagamit ng QuietGuard ang VPN interface ng Android para ilapat ang mga panuntunan ng firewall sa device mo.</string>
+    <string name="vpn_disclosure_data_title">Ano ang ina-access ng firewall</string>
+    <string name="vpn_disclosure_data">Binabasa ng QuietGuard ang &lt;b&gt;listahan ng mga naka-install na app&lt;/b&gt; at sinusuri ang mga koneksyon para ilapat ang mga panuntunan mo. Ang mga log ng koneksyon at opsyonal na packet capture ay &lt;b&gt;mananatili sa device na ito&lt;/b&gt; maliban kung ie-export mo ang mga ito.</string>
+    <string name="vpn_disclosure_sharing">&lt;b&gt;Hindi ipinapadaan ng QuietGuard ang trapiko mo sa anumang server&lt;/b&gt; maliban kung magse-set up ka ng proxy.</string>
+    <string name="vpn_disclosure_accept">Sumang-ayon at magpatuloy</string>
+    <string name="vpn_disclosure_decline">Hindi ngayon</string>
+</resources>

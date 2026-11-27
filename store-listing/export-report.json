@@ -1,0 +1,656 @@
+{
+  "ok": true,
+  "cards": [
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 0,
+      "feature": "home",
+      "file": "bg/phone/phone-01-home.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 198122,
+      "notes": [
+        "en-US capture: phone/01-home.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/01-home.png",
+            "left": 126,
+            "top": 560,
+            "width": 828,
+            "height": 1754
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 120,
+          "width": 936,
+          "height": 351
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 1,
+      "feature": "firewall",
+      "file": "bg/phone/phone-02-firewall.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 191402,
+      "notes": [
+        "en-US capture: phone/02-firewall.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/02-firewall.png",
+            "left": 126,
+            "top": 560,
+            "width": 828,
+            "height": 1754
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 190,
+          "width": 936,
+          "height": 220
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 2,
+      "feature": "log",
+      "file": "bg/phone/phone-03-log.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 235680,
+      "notes": [
+        "en-US capture: phone/03-log.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/03-log.png",
+            "left": 126,
+            "top": 560,
+            "width": 828,
+            "height": 1754
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 120,
+          "width": 936,
+          "height": 351
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 3,
+      "feature": "detail",
+      "file": "bg/phone/phone-04-detail.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 228280,
+      "notes": [
+        "en-US capture: phone/04-detail.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/04-detail.png",
+            "left": 126,
+            "top": 560,
+            "width": 828,
+            "height": 1754
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 120,
+          "width": 936,
+          "height": 351
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 4,
+      "feature": "rules",
+      "file": "bg/phone/phone-05-rules.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 209435,
+      "notes": [
+        "en-US capture: phone/06-rules.png, phone/05-settings.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/06-rules.png",
+            "role": "primary",
+            "left": 220,
+            "top": -800,
+            "width": 640,
+            "height": 1356
+          },
+          {
+            "raw": "phone/05-settings.png",
+            "role": "secondary",
+            "left": 220,
+            "top": 1270,
+            "width": 640,
+            "height": 1356
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 742,
+          "width": 936,
+          "height": 351
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 5,
+      "feature": "filter",
+      "file": "bg/phone/phone-06-filter.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 244263,
+      "notes": [
+        "en-US capture: phone/08-blocked.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/08-blocked.png",
+            "left": 126,
+            "top": 560,
+            "width": 828,
+            "height": 1754
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 120,
+          "width": 936,
+          "height": 351
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 6,
+      "feature": "appearance",
+      "file": "bg/phone/phone-07-appearance.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 199435,
+      "notes": [
+        "en-US capture: phone/10-firewall-dark.png, phone/02-firewall.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "phone/10-firewall-dark.png",
+            "role": "dark",
+            "left": 400,
+            "top": 560,
+            "width": 640,
+            "height": 1356
+          },
+          {
+            "raw": "phone/02-firewall.png",
+            "role": "light",
+            "left": 40,
+            "top": 680,
+            "width": 640,
+            "height": 1356
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 190,
+          "width": 936,
+          "height": 220
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "phone",
+      "index": 7,
+      "feature": "tablet",
+      "file": "bg/phone/phone-08-tablet.jpg",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 205824,
+      "notes": [
+        "en-US capture: tablet10/02-firewall.png"
+      ],
+      "layout": {
+        "width": 1080,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet10/02-firewall.png",
+            "role": "primary",
+            "left": 84,
+            "top": 600,
+            "width": 1760,
+            "height": 1116
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 190,
+          "width": 936,
+          "height": 220
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet7",
+      "index": 0,
+      "feature": "home",
+      "file": "bg/tablet7/tablet7-01-home.jpg",
+      "width": 1200,
+      "height": 1920,
+      "bytes": 216556,
+      "notes": [
+        "en-US capture: tablet7/01-home.png"
+      ],
+      "layout": {
+        "width": 1200,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet7/01-home.png",
+            "left": 150,
+            "top": 640,
+            "width": 900,
+            "height": 1421
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 130,
+          "width": 1056,
+          "height": 372
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet7",
+      "index": 1,
+      "feature": "firewall",
+      "file": "bg/tablet7/tablet7-02-firewall.jpg",
+      "width": 1200,
+      "height": 1920,
+      "bytes": 195504,
+      "notes": [
+        "en-US capture: tablet7/02-firewall.png"
+      ],
+      "layout": {
+        "width": 1200,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet7/02-firewall.png",
+            "left": 150,
+            "top": 640,
+            "width": 900,
+            "height": 1421
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 200,
+          "width": 1056,
+          "height": 237
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet7",
+      "index": 2,
+      "feature": "log",
+      "file": "bg/tablet7/tablet7-03-log.jpg",
+      "width": 1200,
+      "height": 1920,
+      "bytes": 248156,
+      "notes": [
+        "en-US capture: tablet7/03-log.png"
+      ],
+      "layout": {
+        "width": 1200,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet7/03-log.png",
+            "left": 150,
+            "top": 640,
+            "width": 900,
+            "height": 1421
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 130,
+          "width": 1056,
+          "height": 372
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet7",
+      "index": 3,
+      "feature": "detail",
+      "file": "bg/tablet7/tablet7-04-detail.jpg",
+      "width": 1200,
+      "height": 1920,
+      "bytes": 244770,
+      "notes": [
+        "en-US capture: tablet7/04-detail.png"
+      ],
+      "layout": {
+        "width": 1200,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet7/04-detail.png",
+            "left": 150,
+            "top": 640,
+            "width": 900,
+            "height": 1421
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 130,
+          "width": 1056,
+          "height": 372
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet7",
+      "index": 4,
+      "feature": "appearance",
+      "file": "bg/tablet7/tablet7-05-appearance.jpg",
+      "width": 1200,
+      "height": 1920,
+      "bytes": 239575,
+      "notes": [
+        "en-US capture: tablet7/05-settings.png, tablet7/10-firewall-dark.png"
+      ],
+      "layout": {
+        "width": 1200,
+        "height": 1920,
+        "devices": [
+          {
+            "raw": "tablet7/05-settings.png",
+            "role": "primary",
+            "left": 40,
+            "top": 600,
+            "width": 640,
+            "height": 1010
+          },
+          {
+            "raw": "tablet7/10-firewall-dark.png",
+            "role": "secondary",
+            "left": 520,
+            "top": 780,
+            "width": 640,
+            "height": 1010
+          }
+        ],
+        "header": {
+          "left": 72,
+          "top": 200,
+          "width": 1056,
+          "height": 237
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet10",
+      "index": 0,
+      "feature": "firewall",
+      "file": "bg/tablet10/tablet10-01-firewall.jpg",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 231297,
+      "notes": [
+        "en-US capture: tablet10/02-firewall.png"
+      ],
+      "layout": {
+        "width": 1920,
+        "height": 1200,
+        "devices": [
+          {
+            "raw": "tablet10/02-firewall.png",
+            "left": 730,
+            "top": 240,
+            "width": 1110,
+            "height": 704
+          }
+        ],
+        "header": {
+          "left": 110,
+          "top": 0,
+          "width": 560,
+          "height": 1200
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet10",
+      "index": 1,
+      "feature": "home",
+      "file": "bg/tablet10/tablet10-02-home.jpg",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 240346,
+      "notes": [
+        "en-US capture: tablet10/01-home.png",
+        "copy shrunk to 88%"
+      ],
+      "layout": {
+        "width": 1920,
+        "height": 1200,
+        "devices": [
+          {
+            "raw": "tablet10/01-home.png",
+            "left": 730,
+            "top": 240,
+            "width": 1110,
+            "height": 704
+          }
+        ],
+        "header": {
+          "left": 110,
+          "top": 0,
+          "width": 560,
+          "height": 1200
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet10",
+      "index": 2,
+      "feature": "log",
+      "file": "bg/tablet10/tablet10-03-log.jpg",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 184504,
+      "notes": [
+        "en-US capture: tablet10/03-log.png"
+      ],
+      "layout": {
+        "width": 1920,
+        "height": 1200,
+        "devices": [
+          {
+            "raw": "tablet10/03-log.png",
+            "left": 730,
+            "top": 240,
+            "width": 1110,
+            "height": 704
+          }
+        ],
+        "header": {
+          "left": 110,
+          "top": 0,
+          "width": 560,
+          "height": 1200
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet10",
+      "index": 3,
+      "feature": "filter",
+      "file": "bg/tablet10/tablet10-04-filter.jpg",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 193330,
+      "notes": [
+        "en-US capture: tablet10/08-blocked.png"
+      ],
+      "layout": {
+        "width": 1920,
+        "height": 1200,
+        "devices": [
+          {
+            "raw": "tablet10/08-blocked.png",
+            "left": 730,
+            "top": 240,
+            "width": 1110,
+            "height": 704
+          }
+        ],
+        "header": {
+          "left": 110,
+          "top": 0,
+          "width": 560,
+          "height": 1200
+        },
+        "callouts": []
+      }
+    },
+    {
+      "locale": "bg",
+      "kind": "tablet10",
+      "index": 4,
+      "feature": "appearance",
+      "file": "bg/tablet10/tablet10-05-appearance.jpg",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 240775,
+      "notes": [
+        "en-US capture: tablet10/10-firewall-dark.png, phone/07-appearance.png"
+      ],
+      "layout": {
+        "width": 1920,
+        "height": 1200,
+        "devices": [
+          {
+            "raw": "tablet10/10-firewall-dark.png",
+            "role": "primary",
+            "left": 700,
+            "top": 150,
+            "width": 1080,
+            "height": 685
+          },
+          {
+            "raw": "phone/07-appearance.png",
+            "role": "secondary",
+            "left": 1470,
+            "top": 470,
+            "width": 400,
+            "height": 848
+          }
+        ],
+        "header": {
+          "left": 110,
+          "top": 0,
+          "width": 560,
+          "height": 1200
+        },
+        "callouts": []
+      }
+    }
+  ],
+  "warnings": [],
+  "locales": [
+    {
+      "locale": "bg",
+      "cards": 18,
+      "untranslated": 0,
+      "borrowedCaptures": 18,
+      "movedCallouts": 0,
+      "fixedCallouts": 0,
+      "shrunk": 1
+    }
+  ],
+  "finishedAt": "2026-11-27T14:24:21.089Z",
+  "options": {
+    "locales": [
+      "bg"
+    ],
+    "strict": false
+  }
+}

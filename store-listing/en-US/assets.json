@@ -2,91 +2,123 @@
   "galleries": {
     "phone": [
       {
-        "file": "phone/phone-01-home.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 0,
         "feature": "home",
-        "slide": 0,
+        "file": "phone/phone-01-home.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 188681,
+        "notes": [],
+        "slide": 0,
         "sources": [
           "raw/phone/01-home.png"
         ]
       },
       {
-        "file": "phone/phone-02-firewall.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 1,
         "feature": "firewall",
-        "slide": 1,
+        "file": "phone/phone-02-firewall.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 183846,
+        "notes": [],
+        "slide": 1,
         "sources": [
           "raw/phone/02-firewall.png"
         ]
       },
       {
-        "file": "phone/phone-03-log.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 2,
         "feature": "log",
-        "slide": 2,
+        "file": "phone/phone-03-log.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 228527,
+        "notes": [],
+        "slide": 2,
         "sources": [
           "raw/phone/03-log.png"
         ]
       },
       {
-        "file": "phone/phone-04-detail.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 3,
         "feature": "detail",
-        "slide": 3,
+        "file": "phone/phone-04-detail.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 211752,
+        "notes": [],
+        "slide": 3,
         "sources": [
           "raw/phone/04-detail.png"
         ]
       },
       {
-        "file": "phone/phone-05-rules.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 4,
         "feature": "rules",
-        "slide": 4,
+        "file": "phone/phone-05-rules.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 190615,
+        "notes": [],
+        "slide": 4,
         "sources": [
           "raw/phone/06-rules.png",
           "raw/phone/05-settings.png"
         ]
       },
       {
-        "file": "phone/phone-06-filter.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 5,
         "feature": "filter",
-        "slide": 5,
+        "file": "phone/phone-06-filter.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 236704,
+        "notes": [],
+        "slide": 5,
         "sources": [
           "raw/phone/08-blocked.png"
         ]
       },
       {
-        "file": "phone/phone-07-appearance.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 6,
         "feature": "appearance",
-        "slide": 6,
+        "file": "phone/phone-07-appearance.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 188997,
+        "notes": [],
+        "slide": 6,
         "sources": [
           "raw/phone/10-firewall-dark.png",
           "raw/phone/02-firewall.png"
         ]
       },
       {
-        "file": "phone/phone-08-tablet.jpg",
+        "locale": "en-US",
+        "kind": "phone",
+        "index": 7,
         "feature": "tablet",
-        "slide": 7,
+        "file": "phone/phone-08-tablet.jpg",
         "width": 1080,
         "height": 1920,
         "bytes": 195258,
+        "notes": [],
+        "slide": 7,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
@@ -94,56 +126,76 @@
     ],
     "tablet7": [
       {
-        "file": "tablet7/tablet7-01-home.jpg",
+        "locale": "en-US",
+        "kind": "tablet7",
+        "index": 0,
         "feature": "home",
-        "slide": 0,
+        "file": "tablet7/tablet7-01-home.jpg",
         "width": 1200,
         "height": 1920,
         "bytes": 206645,
+        "notes": [],
+        "slide": 0,
         "sources": [
           "raw/tablet7/01-home.png"
         ]
       },
       {
-        "file": "tablet7/tablet7-02-firewall.jpg",
+        "locale": "en-US",
+        "kind": "tablet7",
+        "index": 1,
         "feature": "firewall",
-        "slide": 1,
+        "file": "tablet7/tablet7-02-firewall.jpg",
         "width": 1200,
         "height": 1920,
         "bytes": 189129,
+        "notes": [],
+        "slide": 1,
         "sources": [
           "raw/tablet7/02-firewall.png"
         ]
       },
       {
-        "file": "tablet7/tablet7-03-log.jpg",
+        "locale": "en-US",
+        "kind": "tablet7",
+        "index": 2,
         "feature": "log",
-        "slide": 2,
+        "file": "tablet7/tablet7-03-log.jpg",
         "width": 1200,
         "height": 1920,
         "bytes": 240664,
+        "notes": [],
+        "slide": 2,
         "sources": [
           "raw/tablet7/03-log.png"
         ]
       },
       {
-        "file": "tablet7/tablet7-04-detail.jpg",
+        "locale": "en-US",
+        "kind": "tablet7",
+        "index": 3,
         "feature": "detail",
-        "slide": 3,
+        "file": "tablet7/tablet7-04-detail.jpg",
         "width": 1200,
         "height": 1920,
         "bytes": 227683,
+        "notes": [],
+        "slide": 3,
         "sources": [
           "raw/tablet7/04-detail.png"
         ]
       },
       {
-        "file": "tablet7/tablet7-05-appearance.jpg",
+        "locale": "en-US",
+        "kind": "tablet7",
+        "index": 4,
         "feature": "appearance",
-        "slide": 4,
+        "file": "tablet7/tablet7-05-appearance.jpg",
         "width": 1200,
         "height": 1920,
         "bytes": 228731,
+        "notes": [],
+        "slide": 4,
         "sources": [
           "raw/tablet7/05-settings.png",
           "raw/tablet7/10-firewall-dark.png"
@@ -152,56 +204,76 @@
     ],
     "tablet10": [
       {
-        "file": "tablet10/tablet10-01-firewall.jpg",
+        "locale": "en-US",
+        "kind": "tablet10",
+        "index": 0,
         "feature": "firewall",
-        "slide": 0,
+        "file": "tablet10/tablet10-01-firewall.jpg",
         "width": 1920,
         "height": 1200,
-        "bytes": 215243,
+        "bytes": 214894,
+        "notes": [],
+        "slide": 0,
         "sources": [
           "raw/tablet10/02-firewall.png"
         ]
       },
       {
-        "file": "tablet10/tablet10-02-home.jpg",
+        "locale": "en-US",
+        "kind": "tablet10",
+        "index": 1,
         "feature": "home",
-        "slide": 1,
+        "file": "tablet10/tablet10-02-home.jpg",
         "width": 1920,
         "height": 1200,
-        "bytes": 236907,
+        "bytes": 237122,
+        "notes": [],
+        "slide": 1,
         "sources": [
           "raw/tablet10/01-home.png"
         ]
       },
       {
-        "file": "tablet10/tablet10-03-log.jpg",
+        "locale": "en-US",
+        "kind": "tablet10",
+        "index": 2,
         "feature": "log",
-        "slide": 2,
+        "file": "tablet10/tablet10-03-log.jpg",
         "width": 1920,
         "height": 1200,
         "bytes": 179496,
+        "notes": [],
+        "slide": 2,
         "sources": [
           "raw/tablet10/03-log.png"
         ]
       },
       {
-        "file": "tablet10/tablet10-04-filter.jpg",
+        "locale": "en-US",
+        "kind": "tablet10",
+        "index": 3,
         "feature": "filter",
-        "slide": 3,
+        "file": "tablet10/tablet10-04-filter.jpg",
         "width": 1920,
         "height": 1200,
         "bytes": 187255,
+        "notes": [],
+        "slide": 3,
         "sources": [
           "raw/tablet10/08-blocked.png"
         ]
       },
       {
-        "file": "tablet10/tablet10-05-appearance.jpg",
+        "locale": "en-US",
+        "kind": "tablet10",
+        "index": 4,
         "feature": "appearance",
-        "slide": 4,
+        "file": "tablet10/tablet10-05-appearance.jpg",
         "width": 1920,
         "height": 1200,
         "bytes": 233236,
+        "notes": [],
+        "slide": 4,
         "sources": [
           "raw/tablet10/10-firewall-dark.png",
           "raw/phone/07-appearance.png"
@@ -210,12 +282,16 @@
     ],
     "readme": [
       {
-        "file": "readme/hero.jpg",
+        "locale": "en-US",
+        "kind": "readme",
+        "index": 0,
         "feature": "readme-hero",
-        "slide": 0,
+        "file": "readme/hero.jpg",
         "width": 2400,
         "height": 1260,
         "bytes": 292721,
+        "notes": [],
+        "slide": 0,
         "sources": [
           "raw/phone/01-home.png",
           "raw/phone/02-firewall.png",
@@ -223,12 +299,16 @@
         ]
       },
       {
-        "file": "readme/rules.jpg",
+        "locale": "en-US",
+        "kind": "readme",
+        "index": 1,
         "feature": "readme-rules",
-        "slide": 1,
+        "file": "readme/rules.jpg",
         "width": 2400,
         "height": 1260,
         "bytes": 320202,
+        "notes": [],
+        "slide": 1,
         "sources": [
           "raw/phone/04-detail.png",
           "raw/phone/08-blocked.png",
@@ -236,24 +316,32 @@
         ]
       },
       {
-        "file": "readme/big-screen.jpg",
+        "locale": "en-US",
+        "kind": "readme",
+        "index": 2,
         "feature": "readme-spread",
-        "slide": 2,
+        "file": "readme/big-screen.jpg",
         "width": 2400,
         "height": 1260,
         "bytes": 288906,
+        "notes": [],
+        "slide": 2,
         "sources": [
           "raw/tablet10/02-firewall.png",
           "raw/phone/10-firewall-dark.png"
         ]
       },
       {
-        "file": "readme/before-after.jpg",
+        "locale": "en-US",
+        "kind": "readme",
+        "index": 3,
         "feature": "readme-compare",
-        "slide": 3,
+        "file": "readme/before-after.jpg",
         "width": 2400,
         "height": 1260,
         "bytes": 315969,
+        "notes": [],
+        "slide": 3,
         "sources": [
           "raw/compare/netguard-firewall.png",
           "raw/phone/02-firewall.png",

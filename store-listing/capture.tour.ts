@@ -1,13 +1,13 @@
 // QuietGuard's store screens on the capture emulator. The capture build seeds fictional apps and traffic and never
 // starts the VPN or touches the network. `npx screenshot-studio recapture` installs it, runs this tour for every
 // language and device size, and exports. Alone: npx screenshot-studio tour [--profile phone] [--locale de-DE].
+import type {Tour, TourDevice} from 'screenshot-studio';
 
 /** A navigation tab, by its text: the Home hero's toggle is also described as "Firewall". */
-const tab = (d, label) => d.tap(label, {textOnly: true});
+const tab = (d: TourDevice, label: string) => d.tap(label, {textOnly: true});
 /** The 10-inch tablet shows the list and the detail side by side. */
-const wide = d => d.profile === 'tablet10';
+const wide = (d: TourDevice) => d.profile === 'tablet10';
 
-/** @type {import('screenshot-studio').Tour} */
 export default {
   app: 'com.bernaferrari.quietguard.storecapture',
   activity: 'com.bernaferrari.quietguard.ActivityMain',
@@ -31,4 +31,4 @@ export default {
       async '10-firewall-dark'(d) { await tab(d, 'Firewall'); if (wide(d)) await d.tap('Camera'); },
     },
   },
-};
+} satisfies Tour;

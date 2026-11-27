@@ -6,9 +6,9 @@ Built with [Screenshot Studio](https://github.com/bernaferrari/screenshot-studio
 | --- | --- |
 | Cards, order, captures | `gallery.json` |
 | Words per language | `<locale>/copy.json`, `<locale>/listing.json` |
-| Look | `theme.css`, `theme.js` |
+| Look | `theme.css`, `theme.ts` |
 | Canvas and capture sizes | `profiles.json` |
-| Scene tour | `capture.tour.mjs` (build and runs: `studio.json` → `capture`) |
+| Scene tour | `capture.tour.ts` (build and runs: `studio.json` → `capture`) |
 
 ```sh
 npx screenshot-studio recapture                 # rebuild, capture every size on emulator-5578, export every language
